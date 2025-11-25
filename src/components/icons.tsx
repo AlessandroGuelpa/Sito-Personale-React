@@ -27,8 +27,8 @@ export const Logo2: React.FC = () => (
   <img
     src="/logo_black.webp"
     alt="Logo"
-    width={168}
-    height={168}
+    width={120}
+    height={120}
   />
 );
 
