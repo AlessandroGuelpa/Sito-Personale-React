@@ -25,7 +25,7 @@ export const Logo: React.FC<IconSvgProps> = ({
 
 export const Logo2: React.FC = () => (
   <img
-    src="/logo_black.webp"
+    src="/logo_trasparente.png"
     alt="Logo"
     width={120}
     height={120}
