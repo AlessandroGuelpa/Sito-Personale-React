@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DefaultLayout from "@/layouts/default";
 import Skills from "@/components/skills";
 import {Helmet} from "react-helmet";
+import CustomLink from '@/components/customlink';
 
 interface Repo {
   id: number;
@@ -100,15 +101,12 @@ export default function Projects() {
     </>
   )}
 </div>
-              <a
+              <CustomLink
                 href={repo.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-violet-600 hover:underline"
                 aria-label={`Apri ${repo.name} su GitHub`}
               >
                 Vai al repo <span>↗</span>
-              </a>
+              </CustomLink>
             </div>
           ))}
         </div>
