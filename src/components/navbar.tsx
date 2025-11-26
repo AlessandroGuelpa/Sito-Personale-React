@@ -18,6 +18,7 @@ import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon, Logo2, SearchIcon } from "@/components/icons";
 import CustomLink from '@/components/customlink';
+//import { color } from "framer-motion";
 
 export const Navbar = () => {
   const searchInput = (
@@ -57,6 +58,7 @@ export const Navbar = () => {
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <CustomLink
+              className = "text-light"
                 href={item.href}
               >
                 {item.label}
