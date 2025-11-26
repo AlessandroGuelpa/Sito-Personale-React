@@ -26,7 +26,7 @@ export default function DefaultLayout({
       <footer className="w-full flex items-center justify-center py-3">
           <span className="text-default-600">Powered by </span>
           <CustomLink href="/">
-          <span> &nbspAlessandro Guelpa</span>
+          <span>&nbsp; Alessandro Guelpa</span>
           </CustomLink>
       </footer>
     </div>
