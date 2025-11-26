@@ -1,13 +1,21 @@
-const CustomLink = ({ href, children }) => {
+import React from 'react';
+
+// Definiamo i "tipi" che il componente accetta
+interface CustomLinkProps {
+  href: string;
+  children: React.ReactNode; // Accetta testo, icone o altri elementi React
+}
+
+const CustomLink = ({ href, children }: CustomLinkProps) => {
   return (
     <a 
       href={href} 
       className="group relative inline-block text-slate-800 font-medium cursor-pointer"
     >
       {children}
-      {/* Notare 'left-1/2' e '-translate-x-1/2' per centrare l'inizio */}
-      <span className="absolute bottom-0 left-1/2 h-[2px] w-0 -translate-x-1/2 bg-rose-500 transition-all duration-300 ease-out group-hover:w-full"></span>
+      <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-indigo-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
     </a>
   );
 };
+
 export default CustomLink;

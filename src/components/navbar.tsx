@@ -11,8 +11,8 @@ import {
   NavbarMenu,
   NavbarMenuItem,
 } from "@heroui/navbar";
-import { link as linkStyles } from "@heroui/theme";
-import clsx from "clsx";
+//import { link as linkStyles } from "@heroui/theme";
+//import clsx from "clsx";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
