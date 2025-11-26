@@ -1,4 +1,5 @@
 import { Link } from "@heroui/link";
+import { Analytics } from "@vercel/analytics/next"
 
 import { Navbar } from "@/components/navbar";
 import { motion } from "framer-motion";
