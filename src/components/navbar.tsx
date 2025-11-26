@@ -105,7 +105,7 @@ export const Navbar = () => {
                 }
                 href={item.href}
                 size="lg"
-              >
+              >ciao
                 {item.label}
               </Link>
             </NavbarMenuItem>
