@@ -97,6 +97,7 @@ export const Navbar = () => {
             <NavbarMenuItem key={`${item}-${index}`}>
               <CustomLink
                 href={item.href}
+                className = "text-light"
               >
                 {item.label}
               </CustomLink>

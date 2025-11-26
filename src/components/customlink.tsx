@@ -18,7 +18,7 @@ const CustomLink = ({ href, children, className}: CustomLinkProps) => {
     <Link to={href} className={finalClass}>
       {children}
       <span 
-        className={`absolute bottom-0 left-0 h-[2px] bg-indigo-600 transition-all duration-300 ease-in-out 
+        className={`absolute bottom-0 left-0 h-[2px] bg-violet-600 transition-all duration-300 ease-in-out 
         ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`}
       ></span>
     </Link>
