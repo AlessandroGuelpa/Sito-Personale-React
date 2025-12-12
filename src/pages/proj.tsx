@@ -104,6 +104,7 @@ export default function Projects() {
               <CustomLink
                 href={repo.html_url}
                 aria-label={`Apri ${repo.name} su GitHub`}
+                target="_blank"
               >
                 Vai al repo <span>↗</span>
               </CustomLink>

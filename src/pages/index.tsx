@@ -28,7 +28,7 @@ export default function IndexPage() {
           <CustomLink
             href={siteConfig.links.github}
           >
-            <GithubIcon size={20} />
+            <GithubIcon size={20} className="inline align-sub" />
             GitHub
           </CustomLink>
         </div>
