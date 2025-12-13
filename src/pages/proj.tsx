@@ -43,75 +43,85 @@ export default function Projects() {
     fetch("https://api.github.com/users/AlessandroGuelpa/repos")
       .then((res) => res.json())
       .then((data) => {
-  const filtered = data.filter(
-    (repo: Repo) =>
-      !repo.fork &&
-      !["AlessandroGuelpa", "alessandroguelpa.github.io", "Esami-di-stato-update"].includes(repo.name)
-  );
-  setRepos(filtered);
-  setLoading(false);
-});
+        if (Array.isArray(data)) {
+          const filtered = data.filter(
+            (repo: Repo) =>
+              !repo.fork &&
+              !["AlessandroGuelpa", "alessandroguelpa.github.io", "Esami-di-stato-update"].includes(repo.name)
+          );
+          setRepos(filtered);
+        }
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, []);
       const pageUrl = "https://alessandroguelpa.it/project";
   return (
     <DefaultLayout>
-          <Helmet>
+      <Helmet>
         <title>Progetti | Alessandro Guelpa</title>
         <meta name="description" content="Esplora il mio portfolio di progetti: dalle applicazioni web agli esperimenti di codice. Scopri le tecnologie che uso e la mia capacità di trasformare le idee in realtà." />
-                 <link rel="canonical" href={pageUrl} />
-
-        {/* Tag Open Graph (per i social) */}
+        <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content="Progetti | Alessandro Guelpa" />
         <meta property="og:description" content="Esplora il mio portfolio di progetti: dalle applicazioni web agli esperimenti di codice. Scopri le tecnologie che uso e la mia capacità di trasformare le idee in realtà." />
         <meta property="og:url" content={pageUrl} />
       </Helmet>
-      <Skills />
-      <div className="my-8 border-t border-muted-dark" />
+      
+      {/* Background Elements */}
+      <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+           <div className="absolute top-20 left-10 w-96 h-96 bg-violet-500/10 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob"></div>
+           <div className="absolute top-40 right-10 w-96 h-96 bg-fuchsia-500/10 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+      </div>
 
-      <h2 className="text-4xl text-violet-600 dark:text-violet-500 font-bold text-center mb-12">Progetti GitHub</h2>
+      <div className="relative z-10">
+        <Skills />
+        <div className="my-16 border-t border-zinc-200/50 dark:border-zinc-800/50" />
 
-      {loading ? (
-        <p className="text-center animate-pulse text-zinc-500">
-          Caricamento in corso...
-        </p>
-      ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {repos.map((repo) => (
-            <div
-              key={repo.id}
-              className="bg-white rounded-lg shadow p-6 border border-gray-200 dark:bg-zinc-900 transition-all duration-300 hover:scale-[1.02] hover:border-violet-500"
-            >
-              <h3 className="text-lg font-semibold leading-tight line-clamp-1">
-                {repo.name}
-              </h3>
-              <div className="min-h-[28px]">
-              {repo.description && (
-                <p className="text-gray-700 text-sm mb-2">
-                  {repo.description || "Nessuna descrizione"}
-                </p>
-              )}
-              </div>
-             <div className="min-h-[28px]">
-  {repo.language && (
-    <>
-      <span>Linguaggio: </span>
-      <span className="bg-zinc-700 text-xs px-2 py-0.5 rounded text-white">
-        {repo.language}
-      </span>
-    </>
-  )}
-</div>
-              <CustomLink
-                href={repo.html_url}
-                aria-label={`Apri ${repo.name} su GitHub`}
-                target="_blank"
+        <h2 className="text-5xl md:text-6xl font-black text-center mb-16 tracking-tight drop-shadow-sm">
+            Progetti <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-fuchsia-500">GitHub</span>
+        </h2>
+
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-violet-600"></div>
+          </div>
+        ) : (
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {repos.map((repo) => (
+              <div
+                key={repo.id}
+                className="group relative flex flex-col h-full bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xl rounded-2xl p-8 border border-zinc-200 dark:border-zinc-800 hover:border-violet-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-violet-500/10 hover:-translate-y-2"
               >
-                Vai al repo <span>↗</span>
-              </CustomLink>
-            </div>
-          ))}
-        </div>
-      )}
+                <div className="flex-grow">
+                  <h3 className="text-2xl font-bold text-zinc-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors mb-3 line-clamp-1">
+                    {repo.name}
+                  </h3>
+                  <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-6 leading-relaxed line-clamp-3">
+                    {repo.description || "Nessuna descrizione disponibile."}
+                  </p>
+                </div>
+
+                <div className="mt-auto pt-6 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+                  {repo.language ? (
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-violet-100 dark:bg-violet-500/10 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-500/20">
+                      {repo.language}
+                    </span>
+                  ) : <span></span>}
+                  
+                  <CustomLink
+                    href={repo.html_url}
+                    aria-label={`Apri ${repo.name} su GitHub`}
+                    target="_blank"
+                    className="text-sm font-bold flex items-center gap-1 group/link"
+                  >
+                    Repo <span className="transition-transform group-hover/link:translate-x-1">→</span>
+                  </CustomLink>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </DefaultLayout>
   );
 }

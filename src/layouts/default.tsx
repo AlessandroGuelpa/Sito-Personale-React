@@ -12,7 +12,7 @@ export default function DefaultLayout({
   return (
     <div className="relative flex flex-col h-screen">
       <Navbar />
-      <main className="container mx-auto max-w-7xl px-6 flex-grow pt-16">
+      <main className="container mx-auto max-w-7xl px-6 flex-grow pt-0">
         <motion.section
           className="max-w-5xl mx-auto px-6 py-10 items-center gap-12 motion"
           initial={{ opacity: 0, y: 20 }}

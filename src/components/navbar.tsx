@@ -43,7 +43,7 @@ export const Navbar = () => {
   );
 
   return (
-    <HeroUINavbar maxWidth="2xl" position="sticky" className="bg-dark text-light border-b border-muted-dark shadow-sm" style={{backgroundColor: 'black'}}>
+    <HeroUINavbar maxWidth="xl" position="sticky" className="backdrop-blur-md bg-white/70 dark:bg-black/70 border-b border-zinc-200/50 dark:border-white/10 py-2">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand className="gap-3 max-w-fit">
           <Link
@@ -58,7 +58,7 @@ export const Navbar = () => {
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <CustomLink
-              className = "text-light"
+              className = "text-zinc-800 dark:text-zinc-100"
                 href={item.href}
               >
                 {item.label}
@@ -74,7 +74,7 @@ export const Navbar = () => {
       >
         <NavbarItem className="hidden sm:flex gap-2">
           <Link isExternal href={siteConfig.links.github} title="GitHub">
-            <GithubIcon className="text-light hover:text-accent transition-colors" />
+            <GithubIcon className="text-zinc-800 dark:text-zinc-100 hover:text-violet-600 transition-colors" />
           </Link>
           <ThemeSwitch />
         </NavbarItem>
@@ -83,10 +83,10 @@ export const Navbar = () => {
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
   <Link isExternal href={siteConfig.links.github}>
-    <GithubIcon className="text-light hover:text-accent transition-colors" />
+    <GithubIcon className="text-zinc-800 dark:text-zinc-100 hover:text-violet-600 transition-colors" />
   </Link>
   <ThemeSwitch />
-  <NavbarMenuToggle className="text-light hover:text-primary transition-colors" />
+  <NavbarMenuToggle className="text-zinc-800 dark:text-zinc-100 hover:text-violet-600 transition-colors" />
 </NavbarContent>
 
 
@@ -97,7 +97,7 @@ export const Navbar = () => {
             <NavbarMenuItem key={`${item}-${index}`}>
               <CustomLink
                 href={item.href}
-                className = "text-light"
+                className = "text-zinc-800 dark:text-zinc-100"
               >
                 {item.label}
               </CustomLink>

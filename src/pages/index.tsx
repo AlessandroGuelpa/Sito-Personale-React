@@ -1,10 +1,11 @@
 import { siteConfig } from "@/config/site";
 import { GithubIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
-import CustomLink from '@/components/customlink';
+//import CustomLink from '@/components/customlink';
+import { Link } from "react-router-dom";
 
 // Placeholder data for featured projects
-const featuredProjects = [
+/*const featuredProjects = [
   {
     title: "Progetto E-commerce",
     description: "Una piattaforma e-commerce completa costruita con Shopify e React, ottimizzata per le performance e l'esperienza utente.",
@@ -23,7 +24,7 @@ const featuredProjects = [
     image: "/mma3.webp",
     link: "/proj"
   }
-];
+];*/
 
 const techCategories = [
   {
@@ -44,7 +45,7 @@ export default function IndexPage() {
   return (
     <DefaultLayout>
       {/* Hero Section */}
-      <section className="relative flex flex-col md:flex-row items-center justify-between gap-12 py-24 md:py-40 overflow-hidden">
+      <section className="relative flex flex-col md:flex-row items-center justify-between gap-12 pt-12 pb-24 py-5 md:pt-10 md:pb-40 overflow-hidden">
         
         {/* Crazy Background Elements */}
         <div className="absolute inset-0 -z-10 pointer-events-none">
@@ -66,18 +67,18 @@ export default function IndexPage() {
           </h2>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-            <CustomLink
-              href="/proj"
+            <Link
+              to="/proj"
               className="relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-violet-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-600 hover:bg-violet-700 hover:shadow-lg hover:-translate-y-1 hover:shadow-violet-500/50"
             >
               Scopri i miei lavori
-            </CustomLink>
-            <CustomLink
-              href="/contact"
+            </Link>
+            <Link
+              to="/contact"
               className="relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-gray-900 transition-all duration-200 bg-transparent border-2 border-gray-900 dark:border-white dark:text-white font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 hover:-translate-y-1"
             >
               Contattami
-            </CustomLink>
+            </Link>
           </div>
         </div>
 
@@ -93,7 +94,7 @@ export default function IndexPage() {
         </div>
       </section>
 
-      {/* Featured Projects Section */}
+      {/* Featured Projects Section
       <section className="py-20 md:py-32 bg-gray-50 dark:bg-zinc-900/50 relative">
          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-violet-500 to-transparent opacity-20"></div>
 
@@ -126,7 +127,7 @@ export default function IndexPage() {
           </div>
         </div>
       </section>
-
+ */}
       {/* Technologies Section */}
       <section className="py-20 md:py-32 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-violet-500/5 rounded-full blur-3xl -z-10"></div>
@@ -138,8 +139,8 @@ export default function IndexPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {techCategories.map((category, idx) => (
-              <div key={category.title} className={`bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm p-8 rounded-3xl border border-zinc-200 dark:border-zinc-800 hover:border-violet-500/30 transition-all duration-300 hover:shadow-xl ${idx === 1 ? 'md:-translate-y-4' : ''}`}>
+            {techCategories.map((category) => (
+              <div key={category.title} className="bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm p-7 rounded-3xl border border-zinc-200 dark:border-zinc-800 hover:border-violet-500/30 transition-all duration-300 hover:shadow-xl">
                 <h3 className="text-2xl font-bold mb-6 text-violet-600 dark:text-violet-400">{category.title}</h3>
                 <div className="flex flex-wrap gap-3">
                   {category.skills.map((tech) => (
