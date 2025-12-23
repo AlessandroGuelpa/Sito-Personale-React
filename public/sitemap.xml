@@ -3,22 +3,17 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://alessandroguelpa.it/</loc>
-    <lastmod>2025-10-17T15:20:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/about</loc>
-    <lastmod>2025-10-17T15:20:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/projects</loc>
-    <lastmod>2025-10-17T15:20:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/blog</loc>
-    <lastmod>2025-10-17T15:20:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/contact</loc>
-    <lastmod>2025-10-17T15:20:00+00:00</lastmod>
   </url>
 </urlset>
