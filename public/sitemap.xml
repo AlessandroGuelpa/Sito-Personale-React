@@ -2,18 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://alessandroguelpa.it/</loc>
+    <loc>alessandroguelpa.vercel.app/</loc>
   </url>
   <url>
-    <loc>https://alessandroguelpa.it/about</loc>
+    <loc>alessandroguelpa.vercel.app/about</loc>
   </url>
   <url>
-    <loc>https://alessandroguelpa.it/projects</loc>
+    <loc>alessandroguelpa.vercel.app/projects</loc>
   </url>
   <url>
-    <loc>https://alessandroguelpa.it/blog</loc>
+    <loc>alessandroguelpa.vercel.app/blog</loc>
   </url>
   <url>
-    <loc>https://alessandroguelpa.it/contact</loc>
+    <loc>alessandroguelpa.vercel.app/contact</loc>
   </url>
 </urlset>
