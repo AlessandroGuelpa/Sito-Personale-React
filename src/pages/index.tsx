@@ -29,7 +29,7 @@ import { Link } from "react-router-dom";
 const techCategories = [
   {
     title: "Frontend",
-    skills: ["React", "TypeScript", "Tailwind CSS", "Vite"]
+    skills: ["React", "Javascript","HTML & CSS", "Tailwind CSS", "Vite", "Liquid (Shopify)"]
   },
   {
     title: "Backend & Database",
