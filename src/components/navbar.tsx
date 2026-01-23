@@ -1,4 +1,3 @@
-//import { Button } from "@heroui/button";
 import { Kbd } from "@heroui/kbd";
 import { Link } from "@heroui/link";
 import { Input } from "@heroui/input";
@@ -11,14 +10,11 @@ import {
   NavbarMenu,
   NavbarMenuItem,
 } from "@heroui/navbar";
-//import { link as linkStyles } from "@heroui/theme";
-//import clsx from "clsx";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { GithubIcon, Logo2, SearchIcon } from "@/components/icons";
+import { GithubIcon, SearchIcon } from "@/components/icons";
 import CustomLink from '@/components/customlink';
-//import { color } from "framer-motion";
 
 export const Navbar = () => {
   const searchInput = (
@@ -51,14 +47,36 @@ export const Navbar = () => {
             color="foreground"
             href="/"
           >
-            <Logo2 />
+           {/* --- SOLUZIONE CSS/TAILWIND --- */}
+            
+            {/* 1. Logo per LIGHT MODE (Giorno) 
+                Carico: logo_white (Sfondo bianco, scritte nere)
+                Visibile di base (block), nascosto di notte (dark:hidden)
+            */}
+            <img 
+              src="/logo_white.webp" 
+              alt="Alessandro Guelpa Logo" width={120} height={120}
+              className="object-contain rounded-full block dark:hidden" 
+            />
+
+            {/* 2. Logo per DARK MODE (Notte) 
+                Carico: logo_black (Sfondo nero, scritte bianche)
+                Nascosto di base (hidden), visibile di notte (dark:block)
+            */}
+            <img 
+              src="/logo_black.webp" 
+              alt="Alessandro Guelpa Logo" width={120} height={120}
+              className="object-contain rounded-full hidden dark:block" 
+            />
+            
+            {/* --------------------------------------------- */}
           </Link>
         </NavbarBrand>
         <div className="hidden lg:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <CustomLink
-              className = "text-zinc-800 dark:text-zinc-100"
+                className="text-zinc-800 dark:text-zinc-100"
                 href={item.href}
               >
                 {item.label}
@@ -78,17 +96,15 @@ export const Navbar = () => {
           </Link>
           <ThemeSwitch />
         </NavbarItem>
-        
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-  <Link isExternal href={siteConfig.links.github}>
-    <GithubIcon className="text-zinc-800 dark:text-zinc-100 hover:text-violet-600 transition-colors" />
-  </Link>
-  <ThemeSwitch />
-  <NavbarMenuToggle className="text-zinc-800 dark:text-zinc-100 hover:text-violet-600 transition-colors" />
-</NavbarContent>
-
+        <Link isExternal href={siteConfig.links.github}>
+          <GithubIcon className="text-zinc-800 dark:text-zinc-100 hover:text-violet-600 transition-colors" />
+        </Link>
+        <ThemeSwitch />
+        <NavbarMenuToggle className="text-zinc-800 dark:text-zinc-100 hover:text-violet-600 transition-colors" />
+      </NavbarContent>
 
       <NavbarMenu>
         {searchInput}
@@ -97,7 +113,7 @@ export const Navbar = () => {
             <NavbarMenuItem key={`${item}-${index}`}>
               <CustomLink
                 href={item.href}
-                className = "text-zinc-800 dark:text-zinc-100"
+                className="text-zinc-800 dark:text-zinc-100"
               >
                 {item.label}
               </CustomLink>
