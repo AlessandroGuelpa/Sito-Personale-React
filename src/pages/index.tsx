@@ -29,11 +29,11 @@ import { Link } from "react-router-dom";
 const techCategories = [
   {
     title: "Frontend",
-    skills: ["React", "TypeScript", "Next.js", "Tailwind CSS", "Vite"]
+    skills: ["React", "TypeScript", "Tailwind CSS", "Vite"]
   },
   {
     title: "Backend & Database",
-    skills: ["Ruby on Rails", "PostgreSQL", "Node.js", "MySQL"]
+    skills: ["Ruby on Rails", "PostgreSQL", "MySQL"]
   },
   {
     title: "Tools & Altro",
