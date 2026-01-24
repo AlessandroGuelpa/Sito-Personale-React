@@ -27,7 +27,7 @@ const manualProjects: FrontendProject[] = [
     id: 1,
     title: "Ballerini&Sapori",
     description: "Sito vetrina per un catering specializzato in eventi aziendali, matrimoni e feste private.",
-    imgUrl: "/balleriniesapori.com.png", 
+    imgUrl: "/balleriniesapori.com.webp", 
     link: "https://balleriniesapori.com/",
     techStack: ["Wordpress"]
   },

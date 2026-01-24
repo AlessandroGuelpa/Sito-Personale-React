@@ -21,10 +21,10 @@ export const siteConfig = {
       label: "Sport e Passioni",
       href: "/sports",
     },
-    {
+    /*{
       label: "Javascript Compiler",
       href: "/javascript-compiler",
-    },
+    },*/
   ],
   navMenuItems: [
     {
@@ -44,10 +44,10 @@ export const siteConfig = {
       label: "Sport e Passioni",
       href: "/sports",
     },
-    {
+    /*{
       label: "Javascript Compiler",
       href: "/javascript-compiler",
-    },
+    },*/
   ],
   links: {
     github: "https://github.com/AlessandroGuelpa",

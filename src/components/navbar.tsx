@@ -49,24 +49,25 @@ export const Navbar = () => {
           >
            {/* --- SOLUZIONE CSS/TAILWIND --- */}
             
-            {/* 1. Logo per LIGHT MODE (Giorno) 
-                Carico: logo_white (Sfondo bianco, scritte nere)
-                Visibile di base (block), nascosto di notte (dark:hidden)
-            */}
+            {/* --- LOGO RESPONSIVE (Piccolo su mobile, Grande su desktop) --- */}
+            
+            {/* 1. Logo per LIGHT MODE (Giorno) */}
             <img 
               src="/logo_white.webp" 
-              alt="Alessandro Guelpa Logo" width={120} height={120}
-              className="object-contain rounded-full block dark:hidden" 
+              alt="Alessandro Guelpa Logo" 
+              // MODIFICHE:
+              // - Rimosso 'rounded-full'
+              // - w-12 h-12: Dimensione base per MOBILE (48px)
+              // - sm:w-[120px] sm:h-[120px]: Dimensione per DESKTOP (120px) da breakpoint 'sm' in su
+              className="w-18 h-18 sm:w-[100px] sm:h-[100px] object-contain block dark:hidden" 
             />
 
-            {/* 2. Logo per DARK MODE (Notte) 
-                Carico: logo_black (Sfondo nero, scritte bianche)
-                Nascosto di base (hidden), visibile di notte (dark:block)
-            */}
+            {/* 2. Logo per DARK MODE (Notte) */}
             <img 
               src="/logo_black.webp" 
-              alt="Alessandro Guelpa Logo" width={120} height={120}
-              className="object-contain rounded-full hidden dark:block" 
+              alt="Alessandro Guelpa Logo" 
+              // Stesse modifiche qui
+              className="w-18 h-18 sm:w-[100px] sm:h-[100px] object-contain hidden dark:block" 
             />
             
             {/* --------------------------------------------- */}
