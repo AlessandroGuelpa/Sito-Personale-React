@@ -68,7 +68,7 @@ export default function IndexPage() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
             <Link
-              to="/proj"
+              to="/project"
               className="relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-violet-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-600 hover:bg-violet-700 hover:shadow-lg hover:-translate-y-1 hover:shadow-violet-500/50"
             >
               Scopri i miei lavori
