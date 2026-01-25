@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://alessandroguelpa.vercel.app/</loc>
+    <loc>https://alessandroguelpa.it/</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://alessandroguelpa.vercel.app/about</loc>
+    <loc>https://alessandroguelpa.it/about</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alessandroguelpa.vercel.app/project</loc>
+    <loc>https://alessandroguelpa.it/project</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alessandroguelpa.vercel.app/sports</loc>
+    <loc>https://alessandroguelpa.it/sports</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alessandroguelpa.vercel.app/contact</loc>
+    <loc>https://alessandroguelpa.it/contact</loc>
     <priority>0.5</priority>
   </url>
 </urlset>
