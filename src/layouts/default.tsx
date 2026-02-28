@@ -13,12 +13,13 @@ export default function DefaultLayout({
   return (
     <div className="relative flex flex-col h-screen">
       <Navbar />
-      <main className="container mx-auto max-w-7xl px-6 flex-grow pt-0">
+      <main className="container mx-auto max-w-7xl px-6 flex-grow ">
         <motion.section
           animate={{ opacity: 1, y: 0 }}
           className="max-w-5xl mx-auto px-6 py-10 items-center gap-12 motion"
+          exit={{ opacity: 0, y: -20 }}
           initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
         >
           {children}
         </motion.section>

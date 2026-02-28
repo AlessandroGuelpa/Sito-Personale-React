@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import { motion } from "framer-motion";
 
 import DefaultLayout from "@/layouts/default";
 import Skills from "@/components/skills";
@@ -92,11 +93,31 @@ export default function Projects() {
         </h2>
 
         {/* MODIFICA 1: Tornato a grid-cols-3 per renderle più compatte in larghezza */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-24">
+        <motion.div
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-24"
+          initial="hidden"
+          variants={{
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: { staggerChildren: 0.15 },
+            },
+          }}
+          viewport={{ once: true, margin: "-50px" }}
+          whileInView="show"
+        >
           {manualProjects.map((project) => (
-            <div
+            <motion.div
               key={project.id}
-              className="group relative flex flex-col h-full bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xl rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 hover:border-violet-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-violet-500/10 hover:-translate-y-2"
+              className="group relative flex flex-col h-full bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xl rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 hover:border-violet-500/50 transition-colors duration-300 hover:shadow-2xl hover:shadow-violet-500/10"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                show: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { type: "spring", stiffness: 300, damping: 24 },
+                },
+              }}
             >
               {/* MODIFICA 2: 
                   - h-80: Altezza ridotta (320px). Se la vuoi ancora più piccola usa h-72 o h-64.
@@ -109,10 +130,12 @@ export default function Projects() {
                 target="_blank"
               >
                 <div className="absolute inset-0 bg-violet-900/0 group-hover:bg-violet-900/5 transition-colors z-10" />
-                <img
+                <motion.img
                   alt={project.title}
-                  className="w-full h-full object-cover object-top transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                  className="w-full h-full object-cover object-top"
                   src={project.imgUrl}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  whileHover={{ scale: 1.05 }}
                 />
               </a>
 
@@ -157,9 +180,9 @@ export default function Projects() {
                   </CustomLink>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* --- SEZIONE GITHUB API (Invariata) --- */}
         <h2 className="text-4xl md:text-5xl font-black text-center mb-16 tracking-tight drop-shadow-sm opacity-80">
@@ -171,11 +194,35 @@ export default function Projects() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-violet-600" />
           </div>
         ) : (
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <motion.div
+            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+            initial="hidden"
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: { staggerChildren: 0.1 },
+              },
+            }}
+            viewport={{ once: true, margin: "-50px" }}
+            whileInView="show"
+          >
             {repos.map((repo) => (
-              <div
+              <motion.div
                 key={repo.id}
-                className="group relative flex flex-col h-full bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xl rounded-2xl p-8 border border-zinc-200 dark:border-zinc-800 hover:border-violet-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-violet-500/10 hover:-translate-y-2"
+                className="group relative flex flex-col h-full bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xl rounded-2xl p-8 border border-zinc-200 dark:border-zinc-800 hover:border-violet-500/50 transition-colors duration-300"
+                variants={{
+                  hidden: { opacity: 0, scale: 0.9 },
+                  show: {
+                    opacity: 1,
+                    scale: 1,
+                    transition: { type: "spring", stiffness: 300, damping: 24 },
+                  },
+                }}
+                whileHover={{
+                  y: -5,
+                  boxShadow: "0 25px 50px -12px rgba(139, 92, 246, 0.25)",
+                }}
               >
                 <div className="flex-grow">
                   <h3 className="text-2xl font-bold text-zinc-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors mb-3 line-clamp-1">
@@ -207,9 +254,9 @@ export default function Projects() {
                     </span>
                   </CustomLink>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     </DefaultLayout>
