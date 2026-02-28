@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { siteConfig } from "@/config/site";
 import { GithubIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
+import { Background3D } from "@/components/background-3d";
 
 const techCategories = [
   {
@@ -31,11 +32,7 @@ export default function IndexPage() {
   return (
     <DefaultLayout>
       <section className="relative flex flex-col md:flex-row items-center justify-between gap-12 pt-12 pb-24 py-5 md:pt-10 md:pb-40 overflow-hidden">
-        <div className="absolute inset-0 -z-10 pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-72 h-72 md:w-96 md:h-96 bg-violet-500/30 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob" />
-          <div className="absolute top-0 right-1/4 w-72 h-72 md:w-96 md:h-96 bg-fuchsia-500/30 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
-          <div className="absolute -bottom-8 left-1/3 w-72 h-72 md:w-96 md:h-96 bg-pink-500/30 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-4000" />
-        </div>
+        <Background3D />
 
         <div className="max-w-2xl text-center md:text-left z-10">
           <motion.h1
