@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 
 // Definiamo i "tipi" che il componente accetta
 interface CustomLinkProps {
@@ -9,21 +9,21 @@ interface CustomLinkProps {
   children: React.ReactNode; // Accetta testo, icone o altri elementi React
 }
 
-const CustomLink = ({ href, children, target, className}: CustomLinkProps) => {
+const CustomLink = ({ href, children, target, className }: CustomLinkProps) => {
   const baseClasses = "group relative inline-block font-medium cursor-pointer";
-  const finalClass = `${baseClasses} ${className || 'text-violet-600 dark:text-violet-500'}`;
+  const finalClass = `${baseClasses} ${className || "text-violet-600 dark:text-violet-500"}`;
   const location = useLocation();
   const isActive = location.pathname === href;
 
   return (
-    <Link to={href} className={finalClass} target={target}>
+    <Link className={finalClass} target={target} to={href}>
       {children}
-      <span 
+      <span
         className={`absolute bottom-0 left-0 h-[2px] bg-violet-600 transition-all duration-300 ease-in-out 
-        ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`}
-      ></span>
+        ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
+      />
     </Link>
-  )
+  );
 };
 
 export default CustomLink;

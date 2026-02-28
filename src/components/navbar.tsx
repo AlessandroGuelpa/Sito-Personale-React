@@ -14,7 +14,7 @@ import {
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon, SearchIcon } from "@/components/icons";
-import CustomLink from '@/components/customlink';
+import CustomLink from "@/components/customlink";
 
 export const Navbar = () => {
   const searchInput = (
@@ -39,7 +39,11 @@ export const Navbar = () => {
   );
 
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky" className="backdrop-blur-md bg-white/70 dark:bg-black/70 border-b border-zinc-200/50 dark:border-white/10 py-2">
+    <HeroUINavbar
+      className="backdrop-blur-md bg-white/70 dark:bg-black/70 border-b border-zinc-200/50 dark:border-white/10 py-2"
+      maxWidth="xl"
+      position="sticky"
+    >
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand className="gap-3 max-w-fit">
           <Link
@@ -47,30 +51,17 @@ export const Navbar = () => {
             color="foreground"
             href="/"
           >
-           {/* --- SOLUZIONE CSS/TAILWIND --- */}
-            
-            {/* --- LOGO RESPONSIVE (Piccolo su mobile, Grande su desktop) --- */}
-            
-            {/* 1. Logo per LIGHT MODE (Giorno) */}
-            <img 
-              src="/logo_white.webp" 
-              alt="Alessandro Guelpa Logo" 
-              // MODIFICHE:
-              // - Rimosso 'rounded-full'
-              // - w-12 h-12: Dimensione base per MOBILE (48px)
-              // - sm:w-[120px] sm:h-[120px]: Dimensione per DESKTOP (120px) da breakpoint 'sm' in su
-              className="w-18 h-18 sm:w-[100px] sm:h-[100px] object-contain block dark:hidden" 
+            <img
+              alt="Alessandro Guelpa Logo"
+              className="w-18 h-18 sm:w-[100px] sm:h-[100px] object-contain block dark:hidden"
+              src="/logo_white.webp"
             />
 
-            {/* 2. Logo per DARK MODE (Notte) */}
-            <img 
-              src="/logo_black.webp" 
-              alt="Alessandro Guelpa Logo" 
-              // Stesse modifiche qui
-              className="w-18 h-18 sm:w-[100px] sm:h-[100px] object-contain hidden dark:block" 
+            <img
+              alt="Alessandro Guelpa Logo"
+              className="w-18 h-18 sm:w-[100px] sm:h-[100px] object-contain hidden dark:block"
+              src="/logo_black.webp"
             />
-            
-            {/* --------------------------------------------- */}
           </Link>
         </NavbarBrand>
         <div className="hidden lg:flex gap-4 justify-start ml-2">
@@ -113,8 +104,8 @@ export const Navbar = () => {
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <CustomLink
-                href={item.href}
                 className="text-zinc-800 dark:text-zinc-100"
+                href={item.href}
               >
                 {item.label}
               </CustomLink>

@@ -24,15 +24,8 @@ export const Logo: React.FC<IconSvgProps> = ({
 );
 
 export const Logo2: React.FC = () => (
-  <img
-    src="/logo_black.webp"
-    alt="Logo"
-    width={120}
-    height={120}
-  />
+  <img alt="Logo" height={120} src="/logo_black.webp" width={120} />
 );
-
-
 
 export const DiscordIcon: React.FC<IconSvgProps> = ({
   size = 24,
@@ -197,8 +190,15 @@ export const SearchIcon = (props: IconSvgProps) => (
 );
 
 export const SublimeIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" className="w-5 h-5">
-    <rect width="256" height="256" rx="50" fill="#2E2E2E" />
-    <path d="M64 72L192 32V80L96 112L192 144V192L64 152V104L160 72L64 40V72Z" fill="#FF9800" />
+  <svg
+    className="w-5 h-5"
+    viewBox="0 0 256 256"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect fill="#2E2E2E" height="256" rx="50" width="256" />
+    <path
+      d="M64 72L192 32V80L96 112L192 144V192L64 152V104L160 72L64 40V72Z"
+      fill="#FF9800"
+    />
   </svg>
 );

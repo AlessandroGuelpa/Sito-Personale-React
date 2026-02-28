@@ -15,6 +15,7 @@ import {
   SiShopify,
 } from "react-icons/si";
 import { VscCode } from "react-icons/vsc";
+
 import { SublimeIcon } from "@/components/icons";
 
 const skills = {
@@ -27,16 +28,24 @@ const skills = {
       icon: <SiShopify className="text-green-600 text-3xl" />,
     },
     { name: "React", icon: <FaReact className="text-cyan-400 text-3xl" /> },
-    { name: "Tailwind CSS", icon: <SiTailwindcss className="text-sky-400 text-3xl" /> },
+    {
+      name: "Tailwind CSS",
+      icon: <SiTailwindcss className="text-sky-400 text-3xl" />,
+    },
     { name: "Vite", icon: <SiVite className="text-purple-500 text-3xl" /> },
   ],
   Backend: [
     { name: "Ruby", icon: <SiRuby className="text-red-500 text-3xl" /> },
-    { name: "Ruby on Rails", icon: <SiRubyonrails className="text-red-600 text-3xl" /> },
+    {
+      name: "Ruby on Rails",
+      icon: <SiRubyonrails className="text-red-600 text-3xl" />,
+    },
     { name: "MySQL", icon: <SiMysql className="text-blue-600 text-3xl" /> },
     {
       name: "API REST",
-      icon: <span className="text-gray-600 dark:text-gray-300 text-3xl">🔗</span>,
+      icon: (
+        <span className="text-gray-600 dark:text-gray-300 text-3xl">🔗</span>
+      ),
     },
   ],
   Tools: [
@@ -46,7 +55,14 @@ const skills = {
       icon: <FaGithub className="text-gray-800 dark:text-white text-3xl" />,
     },
     { name: "VSCode", icon: <VscCode className="text-blue-500 text-3xl" /> },
-    { name: "Sublime Text", icon: <div className="scale-150"><SublimeIcon /></div> },
+    {
+      name: "Sublime Text",
+      icon: (
+        <div className="scale-150">
+          <SublimeIcon />
+        </div>
+      ),
+    },
   ],
 };
 
@@ -54,13 +70,16 @@ export default function Skills() {
   return (
     <section className="relative">
       <h2 className="text-5xl md:text-6xl font-black text-center mb-16 tracking-tight drop-shadow-sm">
-        Le mie <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-fuchsia-500">Skills</span>
+        Le mie{" "}
+        <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-fuchsia-500">
+          Skills
+        </span>
       </h2>
 
       <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {Object.entries(skills).map(([category, items]) => (
-          <div 
-            key={category} 
+          <div
+            key={category}
             className="bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 hover:border-violet-500/30 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
           >
             <h2 className="text-3xl font-bold mb-8 text-zinc-800 dark:text-zinc-100 border-b border-zinc-200 dark:border-zinc-700 pb-4">
@@ -75,7 +94,9 @@ export default function Skills() {
                   <div className="transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
                     {icon}
                   </div>
-                  <span className="font-semibold text-zinc-700 dark:text-zinc-200 text-lg">{name}</span>
+                  <span className="font-semibold text-zinc-700 dark:text-zinc-200 text-lg">
+                    {name}
+                  </span>
                 </li>
               ))}
             </ul>
