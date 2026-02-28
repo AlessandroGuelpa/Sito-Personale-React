@@ -1,5 +1,6 @@
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Float, MeshDistortMaterial, Environment } from "@react-three/drei";
+import { Float, MeshDistortMaterial } from "@react-three/drei";
 
 const Shapes = () => {
   return (
@@ -55,10 +56,21 @@ export const Background3D = () => {
   return (
     <div className="absolute inset-0 -z-10 pointer-events-none">
       <Canvas camera={{ position: [0, 0, 8], fov: 50 }} dpr={[1, 2]}>
-        <ambientLight intensity={0.5} />
-        <directionalLight intensity={1} position={[10, 10, 10]} />
-        <Environment preset="city" />
-        <Shapes />
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.8} />
+          <directionalLight
+            color="#ffffff"
+            intensity={2}
+            position={[10, 10, 10]}
+          />
+          <directionalLight
+            color="#7c3aed"
+            intensity={3}
+            position={[-10, -10, -10]}
+          />
+          <pointLight color="#e879f9" intensity={2} position={[0, 5, 0]} />
+          <Shapes />
+        </Suspense>
       </Canvas>
     </div>
   );
