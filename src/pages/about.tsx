@@ -1,8 +1,9 @@
 //import { title } from "@/components/primitives";
 import { FaDownload } from "react-icons/fa";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 import DefaultLayout from "@/layouts/default";
+import { SkillBento } from "@/components/skill-bento";
 
 export default function DocsPage() {
   const pageUrl = "https://alessandroguelpa.it/about";
@@ -70,24 +71,47 @@ export default function DocsPage() {
           </div>
         </div>
 
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-black mb-8">Il mio CV</h2>
-          <button
-            className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-violet-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-600 hover:bg-violet-700 hover:shadow-lg hover:-translate-y-1 hover:shadow-violet-500/50"
-            onClick={() => window.open("/AlessandroGuelpa_CV.pdf", "_blank")}
-          >
-            Scarica il PDF
-            <FaDownload className="ml-3 w-5 h-5 group-hover:animate-bounce" />
-          </button>
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          {/* CV Column */}
+          <div className="flex flex-col">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-black mb-8">
+                Il mio CV
+              </h2>
+              <button
+                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-violet-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-600 hover:bg-violet-700 hover:shadow-lg hover:-translate-y-1 hover:shadow-violet-500/50"
+                onClick={() =>
+                  window.open("/AlessandroGuelpa_CV.pdf", "_blank")
+                }
+              >
+                Scarica il PDF
+                <FaDownload className="ml-3 w-5 h-5 group-hover:animate-bounce" />
+              </button>
+            </div>
 
-        <div className="bg-zinc-900 dark:bg-zinc-800 rounded-2xl shadow-2xl overflow-hidden border border-zinc-200 dark:border-zinc-700 transform transition-all hover:scale-[1.01] duration-500">
-          <iframe
-            className="w-full h-[600px] md:h-[800px]"
-            src="/AlessandroGuelpa_CV.pdf"
-            style={{ border: "none" }}
-            title="CV Alessandro"
-          />
+            <div className="bg-zinc-900 dark:bg-zinc-800 rounded-2xl shadow-2xl overflow-hidden border border-zinc-200 dark:border-zinc-700 transform transition-all hover:scale-[1.01] duration-500">
+              <iframe
+                className="w-full h-[600px]"
+                src="/AlessandroGuelpa_CV.pdf"
+                style={{ border: "none" }}
+                title="CV Alessandro"
+              />
+            </div>
+          </div>
+
+          {/* Skills Column */}
+          <div className="flex flex-col h-full justify-center">
+            <div className="text-center mb-8 lg:mb-12">
+              <h2 className="text-4xl md:text-5xl font-black mb-4">
+                Le Mie Skills
+              </h2>
+              <p className="text-lg text-zinc-600 dark:text-zinc-400">
+                Un approccio moderno e scalabile allo sviluppo Front-end.
+              </p>
+            </div>
+
+            <SkillBento />
+          </div>
         </div>
       </div>
     </DefaultLayout>

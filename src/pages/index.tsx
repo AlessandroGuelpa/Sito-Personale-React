@@ -5,28 +5,7 @@ import { siteConfig } from "@/config/site";
 import { GithubIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
 import { Background3D } from "@/components/background-3d";
-
-const techCategories = [
-  {
-    title: "Frontend",
-    skills: [
-      "React",
-      "Javascript",
-      "HTML & CSS",
-      "Tailwind CSS",
-      "Vite",
-      "Liquid (Shopify)",
-    ],
-  },
-  {
-    title: "Backend & Database",
-    skills: ["Ruby on Rails", "PostgreSQL", "MySQL"],
-  },
-  {
-    title: "Tools & Altro",
-    skills: ["Git", "GitHub", "Shopify", "Wordpress"],
-  },
-];
+import { TechMarquee } from "@/components/tech-marquee";
 
 export default function IndexPage() {
   return (
@@ -125,31 +104,12 @@ export default function IndexPage() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {techCategories.map((category, index) => (
-              <motion.div
-                key={category.title}
-                className="bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm p-7 rounded-3xl border border-zinc-200 dark:border-zinc-800 hover:border-violet-500/30 transition-all duration-300 hover:shadow-xl"
-                initial={{ opacity: 0, y: 50 }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                viewport={{ once: true, margin: "-50px" }}
-                whileInView={{ opacity: 1, y: 0 }}
-              >
-                <h3 className="text-2xl font-bold mb-6 text-violet-600 dark:text-violet-400">
-                  {category.title}
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  {category.skills.map((tech) => (
-                    <div
-                      key={tech}
-                      className="bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-sm font-bold px-4 py-2 rounded-full border border-zinc-200 dark:border-zinc-700 shadow-sm hover:scale-105 transition-transform cursor-default"
-                    >
-                      {tech}
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+          <div className="w-full relative overflow-hidden">
+            {/* Gradiente a sfumare ai bordi per dare l'illusione di uscita/entrata */}
+            <div className="absolute left-0 top-0 bottom-0 w-24 md:w-48 bg-gradient-to-r from-[#fdfdfd] dark:from-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 md:w-48 bg-gradient-to-l from-[#fdfdfd] dark:from-black to-transparent z-10 pointer-events-none" />
+
+            <TechMarquee />
           </div>
 
           <motion.div

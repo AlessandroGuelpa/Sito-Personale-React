@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { useState, useRef } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { FaPlay, FaTrash } from "react-icons/fa";
 import Editor, { OnMount } from "@monaco-editor/react";
 import { motion } from "framer-motion";
