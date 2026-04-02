@@ -61,15 +61,6 @@ export default defineConfig({
             if (id.includes("@heroui") || id.includes("@react-aria")) {
               return "vendor-ui";
             }
-            if (
-              id.includes("react/") ||
-              id.includes("react-dom/") ||
-              id.includes("react-router-dom/")
-            ) {
-              return "vendor-react";
-            }
-            // Tutto il resto dei pacchetti NPM
-            return "vendor";
           }
         },
       },
