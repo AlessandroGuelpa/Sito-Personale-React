@@ -92,16 +92,59 @@ Ti insegna che la perfezione è un'illusione matematica. L'ingegneria, in realt�
 Quindi, la prossima volta che passate la notte a cercare un bug irreplicabile, mettetevi il cuore in pace. Forse il vostro codice era perfetto e siete solo stati vittime di uno scherzo galattico. 
 
 C'è una certa poesia anche in questo.
-    `
+    `,
   },
-  {
-    id: "2",
-    title: "Lezione di Tennis e Programmazione",
-    date: "2026-04-01",
-    content: `
-Stamattina ottima sessione di allenamento a tennis. Il rovescio sta finalmente migliorando!
+  { 
+id: "5", 
+title: "Il Caffè, l'Università e la Magia del Codice Asincrono", 
+date: "2026-04-04", 
+content: ` 
+Essere uno studente di Ingegneria Informatica (L-8) e lavorare come sviluppatore web significa una cosa sola: il tempo è la risorsa più scarsa dell'Universo. 
 
-Nel pomeriggio mi sono dedicato ad alcuni progetti React, integrando Framer Motion per le animazioni. Devo dire che la differenza si nota subito! Le transizioni sono molto più fluide.
-    `
-  }
+Ogni mattina cerco di incastrare lo studio di Analisi o di Sistemi di Elaborazione con le task del lavoro. E ogni mattina, la mia giornata inizia con una lezione pratica di programmazione e termodinamica: preparare il caffè.
+
+Sembra un'azione banale, ma nasconde uno dei concetti più importanti dello sviluppo software moderno.
+
+## Sincrono vs Asincrono: Questione di Attese
+Immaginate la scena. Vado in cucina, riempio la moka, accendo il fuoco e... resto immobile a fissarla. Non parlo, non preparo la colazione, non accendo il PC. Fisso la moka per 5 minuti finché il caffè non è pronto. 
+
+Questo è il **codice sincrono**. Il programma esegue un'istruzione alla volta e, se un'operazione richiede tempo, tutto il resto si blocca. Se i nostri siti web funzionassero così, ogni volta che caricate una foto, l'intera pagina rimarrebbe congelata finché il download non è completato.
+
+Fortunatamente, nella vita reale siamo esseri **asincroni**. Metto la moka sul fuoco (avvio il processo) e, mentre l'acqua si scalda assorbendo calore, io accendo il laptop, apro gli appunti dell'università e preparo l'editor di codice.
+
+## Il Mio Primo "Fango" con le API
+Ricordo ancora le prime volte che ho provato a collegare un frontend a un database esterno. Usavo JavaScript e non avevo ben chiaro come gestire i tempi di attesa della rete (la latenza).
+
+Avevo scritto una funzione che richiedeva una lista di prodotti a Shopify. Il problema? Il codice successivo cercava di mostrare quei prodotti prima ancora che i dati fossero fisicamente arrivati sul mio computer. L'interfaccia si rompeva, restituendomi un bel \`undefined\`. 
+
+Stavo cercando di bere il caffè prima ancora di aver messo l'acqua nella moka.
+
+## La Soluzione: Promesse e Attese
+Nel mondo di JavaScript (e in molti altri linguaggi), risolviamo questo problema con strumenti chiamati \`Promises\` o con la sintassi \`async / await\`. 
+
+\`\`\`javascript
+// Un esempio di vita vissuta (e di codice asincrono)
+
+async function preparaColazione() {
+  console.log("1. Accendo il fuoco per la moka...");
+  
+  // La keyword 'await' dice al sistema di aspettare il risultato qui,
+  // ma permette al resto dell'applicazione web di non bloccarsi!
+  const caffe = await fetch('/api/macchina-del-caffe'); 
+  
+  console.log("3. Caffè pronto! Verso nella tazza:", caffe);
+}
+
+preparaColazione();
+console.log("2. Intanto apro gli appunti di Analisi 1...");
+\`\`\`
+
+Se eseguite mentalmente questo codice, l'ordine delle azioni nella console sarà 1, poi 2 (mentre l'acqua bolle in background), e infine 3. 
+
+## Il Takeaway
+Che voi stiate studiando per un esame difficile o progettando un'applicazione web, la regola d'oro è non bloccare mai il "thread principale". 
+
+Delegare i compiti lunghi, non restare bloccati davanti agli ostacoli che richiedono tempo per risolversi da soli (come l'attesa di un'email importante o il caricamento di un server) e continuare a fare progressi sulle altre piccole task. È il modo migliore per mantenere fluida un'applicazione, e forse anche la nostra vita da studenti.
+` 
+}
 ];
