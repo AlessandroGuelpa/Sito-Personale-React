@@ -7,7 +7,7 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    id: "3",
+    id: "1",
     title: "Quando l'Universo ti Cambia le Variabili in Produzione",
     date: "2026-04-02",
     content: `
@@ -95,9 +95,9 @@ C'è una certa poesia anche in questo.
     `,
   },
   { 
-id: "5", 
+id: "1", 
 title: "Il Caffè, l'Università e la Magia del Codice Asincrono", 
-date: "2026-04-04", 
+date: "2026-04-01", 
 content: ` 
 Essere uno studente di Ingegneria Informatica (L-8) e lavorare come sviluppatore web significa una cosa sola: il tempo è la risorsa più scarsa dell'Universo. 
 
