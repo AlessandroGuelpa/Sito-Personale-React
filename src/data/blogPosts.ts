@@ -7,7 +7,7 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    id: "1",
+    id: "2",
     title: "Quando l'Universo ti Cambia le Variabili in Produzione",
     date: "2026-04-02",
     content: `
