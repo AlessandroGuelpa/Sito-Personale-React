@@ -7,6 +7,45 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "3",
+    title: "La Paperella di Gomma e l'Arte di sentirsi Stupidi",
+    date: "",
+    content: 
+` 
+C'è un momento preciso nella vita di ogni studente o sviluppatore in cui ci si sente profondamente, irrimediabilmente stupidi. 
+
+Per me succede spesso la sera. Magari sto preparando un esame per il mio corso di Ingegneria (L-8) e mi blocco su un paragrafo che rileggo per la decima volta, senza che una singola parola abbia senso. Oppure sto lavorando a un componente in React o a una logica in Ruby e il terminale continua a sputarmi addosso lo stesso errore incomprensibile, nonostante io sia convinto di aver fatto tutto perfettamente.
+
+La frustrazione sale, la stanchezza pure. E in quei momenti, l'istinto è quello di chiudere il PC e arrendersi.
+
+## Parlare con gli oggetti inanimati
+La mia salvezza, scoperta quasi per caso grazie allo sviluppo web, si chiama *Rubber Duck Debugging* (il debugging della paperella di gomma).
+
+È una pratica famosissima tra i programmatori. Quando sei bloccato su un bug e non sai più dove sbattere la testa, prendi una paperella di gomma e la metti sulla scrivania. A quel punto, devi spiegarle il tuo codice. Riga per riga, ad alta voce, nei minimi dettagli, come se la paperella dovesse capire esattamente cosa volevi fare.
+
+Sembra la ricetta perfetta per sembrare pazzi. Invece, nel 90% dei casi, mentre stai spiegando la terza riga, ti interrompi da solo e dici: *"Ah. Ecco dove ho sbagliato."*
+
+## Il Cortocircuito Mentale
+Qualche giorno fa stavo impazzendo su un ciclo in Ruby on Rails che non filtrava i dati come volevo. Nella mia testa, la logica era inattaccabile. 
+
+Il problema è che il cervello umano è un maestro nell'auto-inganno: quando leggiamo mentalmente qualcosa che abbiamo scritto noi (o che stiamo studiando), saltiamo automaticamente i buchi logici perché sappiamo cosa *volevamo* dire. Riempiamo gli spazi vuoti con l'intenzione, non con la realtà.
+
+Ho preso in mano una tazza vuota dalla scrivania e ho iniziato a parlarle ad alta voce: *"Allora, qui prendo l'utente. Poi, se l'utente ha il carrello vuoto, io... aspetta. Non sto affatto controllando se l'utente ha fatto il login prima di guardare il suo carrello."* Errore trovato. Mezz'ora di panico frustrante risolta in venti secondi di monologo imbarazzante con una tazza di ceramica.
+
+## L'Illusione della Comprensione
+Questa tecnica non serve solo per scovare i bug nel codice. Ho iniziato ad applicarla costantemente allo studio.
+
+Spesso confondiamo il "riconoscere" un testo con il "capirlo". Sottolineiamo il libro, annuiamo e pensiamo di essere pronti. Ma la vera prova del nove è la spiegazione. Quando provi a spiegare un concetto ad alta voce a una paperella di gomma (o a un amico che non ha mai aperto un libro di informatica in vita sua), sei costretto a semplificare. Devi togliere il gergo, rallentare il pensiero e collegare i concetti con una logica lineare.
+
+Se ti blocchi a metà frase, se ti accorgi che non sai come passare dal punto A al punto B senza usare una "supercazzola"... significa che quel concetto non l'hai capito affatto. Lo stavi solo imparando a memoria, come un pappagallo.
+
+## Il Takeaway
+Che tu stia cercando di far funzionare una pagina web su Vercel o di passare un esame impossibile, la regola d'oro alla fine è sempre la stessa: **se non sai spiegarlo in modo semplice, non lo hai capito abbastanza bene.**
+
+Non abbiate paura di sembrare pazzi. Parlate da soli, parlate ai muri, parlate agli oggetti inanimati. Accettare di sentirsi temporaneamente stupidi è l'unico vero trucco per imparare le cose sul serio, una riga (o una pagina) alla volta.
+` 
+  },
+  {
     id: "2",
     title: "Quando l'Universo ti Cambia le Variabili in Produzione",
     date: "2026-04-02",
