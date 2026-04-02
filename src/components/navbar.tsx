@@ -53,13 +53,13 @@ export const Navbar = () => {
           >
             <img
               alt="Alessandro Guelpa Logo"
-              className="w-18 h-18 sm:w-[100px] sm:h-[100px] object-contain block dark:hidden"
+              className="w-[80px] min-w-[80px] h-[100px] shrink-0 object-contain block dark:hidden"
               src="/logo_white.webp"
             />
 
             <img
               alt="Alessandro Guelpa Logo"
-              className="w-18 h-18 sm:w-[100px] sm:h-[100px] object-contain hidden dark:block"
+              className="w-[80px] min-w-[80px] h-[100px] shrink-0 object-contain hidden dark:block"
               src="/logo_black.webp"
             />
           </Link>

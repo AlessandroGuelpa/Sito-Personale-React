@@ -7,6 +7,8 @@ import { ScrollProgress } from "@/components/scroll-progress";
 
 // Lazy import delle pagine
 const IndexPage = lazy(() => import("@/pages/index"));
+const BlogPage = lazy(() => import("@/pages/blog/index"));
+const BlogPostPage = lazy(() => import("@/pages/blog/[id]"));
 const AboutPage = lazy(() => import("@/pages/about"));
 const ProjPage = lazy(() => import("@/pages/proj"));
 const ContactPage = lazy(() => import("@/pages/contact"));
@@ -30,6 +32,8 @@ function App() {
         <AnimatePresence mode="wait">
           <Routes key={location.pathname} location={location}>
             <Route element={<IndexPage />} path="/" />
+            <Route element={<BlogPage />} path="/blog" />
+            <Route element={<BlogPostPage />} path="/blog/:id" />
             <Route element={<ProjPage />} path="/project" />
             <Route element={<ContactPage />} path="/contact" />
             <Route element={<AboutPage />} path="/about" />
