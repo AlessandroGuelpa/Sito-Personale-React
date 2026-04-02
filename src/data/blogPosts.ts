@@ -1,20 +1,24 @@
+import type { ReactNode } from "react";
+
 export interface BlogPost {
   id: string;
   title: string;
   date: string;
   content: string;
+  icon?: ReactNode | string;
 }
 
 export const blogPosts: BlogPost[] = [
   {
     id: "3",
     title: "La Paperella di Gomma e l'Arte di sentirsi Stupidi",
-    date: "",
+    icon: "🦆",
+    date: "2026-04-03",
     content: 
 ` 
 C'è un momento preciso nella vita di ogni studente o sviluppatore in cui ci si sente profondamente, irrimediabilmente stupidi. 
 
-Per me succede spesso la sera. Magari sto preparando un esame per il mio corso di Ingegneria (L-8) e mi blocco su un paragrafo che rileggo per la decima volta, senza che una singola parola abbia senso. Oppure sto lavorando a un componente in React o a una logica in Ruby e il terminale continua a sputarmi addosso lo stesso errore incomprensibile, nonostante io sia convinto di aver fatto tutto perfettamente.
+Per me succede spesso la sera. Magari sto preparando un esame per il mio corso di Ingegneria e mi blocco su un paragrafo che rileggo per la decima volta, senza che una singola parola abbia senso. Oppure sto lavorando a un componente in React o a una logica in Ruby e il terminale continua a sputarmi addosso lo stesso errore incomprensibile, nonostante io sia convinto di aver fatto tutto perfettamente.
 
 La frustrazione sale, la stanchezza pure. E in quei momenti, l'istinto è quello di chiudere il PC e arrendersi.
 
@@ -48,6 +52,7 @@ Non abbiate paura di sembrare pazzi. Parlate da soli, parlate ai muri, parlate a
   {
     id: "2",
     title: "Quando l'Universo ti Cambia le Variabili in Produzione",
+    icon: "🚀",
     date: "2026-04-02",
     content: `
 
@@ -136,6 +141,7 @@ C'è una certa poesia anche in questo.
   { 
 id: "1", 
 title: "Il Caffè, l'Università e la Magia del Codice Asincrono", 
+icon: "☕️",
 date: "2026-04-01", 
 content: ` 
 Essere uno studente di Ingegneria Informatica e lavorare come sviluppatore web significa una cosa sola: il tempo è la risorsa più scarsa dell'Universo. 

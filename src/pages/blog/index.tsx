@@ -53,10 +53,17 @@ export default function BlogPage() {
                 })}
               </div>
 
-              {/* Titolo Post */}
-              <h3 className="text-2xl sm:text-3xl font-bold mt-2 mb-4 text-zinc-900 dark:text-zinc-100 group-hover:text-violet-600 transition-colors relative z-0">
-                {post.title}
-              </h3>
+              {/* Intestazione: Icona e Titolo Post */}
+              <div className="flex items-center gap-4 mt-2 mb-4 relative z-0">
+                {(post as any).icon && (
+                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-2xl bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 text-2xl shadow-sm">
+                    {(post as any).icon}
+                  </div>
+                )}
+                <h3 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-violet-600 transition-colors">
+                  {post.title}
+                </h3>
+              </div>
 
               {/* Anteprima del Contenuto Markdown limitata a 3 righe */}
               <div className="prose prose-zinc dark:prose-invert prose-p:leading-relaxed prose-a:text-violet-500 prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100 max-w-none line-clamp-3 opacity-80 relative z-0">
