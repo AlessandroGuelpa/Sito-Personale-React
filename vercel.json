@@ -1,5 +1,19 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+  "redirects": [
+    {
+      "source": "/compiler",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/javascript-compiler",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/projects",
+      "destination": "/project",
+      "permanent": true
+    }
   ]
 }

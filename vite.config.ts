@@ -46,6 +46,7 @@ export default defineConfig({
   // Aggiungiamo il plugin custom
   plugins: [react(), tsconfigPaths(), generateSitemap()],
   build: {
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         // Dividiamo le librerie pesanti in file separati
