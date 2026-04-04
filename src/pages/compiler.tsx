@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console
 import { useState, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { FaPlay, FaTrash } from "react-icons/fa";
@@ -116,8 +116,8 @@ export default function CompilerPage() {
         />
         <meta content={pageUrl} property="og:url" />
       </Helmet>
-
-      {/* Background Elements */}
+ */
+      {/* Background Elements 
       <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-fuchsia-500/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
@@ -147,7 +147,7 @@ export default function CompilerPage() {
           initial={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          {/* Editor Column */}
+          {/* Editor Column 
           <div className="flex flex-col bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 rounded-3xl p-4 md:p-6 shadow-xl h-[600px] hover:border-violet-500/50 transition-colors">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-bold text-zinc-800 dark:text-zinc-200 flex items-center gap-2">
@@ -184,7 +184,7 @@ export default function CompilerPage() {
             </div>
           </div>
 
-          {/* Output Column */}
+          {/* Output Column 
           <div className="flex flex-col bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 rounded-3xl p-4 md:p-6 shadow-xl h-[600px] hover:border-fuchsia-500/50 transition-colors">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-bold text-zinc-800 dark:text-zinc-200 flex items-center gap-2">
@@ -217,3 +217,4 @@ export default function CompilerPage() {
     </DefaultLayout>
   );
 }
+*/}
