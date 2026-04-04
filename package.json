@@ -7,8 +7,11 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint --fix",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "publish-post": "git add . && git commit -m '📝 Pubblicato nuovo post' && git push"
+
   },
+
   "dependencies": {
     "@heroui/button": "2.2.23",
     "@heroui/code": "2.2.17",
