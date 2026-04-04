@@ -9,6 +9,94 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
+  { 
+    id: "la-sindrome-del-funzionava-sulla-mia-macchina", 
+    title: "La Sindrome del \"Funzionava sulla mia macchina!\"", 
+    date: "2026-04-04", 
+    content: ` 
+Vi è mai capitato di fare una simulazione d'esame seduti comodamente sul divano di casa, in pigiama, e sentirvi dei geni assoluti, per poi fare scena muta il giorno del test vero e proprio? 
+
+A me è successo. Ed è in quel momento che ho capito che l'università e lo sviluppo software condividono una delle maledizioni più antiche del mondo informatico: la sindrome del *"Sul mio computer funzionava!"*.
+
+## Localhost vs Produzione
+Quando sviluppi un'applicazione web sul tuo computer, sei in un ambiente protetto che chiamiamo \`localhost\`. È il tuo divano. Hai tutte le librerie installate, il database ha esattamente i dati che ti aspetti, la connessione è istantanea e nessuno sta cercando di cliccare su dieci bottoni contemporaneamente.
+
+Ma prima o poi, il tuo codice deve andare in "Produzione", ovvero sul server reale accessibile a tutti. La Produzione è l'aula d'esame. È un ambiente spietato, pieno di variabili impreviste, reti instabili e utenti imprevedibili.
+
+## Il Fango delle Variabili d'Ambiente
+Qualche tempo fa stavo lavorando al mio sito personale in React + Vite. In locale era una scheggia. Le animazioni erano fluide, il fetch dei dati perfetto. Mi sentivo invincibile. Faccio il push del codice e avvio il deploy su Vercel. 
+
+Apro il link pubblico e... pagina bianca. Il network tab del browser era un cimitero di errori 404 (Not Found). 
+
+Panico totale. *"Ma come? Sul mio computer funziona perfettamente!"*. Ho perso un'ora a rileggere componenti che non avevano alcun problema. Il vero colpevole? Mi ero dimenticato di impostare le variabili d'ambiente (le API keys) sul pannello di Vercel. Il mio codice in locale le leggeva da un file protetto che, giustamente, non viene inviato al server. In produzione, l'applicazione stava cercando di connettersi al nulla.
+
+## Il Takeaway
+Che tu stia preparando Analisi Matematica o configurando un server, non fidarti mai del tuo ambiente protetto. 
+
+Fare gli esercizi con il libro aperto o il codice sorgente già configurato ti dà un falso senso di sicurezza. Devi sforzarti di testare le tue conoscenze (e il tuo software) nelle condizioni più vicine possibili alla realtà. Fai deploy frequenti fin dal primo giorno e prova a fare le simulazioni d'esame senza appunti. Il mondo reale non perdona, ma insegna tantissimo.
+` 
+  },
+  { 
+    id: "chi-ha-scritto-questa-roba", 
+    title: "\"Chi ha scritto questa roba?\": Appunti e Debito Tecnico", 
+    date: "2026-03-30", 
+    content: ` 
+L'altro giorno ho ripreso in mano i miei appunti di Fisica per un ripasso veloce prima di un test. Ho fissato la pagina per buoni dieci minuti, cercando di decifrare una formula circondata da frecce caotiche e note a margine mezza cancellate. 
+
+Ho pensato: *"Ma chi diavolo ha scritto questa roba? Sembra arabo."* Poi ho realizzato con orrore che la grafia era la mia.
+
+Questo fenomeno di totale alienazione verso il lavoro del "Te Stesso" del passato è il fulcro di uno dei concetti più importanti dell'Ingegneria Informatica: il Debito Tecnico.
+
+## Scrivere per l'Oggi vs Scrivere per il Domani
+Quando siamo di fretta—magari a ridosso di una scadenza lavorativa o mentre il professore spiega troppo velocemente—il nostro unico obiettivo è portare a casa il risultato. Prendiamo appunti disordinati o scriviamo codice appena sufficiente a far funzionare le cose.
+
+In programmazione, questo compromesso si chiama Debito Tecnico. Ottieni un vantaggio immediato (finisci il task oggi), ma contrai un "debito" con il futuro. Prima o poi, gli interessi andranno pagati, e si pagheranno in ore di frustrazione cercando di capire cosa stavi pensando in quel momento.
+
+## Il Fango del Codice Illeggibile
+Mesi fa, per un progetto freelance, dovevo integrare alcune API di Shopify in un backend Ruby on Rails. Il cliente aveva fretta. Ho creato un controller enorme, scritto tutto di getto, usando nomi di variabili orribili come \`data1\`, \`temp_val\` e \`x\`. Niente commenti. Ha funzionato al primo colpo. Mi sono dato una pacca sulla spalla e ho chiuso il file.
+
+Settimana scorsa, mi chiedono una piccola modifica a quella logica. Apro il file e mi trovo davanti un muro di codice incomprensibile. Ho dovuto letteralmente fare *reverse engineering* del mio stesso software per capire cosa facesse la variabile \`x\`. Una modifica da venti minuti mi ha rubato mezza giornata. Gli interessi del debito tecnico avevano bussato alla porta.
+
+## Il Takeaway
+Il codice che scrivi oggi, o gli appunti che prendi a lezione, raramente servono per l'immediato. Servono per la manutenzione futura.
+
+Usa nomi di variabili che abbiano senso (meglio \`user_cart_total\` che \`uct\`). Lascia un commento se una logica è complessa. Riscrivi quegli appunti in bella copia finché hai il concetto fresco in testa. Smettila di programmare o studiare solo per finire la giornata: inizia a fare un favore al Te Stesso di tra sei mesi. Ti ringrazierà.
+` 
+  },
+  { 
+    id: "i-messaggi-di-errore-non-ti-stanno-giudicando", 
+    title: "I Messaggi di Errore Non Ti Stanno Giudicando", 
+    date: "2026-03-15", 
+    content: ` 
+Esiste un riflesso incondizionato che colpisce quasi tutti gli studenti e i programmatori junior: la reazione di panico davanti al rosso.
+
+Può essere un esame universitario restituito dal professore pieno di correzioni a penna rossa, oppure il terminale che improvvisamente si riempie di uno *stack trace* chilometrico color cremisi scuro. L'istinto umano è sempre lo stesso: un tuffo al cuore, le mani che si staccano dalla tastiera e il pensiero martellante *"Ho rotto tutto, non sono capace, non passerò mai questo corso."*
+
+Ci ho messo un bel po' a capirlo, ma la verità è molto più rassicurante: i messaggi di errore non ti stanno giudicando.
+
+## Il Navigatore Satellitare, non una Sentenza
+Quando ho iniziato a studiare seriamente la programmazione, vedevo gli errori in console come una bocciatura personale. Se il codice non compilava al primo colpo, mi sentivo un impostore.
+
+Poi ho cambiato prospettiva. Il terminale è solo una macchina molto pedante che non capisce i sottintesi. Quando ti vomita addosso una schermata rossa, non ti sta dicendo "Sei stupido". Ti sta dicendo: *"Ehi, mi hai chiesto di andare a Roma, ma qui c'è un cantiere che mi blocca. Nello specifico, il cantiere è al chilometro 42 (riga 42 del file index.js), e riguarda un ponte crollato (ReferenceError: user is not defined)."*
+
+Il messaggio di errore è la mappa del tesoro.
+
+## Il Fango della Disattenzione
+Ero immerso in un progetto frontend in React. Stavo passando delle *props* a un componente figlio e, all'improvviso, lo schermo diventa bianco. Apro la console: errore critico. 
+
+Preso dalla fretta e dalla frustrazione, ignoro il testo dell'errore (che mi sembrava lunghissimo e complicato) e inizio a riscrivere la logica del componente alla cieca. Aggiungo \`console.log\` ovunque. Niente. Ci perdo un'ora e mezza, sudando freddo.
+
+A un certo punto, mi fermo, faccio un bel respiro e leggo la primissima riga di quell'orribile muro di testo rosso: 
+\`TypeError: Cannot read properties of undefined (reading 'map')\`.
+
+Avevo semplicemente dimenticato di passare l'array al componente figlio, che stava cercando di mappare il nulla. Se avessi letto il navigatore invece di guidare bendato per la stanza, avrei risolto in tre secondi netti.
+
+## Il Takeaway
+Che si tratti della correzione di un professore a Ingegneria L-8 o di un errore del compilatore, smettila di prenderla sul personale. 
+
+Respira profondo. Leggi la prima riga dell'errore. Cerca le parole chiave. Il sistema non ti sta rimproverando, ti sta letteralmente dando la soluzione per andare avanti. Imparare ad amare i messaggi di errore è il vero superpotere di chi non smette mai di crescere.
+` 
+  },
   {
     id: "la-paperella-di-gomma-e-larte-di-sentirsi-stupidi",
     title: "La Paperella di Gomma e l'Arte di sentirsi Stupidi",
