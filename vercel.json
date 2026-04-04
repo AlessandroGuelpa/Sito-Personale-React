@@ -15,5 +15,11 @@
       "destination": "/project",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
