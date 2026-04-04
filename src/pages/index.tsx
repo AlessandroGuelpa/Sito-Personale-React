@@ -1,18 +1,23 @@
+import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import { siteConfig } from "@/config/site";
 import { GithubIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
-import { Background3D } from "@/components/background-3d";
 import { TechMarquee } from "@/components/tech-marquee";
 import { blogPosts } from "@/data/blogPosts";
+
+// Importiamo il componente 3D in modo asincrono (Lazy Load)
+const Background3D = lazy(() => import("@/components/background-3d").then(module => ({ default: module.Background3D })));
 
 export default function IndexPage() {
   return (
     <DefaultLayout>
       <section className="relative flex flex-col md:flex-row items-center justify-between gap-12 pt-12 pb-24 py-5 md:pt-10 md:pb-40 overflow-hidden">
-        <Background3D />
+        <Suspense fallback={<div className="absolute inset-0 z-0 bg-transparent" />}>
+          <Background3D />
+        </Suspense>
 
         <div className="max-w-2xl text-center md:text-left z-10">
           <motion.h1
