@@ -31,7 +31,9 @@ export default function BlogPage() {
         </div>
 
         <div className="w-full max-w-4xl px-4 flex flex-col gap-12 mt-8">
-          {blogPosts.map((post, index) => (
+          {[...blogPosts]
+            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+            .map((post, index) => (
             <motion.article
               key={post.id}
               animate={{ opacity: 1, y: 0 }}
@@ -55,9 +57,9 @@ export default function BlogPage() {
 
               {/* Intestazione: Icona e Titolo Post */}
               <div className="flex items-center gap-4 mt-2 mb-4 relative z-0">
-                {(post as any).icon && (
+                {post.icon && (
                   <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-2xl bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 text-2xl shadow-sm">
-                    {(post as any).icon}
+                    {post.icon}
                   </div>
                 )}
                 <h3 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-violet-600 transition-colors">
@@ -72,9 +74,12 @@ export default function BlogPage() {
                 </ReactMarkdown>
               </div>
               
-              <div className="mt-6">
+              <div className="mt-6 flex items-center justify-between">
                 <span className="inline-flex items-center gap-2 font-bold text-violet-600 dark:text-violet-400 group-hover:text-violet-700 transition-colors relative z-0">
                   Leggi di più →
+                </span>
+                <span className="text-sm text-zinc-500 dark:text-zinc-400 font-medium relative z-0">
+                  {Math.ceil(post.content.trim().split(/\s+/).length / 200)} min di lettura
                 </span>
               </div>
             </motion.article>

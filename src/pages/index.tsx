@@ -6,6 +6,7 @@ import { GithubIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
 import { Background3D } from "@/components/background-3d";
 import { TechMarquee } from "@/components/tech-marquee";
+import { blogPosts } from "@/data/blogPosts";
 
 export default function IndexPage() {
   return (
@@ -143,6 +144,63 @@ export default function IndexPage() {
               </svg>
             </a>
           </motion.div>
+        </div>
+      </section>
+
+      {/* SEZIONE: Ultimi Articoli dal Blog */}
+      <section className="flex flex-col items-center justify-center gap-6 py-12 mb-20 w-full max-w-4xl mx-auto px-4 relative z-10">
+        <div className="w-full flex justify-between items-end mb-4 md:mb-6">
+          <h2 className="text-3xl md:text-4xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight">
+            Ultimi Articoli
+          </h2>
+          <Link
+            className="text-violet-600 hover:text-violet-700 dark:text-violet-400 dark:hover:text-violet-300 font-semibold transition-colors flex items-center gap-1"
+            to="/blog"
+          >
+            Vedi tutti <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </div>
+
+        <div className="w-full flex flex-col gap-4 sm:gap-6">
+          {[...blogPosts]
+            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+            .slice(0, 3) // Mostra solo i 3 articoli più recenti
+            .map((post, index) => (
+              <motion.div
+                key={post.id}
+                initial={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                <Link
+                  className="group flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 rounded-3xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 hover:border-violet-500/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                  to={`/blog/${post.id}`}
+                >
+                  {post.icon && (
+                    <div className="flex-shrink-0 w-14 h-14 flex items-center justify-center rounded-2xl bg-violet-100 dark:bg-violet-900/30 text-2xl shadow-sm">
+                      {post.icon}
+                    </div>
+                  )}
+                  <div className="flex-1">
+                    <h3 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-violet-600 transition-colors">
+                      {post.title}
+                    </h3>
+                  <div className="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 mt-2 font-medium">
+                    <span>
+                      {new Date(post.date).toLocaleDateString("it-IT", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </span>
+                    <span>•</span>
+                    <span>{Math.ceil(post.content.trim().split(/\s+/).length / 200)} min di lettura</span>
+                  </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
         </div>
       </section>
     </DefaultLayout>

@@ -54,9 +54,6 @@ export default defineConfig({
             if (id.includes("three") || id.includes("@react-three")) {
               return "vendor-three";
             }
-            if (id.includes("@monaco-editor")) {
-              return "vendor-editor";
-            }
             if (id.includes("framer-motion")) {
               return "vendor-framer-motion";
             }

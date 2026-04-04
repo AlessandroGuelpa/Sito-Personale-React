@@ -12,6 +12,7 @@ export const blogPosts: BlogPost[] = [
   { 
     id: "la-sindrome-del-funzionava-sulla-mia-macchina", 
     title: "La Sindrome del \"Funzionava sulla mia macchina!\"", 
+    icon: "🤖",
     date: "2026-04-04", 
     content: ` 
 Vi è mai capitato di fare una simulazione d'esame seduti comodamente sul divano di casa, in pigiama, e sentirvi dei geni assoluti, per poi fare scena muta il giorno del test vero e proprio? 
@@ -39,6 +40,7 @@ Fare gli esercizi con il libro aperto o il codice sorgente già configurato ti d
   { 
     id: "chi-ha-scritto-questa-roba", 
     title: "\"Chi ha scritto questa roba?\": Appunti e Debito Tecnico", 
+    icon: "📝",
     date: "2026-03-30", 
     content: ` 
 L'altro giorno ho ripreso in mano i miei appunti di Fisica per un ripasso veloce prima di un test. Ho fissato la pagina per buoni dieci minuti, cercando di decifrare una formula circondata da frecce caotiche e note a margine mezza cancellate. 
@@ -66,6 +68,7 @@ Usa nomi di variabili che abbiano senso (meglio \`user_cart_total\` che \`uct\`)
   { 
     id: "i-messaggi-di-errore-non-ti-stanno-giudicando", 
     title: "I Messaggi di Errore Non Ti Stanno Giudicando", 
+    icon: "⚠️",
     date: "2026-03-15", 
     content: ` 
 Esiste un riflesso incondizionato che colpisce quasi tutti gli studenti e i programmatori junior: la reazione di panico davanti al rosso.
