@@ -10,7 +10,7 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    id: "3",
+    id: "la-paperella-di-gomma-e-larte-di-sentirsi-stupidi",
     title: "La Paperella di Gomma e l'Arte di sentirsi Stupidi",
     icon: "🦆",
     date: "2026-04-03",
@@ -50,7 +50,7 @@ Non abbiate paura di sembrare pazzi. Parlate da soli, parlate ai muri, parlate a
 ` 
   },
   {
-    id: "2",
+    id: "quando-luniverso-ti-cambia-le-variabili-in-produzione",
     title: "Quando l'Universo ti Cambia le Variabili in Produzione",
     icon: "🚀",
     date: "2026-04-02",
@@ -139,7 +139,7 @@ C'è una certa poesia anche in questo.
     `,
   },
   { 
-id: "1", 
+id: "il-caffe-luniversita-e-la-magia-del-codice-asincrono", 
 title: "Il Caffè, l'Università e la Magia del Codice Asincrono", 
 icon: "☕️",
 date: "2026-04-01", 

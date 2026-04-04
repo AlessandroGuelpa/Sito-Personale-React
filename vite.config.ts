@@ -13,6 +13,8 @@ function generateSitemap() {
     buildStart() {
       const baseUrl = 'https://alessandroguelpa.it';
       
+      const today = new Date().toISOString().split('T')[0];
+
       // 1. Definisci le tue rotte statiche principali
       const staticPages = [
         { path: '', priority: '1.0' },
@@ -23,11 +25,11 @@ function generateSitemap() {
         { path: '/contact', priority: '0.5' },
       ];
 
-      const staticUrls = staticPages.map(page => `  <url>\n    <loc>${baseUrl}${page.path}</loc>\n    <priority>${page.priority}</priority>\n  </url>`).join('\n');
+      const staticUrls = staticPages.map(page => `  <url>\n    <loc>${baseUrl}${page.path}</loc>\n    <lastmod>${today}</lastmod>\n    <priority>${page.priority}</priority>\n  </url>`).join('\n');
 
       // 2. Genera dinamicamente le rotte per ogni post del blog
       // Usiamo 'any' per evitare errori di compilazione TS nel file di config
-      const dynamicUrls = blogPosts.map((post: any) => `  <url>\n    <loc>${baseUrl}/blog/${post.id}</loc>\n    <priority>0.6</priority>\n  </url>`).join('\n');
+      const dynamicUrls = blogPosts.map((post: any) => `  <url>\n    <loc>${baseUrl}/blog/${post.id}</loc>\n    <lastmod>${post.date}</lastmod>\n    <priority>0.6</priority>\n  </url>`).join('\n');
 
       const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${staticUrls}\n${dynamicUrls}\n</urlset>`;
 

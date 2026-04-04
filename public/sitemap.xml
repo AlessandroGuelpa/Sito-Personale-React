@@ -2,38 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://alessandroguelpa.it</loc>
+    <lastmod>2026-04-04</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/about</loc>
+    <lastmod>2026-04-04</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/project</loc>
+    <lastmod>2026-04-04</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/sports</loc>
+    <lastmod>2026-04-04</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/blog</loc>
+    <lastmod>2026-04-04</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/contact</loc>
+    <lastmod>2026-04-04</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://alessandroguelpa.it/blog/3</loc>
+    <loc>https://alessandroguelpa.it/blog/la-paperella-di-gomma-e-larte-di-sentirsi-stupidi</loc>
+    <lastmod>2026-04-03</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://alessandroguelpa.it/blog/2</loc>
+    <loc>https://alessandroguelpa.it/blog/quando-luniverso-ti-cambia-le-variabili-in-produzione</loc>
+    <lastmod>2026-04-02</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://alessandroguelpa.it/blog/1</loc>
+    <loc>https://alessandroguelpa.it/blog/il-caffe-luniversita-e-la-magia-del-codice-asincrono</loc>
+    <lastmod>2026-04-01</lastmod>
     <priority>0.6</priority>
   </url>
 </urlset>
