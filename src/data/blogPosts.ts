@@ -10,11 +10,78 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "entropia-del-codice",
+    title: "L'Entropia del Codice: Perché i Tuoi Progetti Invecchiano Male",
+    date: "2026-04-06",
+    icon: "🔑",
+    content: `
+
+C'è una sensazione magica quando inizializzi un nuovo progetto con \`npm create vite@latest\`. L'editor è pulito, le cartelle sono ordinate semanticamente, i componenti hanno una singola responsabilità. È un ecosistema in perfetto equilibrio.
+
+Poi, passano sei mesi. 
+
+Apri quello stesso progetto per fixare un bug e ti viene da piangere. Componenti lunghi mille righe, \`useEffect\` annidati che scatenano reazioni a catena incomprensibili, file chiamati \`utils_final_v3.js\`. Ti chiedi: *chi ha scritto questo disastro?* E poi guardi la cronologia di Git. Sei stato tu.
+
+Non sentirti in colpa. Non sei un pessimo sviluppatore. Stai solo subendo gli inesorabili effetti della Termodinamica.
+
+## La Seconda Legge e il Debito Tecnico
+
+Mentre ripassavo per il temutissimo esame di Fisica I, mi sono soffermato sulla Seconda Legge della Termodinamica. In modo molto semplificato, il principio afferma che l'entropia (la misura del disordine) di un sistema isolato non decresce mai nel tempo:
+
+$$\\Delta S \\ge 0$$
+
+L'universo tende naturalmente verso il caos. Un bicchiere di vetro cade e si frantuma in mille pezzi; quei pezzi non si rimetteranno mai insieme da soli per formare magicamente un bicchiere nuovo. Il disordine è lo stato più probabile della materia.
+
+Il software funziona esattamente allo stesso modo. Una codebase è un sistema fisico in evoluzione. Man mano che aggiungi funzionalità per compiacere un cliente, risolvi bug in emergenza alle 2 di notte e adatti i requisiti in corsa, stai inserendo disordine nel sistema. Il codice "marcisce". 
+
+## Il Fango del Prop Drilling
+
+Ho vissuto questo dramma sulla mia pelle con un gestionale React per un cliente locale. All'inizio, l'albero dei componenti e la gestione dello stato erano immacolati. 
+
+Poi il cliente mi ha chiesto di aggiungere "solo un piccolo bottone per filtrare" dentro una tabella remota. Avevo fretta, dovevo finire un progetto universitario per Analisi II, così invece di ristrutturare il context globale, ho semplicemente passato una prop giù per sei livelli di componenti (il famigerato *prop drilling*). 
+
+La settimana dopo, serviva un'animazione collegata a quel filtro. Ho aggiunto un \`useEffect\` per sincronizzare gli stati in modo asincrono. Poi un altro. 
+
+Risultato? Il mio codice era diventato una macchina di Rube Goldberg. Avevo creato puro *Debito Tecnico*. L'entropia del mio sistema era schizzata alle stelle: ogni nuova modifica richiedeva un dispendio di energia esponenziale per evitare che l'intera UI collassasse.
+
+## Il Demone di Maxwell e il Refactoring
+
+In termodinamica, l'unico modo per ridurre l'entropia locale di un sistema e riportare l'ordine è immettere energia dall'esterno. Devi letteralmente "compiere un lavoro".
+
+Nello sviluppo software, quel lavoro (quell'immissione di energia) si chiama **Refactoring**. 
+
+Non puoi pretendere che il tuo codice rimanga pulito semplicemente continuando ad aggiungere nuove feature. Devi fermarti, prendere l'energia del tuo cervello (e il tempo pagato dal cliente o dall'azienda) e usarla per riordinare il sistema. Separare i componenti, estrarre la logica di business in hook personalizzati, cancellare il codice morto. 
+
+\`\`\`jsx
+// Prima: Entropia massima (Caos)
+function Dashboard() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [filterActive, setFilterActive] = useState(false);
+  // ... altri 15 stati sparsi e useEffect incrociati che fanno a pugni
+}
+
+// Dopo: Lavoro applicato (Refactoring)
+function Dashboard() {
+  // Ordine ripristinato nascondendo la complessità
+  const { data, loading, error, toggleFilter } = useDashboardData(); 
+  // ...
+}
+\`\`\`
+
+## Il Takeaway
+
+Il debito tecnico non è una colpa morale di chi scrive il codice. È una legge fisica universale. L'entropia della vostra applicazione aumenterà sempre.
+
+L'unico vero errore è far finta che non esista. Se non pianifichi regolarmente sessioni di refactoring all'interno del tuo ciclo di sviluppo (esattamente come fai manutenzione alla tua auto), stai semplicemente lasciando che l'universo faccia il suo corso. E credimi, all'universo piacciono da morire gli spaghetti (code).
+    `
+  },
+  {
     id: "equazione-del-razzo-e-il-problema-del-bundle-da-830kb",
     title: "L'Equazione del Razzo e il Problema del Bundle da 830kB",
     date: "2026-04-05",
+    icon: "🧮",
     content: `
-# L'Equazione del Razzo e il Problema del Bundle da 830kB
 
 Alla fine dell'Ottocento, lo scienziato russo Konstantin Tsiolkovsky formulò l'equazione del razzo, una formula spietata che governa ancora oggi l'esplorazione spaziale: 
 
