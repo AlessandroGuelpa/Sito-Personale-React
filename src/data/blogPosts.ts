@@ -10,6 +10,79 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "equazione-del-razzo-e-il-problema-del-bundle-da-830kb",
+    title: "L'Equazione del Razzo e il Problema del Bundle da 830kB",
+    date: "2026-04-05",
+    content: `
+# L'Equazione del Razzo e il Problema del Bundle da 830kB
+
+Alla fine dell'Ottocento, lo scienziato russo Konstantin Tsiolkovsky formulò l'equazione del razzo, una formula spietata che governa ancora oggi l'esplorazione spaziale: 
+
+$$\\Delta v = v_e \\ln \\frac{m_0}{m_f}$$
+
+In parole povere: più massa ($m_0$) vuoi mandare in orbita, più carburante ti serve. Ma il carburante stesso ha una massa, che richiede ulteriore carburante per essere sollevata. È un circolo vizioso. Nello sviluppo web, viviamo sotto la dittatura di un'equazione molto simile: più il tuo bundle JavaScript è pesante, più CPU e banda serve all'utente per scaricarlo, bloccare il main thread e renderizzare la pagina.
+
+L'altro giorno, facendo il deploy di questo stesso blog su Vercel, ho ricevuto un avviso dal mio bundler (Vite): il file principale aveva superato gli 800 kB. Stavo chiedendo troppa fatica al browser in un colpo solo.
+
+## Analisi della scatola nera (Il package.json)
+
+Ho aperto il mio \`package.json\` per capire cosa stesse generating tutta questa massa critica. E ho trovato non uno, ma ben due "buchi neri" supermassicci:
+
+1. **La Galassia del 3D:** \`three\`, \`@react-three/fiber\` e \`@react-three/drei\`. Questa è un'infrastruttura pazzesca per renderizzare grafica WebGL avanzata. 
+2. **Il Supercomputer:** \`@monaco-editor/react\`. Questo pacchetto porta l'intero core editor di Visual Studio Code direttamente dentro il browser.
+
+Stavo chiedendo a Vite di prendere un motore 3D, un IDE completo, una libreria di animazioni (\`framer-motion\`), un intero design system (\`@heroui\`) e di compattarli in un unico file \`index.js\`. 
+
+Era l'equivalente di lanciare la navicella Apollo portandosi dietro l'intero pad di lancio di Cape Canaveral.
+
+## Razzi a stadi multipli (Code Splitting)
+
+La soluzione a questo problema è la stessa che usano alla NASA: non lanci tutta la massa in un colpo solo. Dividi il razzo in stadi.
+
+Invece di lasciare che Vite faccia un "minestrone" unico, ho modificato il mio file \`vite.config.ts\` per istruire Rollup (il motore sotto il cofano di Vite) a creare dei pacchetti separati per le librerie più pesanti. 
+
+Se un utente sta leggendo un articolo testuale, non deve scaricare il motore 3D. Se non sta scrivendo codice, non ha bisogno di Monaco Editor.
+
+Ecco la configurazione che ha salvato le performance del mio blog:
+
+\`\`\`typescript
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Stadio 1: Il motore grafico 3D
+          'vendor-3d': ['three', '@react-three/fiber', '@react-three/drei'],
+          
+          // Stadio 2: L'editor di codice pesante
+          'vendor-editor': ['@monaco-editor/react'],
+          
+          // Stadio 3: UI e Animazioni
+          'vendor-ui': ['@heroui/react', 'framer-motion', 'tailwindcss'],
+          
+          // Stadio 4: React e l'infrastruttura base
+          'vendor-core': ['react', 'react-dom', 'react-router-dom']
+        }
+      }
+    }
+  }
+});
+\`\`\`
+
+## Il Takeaway
+
+Guardare solo il proprio codice sorgente è come progettare l'aerodinamica di un razzo ignorando quanto pesano i satelliti al suo interno. 
+
+Le dipendenze che importiamo nei nostri progetti moderni (\`npm install\`) sono strumenti incredibili, ma hanno una massa fisica reale sotto forma di byte che l'utente deve elaborare. Studiare i sistemi di elaborazione ci insegna che la larghezza di banda e i cicli di CPU non sono infiniti. 
+
+La prossima volta che integrate una libreria spettacolare nel vostro frontend, chiedetevi sempre: *sto mettendo in orbita un satellite utile, o mi sto portando dietro tutta Cape Canaveral?*
+    `
+  },
+  {
     id: "effetto-osservatore-fisica-quantistica-e-l-arte-del-debugging",
     title: "L'Effetto Osservatore: Fisica Quantistica e l'Arte del Debugging",
     date: "2026-04-07",
