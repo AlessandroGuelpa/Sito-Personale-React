@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 import DefaultLayout from "@/layouts/default";
 import { blogPosts } from "@/data/blogPosts";
@@ -69,7 +71,8 @@ export default function BlogPostPage() {
           </h1>
 
           <div className="prose prose-zinc dark:prose-invert prose-lg prose-p:leading-relaxed prose-a:text-violet-500 hover:prose-a:text-violet-600 prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100 max-w-none">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} 
+  rehypePlugins={[rehypeKatex]}>
               {post.content}
             </ReactMarkdown>
           </div>

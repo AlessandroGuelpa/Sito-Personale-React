@@ -2,33 +2,53 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://alessandroguelpa.it</loc>
-    <lastmod>2026-04-04</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/about</loc>
-    <lastmod>2026-04-04</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/project</loc>
-    <lastmod>2026-04-04</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/sports</loc>
-    <lastmod>2026-04-04</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/blog</loc>
-    <lastmod>2026-04-04</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/contact</loc>
-    <lastmod>2026-04-04</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://alessandroguelpa.it/blog/non-puoi-negoziare-con-la-gravita-space-force-e-le-scadenze-assurde</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://alessandroguelpa.it/blog/entropia-del-codice</loc>
+    <lastmod>2026-04-06</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://alessandroguelpa.it/blog/equazione-del-razzo-e-il-problema-del-bundle-da-830kb</loc>
+    <lastmod>2026-04-05</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://alessandroguelpa.it/blog/effetto-osservatore-fisica-quantistica-e-l-arte-del-debugging</loc>
+    <lastmod>2026-04-07</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://alessandroguelpa.it/blog/la-sindrome-del-funzionava-sulla-mia-macchina</loc>
