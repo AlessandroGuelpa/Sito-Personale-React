@@ -10,12 +10,299 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "principio-di-esclusione-di-pauli-e-i-conflitti-git",
+    title: "Il Principio di Pauli e il Dramma dei Conflitti su Git",
+    date: "2026-04-12",
+    icon: "🔀",
+    content: `
+
+Nella meccanica quantistica esiste una regola fondamentale chiamata Principio di Esclusione di Pauli. Formulato nel 1925, afferma una cosa tanto semplice quanto categorica: due fermioni identici non possono occupare lo stesso stato quantico contemporaneamente.
+
+In pratica, l'universo vieta a due particelle della materia di trovarsi nello stesso identico posto, con le stesse esatte proprietà, nello stesso istante.
+
+Se Wolfgang Pauli fosse stato un Web Developer, avrebbe probabilmente formulato lo stesso principio per Git: due sviluppatori non possono modificare la stessa riga di codice nello stesso file, nello stesso istante, senza generare un'esplosione nucleare chiamata *Merge Conflict*.
+
+## La Collisione Inevitabile
+
+Quando lavori in team, il repository Git è il tuo universo condiviso. Finché tu lavori sul frontend e il tuo collega sul backend, state occupando "stati quantici" diversi. Tutto fila liscio.
+
+Ma quando il manager assegna due task separati che, sfortunatamente, toccano lo stesso componente React, state letteralmente forzando due fermioni nello stesso spazio per rispettare la solita scadenza "era per ieri".
+
+> *"Due sviluppatori non possono modificare lo stesso index.js lo stesso venerdì sera senza che uno dei due pianga."*
+
+## Il Fango: Mergiare a Occhi Chiusi
+
+Ricordo il mio primo progetto collaborativo all'università per l'esame di Ingegneria del Software. Eravamo in due e, clamorosamente in ritardo, lavoravamo direttamente sul branch \`main\`. 
+
+Lui stava modificando la navbar, io pure. Ho finito la mia parte, ho fatto \`git commit\` e poi un disastroso \`git push --force\` perché il terminale mi dava un errore e volevo andare a dormire.
+
+\`\`\`javascript
+// Bad Code: L'Esplosione Quantica nel Sorgente
+<<<<<<< HEAD
+export const Navbar = () => {
+  return <nav className="bg-red-500">Menu di Alessandro</nav>;
+}
+=======
+export const Navbar = () => {
+  return <nav className="bg-blue-800 text-white">Menu di Marco</nav>;
+}
+>>>>>>> feature-navbar
+\`\`\`
+
+Il giorno dopo, Marco ha pullato, ha visto i marker di conflitto di Git inseriti brutalmente nel codice e, non sapendo cosa fossero, ha fatto il commit di *tutto* il blocco. Frecce incluse. L'app React è morta sul colpo. Abbiamo passato la notte prima della consegna a fare copia-incolla dei file a mano.
+
+## L'Ingegneria: Spazio Quantico Isolato
+
+Come si evita che le particelle collidano? Dando loro stati quantici diversi. Nello sviluppo, questo significa usare i Feature Branch e comunicare. 
+
+Invece di sovrascriverci a vicenda sul file centrale, creiamo universi paralleli isolati, facciamo le nostre modifiche, e poi usiamo la diplomazia per decidere come fonderli.
+
+\`\`\`bash
+// Good Engineering: Il Flusso Corretto e Isolato
+
+# 1. Creo il mio universo personale
+git checkout -b feature/la-mia-nuova-navbar
+
+# 2. Lavoro tranquillo e chiudo il pacchetto
+git commit -m "feat: aggiorna colore navbar"
+
+# 3. Prima di mergiare, sincronizzo il mio universo con quello base
+git fetch origin
+git rebase origin/main
+
+# 4. Risolvo i conflitti in pace locale, non urlando in produzione
+git push origin feature/la-mia-nuova-navbar
+\`\`\`
+
+## Il Takeaway
+
+L'universo ci impedisce di compenetrarci fisicamente per un ottimo motivo: evitare il collasso. 
+
+Se lavorate in team, rispettate il Principio di Pauli. Isolate il vostro lavoro in branch dedicati, fate commit frequenti e aggiornatevi spesso sulle modifiche altrui. Git non è un Google Drive gigante per fare i backup; è un simulatore spazio-temporale. Usatelo con il dovuto rispetto.
+
+    `
+  },
+  {
+    id: "conservazione-della-massa-e-memory-leaks-in-react",
+    title: "Lavoisier in Frontend: Conservazione della Massa e Memory Leaks",
+    date: "2026-04-11",
+    icon: "💧",
+    content: `
+Nel 1789, Antoine Lavoisier mise per iscritto uno dei pilastri della chimica moderna: 
+
+> *"Nulla si crea, nulla si distrugge, tutto si trasforma".* È la legge della conservazione della massa. Ogni atomo coinvolto in una reazione deve essere bilanciato. Se bruci della carta, la cenere e i gas prodotti peseranno esattamente quanto la carta e l'ossigeno originali.
+
+Nel mondo magico di JavaScript e React, tendiamo a ignorare la chimica. Pensiamo di poter creare componenti, farli apparire sullo schermo, e poi farli sparire nel nulla chiudendo un modale. Ma i byte nella RAM sono fisici. Se non li "trasformi" pulendoli, ottieni il nemico letale delle Single Page Applications: il *Memory Leak*.
+
+## L'Accumulo Inesorabile
+
+Browser moderni come Chrome hanno un Garbage Collector (un netturbino automatico) che fa un lavoro eccellente nel buttare via i dati orfani. Ma il Collector non è onnisciente. 
+
+Se lasci un Event Listener o un timer attivo agganciato a un componente smontato, il browser penserà: *"Ehi, questo dev sta ancora ascoltando l'evento, meglio tenere tutto in memoria"*. E così, click dopo click, l'app inizia a pesare come una nana bianca, finché la tab non implode.
+
+## Il Fango: Event Listeners Immortali
+
+Durante un tirocinio aziendale, mi chiesero di fare una barra laterale che sparisse o apparisse facendo il resize dello schermo. Avevo mezz'ora prima della call di allineamento, così l'ho buttata giù in fretta in React attaccando un ascoltatore globale alla \`window\`.
+
+\`\`\`jsx
+// Bad Code: Sto ignorando Lavoisier
+function Sidebar() {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    // Creo massa (un listener) dal nulla
+    window.addEventListener('resize', () => {
+      setWidth(window.innerWidth);
+      console.log("Ridimensiono!");
+    });
+  }, []);
+
+  return <div>Larghezza: {width}px</div>;
+}
+\`\`\`
+
+Il dramma? Quella sidebar era dentro una dashboard dove gli utenti navigavano tra decine di sezioni diverse, facendola montare e smontare in continuazione. Ogni mount creava un *nuovo* listener fantasma in memoria senza mai distruggere quello vecchio. 
+
+Dopo un'ora di utilizzo, un singolo resize della finestra scatenava centinaia di esecuzioni contemporanee della funzione. I browser dell'amministrazione aziendale giravano con le ventole che sembravano elicotteri.
+
+## L'Ingegneria: Pulire le Proprie Ceneri
+
+La soluzione corretta rispetta il bilancio energetico della memoria. Se nel tuo \`useEffect\` "crei" qualcosa (un listener, un \`setInterval\`, una WebSocket), sei obbligato a fornire una funzione di *cleanup* per distruggerla alla chiusura.
+
+\`\`\`jsx
+// Good Code: Conservazione della Memoria
+function Sidebar() {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    
+    // Assegno la funzione specificatamente per poterla rintracciare
+    window.addEventListener('resize', handleResize);
+
+    // Return the Cleanup Function: il mio netturbino personale
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return <div>Larghezza: {width}px</div>;
+}
+\`\`\`
+
+## Il Takeaway
+
+Non fidatevi mai ciecamente del Garbage Collector. Voi siete gli ingegneri creatori dell'evento, voi avete la responsabilità dello smantellamento.
+
+Ricordatevi di Lavoisier la prossima volta che vi iscrivete a uno stream di dati in un componente React. Se non predisponete un piano di evacuazione, le vostre omissioni si accumuleranno silenziosamente nella RAM degli utenti. E Chrome non perdona.
+
+    `
+  },
+  {
+    id: "relativita-del-tempo-e-timezone-nei-database",
+    title: "La Relatività Generale e l'Incubo dei Timezone",
+    date: "2026-04-10",
+    icon: "🕰️",
+    content: `
+Nel 1915, Albert Einstein sconvolse il mondo della fisica dimostrando che il tempo non è assoluto. Lo scorrere del tempo dipende dalla velocità e dalla gravità. Due osservatori in luoghi diversi dell'universo non saranno mai d'accordo su "che ore sono".
+
+Oltre un secolo dopo, noi dev sbattiamo la testa esattamente contro lo stesso identico problema teorico. Solo che non ci serve viaggiare prossimi alla velocità della luce per sperimentarlo: ci basta far usare la nostra web app a un tizio in Italia e a uno a New York.
+
+Gestire i Timezone è la prova tangibile che il tempo è un'illusione crudele, ed è la causa madre dei bug più frustranti di sempre.
+
+## L'Illusione del "Tempo Assoluto"
+
+Quando chiami \`new Date()\` sul frontend, il PC ti restituisce la tua ora locale basata sulle impostazioni del sistema operativo. Il cervello si fida, crede che quello sia un dato oggettivo per tutto il pianeta.
+
+Ma se dico "Ci vediamo alle 18:00" e tu sei in Giappone, stiamo parlando di due posizioni diverse lungo il nastro dello spazio-tempo. Se salvo la stringa "18:00" bruta in un database relazionale, mi preparo a scatenare il caos intercontinentale.
+
+## Il Fango: Viaggiare nel Passato
+
+Tre anni fa sviluppai il backend per la prenotazione aule dell'università. Un professore inseriva l'orario di un ricevimento dal suo PC.
+
+Ero acerbo sulle astrazioni del tempo. Ho letteralmente salvato la stringa di testo così come veniva digitata dal browser nel mio fido database PostgreSQL.
+
+\`\`\`javascript
+// Bad Code: Il Tempo considerato Globale Assoluto
+app.post('/api/ricevimenti', (req, res) => {
+  const { professore, dataOraRicevimento } = req.body;
+  // dataOraRicevimento arriva nuda: "2026-04-15 14:00:00"
+  
+  // Salvo direttamente nel DB. Pura Follia.
+  database.save({ title: professore, date: dataOraRicevimento }); 
+});
+\`\`\`
+
+Tutto bene, finché uno studente Erasmus, trovandosi temporaneamente all'estero (con il PC settato su un altro fuso), prenotava il ricevimento. Il suo browser interpretava il "14:00" come locale estero, lo trasformava dietro le quinte, e il sistema finiva per registrare prenotazioni nel passato o alle 3 di notte italiane. Ho inavvertitamente inventato una macchina del tempo rotta.
+
+## L'Ingegneria: Il Meridiano Neutro (UTC)
+
+Per evitare che l'architettura crolli sotto la soggettività dei fusi orari, l'informatica si aggancia a un unico punto zero: il **Coordinated Universal Time (UTC)**.
+
+> *"Il database non parla lingue, non ha passaporti e non vive in un fuso orario. Il database vive in UTC."*
+
+La regola d'oro inalienabile è salvare i dati universali sul server, per poi fare la traduzione per l'osservatore solo ed esclusivamente sul client del frontend.
+
+\`\`\`javascript
+// Good Code: Lo Standard ISO 8601 Neutro
+app.post('/api/ricevimenti', (req, res) => {
+  // Il frontend invia la data convertita nello standard UTC
+  // Es: "2026-04-15T12:00:00.000Z" (La 'Z' indica l'UTC, Tempo Zulu)
+  const { professore, dataOraUtc } = req.body;
+  
+  database.save({ title: professore, date: dataOraUtc });
+});
+
+// Su React, l'oggetto Intl formatterà dinamicamente 
+// l'orario in base al dispositivo fisico di chi legge
+const mostraOra = new Intl.DateTimeFormat(navigator.language, { 
+  timeStyle: 'short' 
+}).format(new Date(event.date));
+\`\`\`
+
+## Il Takeaway
+
+Albert Einstein vi perdonerebbe l'errore matematico, ma un utente che perde un appuntamento o un volo aereo no.
+
+Non fidatevi mai della località del server o del browser per i salvataggi persistenti. Usate sempre gli standard UTC nel backend. Lasciate le traduzioni relativistiche al frontend, che sa esattamente dove si trova l'osservatore nell'universo.
+
+    `
+  },
+  {
+    id: "teoria-del-caos-effetto-farfalla-e-css-globale",
+    title: "L'Effetto Farfalla: Teoria del Caos e CSS Globale",
+    date: "2026-04-08",
+    icon: "🦋",
+    content: `
+
+C'è un principio della Teoria del Caos, popolarizzato da Edward Lorenz, noto ai più come L'Effetto Farfalla: 
+
+> *"Può il battito d'ali di una farfalla in Brasile scatenare un tornado in Texas?"*
+
+L'idea è che nei sistemi matematici complessi, una minuscola e apparentemente innocua variazione delle condizioni in una zona ristretta possa causare reazioni a catena disastrose dall'altra parte del sistema.
+
+Se tutto questo vi sembra eccessivamente poetico, vi sfido ad aprire un file \`style.css\` da seimila righe di un vecchio monolite aziendale, cambiare il \`padding\` a un semplice bottone e aspettare che il footer della pagina contatti, per qualche mistica ragione, esploda fuori dal monitor.
+
+## L'Atmosfera Non È Isolata
+
+In JavaScript e React, facciamo di tutto per tenere confinato lo stato delle cose. Usiamo blocchi \`const\`, file separati e incapsulamento.
+
+Ma il CSS nativo vecchio stile è spietatamente, inesorabilmente **globale**. Tutto ciò che scrivi è nell'etere e si applica in modo trasversale ovunque ci sia una coincidenza di classi. È l'ecosistema meteorologico perfetto per il caos.
+
+## Il Fango: L'Innocua .card
+
+Al primo anno di università collaboravo alla manutenzione del sito del polo studentesco. C'era un problema stupido: le tessere delle notizie in homepage erano troppo attaccate al bordo laterale. 
+
+L'inspector di Chrome mi mostrava che usavano la classe \`.card-container\`. 
+Apro felice il mastodontico file \`main.css\` e scrivo:
+
+\`\`\`css
+/* Bad Code: Il battito d'ali velenoso */
+.card-container {
+  margin-left: 20px !important; /* L'important era pura disperazione */
+  width: 90%;
+}
+\`\`\`
+
+Salvo. Ricarico l'homepage. Spaziatura perfetta. Commit. Vado a lezione sereno.
+
+Nel pomeriggio, il gruppo Whatsapp dell'Ateneo esplode. Il form per prenotare i pasti in mensa era sparito per metà schermo. Perché? Perché anche il blocco dei menù nella dashboard segreta degli amministratori usava \`.card-container\` e si aspettava un width del 100% assoluto. Sistemando una cosa banale a "sinistra", avevo distrutto la logica di allineamento a "destra". Un tornado perfetto.
+
+## L'Ingegneria: Confinare le Correnti
+
+Per uccidere l'effetto farfalla nel frontend, le architetture moderne hanno smesso di scrivere file di stile monolitici. L'ingegneria corretta prevede di isolare il CSS esattamente come si fa con le variabili: **scoping**.
+
+Che si tratti di CSS Modules o dell'approccio a classi di utilità (Utility-first) come Tailwind CSS, l'obiettivo è limitare l'effetto visivo esclusivamente al componente che lo dichiara.
+
+\`\`\`jsx
+// Good Code: Isolare l'entropia con Tailwind
+function NewsCard({ title }) {
+  // Le classi qui dentro non potranno mai influenzare i form della mensa.
+  // La modifica vive e muore all'interno del perimetro del return.
+  return (
+    <div className="ml-5 w-[90%] bg-white rounded shadow">
+      <h2>{title}</h2>
+    </div>
+  );
+}
+\`\`\`
+
+Modificando Tailwind, il tornado è confinato nella scatola del componente React. L'oceano globale del CSS resta intatto.
+
+## Il Takeaway
+
+Il CSS non protetto farà impazzire voi e i vostri colleghi futuri. Man mano che un progetto legacy cresce, il file globale diventa un cimitero intoccabile dove ogni "aggiunta veloce" può innescare una regressione visiva.
+
+Smettete di basarvi sulla fortuna o sul \`!important\`. Adottate pattern di isolamento stilistico. La teoria del caos è affascinante da studiare nei libri di Fisica, ma è l'ultima cosa che vorrete ritrovarvi davanti in fase di pre-rilascio.
+
+    `
+  },
+  {
     id: "legge-di-gravitazione-universale-e-i-legacy-code",
     title: "Gravitazione Universale: Perché il Legacy Code ha un'Attrazione Fatale",
     date: "2026-04-13",
     icon: "🪐",
     content: `
-[INIZIO MARKDOWN]
 Esiste una forza invisibile che governa ogni ufficio tecnico, una forza più potente dei desideri del Product Manager e più persistente delle promesse di un venditore: la massa del codice ereditato.
 
 Isaac Newton, nel 1687, ci ha regalato la formula per calcolare questa maledizione: 
@@ -86,7 +373,6 @@ class DiscountCalculator {
 Non puoi negoziare con la gravità. Se continui ad aggiungere codice a moduli già troppo grandi, non stai "velocizzando la consegna", stai solo aumentando la densità di un corpo celeste che prima o poi collasserà in una supernova, portando con sé tutto il tuo weekend.
 
 L'unico modo per sopravvivere è mantenere i componenti piccoli e leggeri. Meno massa significa meno attrazione per i bug. Newton aveva ragione sulla meccanica celeste, ma se avesse dovuto fare manutenzione a un'app in React, probabilmente avrebbe scoperto che l'entropia è l'unica costante universale.
-[FINE MARKDOWN]
     `
 },
   {
