@@ -10,9 +10,89 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "legge-di-gravitazione-universale-e-i-legacy-code",
+    title: "Gravitazione Universale: Perché il Legacy Code ha un'Attrazione Fatale",
+    date: "2026-04-13",
+    icon: "🪐",
+    content: `
+[INIZIO MARKDOWN]
+Esiste una forza invisibile che governa ogni ufficio tecnico, una forza più potente dei desideri del Product Manager e più persistente delle promesse di un venditore: la massa del codice ereditato.
+
+Isaac Newton, nel 1687, ci ha regalato la formula per calcolare questa maledizione: 
+
+$$F = G \\frac{m_1 m_2}{r^2}$$
+
+In astrofisica, più un corpo è massiccio, più attira a sé gli oggetti vicini. Nello sviluppo software, sostituisci la massa ($m$) con le righe di codice scritte dieci anni fa da qualcuno che ora vive in un eremo senza Wi-Fi. Più quel modulo è grande e antico, più esercita una forza gravitazionale che trascina ogni nuova feature nel suo nucleo denso e instabile.
+
+## L'Orizzonte degli Eventi del Refactoring
+
+Mentre preparo l'esame di Fisica I, non posso fare a meno di pensare che certi file \`GlobalUtils.js\` siano dei veri e propri buchi neri. Hanno una densità di logica così elevata che nemmeno la luce (o un test unitario ben scritto) riesce a uscirne indenne.
+
+Se provi ad avvicinarti per un piccolo refactoring, il tempo inizia a dilatarsi. Quella che doveva essere una task da "5 minuti, promesso" si trasforma in una settimana di debug asincrono. Sei entrato nell'orizzonte degli eventi: non puoi più tornare indietro senza riscrivere l'intero backend.
+
+## Il Fango: L'Attrazione Fatale dello "Schifo"
+
+Qualche mese fa, dovevo implementare un sistema di sconti stagionali per un cliente. Invece di creare un microservizio pulito o una strategia isolata, ho ceduto alla gravità del "Codice Esistente". C'era questo file Rails chiamato \`order_processor.rb\` che pesava circa 4000 righe. 
+
+Sotto pressione per la scadenza del lunedì, invece di combattere la forza di attrazione, sono diventato parte della massa.
+
+\`\`\`ruby
+# Bad Code: Ho aggiunto massa al buco nero
+class OrderProcessor
+  def calculate_total
+    # ... 300 righe di logica pre-esistente ...
+    
+    # Il mio "contributo" fangoso:
+    if @order.created_at.month == 12 && @order.user.is_loyal?
+       @total = @total * 0.8 # Sconto Natale fatto male
+    end
+    
+    # ... altre 3000 righe di spaghetti code ...
+  end
+end
+\`\`\`
+
+Il risultato? Ho rotto il calcolo dell'IVA per gli utenti in Giappone. Perché? Perché a riga 2453 c'era un'altra condizione gravitazionale che entrava in collisione con la mia. Avevo ignorato il fatto che in un sistema così massiccio, ogni azione ha una reazione uguale e contraria (e spesso distruttiva).
+
+## L'Ingegneria: Il Principio di Fuga
+
+Per sfuggire alla gravità di un pianeta, serve una velocità di fuga. Per sfuggire al legacy code, serve il **Principio di Responsabilità Singola (SRP)**. 
+
+Invece di aggiungere massa al pianeta morente, bisogna costruire un satellite indipendente. Ecco come avrei dovuto gestire la "fisica" di quella richiesta:
+
+\`\`\`typescript
+// Good Code: Architettura orbitale (Disaccoppiata)
+interface DiscountStrategy {
+  apply(amount: number): number;
+}
+
+class ChristmasDiscount implements DiscountStrategy {
+  apply(amount: number): number {
+    return amount * 0.8;
+  }
+}
+
+// La logica di business è un'entità separata, 
+// non un'appendice del mostro legacy.
+class DiscountCalculator {
+  static calculate(order: Order, strategies: DiscountStrategy[]): number {
+    return strategies.reduce((acc, strategy) => strategy.apply(acc), order.basePrice);
+  }
+}
+\`\`\`
+
+## Il Takeaway
+
+Non puoi negoziare con la gravità. Se continui ad aggiungere codice a moduli già troppo grandi, non stai "velocizzando la consegna", stai solo aumentando la densità di un corpo celeste che prima o poi collasserà in una supernova, portando con sé tutto il tuo weekend.
+
+L'unico modo per sopravvivere è mantenere i componenti piccoli e leggeri. Meno massa significa meno attrazione per i bug. Newton aveva ragione sulla meccanica celeste, ma se avesse dovuto fare manutenzione a un'app in React, probabilmente avrebbe scoperto che l'entropia è l'unica costante universale.
+[FINE MARKDOWN]
+    `
+},
+  {
     id: "non-puoi-negoziare-con-la-gravita-space-force-e-le-scadenze-assurde",
     title: "Non Puoi Negoziare con la Gravità: Space Force e le Scadenze Assurde",
-    date: "2026-04-15",
+    date: "2026-04-09",
     icon: "🚀",
     content: `
 
