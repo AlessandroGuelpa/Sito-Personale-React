@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 import { CustomCursor } from "@/components/custom-cursor";
 import { ScrollProgress } from "@/components/scroll-progress";
@@ -42,6 +43,7 @@ function App() {
         </AnimatePresence>
       </Suspense>
       <Analytics />
+      <SpeedInsights/>
     </>
   );
 }
