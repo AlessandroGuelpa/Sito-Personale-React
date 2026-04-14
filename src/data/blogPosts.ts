@@ -10,6 +10,78 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "shopify-custom-fields-app-vs-codice-nativo",
+    title: "Shopify: Perché pagare 15€ al mese per un <input>? (Spoiler: Non serve)",
+    date: "2026-04-14",
+    icon: "💸",
+    content: `
+Siamo a metà gennaio e l'aria inizia già a puzzare di quel romanticismo forzato che precede San Valentino. Puntuale come una tazzina di caffè versata sulla tastiera, arriva la chiamata del cliente.
+
+*"Senti, dobbiamo assolutamente far incidere una parola o una frase sugli anelli per San Valentino. Ho visto che c'è un'app fantastica sullo store, costa solo 15€ al mese e fa apparire un campo di testo in pagina prodotto. La installiamo?"*
+
+In quel momento, senti un brivido lungo la schiena. Non è il freddo, è l'orrore di vedere un ecosistema software appesantito da un'ennesima dipendenza esterna (e un abbonamento ricorrente) per fare una cosa che il browser inventato negli anni '90 sa già fare benissimo.
+
+## La trappola delle "App Tuttofare"
+
+Il problema di molte app di Shopify che aggiungono "Custom Fields" è che spesso caricano script pesanti sul frontend, rallentano il caricamento della pagina (ciao ciao, punteggio Core Web Vitals) e, soprattutto, ti chiedono soldi ogni mese per un'operazione che richiede letteralmente cinque minuti di codice.
+
+Il cliente era convinto: *"Se costa 15€ al mese, deve essere la soluzione professionale"*. 
+
+La mia risposta è stata: *"Dammi dieci minuti. Ti risparmio 180€ l'anno e l'app non la vedrai neanche nei log del server"*.
+
+## La Magia (Nativa) delle Line Item Properties
+
+Shopify ha una feature "nascosta" ma potentissima: le **Line Item Properties**. Sono attributi che puoi attaccare a un prodotto nel momento in cui viene aggiunto al carrello. La cosa incredibile? Non serve nessuna API complessa o script in React. Shopify legge automaticamente qualsiasi input HTML che si trova dentro il form dell'Add to Cart, a patto che abbia il nome giusto.
+
+Se l'input ha l'attributo \`name="properties[Nome della tua proprietà]"\`, Shopify lo cattura, lo porta attraverso il checkout (senza perderlo nel "buco nero" della transazione) e te lo mostra dritto nel pannello ordini del magazzino.
+
+Ecco il codice che ho scritto per sostituire l'app da 15€ al mese:
+
+\`\`\`html
+{% form 'product', product %}
+  
+  <div class="product-custom-field">
+    <label for="engraving">Testo da incidere (Max 20 caratteri):</label>
+    <input 
+      type="text" 
+      id="engraving" 
+      name="properties[Incisione Personalizzata]" 
+      maxlength="20"
+      placeholder="Es: Per sempre"
+    >
+  </div>
+
+  <div class="product-custom-field">
+    <label for="delivery-date">Data di consegna desiderata:</label>
+    <input 
+      type="date" 
+      id="delivery-date" 
+      name="attributes[Data di Consegna]"
+    >
+  </div>
+
+  <button type="submit" class="btn-add-to-cart">
+    Aggiungi al carrello
+  </div>
+
+{% endform %}
+\`\`\`
+
+## Perché questo approccio è superiore
+
+1. **Costo Zero**: Nessun abbonamento SaaS inutile.
+2. **Performance**: Zero millisecondi di tempo di caricamento aggiuntivo. Nessun file JS esterno che "scimmiotta" il DOM.
+3. **Affidabilità**: Essendo una funzione nativa di Shopify, non smetterà mai di funzionare a causa di un aggiornamento dell'app o di un server esterno che va down.
+4. **Clean Backend**: Il magazziniere vede l'incisione direttamente sotto il nome del prodotto nell'ordine. Niente giri strani tra dashboard diverse.
+
+## Il Takeaway
+
+Il cliente, dopo aver visto che il campo appariva perfettamente integrato nel design del sito e che i dati arrivavano correttamente negli ordini di test, ha disinstallato l'app prima ancora di finire il periodo di prova.
+
+A volte il nostro lavoro non è scrivere il codice più complesso del mondo, ma proteggere il progetto (e il portafoglio del cliente) dall'entusiasmo per le soluzioni "pronte all'uso" che nascondono solo costi e inefficienze. Se Shopify ti dà gli strumenti gratis, usarli è l'unica scelta tecnica sensata.
+    `
+},
+  {
     id: "principio-di-esclusione-di-pauli-e-i-conflitti-git",
     title: "Il Principio di Pauli e il Dramma dei Conflitti su Git",
     date: "2026-04-12",
