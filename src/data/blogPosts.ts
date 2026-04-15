@@ -10,6 +10,88 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "gatto-di-schrodinger-e-allucinazioni-ia",
+    title: "Il Gatto di Schrödinger e l'IA: Perché Copilot non ti Salverà",
+    date: "2026-04-16",
+    icon: "🐈",
+    content: `
+Aprite LinkedIn in questi giorni e vi sembrerà che nessuno scriva più codice a mano. La timeline è inondata di "guru" che si vantano: *"Ho creato un clone di Netflix in 4 secondi usando solo un prompt!"*.
+
+Certo. E io ho preso 30 e Lode all'esame di Fisica Quantistica guardando *Interstellar* sul divano.
+
+La verità che nessuno vi racconta è che stiamo vivendo un'era di pura pigrizia ammantata da innovazione tecnologica. Abbiamo delegato il lavoro sporco ai vari LLM (ChatGPT, Copilot, Gemini), dimenticandoci che questi modelli non "pensano". Calcolano probabilità. E a volte, hanno allucinazioni così realistiche da ingannare anche lo sviluppatore più navigato.
+
+## La Sovrapposizione Quantistica del Codice Generato
+
+Nel 1935, Erwin Schrödinger ideò il suo famoso paradosso: un gatto chiuso in una scatola con un meccanismo letale legato al decadimento di un atomo. Finché non apri la scatola per guardare, la meccanica quantistica ci dice che il gatto è in una "sovrapposizione di stati". È contemporaneamente vivo e morto.
+
+Oggi, il codice che l'IA ti suggerisce nell'editor vive esattamente nello stesso stato.
+
+Quando premi \`Tab\` per accettare quelle venti righe di logica complessa scritte magicamente da Copilot, quel codice è in sovrapposizione quantistica. È contemporaneamente un capolavoro di ingegneria super-ottimizzato e un bug critico che corromperà l'intero database di produzione. Finché non lo esegui, non puoi sapere quale dei due sia.
+
+## Il Fango: L'Allucinazione della Regex
+
+Qualche mese fa, ero sommerso dallo studio per l'esame di Reti Logiche e avevo una scadenza di lavoro assurda: implementare un validatore per codici fiscali e partiva IVA internazionali in un gestionale React.
+
+Ero stanco. Ho aperto ChatGPT e ho scritto: *"Scrivimi una Regex JavaScript infallibile per validare P.IVA europee e codici fiscali"*.
+
+L'IA mi ha sputato fuori un papiro di simboli incomprensibili. Sembrava esoterismo puro, ma aveva l'aria di essere corretto. L'ho copiato, incollato e ho fatto push in produzione alle 18:30 di venerdì.
+
+\`\`\`javascript
+// Bad Code: Fiducia cieca nel Gatto di Schrödinger
+function validateTaxId(taxId) {
+  // Regex generata dall'IA. Non so minimamente come funzioni,
+  // ma me l'ha data con tanta sicurezza che le ho creduto.
+  const aiGeneratedRegex = /^(?:[A-Z]{2})?(?:\\d{2,11}|[A-Z0-9]{16})$/i;
+  
+  if (aiGeneratedRegex.test(taxId)) {
+    saveToDatabase(taxId);
+  }
+}
+\`\`\`
+
+Lunedì mattina il telefono squilla. Il cliente è su tutte le furie. Il sistema stava accettando letteralmente di tutto. C'erano utenti registrati con Partita IVA "PIZZA123" e "BOH".
+
+L'IA aveva avuto un'allucinazione: aveva creato una Regex che validava quasi qualsiasi stringa alfanumerica, e io, per pigrizia, non avevo "aperto la scatola" per controllare se il gatto fosse vivo.
+
+## L'Ingegneria: Collassare la Funzione d'Onda
+
+In meccanica quantistica, l'unico modo per far uscire il sistema dalla sovrapposizione di stati e costringerlo a scegliere una realtà definitiva (vivo o morto) è compiere un'osservazione. Questo processo si chiama *collasso della funzione d'onda*.
+
+Nello sviluppo software moderno, l'osservazione ha un nome ben preciso: **Automated Testing**.
+
+Non puoi fermare l'uso dell'IA, ed è giusto sfruttarla per scrivere codice più velocemente. Ma sei obbligato moralmente e professionalmente a collassare la funzione d'onda prima di mandare quella roba in produzione. Devi scrivere i test.
+
+\`\`\`javascript
+// Good Code: Aprire la scatola con i Test (Vitest / Jest)
+import { describe, it, expect } from 'vitest';
+import { validateTaxId } from './taxUtils';
+
+// L'IA può anche scrivermi la funzione,
+// ma i limiti fisici li decido io con i test.
+describe('validateTaxId', () => {
+  it('dovrebbe accettare una P.IVA italiana valida', () => {
+    expect(validateTaxId('IT12345678901')).toBe(true);
+  });
+
+  it('NON dovrebbe accettare stringhe casuali', () => {
+    // Questo test avrebbe salvato il mio weekend
+    expect(validateTaxId('PIZZA123')).toBe(false);
+    expect(validateTaxId('IT-12')).toBe(false);
+  });
+});
+\`\`\`
+
+## Il Takeaway
+
+L'Intelligenza Artificiale è un copilota straordinario, ma si chiama "copilota" per un motivo. Non è il comandante. Non ha responsabilità penali, non risponde al telefono quando il server va a fuoco di domenica e non deve passare l'esame di Ingegneria del Software al posto vostro.
+
+Usate l'IA per scrivere le funzioni tediose, certo. Ma non incollate *mai* codice di cui non capite il funzionamento intimo, e soprattutto, non consideratelo valido finché non lo avete testato in ogni caso limite.
+
+Ricordatevi sempre: finché non scrivete un Unit Test, il codice della vostra IA è solo un gatto morto in una scatola.
+    `
+},
+  {
     id: "shopify-custom-fields-app-vs-codice-nativo",
     title: "Shopify: Perché pagare 15€ al mese per un <input>? (Spoiler: Non serve)",
     date: "2026-04-14",
