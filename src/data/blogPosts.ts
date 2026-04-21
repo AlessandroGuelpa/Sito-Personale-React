@@ -10,6 +10,380 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "principio-di-inerzia-e-la-sindrome-del-non-toccare",
+    title: "Il Principio di Inerzia: Perché Nessuno Vuole Toccare il Legacy Code",
+    date: "2026-04-17",
+    icon: "🍏",
+    content: `
+Mentre preparavo il primo esonero di Fisica I, c'è una legge di Newton che mi ha fatto sorridere amaramente: il Principio di Inerzia. 
+
+> *"Un corpo mantiene il suo stato di quiete, o di moto rettilineo uniforme, finché una forza esterna non interviene a modificarlo."*
+
+Sostituite "corpo" con "file JavaScript scritto nel 2018" e avrete descritto la filosofia di ogni azienda IT. Il codice legacy gode di un'inerzia mostruosa. Funziona? Più o meno. Nessuno sa perché, chi l'ha scritto ha cambiato lavoro tre anni fa, ma guai a chi lo tocca. Serve un'energia spaventosa (e il rischio di rompere tutto) per alterare quello stato di quiete.
+
+## La Paura della Forza Esterna
+
+Nello sviluppo, la forza esterna siamo noi. Quando ci viene assegnato un task per aggiungere una piccola feature a un monolite, la reazione istintiva non è "rifattorizziamo l'architettura per accogliere questa modifica". La reazione è "come posso incastrare il mio codice senza turbare il mostro?".
+
+E così, strato dopo strato, aggiungiamo cerotti. L'inerzia del sistema inghiotte la nostra voglia di fare le cose per bene.
+
+## Il Fango: Il Cerotto sul Monolite
+
+Qualche tempo fa, dovevo aggiungere un controllo sui permessi utente in un componente React gigantesco, un vero e proprio "God Component" da 1500 righe che gestiva l'intera dashboard clienti.
+
+Avevo due esami alle porte, la scadenza aziendale era vicina. L'idea di spezzare il componente in piccoli pezzi gestibili mi terrorizzava: e se avessi rotto una prop passata al decimo livello?
+
+Ho ceduto all'inerzia. Ho aggiunto l'ennesimo \`if\`.
+
+\`\`\`javascript
+// Bad Code: Seguire la corrente dell'inerzia
+function GodDashboard({ user, data, config, ...props }) {
+  // ... 500 righe di logica ...
+
+  // Il mio cerotto per non toccare il resto:
+  const canSeeButton = user.role === 'admin' || (user.role === 'editor' && config.allowEditors);
+
+  return (
+    <div>
+      {/* ... 800 righe di JSX incasinato ... */}
+      {canSeeButton && <button>Azione Pericolosa</button>}
+    </div>
+  );
+}
+\`\`\`
+
+Il risultato? Il mese dopo serviva un altro permesso. Poi un altro. Il file è arrivato a 2000 righe. Il componente era diventato così pesante che anche l'editor di VS Code laggava ad aprirlo.
+
+## L'Ingegneria: Rompere la Quiete
+
+In fisica, per cambiare lo stato di un corpo massiccio serve l'applicazione mirata di una forza. In programmazione, questa forza si chiama "Astrazione".
+
+Invece di assecondare l'inerzia del monolite, avrei dovuto estrarre la logica in un Custom Hook indipendente. Costava un'ora in più quel giorno, ma avrebbe salvato settimane di debug nei mesi successivi.
+
+\`\`\`javascript
+// Good Code: Applicare una forza (Astrazione)
+function usePermissions(user, config) {
+  // Tutta la logica di business incapsulata e testabile
+  const canEdit = user.role === 'admin' || (user.role === 'editor' && config.allowEditors);
+  const canDelete = user.role === 'superadmin';
+  
+  return { canEdit, canDelete };
+}
+
+// Il componente rimane "leggero"
+function CleanDashboard({ user, config }) {
+  const { canEdit } = usePermissions(user, config);
+
+  return (
+    <div>
+      {canEdit && <button>Azione Pericolosa</button>}
+    </div>
+  );
+}
+\`\`\`
+
+## Il Takeaway
+
+Il codice non è una reliquia sacra. Se un file vi fa paura solo ad aprirlo, significa che l'inerzia ha preso il sopravvento. 
+
+Vincere la resistenza al cambiamento costa fatica ed energia all'inizio, esattamente come spostare un macigno. Ma è l'unico modo per impedire al vostro progetto di fossilizzarsi sotto il peso dei propri cerotti. Non abbiate paura di essere la forza esterna che rimette in moto il sistema.
+    `
+  },
+  {
+    id: "dilatazione-temporale-interstellar-e-optimistic-ui",
+    title: "Dilatazione Temporale: Interstellar e l'Attesa delle API",
+    date: "2026-04-18",
+    icon: "⏳",
+    content: `
+Nel film *Interstellar*, c'è una scena angosciante in cui i protagonisti scendono sul pianeta di Miller. A causa dell'estrema gravità del buco nero vicino, subiscono una brutale dilatazione temporale: un'ora passata su quel pianeta equivale a 7 anni sulla Terra.
+
+Ogni volta che vedo quella scena, penso ai miei utenti quando cliccano "Salva" su una mia applicazione web mal ottimizzata.
+
+La percezione del tempo non è assoluta, né in astrofisica né in UI/UX Design. Per un server backend, elaborare una richiesta al database in 800 millisecondi è un trionfo di efficienza. Ma per un essere umano che fissa uno schermo congelato aspettando che un bottone cambi colore, 800 millisecondi sono un'eternità frustrante.
+
+## Il Fango: L'Attesa Bloccante
+
+Nel mio primo vero progetto freelance (un gestionale per un magazzino), dovevo implementare il pulsante "Metti nei Preferiti".
+
+Seguendo alla lettera i tutorial di base, ho implementato il flusso classico: l'utente clicca, mostro un loader, aspetto la risposta del server, se va bene aggiorno l'interfaccia. 
+
+\`\`\`javascript
+// Bad Code: Sottomettere l'utente alla dilatazione temporale
+async function handleLikeRushed() {
+  setLoading(true); // Blocco l'interfaccia. Inizia l'ansia.
+  
+  try {
+    // Il server è in America, il database è lento. Passa 1 secondo.
+    await api.post('/like', { itemId });
+    setIsLiked(true); // Finalmente, dopo "7 anni", l'icona si colora.
+  } catch (e) {
+    showError();
+  } finally {
+    setLoading(false);
+  }
+}
+\`\`\`
+
+Cosa facevano gli utenti del magazzino? Cliccavano. Vedevano la rotellina girare. Si infastidivano per la latenza, pensavano che non avesse preso il click, e cliccavano di nuovo. Inviavano cinque richieste identiche al backend prima ancora che la prima fosse risolta, mandando in tilt il database.
+
+## L'Ingegneria: Optimistic UI
+
+L'ingegneria moderna del frontend ha inventato una soluzione per "ingannare" questa dilatazione temporale: la **Optimistic UI**.
+
+Il trucco è semplice ma psicologicamente devastante: assumi (ottimisticamente) che il server dirà di sì, e aggiorni l'interfaccia *immediatamente*. L'azione sembra istantanea. Nel frattempo, in background (nello spazio profondo), la richiesta viaggia verso il server. Se miracolosamente dovesse fallire, farai un "rollback" annullando l'azione.
+
+\`\`\`javascript
+// Good Code: Aggiornamento Ottimistico
+async function handleLikeEngineering() {
+  // 1. Salvo lo stato precedente in caso di disastro
+  const previousState = isLiked;
+  
+  // 2. Inganno il tempo: aggiorno IMMEDIATAMENTE la UI.
+  // L'utente percepisce zero latenza. È felice.
+  setIsLiked(!isLiked); 
+
+  try {
+    // 3. Comunico col buco nero (il backend) in modo silenzioso
+    await api.post('/like', { itemId, like: !isLiked });
+  } catch (error) {
+    // 4. Rollback: se l'universo ci rema contro, ripristino il passato.
+    setIsLiked(previousState);
+    toast.error("Ops, salvataggio fallito.");
+  }
+}
+\`\`\`
+
+## Il Takeaway
+
+Il tempo è relativo. Una latenza di mezzo secondo è invisibile nei log di sistema, ma è uno scoglio enorme per l'esperienza utente. 
+
+Quando progettate un'interfaccia, smettetela di tenere i vostri utenti in ostaggio sul pianeta di Miller. Applicate l'Optimistic UI alle azioni reversibili (come i like, le spunte, i toggle). Date l'illusione di una velocità sovrumana; lasciate che sia il codice asincrono sotto il cofano a fare i conti con i buchi neri della rete.
+    `
+  },
+  {
+    id: "radiazione-di-fondo-e-il-cimitero-dei-console-log",
+    title: "Radiazione di Fondo: L'Eco dei console.log Dimenticati",
+    date: "2026-04-19",
+    icon: "📡",
+    content: `
+Nel 1964, i radioastronomi Arno Penzias e Robert Wilson stavano testando una sensibilissima antenna nei laboratori Bell. Continuavano a captare un fastidioso e inspiegabile ronzio di fondo, una radiazione statica presente ovunque puntassero lo strumento. 
+
+Pensarono fosse colpa dei piccioni che avevano nidificato nell'antenna. Invece, avevano appena scoperto la Radiazione Cosmica di Fondo (CMB): l'eco primordiale, raffreddato e indebolito, della colossale esplosione del Big Bang, avvenuto 13,8 miliardi di anni prima.
+
+Anche i nostri browser hanno la loro radiazione di fondo. Solo che noi non l'abbiamo ereditata dal Big Bang. L'abbiamo creata noi, dimenticando i \`console.log()\` in giro per l'applicazione.
+
+## L'Eco delle Battaglie di Debugging
+
+Ogni \`console.log("QUI CI ARRIVA")\` o \`console.log("DATI:", response)\` è l'eco di un momento di panico. È il residuo fossile di una notte in cui non capivi perché un \`useEffect\` scattasse tre volte invece di una.
+
+Il problema è che, una volta risolto il bug (il "Big Bang" della tua fix), chiudi il file, fai commit e deploy. E quel log rimane lì, silente nel codice sorgente, ma pronto a riempire la console del browser di ogni singolo utente che visiterà la tua pagina.
+
+## Il Fango: Esporre Dati Sensibili all'Etere
+
+Preparando il progetto per il corso di Basi di Dati, avevo costruito una fantastica dashboard con React. C'era un bug strano sul login, così, preso dalla foga, ho stampato in console l'intero oggetto utente appena restituito dalle API per capire cosa mancasse.
+
+\`\`\`javascript
+// Bad Code: Il Big Bang della negligenza
+async function loginUser(credentials) {
+  const user = await api.auth(credentials);
+  
+  // Dimenticato qui alle 3 del mattino.
+  // Contiene nome, cognome, token JWT, e forse il gruppo sanguigno.
+  console.log("USER LOGGATO: ", user); 
+  
+  setGlobalUser(user);
+}
+\`\`\`
+
+Il progetto va online. Due settimane dopo, apro i DevTools in produzione per un fix CSS e noto quel blocco di log. Qualsiasi utente (o estensione malevola del browser) avesse aperto la console in quel periodo, avrebbe trovato in chiaro i propri token di sessione spiattellati come un cartellone pubblicitario. 
+
+Oltre a consumare cicli di memoria preziosi del browser per il rendering del JSON in console, stavo esponendo dati sensibili.
+
+## L'Ingegneria: Il Silenziatore Dinamico
+
+In un'applicazione di livello ingegneristico, non ci si affida alla memoria del singolo programmatore per pulire i log. Si delega il compito al sistema di build (come Vite o Webpack) o si crea un'astrazione.
+
+Il codice non dovrebbe mai urlare in produzione. Se proprio devi stampare qualcosa, usa un Logger strutturato che sa in quale ambiente si trova.
+
+\`\`\`javascript
+// Good Code: Filtrare la Radiazione di Fondo
+const Logger = {
+  debug: (...args) => {
+    // La magia: Stampo SOLO se sono sul mio PC in fase di sviluppo
+    if (process.env.NODE_ENV !== 'production') {
+      console.log("[DEBUG]:", ...args);
+    }
+  },
+  error: (...args) => {
+    // Gli errori veri li mando a un sistema esterno come Sentry
+    if (process.env.NODE_ENV === 'production') {
+      Sentry.captureException(args);
+    } else {
+      console.error("[ERROR]:", ...args);
+    }
+  }
+};
+
+// Utilizzo
+Logger.debug("USER LOGGATO: ", user); // Sparisce silenziosamente in Prod!
+\`\`\`
+
+## Il Takeaway
+
+Penzias e Wilson hanno vinto il Premio Nobel per aver ascoltato la radiazione di fondo dell'universo. Voi non vincerete nulla se costringete i browser dei vostri utenti a renderizzare mille stringhe inutili di log a ogni scroll di pagina.
+
+Prendetevi cura della console di produzione. Configurate i vostri linter (es. la regola \`no-console\` di ESLint) o configurate i vostri bundler per rimuovere i log durante la build. L'ambiente di produzione dovrebbe essere muto e buio come lo spazio profondo, rotto solo da eccezioni critiche rigorosamente tracciate.
+    `
+  },
+  {
+    id: "entanglement-quantistico-e-i-disastri-del-global-state",
+    title: "Entanglement Quantistico e l'Incubo del Global State",
+    date: "2026-04-20",
+    icon: "🔗",
+    content: `
+Albert Einstein era un genio assoluto, ma c'era un fenomeno della meccanica quantistica che proprio non riusciva a digerire, tanto da definirlo *"spettrale azione a distanza"*. 
+
+Parliamo dell'Entanglement Quantistico. Se due particelle sono "entangled" (intrecciate), tutto ciò che accade a una di esse si riflette istantaneamente sull'altra, anche se si trovano ai lati opposti della galassia. Modifichi lo spin della Particella A, e la Particella B muta nello stesso istante, senza alcun canale di comunicazione visibile.
+
+Sembra magia nera da film di fantascienza, eppure è scienza. Ed è esattamente la stessa sensazione di impotenza che si prova quando si gestisce male lo stato globale in React. Muti una variabile nel componente Footer e, improvvisamente, il componente Header esplode e l'intera applicazione va in re-render. Azione spettrale a distanza.
+
+## L'Illusione della Comodità
+
+Agli albori dello sviluppo con React, il problema principale era passare i dati dal componente padre ai figli (il *prop-drilling*). Poi scopri la Context API (o Redux, o Zustand) e ti sembra di aver trovato il Santo Graal. 
+
+Pensi: *"Fantastico! Butto tutte le variabili dell'app in un unico enorme Global State, così qualsiasi componente può accedere a qualsiasi dato da ovunque!"*. 
+
+Hai appena entanglato la tua intera base di codice.
+
+## Il Fango: L'Oggetto Divino
+
+In un progetto per un cliente, ho creato un unico \`AppContext\` che conteneva letteralmente tutto: i dati dell'utente, i prodotti nel carrello, il tema chiaro/scuro e persino lo stato di apertura di un singolo modale.
+
+\`\`\`javascript
+// Bad Code: L'Entanglement Globale
+const AppContext = createContext();
+
+function AppProvider({ children }) {
+  const [state, setState] = useState({
+    user: null,
+    cart: [],
+    isModalOpen: false, // <-- Attenzione qui
+  });
+
+  return (
+    <AppContext.Provider value={{ state, setState }}>
+      {children}
+    </AppContext.Provider>
+  );
+}
+\`\`\`
+
+Il disastro? Ogni volta che l'utente cliccava un bottone per aprire un banale popup (modificando \`isModalOpen\`), il reference dell'intero oggetto \`state\` cambiava. 
+
+Siccome la Navbar leggeva lo \`state\` per mostrare il nome utente, e la pagina Prodotti lo leggeva per mostrare il carrello, l'atto di aprire un popup scatenava il re-rendering spettrale di *tutta* l'applicazione. L'app andava a scatti, le ventole del PC decollavano.
+
+## L'Ingegneria: Rompere il Legame
+
+In fisica non puoi spezzare facilmente l'entanglement. In Ingegneria del Software, per fortuna, sì. La soluzione si chiama **Separation of Concerns** (Separazione delle Responsabilità).
+
+Non mettere in un Context globale dati che cambiano frequentemente e dati statici. Isola gli stati in base al loro dominio di competenza.
+
+\`\`\`javascript
+// Good Code: Atomi isolati
+// 1. Context solo per roba che cambia raramente
+const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+}
+
+// 2. Context specifico per il carrello
+const CartProvider = ({ children }) => {
+  const [cart, setCart] = useState([]);
+  return <CartContext.Provider value={cart}>{children}</CartContext.Provider>;
+}
+
+// 3. Gestire lo stato del modale LOCALMENTE, 
+// o usare librerie come Zustand con "selectors" per evitare re-render.
+\`\`\`
+
+Con questo approccio granulare, se il carrello viene modificato, solo i componenti che ascoltano il \`CartContext\` reagiscono. La Navbar con i dati dell'utente se ne sta in pace, imperturbabile.
+
+## Il Takeaway
+
+L'accesso globale e facile ai dati è una trappola mortale travestita da comodità. Più estendete il raggio d'azione di una variabile, più componenti diventeranno dipendenti (entangled) dalle sue mutazioni.
+
+Mantenete lo stato il più locale possibile. Promuovetelo a globale solo quando è strettamente indispensabile, e frammentatelo per logica di business. L'azione fantasma a distanza lasciatela ai fisici quantistici; il vostro codice deve essere prevedibile, isolato e noioso.
+    `
+  },
+  {
+    id: "velocita-della-luce-ping-e-content-delivery-network",
+    title: "Il Limite di c: Perché la Luce è Troppo Lenta per il Tuo Sito",
+    date: "2026-04-21",
+    icon: "⚡",
+    content: `
+Nessuna informazione nell'universo può viaggiare più veloce della luce nel vuoto. La costante *c* (circa 300.000 chilometri al secondo) è il limite di velocità insuperabile imposto dalla Relatività Ristretta.
+
+Trecentomila chilometri al secondo sembrano tanti. Ma quando sei in Italia e stai cercando di caricare un'immagine in alta risoluzione salvata su un server a Tokyo, improvvisamente la luce inizia a sembrare terribilmente lenta. 
+
+È la dura lezione che ogni studente di Reti di Calcolatori impara a sue spese: la larghezza di banda si può comprare, ma con la latenza fisica ci puoi solo convivere.
+
+## La Dittatura della Distanza
+
+Facciamo due conti veloci. In fibra ottica, la luce viaggia a circa 200.000 km/s (il vetro la rallenta rispetto al vuoto). Un pacchetto dati da Milano a Tokyo deve percorrere circa 10.000 km. Solo per fare andata e ritorno (*ping*), la fisica richiede un tempo incomprimibile di circa 100 millisecondi. Aggiungete i vari ritardi di router, switch e handshake SSL, e arrivate facilmente a 250-300ms.
+
+Se la vostra bellissima landing page React richiede 40 file tra immagini, font e bundle JavaScript, e il server è lontano, i vostri utenti stanno aspettando i comodi della meccanica celeste per vedere il sito.
+
+## Il Fango: L'Hosting Monolitico a Basso Costo
+
+Alle prime armi, comprai un server VPS super economico ospitato in un data center in Ohio (USA), perché costava due dollari in meno. Lì ci caricai i file sorgenti, i font giganti non compressi e un video di background in 4K per il portafoglio di un amico fotografo.
+
+\`\`\`html
+<video autoPlay loop muted>
+  <source src="https://mio-server-economico-in-ohio.com/heavy-bg.mp4" type="video/mp4" />
+</video>
+\`\`\`
+
+Il cliente, che operava a Roma, mi chiamò infuriato. *"Il sito è rotto, si vede solo una pagina bianca"*. 
+Non era rotto. Stava semplicemente lottando contro la costanza della velocità della luce e le inefficienze dei cavi sottomarini. Ci metteva 12 secondi interi a renderizzare la prima schermata.
+
+## L'Ingegneria: CDN e Edge Computing
+
+Poiché non possiamo accelerare la luce (Einstein non ce lo permette), l'ingegneria ha aggirato il problema con una soluzione geniale: avvicinare fisicamente il dato all'utente. Questa magia si chiama **CDN (Content Delivery Network)**.
+
+Invece di avere un unico server sperduto in America, la CDN copia le nostre immagini, video e file JavaScript in centinaia di server distribuiti in tutto il mondo (Edge node). 
+
+\`\`\`javascript
+// Good Code: Ingannare la distanza geografica
+// Utilizzando Next.js/Vercel o una CDN come Cloudflare
+import Image from 'next/image';
+
+export default function HeroSection() {
+  return (
+    // Questo componente ottimizza in automatico e serve l'immagine 
+    // dal server CDN geograficamente più vicino all'utente in millisecondi.
+    <Image 
+      src="https://cdn.miosito.com/optimized-hero.webp" 
+      alt="Hero"
+      width={1920}
+      height={1080}
+      priority 
+    />
+  );
+}
+\`\`\`
+
+Quando l'utente da Roma richiede il sito, non attraversa l'oceano. Il suo router dialoga con un server Edge situato magari proprio a Roma, abbattendo la latenza fisica da 150ms a miseri 10ms.
+
+## Il Takeaway
+
+Viviamo nell'illusione che il Cloud sia un'entità astratta, fluttuante nell'etere. Ma il Cloud è fatto di cavi interrati, fondali marini e distanze reali.
+
+Smettiamola di caricare mega-asset locali in cartelle pubbliche aspettandoci miracoli. Appoggiate i file statici, i font e i bundle pesanti su CDN globali (Vercel, Cloudflare, AWS CloudFront). 
+
+Non potete corrompere le leggi della fisica per far viaggiare i vostri dati più velocemente, ma potete (e dovete) essere furbi abbastanza da accorciare il tragitto.
+    `
+  },
+  {
     id: "gatto-di-schrodinger-e-allucinazioni-ia",
     title: "Il Gatto di Schrödinger e l'IA: Perché Copilot non ti Salverà",
     date: "2026-04-16",
