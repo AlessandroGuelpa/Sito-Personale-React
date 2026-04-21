@@ -10,6 +10,164 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "principio-di-archimede-e-i-container-docker",
+    title: "Il Principio di Archimede: Fai Galleggiare le Tue App con Docker",
+    date: "2026-03-31",
+    icon: "🐳",
+    content: `
+
+A Siracusa, nel III secolo a.C., Archimede si immerse in una vasca da bagno, notò che l'acqua traboccava e capì il principio del galleggiamento. Leggenda vuole che sia uscito nudo per strada urlando *"Eureka!"*.
+
+Noi sviluppatori non urliamo "Eureka" in vasca da bagno. Lo urliamo alle tre di notte quando, dopo due giorni di errori incomprensibili, l'applicazione finalmente si avvia. E spesso, la "vasca" che ci salva la vita è un container Docker.
+
+## La Spinta Idrostatica del Software
+
+Il Principio di Archimede afferma che un corpo immerso in un fluido riceve una spinta verso l'alto pari al peso del fluido spostato. In pratica, se la densità del corpo è strutturata bene, il corpo galleggia, indipendente da quanto sia profondo o turbolento l'oceano sotto di lui.
+
+Nello sviluppo moderno, l'oceano turbolento è il sistema operativo del vostro computer (o del server). Tra versioni di Node.js incompatibili, variabili d'ambiente mancanti e librerie globali in conflitto, far girare un progetto vecchio sul vostro Mac nuovo è un incubo. 
+
+I Container sono l'applicazione pratica del galleggiamento: chiudiamo il nostro codice e le sue dipendenze in una "nave" stagna. La nave galleggia sul Kernel del sistema operativo host, ma non si allaga mai con i problemi locali.
+
+## Il Fango: L'Incompatibilità Globale
+
+Qualche mese fa ho clonato il repository di un vecchio progetto React + Express universitario per fare una piccola modifica. 
+
+Non ho usato Docker. Ho semplicemente fatto \`npm install\` e \`npm start\`.
+
+\`\`\`bash
+// Bad Code: Affogare nell'oceano delle dipendenze globali
+$ npm start
+
+Error: error:0308010C:digital envelope routines::unsupported
+    at new Hash (node:internal/crypto/hash:71:19)
+    at Object.createHash (node:crypto:133:10)
+    ...
+\`\`\`
+
+Il progetto usava Node.js v14. Il mio Mac aveva installato Node.js v20. L'algoritmo di hashing di Webpack era deprecato nelle versioni nuove. Ho passato tre ore a disinstallare e reinstallare versioni di Node con NVM, rompendo nel processo altri due progetti moderni a cui stavo lavorando. Ero letteralmente andato a fondo.
+
+## L'Ingegneria: Costruire lo Scafo (Dockerfile)
+
+L'ingegneria software seria non tollera il "funziona solo se hai esattamente il mio stesso computer". L'ingegneria richiede ambienti immutabili. 
+
+Ho cancellato tutto, ho fatto un bel respiro e ho scritto un \`Dockerfile\`. Ho creato una barca su misura che conteneva la vecchia e rassicurante versione di Node.js, isolandola dal mio Mac.
+
+\`\`\`dockerfile
+# Good Code: Il nostro scafo stagno
+# Partiamo da un "fluido" isolato con la versione esatta che ci serve
+FROM node:14-alpine
+
+# Creiamo la cabina di pilotaggio
+WORKDIR /app
+
+# Imbarchiamo i file
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+# Salpiamo
+EXPOSE 3000
+CMD ["npm", "start"]
+\`\`\`
+
+Con un banale \`docker build\` e \`docker run\`, l'applicazione è partita al primo colpo, galleggiando felicemente nel suo container, totalmente all'oscuro del fatto che fuori ci fosse Node 20.
+
+## Il Takeaway
+
+L'ecosistema del vostro computer locale è caotico e in continua mutazione. Se non isolate le vostre applicazioni, prima o poi verranno affondate da un aggiornamento di sistema o da una libreria globale sovrascritta.
+
+Imparate a "containerizzare" i vostri progetti fin dal giorno zero. Non solo vi salverà la sanità mentale quando cambierete PC, ma sarete certi che la vostra app galleggerà esattamente allo stesso modo sia sul vostro localhost che sui server di produzione. Archimede ne sarebbe orgoglioso.
+
+    `
+  },
+  {
+    id: "forza-di-attrito-e-la-ux-dei-form",
+    title: "La Forza di Attrito: Perché gli Utenti Abbandonano il Tuo Sito",
+    date: "2026-04-15",
+    icon: "🛹",
+    content: `
+
+Chiunque abbia preparato l'esame di Fisica I sa che i problemi sul "piano inclinato senza attrito" sono una meravigliosa menzogna. Nella realtà, i cubetti di legno non scivolano all'infinito. Si fermano. 
+
+L'attrito è la forza che si oppone al movimento di due superfici a contatto. Dissipa energia sotto forma di calore, rallenta gli oggetti e, se è abbastanza forte (attrito statico), impedisce persino che il movimento inizi.
+
+Se c'è un campo in cui l'attrito fa più danni che in meccanica, è la User Experience (UX) dello sviluppo web. Ogni click inutile, ogni campo form in più e ogni secondo di caricamento è pura forza di attrito che agisce contro l'utente, consumando la sua pazienza fino a farlo fermare del tutto (e fargli chiudere la scheda del browser).
+
+## L'Attrito Statico del Checkout
+
+In fisica, l'attrito statico è sempre maggiore dell'attrito dinamico. Significa che serve molta più spinta per far partire un blocco fermo rispetto a quanta ne serve per mantenerlo in movimento.
+
+Nel web, la registrazione è il nostro attrito statico. Un utente vuole comprare un prodotto (vuole muoversi). Ma prima di pagare, tu sviluppatore gli piazzi davanti un muro: "Crea un account, inserisci nome, cognome, indirizzo, codice fiscale, data di nascita, e confermami la mail". Lo sforzo iniziale è così alto che l'utente molla la presa. Hai perso una vendita.
+
+## Il Fango: Form Infiniti e Pazienza Esaurita
+
+Per un e-commerce locale di vestiti, ho sviluppato la pagina di checkout. Il cliente (il negoziante) mi aveva detto: *"Prendi più dati possibili, voglio sapere tutto di loro per fare marketing!"*.
+
+Da bravo soldatino, ho costruito un mostro in React. 
+
+\`\`\`jsx
+// Bad Code: Il piano inclinato ricoperto di carta vetrata
+function CheckoutForm() {
+  return (
+    <form>
+      <h2>Per favore, compila questi 15 campi per comprare una t-shirt</h2>
+      <input type="text" placeholder="Nome" required />
+      <input type="text" placeholder="Cognome" required />
+      <input type="email" placeholder="Email" required />
+      <input type="password" placeholder="Crea Password" required />
+      <input type="password" placeholder="Conferma Password" required />
+      <input type="text" placeholder="Codice Fiscale" required />
+      <input type="text" placeholder="Come ci hai conosciuto?" />
+      {/* Altre 50 righe di noia mortale... */}
+      <button>Forse, prima o poi, Paga</button>
+    </form>
+  );
+}
+\`\`\`
+
+Il tasso di abbandono del carrello superava l'85%. Gli utenti mettevano la maglietta nel carrello, vedevano il questionario stile interrogatorio della polizia e scappavano a comprarla su Amazon, dove basta uno swipe.
+
+## L'Ingegneria: Lubrificare il Flusso
+
+L'ingegneria dei materiali usa i lubrificanti per ridurre il coefficiente di attrito. L'ingegneria del software usa l'autenticazione rapida e il **Guest Checkout**.
+
+Per risolvere la crisi, ho cancellato due terzi del form. Ho aggiunto l'accesso tramite Google e ho permesso agli utenti di pagare senza creare un account permanente, chiedendo solo l'indirizzo di spedizione essenziale.
+
+\`\`\`jsx
+// Good Code: Attrito azzerato (Il ghiaccio perfetto)
+function SmoothCheckout() {
+  return (
+    <div className="checkout-flow">
+      <h2>Pagamento Rapido</h2>
+      
+      {/* 1. Lubrificante sociale: un solo click */}
+      <GoogleLoginButton text="Continua con Google" />
+      
+      <Divider text="oppure" />
+      
+      {/* 2. Zero barriere: Guest Checkout essenziale */}
+      <form>
+        <input type="email" placeholder="Email per la ricevuta" required />
+        <AddressAutocomplete /> {/* Autocompilazione da Google Maps! */}
+        <button>Vai al Pagamento Sicuro</button>
+      </form>
+    </div>
+  );
+}
+\`\`\`
+
+Risultato? Conversioni raddoppiate la settimana successiva. La spinta per "iniziare il moto" era diventata talmente bassa che l'acquisto sembrava naturale.
+
+## Il Takeaway
+
+Non c'è niente di più prezioso della forza di inerzia di un utente motivato. Quando naviga sul tuo sito con un intento, ha una certa velocità.
+
+Il tuo compito come sviluppatore non è testare quanto forte sia la sua motivazione mettendogli ostacoli (campi form inutili, popup, conferme captcha incomprensibili). Il tuo compito è creare una superficie di ghiaccio in cui possa scivolare verso l'obiettivo senza nemmeno accorgersene. Riduci l'attrito, e le tue metriche ti ringrazieranno.
+
+    `
+  },
+  {
     id: "principio-di-inerzia-e-la-sindrome-del-non-toccare",
     title: "Il Principio di Inerzia: Perché Nessuno Vuole Toccare il Legacy Code",
     date: "2026-04-17",
