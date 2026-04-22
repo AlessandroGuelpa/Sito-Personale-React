@@ -10,6 +10,31 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "overshoot-day-trogloditi",
+    title: "Earth Overshoot Day: Trogloditi al volante e debiti incolmabili",
+    date: "2026-04-22",
+    icon: "🤬",
+    content: `
+Oggi sono incazzato nero. Non c'è spazio per le solite riflessioni sull'ingegneria del software o per le digressioni affascinanti sull'astrofisica. Oggi c'è solo spazio per il disgusto.
+
+Stavo guidando e ascoltavo un episodio del podcast di Geopop sull'Earth Overshoot Day. Per chi vivesse sotto un sasso, è il giorno in cui l'umanità esaurisce ufficialmente tutte le risorse naturali che la Terra è in grado di rigenerare in un anno. In Italia cade circa il 3 maggio. Significa che dal 4 maggio in poi stiamo letteralmente rubando risorse al futuro. Stiamo raschiando il fondo del barile.
+
+E proprio mentre ascolto dati allarmanti su come stiamo prosciugando il pianeta, si materializza davanti ai miei occhi l'apoteosi dell'ignoranza: l'energumeno nell'auto davanti a me abbassa il finestrino e lancia un mozzicone di sigaretta acceso in terra.
+
+Vi giuro, mi è salito il sangue al cervello.
+
+Siamo una specie di parassiti con la presunzione di essere padroni di casa. Ci facciamo venire gli attacchi di panico per l'inflazione, lo spread, le rate del mutuo, e sudiamo freddo se il bancomat ci rifiuta un prelievo da venti euro. Ma quando si tratta del nostro "conto corrente" biologico e planetario, agiamo come dei perfetti decerebrati.
+
+> *"Tanto è solo una sigaretta, mica sto appiccando un incendio."*
+
+Questa è la mentalità del troglodita medio. Quello che mi fa salire il veleno è la totale disconnessione tra il macro-disastro che stiamo vivendo e i micro-gesti da imbecille del signor Nessuno. Il tizio del finestrino non è un'eccezione, è il sintomo. È la personificazione di una società che non capisce il concetto di "limite". 
+
+Se non riesci a concepire che accumulare questo ritardo ecologico anno dopo anno significa inevitabilmente schiantarsi a 200 all'ora contro un muro, non sei solo parte del problema: sei il muro stesso.
+
+Oggi è così. L'unico "drop" che vorrei fare è prendere queste persone e buttarle direttamente nel cestino dell'umido. E probabilmente non andrebbero bene neanche come compost.
+`
+},
+  {
     id: "principio-di-archimede-e-i-container-docker",
     title: "Il Principio di Archimede: Fai Galleggiare le Tue App con Docker",
     date: "2026-03-31",
