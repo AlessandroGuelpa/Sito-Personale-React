@@ -47,18 +47,19 @@ export const Navbar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand className="gap-3 max-w-fit">
           <Link
+            aria-label="Alessandro Guelpa — torna alla home"
             className="flex justify-start items-center gap-1"
             color="foreground"
             href="/"
           >
             <img
-              alt="Alessandro Guelpa Logo"
+              alt=""
               className="w-[80px] min-w-[80px] h-[100px] shrink-0 object-contain block dark:hidden"
               src="/logo_white.webp"
             />
 
             <img
-              alt="Alessandro Guelpa Logo"
+              alt=""
               className="w-[80px] min-w-[80px] h-[100px] shrink-0 object-contain hidden dark:block"
               src="/logo_black.webp"
             />

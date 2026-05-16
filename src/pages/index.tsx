@@ -104,7 +104,7 @@ export default function IndexPage() {
           <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 to-pink-600 rounded-2xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt" />
           <div className="relative">
             <img
-              alt="Alessandro Guelpa"
+              alt="Ritratto di Alessandro Guelpa, sviluppatore front-end"
               className="w-full h-auto rounded-2xl shadow-2xl object-cover transform transition-transform duration-500 hover:scale-[1.02] border-2 border-white/10 rotate-3 hover:rotate-0"
               src="/io.jpeg"
             />
