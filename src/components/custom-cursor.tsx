@@ -1,56 +1,69 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export const CustomCursor = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const isHoveredRef = useRef(false);
 
-  // Use MotionValues for performance
+  // Use MotionValues for performance (no React re-render on move)
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  // Add a spring physics effect to make it feel smooth
   const springConfig = { damping: 25, stiffness: 200, mass: 0.5 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
-    // Hide default cursor globally when this component is active
+    // Non attaccare nulla su dispositivi touch
+    if (
+      typeof window === "undefined" ||
+      window.matchMedia("(pointer: coarse)").matches
+    ) {
+      return;
+    }
+
     document.body.classList.add("hide-default-cursor");
 
-    const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX - 16); // offset by half width to center
-      cursorY.set(e.clientY - 16);
+    let rafId = 0;
+    let nextX = 0;
+    let nextY = 0;
+
+    const flush = () => {
+      rafId = 0;
+      cursorX.set(nextX - 16);
+      cursorY.set(nextY - 16);
     };
 
-    // Detect if hovering over clickable elements
+    const moveCursor = (e: MouseEvent) => {
+      nextX = e.clientX;
+      nextY = e.clientY;
+      if (rafId === 0) rafId = requestAnimationFrame(flush);
+    };
+
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
+      const clickable = Boolean(
+        target.closest("a, button, [role='button']"),
+      );
 
-      if (
-        target.tagName.toLowerCase() === "a" ||
-        target.tagName.toLowerCase() === "button" ||
-        target.closest("a") ||
-        target.closest("button") ||
-        (target.hasAttribute("role") &&
-          target.getAttribute("role") === "button")
-      ) {
-        setIsHovered(true);
-      } else {
-        setIsHovered(false);
+      // Aggiorna lo stato (e quindi ri-renderizza) solo se cambia davvero
+      if (clickable !== isHoveredRef.current) {
+        isHoveredRef.current = clickable;
+        setIsHovered(clickable);
       }
     };
 
-    window.addEventListener("mousemove", moveCursor);
-    window.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("mousemove", moveCursor, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
 
     return () => {
       document.body.classList.remove("hide-default-cursor");
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("mouseover", handleMouseOver);
+      if (rafId !== 0) cancelAnimationFrame(rafId);
     };
   }, [cursorX, cursorY]);
 
-  // Hide cursor on touch devices to avoid issues
   if (
     typeof window !== "undefined" &&
     window.matchMedia("(pointer: coarse)").matches
