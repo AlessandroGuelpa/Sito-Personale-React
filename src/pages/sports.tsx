@@ -1,6 +1,8 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { Helmet } from "react-helmet-async";
 
 import DefaultLayout from "@/layouts/default";
+import { SITE_URL, SITE_NAME } from "@/utils/seo";
 // @ts-ignore
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -52,6 +54,22 @@ const SportCard = ({
 export default function Sports() {
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>{`Sport e Passioni | ${SITE_NAME}`}</title>
+        <meta
+          name="description"
+          content="Jujitsu, MMA, sala pesi e trekking: gli sport e le passioni che mi tengono in equilibrio fuori dal codice."
+        />
+        <link rel="canonical" href={`${SITE_URL}/sports`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${SITE_URL}/sports`} />
+        <meta property="og:title" content={`Sport e Passioni | ${SITE_NAME}`} />
+        <meta
+          property="og:description"
+          content="Jujitsu, MMA, sala pesi e trekking: gli sport che mi tengono in equilibrio fuori dal codice."
+        />
+      </Helmet>
+
       {/* Background Elements */}
       <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob" />

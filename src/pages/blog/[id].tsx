@@ -8,6 +8,17 @@ import rehypeKatex from 'rehype-katex';
 
 import DefaultLayout from "@/layouts/default";
 import { blogPosts } from "@/data/blogPosts";
+import {
+  SITE_URL,
+  SITE_NAME,
+  DEFAULT_OG_IMAGE,
+  TWITTER_HANDLE,
+  AUTHOR_NAME,
+  buildExcerpt,
+  blogPostUrl,
+  blogPostJsonLd,
+  breadcrumbJsonLd,
+} from "@/utils/seo";
 
 export default function BlogPostPage() {
   const { id } = useParams<{ id: string }>();
@@ -26,23 +37,50 @@ export default function BlogPostPage() {
     );
   }
 
-  const pageUrl = `https://alessandroguelpa.it/blog/${post.id}`;
-  // Puoi aggiungere un campo `excerpt` al tuo array di post per SEO,
-  // o estrarre dinamicamente i primi 150 caratteri del markdown
-  const seoDescription = post.content.substring(0, 150).replace(/[#*`_]/g, "") + "...";
+  const pageUrl = blogPostUrl(post.id);
+  const seoDescription = buildExcerpt(post);
+  const ogImage = post.coverImage ?? DEFAULT_OG_IMAGE;
+  const articleJsonLd = blogPostJsonLd(post);
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Home", url: SITE_URL },
+    { name: "Blog", url: `${SITE_URL}/blog` },
+    { name: post.title, url: pageUrl },
+  ]);
 
   return (
     <DefaultLayout>
       <Helmet>
-        <title>{post.title} | Alessandro Guelpa</title>
+        <title>{`${post.title} | ${SITE_NAME}`}</title>
         <meta name="description" content={seoDescription} />
         <link rel="canonical" href={pageUrl} />
-        
-        {/* Open Graph Tags per una condivisione social perfetta */}
-        <meta property="og:title" content={`${post.title} | Alessandro Guelpa`} />
+
+        {/* Open Graph */}
+        <meta property="og:site_name" content={SITE_NAME} />
+        <meta property="og:locale" content="it_IT" />
+        <meta property="og:title" content={`${post.title} | ${SITE_NAME}`} />
         <meta property="og:description" content={seoDescription} />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="article" />
+        <meta property="og:image" content={ogImage} />
+        <meta property="article:published_time" content={post.date} />
+        <meta property="article:author" content={AUTHOR_NAME} />
+        {post.tags?.map((tag) => (
+          <meta key={tag} property="article:tag" content={tag} />
+        ))}
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content={TWITTER_HANDLE} />
+        <meta name="twitter:title" content={`${post.title} | ${SITE_NAME}`} />
+        <meta name="twitter:description" content={seoDescription} />
+        <meta name="twitter:image" content={ogImage} />
+
+        <script type="application/ld+json">
+          {JSON.stringify(articleJsonLd)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumb)}
+        </script>
       </Helmet>
 
       <article className="max-w-3xl mx-auto px-4 py-12 md:py-20 relative z-10">
