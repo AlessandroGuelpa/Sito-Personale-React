@@ -54,14 +54,18 @@ export const Navbar = () => {
           >
             <img
               alt=""
-              className="w-[80px] min-w-[80px] h-[100px] shrink-0 object-contain block dark:hidden"
+              className="h-16 w-auto shrink-0 block dark:hidden"
+              height={300}
               src="/logo_white.webp"
+              width={400}
             />
 
             <img
               alt=""
-              className="w-[80px] min-w-[80px] h-[100px] shrink-0 object-contain hidden dark:block"
+              className="h-16 w-auto shrink-0 hidden dark:block"
+              height={300}
               src="/logo_black.webp"
+              width={400}
             />
           </Link>
         </NavbarBrand>
