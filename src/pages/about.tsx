@@ -1,4 +1,3 @@
-//import { title } from "@/components/primitives";
 import { FaDownload } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 
