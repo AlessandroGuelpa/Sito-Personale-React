@@ -32,10 +32,9 @@ export default function IndexPage() {
       </Helmet>
 
       <section className="relative flex flex-col md:flex-row items-center justify-between gap-12 pt-12 pb-24 py-5 md:pt-10 md:pb-40 overflow-hidden">
-        <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-          <div className="absolute -top-20 -left-20 w-[28rem] h-[28rem] bg-violet-500/20 rounded-full mix-blend-screen filter blur-3xl opacity-40 animate-blob" />
-          <div className="absolute top-1/3 -right-24 w-[30rem] h-[30rem] bg-fuchsia-500/20 rounded-full mix-blend-screen filter blur-3xl opacity-40 animate-blob animation-delay-2000" />
-          <div className="absolute -bottom-24 left-1/3 w-[26rem] h-[26rem] bg-orange-500/10 rounded-full mix-blend-screen filter blur-3xl opacity-40 animate-blob animation-delay-4000" />
+        <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+          <div className="hero-dot-grid absolute inset-0" />
+          <div className="absolute left-1/2 top-[38%] -translate-x-1/2 -translate-y-1/2 w-[42rem] h-[42rem] rounded-full bg-violet-500/15 dark:bg-violet-500/20 blur-3xl" />
         </div>
 
         <div className="max-w-2xl text-center md:text-left z-10">
@@ -99,6 +98,7 @@ export default function IndexPage() {
           initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
           transition={{ duration: 1, delay: 0.3, type: "spring" }}
         >
+          <div className="absolute -inset-10 rounded-full bg-violet-500/20 dark:bg-violet-500/25 blur-3xl" />
           <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 to-pink-600 rounded-2xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt" />
           <div className="relative">
             <img
