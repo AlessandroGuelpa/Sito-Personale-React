@@ -6,6 +6,9 @@ export interface BlogPost {
   date: string;
   content: string;
   icon?: ReactNode | string;
+  excerpt?: string;
+  tags?: string[];
+  coverImage?: string;
 }
 
 export const blogPosts: BlogPost[] = [

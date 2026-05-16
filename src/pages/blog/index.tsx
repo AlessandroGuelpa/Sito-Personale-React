@@ -2,14 +2,59 @@ import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import { title, subtitle } from "@/components/primitives";
 import DefaultLayout from "@/layouts/default";
 import { blogPosts } from "@/data/blogPosts";
+import {
+  SITE_URL,
+  SITE_NAME,
+  buildExcerpt,
+  blogPostUrl,
+} from "@/utils/seo";
 
 export default function BlogPage() {
+  const sortedPosts = [...blogPosts].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+  const blogJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: `Blog | ${SITE_NAME}`,
+    url: `${SITE_URL}/blog`,
+    inLanguage: "it-IT",
+    author: { "@type": "Person", name: SITE_NAME, url: SITE_URL },
+    blogPost: sortedPosts.map((post) => ({
+      "@type": "BlogPosting",
+      headline: post.title,
+      url: blogPostUrl(post.id),
+      datePublished: post.date,
+      description: buildExcerpt(post, 200),
+    })),
+  };
+
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>{`Blog | ${SITE_NAME}`}</title>
+        <meta
+          name="description"
+          content="Articoli su sviluppo front-end, React, Shopify e riflessioni tecniche. Aggiornamenti quotidiani di Alessandro Guelpa."
+        />
+        <link rel="canonical" href={`${SITE_URL}/blog`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${SITE_URL}/blog`} />
+        <meta property="og:title" content={`Blog | ${SITE_NAME}`} />
+        <meta
+          property="og:description"
+          content="Articoli su sviluppo front-end, React, Shopify e riflessioni tecniche."
+        />
+        <script type="application/ld+json">
+          {JSON.stringify(blogJsonLd)}
+        </script>
+      </Helmet>
+
       <section className="flex flex-col items-center justify-center gap-8 py-8 md:py-16">
         <div className="text-center">
           <motion.h1
@@ -31,8 +76,7 @@ export default function BlogPage() {
         </div>
 
         <div className="w-full max-w-4xl px-4 flex flex-col gap-12 mt-8">
-          {[...blogPosts]
-            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+          {sortedPosts
             .map((post, index) => (
             <motion.article
               key={post.id}

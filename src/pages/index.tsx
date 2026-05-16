@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 
 import { siteConfig } from "@/config/site";
@@ -7,6 +8,7 @@ import { GithubIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
 import { TechMarquee } from "@/components/tech-marquee";
 import { blogPosts } from "@/data/blogPosts";
+import { SITE_URL, SITE_NAME } from "@/utils/seo";
 
 // Importiamo il componente 3D in modo asincrono (Lazy Load)
 const Background3D = lazy(() => import("@/components/background-3d").then(module => ({ default: module.Background3D })));
@@ -14,6 +16,25 @@ const Background3D = lazy(() => import("@/components/background-3d").then(module
 export default function IndexPage() {
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>{`${SITE_NAME} — Front-end & Shopify Developer | Portfolio`}</title>
+        <meta
+          name="description"
+          content="Sviluppatore front-end specializzato in React, Tailwind e Shopify. Case study, articoli tecnici e contatti per collaborazioni e freelance."
+        />
+        <link rel="canonical" href={SITE_URL} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={SITE_URL} />
+        <meta
+          property="og:title"
+          content={`${SITE_NAME} — Front-end & Shopify Developer | Portfolio`}
+        />
+        <meta
+          property="og:description"
+          content="Portfolio, articoli tecnici e progetti in React, Tailwind e Shopify."
+        />
+      </Helmet>
+
       <section className="relative flex flex-col md:flex-row items-center justify-between gap-12 pt-12 pb-24 py-5 md:pt-10 md:pb-40 overflow-hidden">
         <Suspense fallback={<div className="absolute inset-0 z-0 bg-transparent" />}>
           <Background3D />

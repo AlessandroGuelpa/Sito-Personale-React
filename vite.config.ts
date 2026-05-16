@@ -17,19 +17,21 @@ function generateSitemap() {
 
       // 1. Definisci le tue rotte statiche principali
       const staticPages = [
-        { path: '', priority: '1.0' },
-        { path: '/about', priority: '0.8' },
-        { path: '/project', priority: '0.8' },
-        { path: '/sports', priority: '0.8' },
-        { path: '/blog', priority: '0.8' },
-        { path: '/contact', priority: '0.5' },
+        { path: '', priority: '1.0', changefreq: 'weekly' },
+        { path: '/about', priority: '0.8', changefreq: 'monthly' },
+        { path: '/project', priority: '0.8', changefreq: 'weekly' },
+        { path: '/sports', priority: '0.8', changefreq: 'monthly' },
+        { path: '/blog', priority: '0.9', changefreq: 'daily' },
+        { path: '/contact', priority: '0.5', changefreq: 'yearly' },
       ];
 
-      const staticUrls = staticPages.map(page => `  <url>\n    <loc>${baseUrl}${page.path}</loc>\n    <lastmod>${today}</lastmod>\n    <priority>${page.priority}</priority>\n  </url>`).join('\n');
+      const staticUrls = staticPages.map(page => `  <url>\n    <loc>${baseUrl}${page.path}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${page.changefreq}</changefreq>\n    <priority>${page.priority}</priority>\n  </url>`).join('\n');
 
-      // 2. Genera dinamicamente le rotte per ogni post del blog
+      // 2. Genera dinamicamente le rotte per ogni post del blog (più recenti prima)
       // Usiamo 'any' per evitare errori di compilazione TS nel file di config
-      const dynamicUrls = blogPosts.map((post: any) => `  <url>\n    <loc>${baseUrl}/blog/${post.id}</loc>\n    <lastmod>${post.date}</lastmod>\n    <priority>0.6</priority>\n  </url>`).join('\n');
+      const dynamicUrls = [...blogPosts]
+        .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .map((post: any) => `  <url>\n    <loc>${baseUrl}/blog/${post.id}</loc>\n    <lastmod>${post.date}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`).join('\n');
 
       const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${staticUrls}\n${dynamicUrls}\n</urlset>`;
 
