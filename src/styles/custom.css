@@ -69,6 +69,34 @@ nav.flex.z-40.w-full.h-auto.items-center.justify-center.data-\[menu-open\=true\]
   }
 }
 
+/* Sfondo hero: griglia di puntini con sfumatura radiale ai bordi */
+.hero-dot-grid {
+  background-image: radial-gradient(
+    circle,
+    rgba(113, 113, 122, 0.3) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 42%,
+    #000 0%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 42%,
+    #000 0%,
+    transparent 78%
+  );
+}
+
+.dark .hero-dot-grid {
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 1px,
+    transparent 1px
+  );
+}
+
 /* Rispetta la preferenza di sistema per il movimento ridotto */
 @media (prefers-reduced-motion: reduce) {
   *,
