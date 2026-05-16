@@ -23,7 +23,7 @@ const Shapes = () => {
 
       <Float floatIntensity={1.5} rotationIntensity={2} speed={2}>
         <mesh position={[2, -1, 1]} scale={0.8}>
-          <torusKnotGeometry args={[0.8, 0.2, 128, 32]} />
+          <torusKnotGeometry args={[0.8, 0.2, 64, 16]} />
           <MeshDistortMaterial
             clearcoat={1}
             color="#e879f9"
@@ -37,7 +37,7 @@ const Shapes = () => {
 
       <Float floatIntensity={1} rotationIntensity={1} speed={1}>
         <mesh position={[0, 2, -3]} scale={0.6}>
-          <sphereGeometry args={[1, 64, 64]} />
+          <sphereGeometry args={[1, 32, 32]} />
           <MeshDistortMaterial
             clearcoat={1}
             color="#f97316"
@@ -55,7 +55,11 @@ const Shapes = () => {
 export const Background3D = () => {
   return (
     <div className="absolute inset-0 -z-10 pointer-events-none">
-      <Canvas camera={{ position: [0, 0, 8], fov: 50 }} dpr={[1, 2]}>
+      <Canvas
+        camera={{ position: [0, 0, 8], fov: 50 }}
+        dpr={[1, 1.5]}
+        gl={{ powerPreference: "high-performance" }}
+      >
         <Suspense fallback={null}>
           <ambientLight intensity={0.8} />
           <directionalLight
