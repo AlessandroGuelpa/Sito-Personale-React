@@ -1,0 +1,43 @@
+name: Post blog giornaliero
+
+# Piano B: pubblica un post al giorno senza dipendere dal cloud claude.ai o dal Mac.
+# Richiede il secret repo ANTHROPIC_API_KEY (Settings > Secrets and variables > Actions).
+#
+# NOTA fuso orario: il cron di GitHub Actions è in UTC. 07:00 UTC corrisponde a
+# 09:00 ora di Roma in estate (CEST) e 08:00 in inverno (CET) — GitHub non
+# supporta i fusi orari nel cron, quindi c'è uno scostamento di 1h d'inverno.
+
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  pubblica-post:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Leggi il file .claude/blog-routine-prompt.md in questo repo ed esegui
+            ESATTAMENTE le istruzioni che contiene per pubblicare il post blog di
+            oggi: rotazione temi da blog-topics.md, nuovo post in cima all'array
+            in src/data/blogPosts.ts con la data di oggi, build di verifica,
+            commit "📝 Pubblicato nuovo post" e push su main.
+          claude_args: |
+            --allowedTools Bash,Edit,Read,Write,Glob,Grep
+            --max-turns 30
+            --model claude-opus-4-7
