@@ -13,8 +13,9 @@ successivo (a giro, in ordine di lista).
 
 ## Stato
 
-Prossimo tema: 1
+Prossimo tema: 2
 
 ## Storico (ultimi post pubblicati dalla routine)
 
 <!-- la routine aggiunge qui: AAAA-MM-GG — [tema] — titolo -->
+2026-05-24 — Ingegneria generale — Single Point of Failure: il bullone che regge tutto (e che nessuno controlla)

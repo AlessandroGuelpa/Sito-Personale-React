@@ -13,6 +13,35 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "single-point-of-failure-il-bullone-che-regge-tutto",
+    title: "Single Point of Failure: il bullone che regge tutto (e che nessuno controlla)",
+    date: "2026-05-24",
+    icon: "🔩",
+    content: `
+Gli ingegneri meccanici hanno un'ossessione che noi sviluppatori, mediamente, ci sogniamo: la **ridondanza**. Su un ponte, su un aereo, su un razzo, ogni componente critico ha un fratello gemello pronto a entrare in servizio quando il primo cede. Tre sistemi idraulici indipendenti su un 737. Quattro motori dove ne basterebbero due. Tiranti progettati per reggere otto volte il carico massimo previsto.
+
+Poi guardo l'architettura di certi sistemi software e mi viene da ridere. O da piangere, dipende dal caffè.
+
+Hai un solo database. Una sola istanza del servizio di autenticazione. Una sola chiave API in un .env che vive solo nella testa del collega che l'ha messa lì due anni fa e ora lavora altrove. Una sola persona in azienda che sa come funziona davvero quel cron job in produzione. E quando una di queste cose cade, tutto cade.
+
+Quello è un **Single Point of Failure**. Un bullone. Un solo bullone che regge tutto.
+
+> *"Eh ma fino ad oggi ha funzionato."*
+
+Sì. Anche il tirante del ponte Morandi ha funzionato fino al giorno in cui non ha più funzionato. La differenza è che lì le conseguenze le abbiamo viste tutti. Quando salta il tuo SPOF software, la conseguenza la vedi solo tu, alle 3 di notte, mentre Slack esplode e il cliente urla.
+
+La cosa più ipocrita è che lo sappiamo benissimo. Ne parliamo nei post-mortem, lo mettiamo nelle slide di "lessons learned", scriviamo ticket col tag *tech-debt* che restano aperti per due anni. Poi torniamo alla feature nuova perché il bullone, oggi, regge ancora.
+
+L'ingegnere meccanico non si comporta così. L'ingegnere meccanico assume che **tutto, prima o poi, cede**. Non se. Quando. E progetta di conseguenza: con margini, con ridondanze, con piani di manutenzione, con ispezioni periodiche. Considera la rottura come un evento atteso, non come una sfortuna.
+
+Noi invece la trattiamo come una notizia improvvisa. *"Non ci credo, si è rotto."* Eh sì che si è rotto. Era un solo bullone.
+
+La prossima volta che disegni un sistema, prova a fare un esercizio brutale: per ogni componente, chiediti *cosa succede se questo, ora, sparisce*. Se la risposta è "il mondo finisce", hai trovato il tuo bullone. Decidi se vuoi conviverci sapendolo, o se vuoi finalmente metterci un fratello gemello accanto.
+
+Ma almeno smettila di fingere che non esista.
+`
+  },
+  {
     id: "overshoot-day-trogloditi",
     title: "Earth Overshoot Day: Trogloditi al volante e debiti incolmabili",
     date: "2026-04-22",
