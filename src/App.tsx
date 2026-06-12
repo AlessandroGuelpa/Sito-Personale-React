@@ -4,7 +4,6 @@ import { AnimatePresence } from "framer-motion";
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/react"
 
-import { CustomCursor } from "@/components/custom-cursor";
 import { ScrollProgress } from "@/components/scroll-progress";
 
 // Lazy import delle pagine
@@ -21,7 +20,6 @@ function App() {
 
   return (
     <>
-      <CustomCursor />
       <ScrollProgress />
       <Suspense
         fallback={

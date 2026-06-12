@@ -164,14 +164,6 @@ body {
   animation-delay: 4s;
 }
 
-/* Hide default cursor when custom cursor is active */
-@media (pointer: fine) {
-  .hide-default-cursor,
-  .hide-default-cursor * {
-    cursor: none !important;
-  }
-}
-
 /* Sfondo hero: griglia di puntini con sfumatura radiale ai bordi */
 .hero-dot-grid {
   background-image: radial-gradient(
