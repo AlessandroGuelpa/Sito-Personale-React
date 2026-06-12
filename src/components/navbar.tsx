@@ -1,6 +1,4 @@
-import { Kbd } from "@heroui/kbd";
 import { Link } from "@heroui/link";
-import { Input } from "@heroui/input";
 import {
   Navbar as HeroUINavbar,
   NavbarBrand,
@@ -10,37 +8,17 @@ import {
   NavbarMenu,
   NavbarMenuItem,
 } from "@heroui/navbar";
+import { Link as RouterLink } from "react-router-dom";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { GithubIcon, SearchIcon } from "@/components/icons";
+import { GithubIcon } from "@/components/icons";
 import CustomLink from "@/components/customlink";
 
 export const Navbar = () => {
-  const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: "bg-default-100",
-        input: "text-sm",
-      }}
-      endContent={
-        <Kbd className="hidden lg:inline-block" keys={["command"]}>
-          K
-        </Kbd>
-      }
-      labelPlacement="outside"
-      placeholder="Search..."
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
-      type="search"
-    />
-  );
-
   return (
     <HeroUINavbar
-      className="backdrop-blur-md bg-white/70 dark:bg-black/70 border-b border-zinc-200/50 dark:border-white/10 py-2"
+      className="backdrop-blur-xl bg-white/60 dark:bg-black/50 border-b border-zinc-200/60 dark:border-white/10 py-1"
       maxWidth="xl"
       position="sticky"
     >
@@ -54,7 +32,7 @@ export const Navbar = () => {
           >
             <img
               alt=""
-              className="h-16 w-auto shrink-0 block dark:hidden"
+              className="h-14 w-auto shrink-0 block dark:hidden"
               height={300}
               src="/logo_white.webp"
               width={400}
@@ -62,18 +40,18 @@ export const Navbar = () => {
 
             <img
               alt=""
-              className="h-16 w-auto shrink-0 hidden dark:block"
+              className="h-14 w-auto shrink-0 hidden dark:block"
               height={300}
               src="/logo_black.webp"
               width={400}
             />
           </Link>
         </NavbarBrand>
-        <div className="hidden lg:flex gap-4 justify-start ml-2">
+        <div className="hidden lg:flex gap-6 justify-start ml-4">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <CustomLink
-                className="text-zinc-800 dark:text-zinc-100"
+                className="text-sm font-semibold text-zinc-700 dark:text-zinc-200 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
                 href={item.href}
               >
                 {item.label}
@@ -87,11 +65,17 @@ export const Navbar = () => {
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="hidden sm:flex gap-2">
+        <NavbarItem className="hidden sm:flex items-center gap-3">
           <Link isExternal href={siteConfig.links.github} title="GitHub">
-            <GithubIcon className="text-zinc-800 dark:text-zinc-100 hover:text-violet-600 transition-colors" />
+            <GithubIcon className="text-zinc-700 dark:text-zinc-200 hover:text-violet-600 dark:hover:text-violet-400 transition-colors" />
           </Link>
           <ThemeSwitch />
+          <RouterLink
+            className="btn-shine hidden md:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-5 py-2 text-sm font-bold text-white shadow-lg shadow-violet-600/25 hover:shadow-violet-600/40 hover:-translate-y-0.5 transition-all duration-300"
+            to="/contact"
+          >
+            Contattami
+          </RouterLink>
         </NavbarItem>
       </NavbarContent>
 
@@ -103,13 +87,12 @@ export const Navbar = () => {
         <NavbarMenuToggle className="text-zinc-800 dark:text-zinc-100 hover:text-violet-600 transition-colors" />
       </NavbarContent>
 
-      <NavbarMenu>
-        {searchInput}
-        <div className="mx-4 mt-2 flex flex-col gap-2">
+      <NavbarMenu className="backdrop-blur-xl bg-white/80 dark:bg-black/80 pt-8">
+        <div className="mx-4 flex flex-col gap-5">
           {siteConfig.navMenuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
+            <NavbarMenuItem key={`${item.href}-${index}`}>
               <CustomLink
-                className="text-zinc-800 dark:text-zinc-100"
+                className="text-lg font-semibold text-zinc-800 dark:text-zinc-100"
                 href={item.href}
               >
                 {item.label}

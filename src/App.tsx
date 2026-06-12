@@ -25,8 +25,8 @@ function App() {
       <ScrollProgress />
       <Suspense
         fallback={
-          <div className="flex items-center justify-center min-h-screen bg-black">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500" />
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="animate-spin rounded-full h-12 w-12 border-2 border-violet-500/25 border-t-violet-600" />
           </div>
         }
       >

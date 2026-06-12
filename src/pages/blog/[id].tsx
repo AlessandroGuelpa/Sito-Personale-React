@@ -96,17 +96,36 @@ export default function BlogPostPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <span className="inline-block bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 text-sm font-bold px-3 py-1 rounded-full mb-6">
-            {new Date(post.date).toLocaleDateString("it-IT", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            })}
-          </span>
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            <span className="inline-block bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 text-sm font-bold px-3 py-1 rounded-full">
+              {new Date(post.date).toLocaleDateString("it-IT", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
+            </span>
+            <span className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+              {Math.ceil(post.content.trim().split(/\s+/).length / 200)} min di
+              lettura
+            </span>
+          </div>
 
-          <h1 className="text-4xl md:text-5xl font-black mb-12 text-zinc-900 dark:text-zinc-100 leading-tight">
+          <h1 className="text-4xl md:text-5xl font-black mb-8 text-zinc-900 dark:text-zinc-100 leading-tight">
             {post.title}
           </h1>
+
+          {post.tags && post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-12">
+              {post.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-xs font-bold px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800/80 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
 
           <div className="prose prose-zinc dark:prose-invert prose-lg prose-p:leading-relaxed prose-a:text-violet-500 hover:prose-a:text-violet-600 prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100 max-w-none">
             <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} 

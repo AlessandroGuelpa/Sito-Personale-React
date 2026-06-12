@@ -89,11 +89,6 @@ export default function Projects() {
         <link href={pageUrl} rel="canonical" />
       </Helmet>
 
-      <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-violet-500/10 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob" />
-        <div className="absolute top-40 right-10 w-96 h-96 bg-fuchsia-500/10 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
-      </div>
-
       <div className="relative z-10">
         <Skills />
         <div className="my-16 border-t border-zinc-200/50 dark:border-zinc-800/50" />

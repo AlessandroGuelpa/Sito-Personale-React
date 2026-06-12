@@ -79,12 +79,6 @@ export default function Contact() {
         <meta content={pageUrl} property="og:url" />
       </Helmet>
 
-      {/* Background Elements */}
-      <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-fuchsia-500/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
-      </div>
-
       <section className="relative z-10 max-w-4xl mx-auto px-4 pt-8 pb-20 md:pt-12 md:pb-32 flex flex-col items-center">
         <h1 className="text-5xl md:text-7xl font-black text-center mb-8 tracking-tight drop-shadow-sm">
           Parliamo di <br />
@@ -310,7 +304,7 @@ export default function Contact() {
                   className={`relative w-full overflow-hidden flex items-center justify-center gap-2 py-4 rounded-xl text-white font-bold transition-all duration-300 ${
                     isSubmitting
                       ? "bg-zinc-400 cursor-not-allowed"
-                      : "bg-violet-600 hover:bg-violet-700 hover:shadow-lg hover:-translate-y-1"
+                      : "btn-shine bg-gradient-to-r from-violet-600 to-fuchsia-600 shadow-lg shadow-violet-600/25 hover:shadow-xl hover:shadow-violet-600/40 hover:-translate-y-1"
                   }`}
                   disabled={isSubmitting}
                   type="submit"

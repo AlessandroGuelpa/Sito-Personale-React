@@ -81,7 +81,7 @@ export default function BlogPage() {
             <motion.article
               key={post.id}
               animate={{ opacity: 1, y: 0 }}
-              className="group relative p-6 sm:p-8 rounded-3xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 shadow-lg hover:shadow-xl hover:border-violet-500/30 hover:-translate-y-1 transition-all duration-300"
+              className="group relative p-6 sm:p-8 rounded-3xl bg-white/70 dark:bg-zinc-900/70 backdrop-blur border border-zinc-200 dark:border-white/10 shadow-lg hover:shadow-xl hover:shadow-violet-500/5 hover:border-violet-500/30 hover:-translate-y-1 transition-all duration-300"
               initial={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
             >
@@ -91,7 +91,7 @@ export default function BlogPage() {
               </Link>
 
               {/* Data in stile badge */}
-              <div className="absolute -top-4 left-6 sm:left-8 bg-violet-600 text-white text-sm font-semibold px-4 py-1.5 rounded-full shadow-md z-20">
+              <div className="absolute -top-4 left-6 sm:left-8 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white text-sm font-semibold px-4 py-1.5 rounded-full shadow-md shadow-violet-600/30 z-20">
                 {new Date(post.date).toLocaleDateString("it-IT", {
                   day: "numeric",
                   month: "long",

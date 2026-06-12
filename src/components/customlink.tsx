@@ -19,7 +19,7 @@ const CustomLink = ({ href, children, target, className }: CustomLinkProps) => {
     <Link className={finalClass} target={target} to={href}>
       {children}
       <span
-        className={`absolute bottom-0 left-0 h-[2px] bg-violet-600 transition-all duration-300 ease-in-out 
+        className={`absolute -bottom-0.5 left-0 h-[2px] rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 transition-all duration-300 ease-in-out
         ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
       />
     </Link>
