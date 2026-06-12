@@ -4,6 +4,7 @@ import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
 import { Navbar } from "@/components/navbar";
+import { Logo } from "@/components/logo";
 import { siteConfig } from "@/config/site";
 
 const socialLinks = [
@@ -76,14 +77,9 @@ export default function DefaultLayout({
 
         <div className="container mx-auto max-w-7xl px-6 py-14">
           <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-10">
-            <div className="text-center md:text-left max-w-sm">
-              <p className="text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-100">
-                Alessandro{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-fuchsia-500">
-                  Guelpa
-                </span>
-              </p>
-              <p className="mt-3 text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            <div className="flex flex-col items-center md:items-start max-w-sm text-zinc-900 dark:text-zinc-100">
+              <Logo height={42} />
+              <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed text-center md:text-left">
                 {siteConfig.description}
               </p>
             </div>

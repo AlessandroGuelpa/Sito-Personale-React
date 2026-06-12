@@ -13,6 +13,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon } from "@/components/icons";
+import { Logo } from "@/components/logo";
 import CustomLink from "@/components/customlink";
 
 export const Navbar = () => {
@@ -26,25 +27,13 @@ export const Navbar = () => {
         <NavbarBrand className="gap-3 max-w-fit">
           <Link
             aria-label="Alessandro Guelpa — torna alla home"
-            className="flex justify-start items-center gap-1"
+            className="flex justify-start items-center text-zinc-900 dark:text-white"
             color="foreground"
             href="/"
           >
-            <img
-              alt=""
-              className="h-14 w-auto shrink-0 block dark:hidden"
-              height={300}
-              src="/logo_white.webp"
-              width={400}
-            />
-
-            <img
-              alt=""
-              className="h-14 w-auto shrink-0 hidden dark:block"
-              height={300}
-              src="/logo_black.webp"
-              width={400}
-            />
+            {/* Lockup completo da tablet in su, solo dev mark su mobile */}
+            <Logo className="hidden sm:block" height={38} />
+            <Logo className="sm:hidden" height={34} markOnly />
           </Link>
         </NavbarBrand>
         <div className="hidden lg:flex gap-6 justify-start ml-4">
