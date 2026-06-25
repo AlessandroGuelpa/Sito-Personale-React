@@ -12,6 +12,7 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
+  /*
   {
     id: "overshoot-day-trogloditi",
     title: "Earth Overshoot Day: Trogloditi al volante e debiti incolmabili",
@@ -36,7 +37,7 @@ Se non riesci a concepire che accumulare questo ritardo ecologico anno dopo anno
 
 Oggi è così. L'unico "drop" che vorrei fare è prendere queste persone e buttarle direttamente nel cestino dell'umido. E probabilmente non andrebbero bene neanche come compost.
 `
-},
+},*/
   {
     id: "principio-di-archimede-e-i-container-docker",
     title: "Il Principio di Archimede: Fai Galleggiare le Tue App con Docker",
