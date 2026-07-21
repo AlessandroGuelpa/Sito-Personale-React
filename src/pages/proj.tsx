@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaSoundcloud, FaReact } from "react-icons/fa";
+import { FaSoundcloud, FaReact, FaRocket, FaChartLine } from "react-icons/fa";
 
 import DefaultLayout from "@/layouts/default";
 import Skills from "@/components/skills";
@@ -65,6 +65,30 @@ const manualProjects: FrontendProject[] = [
     coverClass: "from-violet-600 via-indigo-600 to-cyan-500",
     techStack: ["React", "TypeScript", "Tailwind", "HeroUI"],
     category: "react",
+  },
+  // ⚠️ Launcher & Tracker: due progetti full-stack "uniti".
+  //    Completa link reali, descrizione e techStack qui sotto.
+  {
+    id: 4,
+    title: "Launcher",
+    description:
+      "Parte del sistema full-stack sviluppato insieme a Tracker. (Descrizione da completare con i dettagli reali del progetto.)",
+    link: "https://github.com/AlessandroGuelpa/Launcher",
+    coverIcon: <FaRocket className="w-16 h-16 opacity-90" />,
+    coverClass: "from-violet-600 via-indigo-600 to-blue-500",
+    techStack: ["Full-stack"],
+    category: "fullstack",
+  },
+  {
+    id: 5,
+    title: "Tracker",
+    description:
+      "Parte del sistema full-stack sviluppato insieme a Launcher. (Descrizione da completare con i dettagli reali del progetto.)",
+    link: "https://github.com/AlessandroGuelpa/Tracker",
+    coverIcon: <FaChartLine className="w-16 h-16 opacity-90" />,
+    coverClass: "from-fuchsia-600 via-violet-600 to-indigo-500",
+    techStack: ["Full-stack"],
+    category: "fullstack",
   },
 ];
 
@@ -130,6 +154,8 @@ export default function Projects() {
                 "alessandroguelpa.github.io",
                 "esami-di-stato-update",
                 "sito-personale-react",
+                "launcher",
+                "tracker",
               ].includes(repo.name.toLowerCase()),
           );
 
