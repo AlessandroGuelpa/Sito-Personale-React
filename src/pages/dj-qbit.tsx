@@ -5,6 +5,7 @@ import {
   FaHeadphones,
   FaCompactDisc,
   FaBolt,
+  FaCode,
 } from "react-icons/fa";
 
 import DefaultLayout from "@/layouts/default";
@@ -46,6 +47,39 @@ const highlights = [
       "Ricerca continua di tracce e sonorità nuove, per un'identità musicale riconoscibile e in costante evoluzione.",
   },
 ];
+
+// Comandi chiave di Sonic Pi mostrati come "chips" nella sezione dedicata.
+const sonicPiConcepts = [
+  { cmd: "play", label: "note & synth" },
+  { cmd: "sample", label: "campioni & drum" },
+  { cmd: "live_loop", label: "loop dal vivo" },
+  { cmd: "with_fx", label: "effetti" },
+  { cmd: "sync", label: "sincronia" },
+];
+
+// Esempio reale di brano in Sonic Pi: drum machine, bassline acid TB-303
+// sincronizzata e una melodia pentatonica con riverbero.
+const SONIC_PI_EXAMPLE = `use_bpm 120
+
+live_loop :drums do
+  sample :bd_haus, amp: 2
+  sleep 0.5
+end
+
+live_loop :bass, sync: :drums do
+  use_synth :tb303
+  play chord(:e2, :minor).choose,
+    release: 0.3, cutoff: rrand(70, 110)
+  sleep 0.25
+end
+
+live_loop :melody do
+  with_fx :reverb, mix: 0.4 do
+    play scale(:e3, :minor_pentatonic).choose,
+      release: 0.2
+    sleep [0.25, 0.5].choose
+  end
+end`;
 
 // Piccolo equalizzatore animato: dà subito il "mood" musicale alla hero.
 const EqualizerBars = () => (
@@ -185,6 +219,120 @@ export default function DjQbitPage() {
               </p>
             </motion.div>
           ))}
+        </section>
+
+        {/* ===== SONIC PI ===== */}
+        <section className="mb-20">
+          <div className="text-center mb-10">
+            <p className="text-sm font-bold uppercase tracking-[0.25em] text-violet-600 dark:text-violet-400 mb-3">
+              Dietro le quinte
+            </p>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight drop-shadow-sm">
+              Il codice diventa musica:{" "}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-fuchsia-500">
+                Sonic Pi
+              </span>
+            </h2>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
+            {/* Spiegazione */}
+            <motion.div
+              className="space-y-5 text-zinc-700 dark:text-zinc-300 leading-relaxed"
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true, margin: "-80px" }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <p>
+                <span className="font-bold text-violet-600 dark:text-violet-400">
+                  Sonic Pi
+                </span>{" "}
+                è un ambiente di <em>live coding</em> gratuito e open source
+                creato da Sam Aaron all&apos;Università di Cambridge. Nato come
+                strumento didattico per insegnare a programmare, è oggi un vero
+                strumento musicale, usato anche sul palco negli{" "}
+                <em>algorave</em>.
+              </p>
+              <p>
+                L&apos;idea è tanto semplice quanto potente: invece di suonare
+                le note, le si{" "}
+                <span className="font-semibold text-zinc-900 dark:text-white">
+                  scrive in codice
+                </span>
+                . Con una sintassi basata su Ruby dici al computer quali synth
+                usare, quali campioni innescare, con che tempo e con quali
+                effetti — e lo ascolti all&apos;istante.
+              </p>
+              <p>
+                Il cuore di tutto sono i{" "}
+                <code className="px-1.5 py-0.5 rounded bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300 font-mono text-sm">
+                  live_loop
+                </code>
+                : cicli che girano in parallelo e che puoi modificare{" "}
+                <span className="font-semibold text-zinc-900 dark:text-white">
+                  mentre la musica suona
+                </span>
+                . Premi Run e il brano si aggiorna senza fermarsi: è così che si
+                improvvisa e si costruisce un set, un layer alla volta.
+              </p>
+              <p>
+                Da sviluppatore è la cosa più naturale del mondo: ogni traccia è
+                precisa, ripetibile e versionabile come qualsiasi altro pezzo di
+                codice.
+              </p>
+
+              <div className="flex flex-wrap gap-2 pt-1">
+                {sonicPiConcepts.map((concept) => (
+                  <span
+                    key={concept.cmd}
+                    className="inline-flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/60 dark:bg-zinc-900/60 px-3 py-1.5 text-sm"
+                  >
+                    <code className="font-mono font-bold text-violet-600 dark:text-violet-400">
+                      {concept.cmd}
+                    </code>
+                    <span className="text-zinc-500 dark:text-zinc-400">
+                      {concept.label}
+                    </span>
+                  </span>
+                ))}
+              </div>
+
+              <a
+                className="inline-flex items-center gap-2 font-bold text-violet-600 dark:text-violet-400 hover:gap-3 transition-all"
+                href="https://sonic-pi.net"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Scopri Sonic Pi
+                <span aria-hidden="true">→</span>
+              </a>
+            </motion.div>
+
+            {/* Blocco codice */}
+            <motion.div
+              className="rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-950 shadow-xl shadow-violet-900/10"
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-800 bg-zinc-900/80">
+                <span className="w-3 h-3 rounded-full bg-red-500/80" />
+                <span className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                <span className="w-3 h-3 rounded-full bg-green-500/80" />
+                <span className="ml-3 flex items-center gap-2 text-xs font-mono text-zinc-400">
+                  <FaCode className="w-3.5 h-3.5" />
+                  live_set.rb
+                </span>
+              </div>
+              <pre className="overflow-x-auto p-5 text-sm leading-relaxed">
+                <code className="font-mono text-zinc-100">
+                  {SONIC_PI_EXAMPLE}
+                </code>
+              </pre>
+            </motion.div>
+          </div>
         </section>
 
         {/* ===== PLAYER SOUNDCLOUD ===== */}
