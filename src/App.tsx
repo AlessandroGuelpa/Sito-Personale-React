@@ -14,6 +14,7 @@ const AboutPage = lazy(() => import("@/pages/about"));
 const ProjPage = lazy(() => import("@/pages/proj"));
 const ContactPage = lazy(() => import("@/pages/contact"));
 const SportPage = lazy(() => import("@/pages/sports"));
+const DjQbitPage = lazy(() => import("@/pages/dj-qbit"));
 
 function App() {
   const location = useLocation();
@@ -37,6 +38,7 @@ function App() {
             <Route element={<ContactPage />} path="/contact" />
             <Route element={<AboutPage />} path="/about" />
             <Route element={<SportPage />} path="/sports" />
+            <Route element={<DjQbitPage />} path="/dj-qbit" />
           </Routes>
         </AnimatePresence>
       </Suspense>
