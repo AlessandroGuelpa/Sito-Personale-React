@@ -21,6 +21,7 @@ function generateSitemap() {
         { path: '/about', priority: '0.8', changefreq: 'monthly' },
         { path: '/project', priority: '0.8', changefreq: 'weekly' },
         { path: '/sports', priority: '0.8', changefreq: 'monthly' },
+        { path: '/dj-qbit', priority: '0.7', changefreq: 'monthly' },
         { path: '/blog', priority: '0.9', changefreq: 'daily' },
         { path: '/contact', priority: '0.5', changefreq: 'yearly' },
       ];

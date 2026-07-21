@@ -21,6 +21,10 @@ export const siteConfig = {
       label: "Sport e Passioni",
       href: "/sports",
     },
+    {
+      label: "Dj_QBIT",
+      href: "/dj-qbit",
+    },
   ],
   navMenuItems: [
     {
@@ -42,6 +46,10 @@ export const siteConfig = {
     {
       label: "Sport e Passioni",
       href: "/sports",
+    },
+    {
+      label: "Dj_QBIT",
+      href: "/dj-qbit",
     },
   ],
   links: {
