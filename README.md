@@ -8,4 +8,5 @@ Un sito personale sviluppato con **React**, **Vite** e **Tailwind CSS**, come pr
 - **Vite**
 - **Tailwind CSS**
 - **HeroUI Components**
+- **Typescript**
 - **Aruba Hosting (static deployment)**
