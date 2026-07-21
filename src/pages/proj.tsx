@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaSoundcloud } from "react-icons/fa";
+import { FaSoundcloud, FaReact, FaRocket, FaServer } from "react-icons/fa";
 
 import DefaultLayout from "@/layouts/default";
 import Skills from "@/components/skills";
@@ -26,6 +26,8 @@ interface FrontendProject {
   imgUrl?: string;
   link: string;
   internal?: boolean;
+  coverIcon?: ReactNode;
+  coverClass?: string;
   techStack: string[];
   category: "all" | "react" | "landing" | "fullstack";
 }
@@ -45,11 +47,47 @@ const manualProjects: FrontendProject[] = [
     id: 2,
     title: "Dj_QBIT",
     description:
-      "La mia landing musicale: DJ set ed elettronica, prodotta anche con il live coding di Sonic Pi e con player SoundCloud integrato.",
+      "Il mio progetto musicale: DJ set ed elettronica prodotti con il live coding di Sonic Pi, con player SoundCloud integrato.",
     link: "/dj-qbit",
     internal: true,
-    techStack: ["React", "SoundCloud", "Sonic Pi"],
+    coverIcon: <FaSoundcloud className="w-16 h-16 opacity-90" />,
+    coverClass: "from-violet-600 via-fuchsia-600 to-orange-500",
+    techStack: ["Sonic Pi", "SoundCloud"],
+    category: "all",
+  },
+  {
+    id: 3,
+    title: "Portfolio Personale",
+    description:
+      "Il sito che stai visitando: front-end moderno in React, TypeScript, Tailwind e HeroUI, con animazioni, dark mode e attenzione a performance e SEO.",
+    link: "https://alessandroguelpa.it",
+    coverIcon: <FaReact className="w-16 h-16 opacity-90" />,
+    coverClass: "from-violet-600 via-indigo-600 to-cyan-500",
+    techStack: ["React", "TypeScript", "Tailwind", "HeroUI"],
     category: "react",
+  },
+  // Launch Tracker: progetto full-stack diviso in due repo (frontend + API).
+  {
+    id: 4,
+    title: "Launch Tracker — Frontend",
+    description:
+      "Front-end dell'app che traccia i lanci orbitali: countdown T-minus in tempo reale, database dei lanci con ricerca full-text e filtri per provider, e dashboard di statistiche con contatori animati e grafici. Mobile-first e accessibile.",
+    link: "https://github.com/AlessandroGuelpa/launch-tracker-frontend",
+    coverIcon: <FaRocket className="w-16 h-16 opacity-90" />,
+    coverClass: "from-violet-600 via-indigo-600 to-blue-500",
+    techStack: ["React", "TypeScript", "Tailwind"],
+    category: "fullstack",
+  },
+  {
+    id: 5,
+    title: "Launch Tracker — API",
+    description:
+      "REST API in Rails (API-only) che aggrega i dati globali dei lanci orbitali da Launch Library 2 in un database locale ed espone endpoint arricchiti con statistiche, filtri e ricerca full-text non presenti nella fonte. Con consumo di API esterne e job in background.",
+    link: "https://github.com/AlessandroGuelpa/launcher-tracker-api",
+    coverIcon: <FaServer className="w-16 h-16 opacity-90" />,
+    coverClass: "from-fuchsia-600 via-violet-600 to-indigo-500",
+    techStack: ["Ruby on Rails", "PostgreSQL", "REST API"],
+    category: "fullstack",
   },
 ];
 
@@ -111,10 +149,13 @@ export default function Projects() {
             (repo: Repo) =>
               !repo.fork &&
               ![
-                "AlessandroGuelpa",
+                "alessandroguelpa",
                 "alessandroguelpa.github.io",
-                "Esami-di-stato-update",
-              ].includes(repo.name),
+                "esami-di-stato-update",
+                "sito-personale-react",
+                "launch-tracker-frontend",
+                "launcher-tracker-api",
+              ].includes(repo.name.toLowerCase()),
           );
 
           setRepos(filtered);
@@ -208,8 +249,15 @@ export default function Projects() {
                       whileHover={{ scale: 1.05 }}
                     />
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-violet-600 via-fuchsia-600 to-orange-500 text-white">
-                      <FaSoundcloud className="w-16 h-16 opacity-90" />
+                    <div
+                      className={`w-full h-full flex flex-col items-center justify-center gap-3 bg-gradient-to-br ${
+                        project.coverClass ??
+                        "from-violet-600 via-fuchsia-600 to-orange-500"
+                      } text-white`}
+                    >
+                      {project.coverIcon ?? (
+                        <FaReact className="w-16 h-16 opacity-90" />
+                      )}
                       <span className="text-3xl font-black tracking-tight drop-shadow">
                         {project.title}
                       </span>
