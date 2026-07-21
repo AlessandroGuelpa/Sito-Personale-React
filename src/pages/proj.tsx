@@ -1,6 +1,10 @@
+import type { ReactNode } from "react";
+
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
+import { FaSoundcloud } from "react-icons/fa";
 
 import DefaultLayout from "@/layouts/default";
 import Skills from "@/components/skills";
@@ -19,8 +23,9 @@ interface FrontendProject {
   id: number;
   title: string;
   description: string;
-  imgUrl: string;
+  imgUrl?: string;
   link: string;
+  internal?: boolean;
   techStack: string[];
   category: "all" | "react" | "landing" | "fullstack";
 }
@@ -36,6 +41,16 @@ const manualProjects: FrontendProject[] = [
     techStack: ["Wordpress"],
     category: "landing",
   },
+  {
+    id: 2,
+    title: "Dj_QBIT",
+    description:
+      "La mia landing musicale: DJ set ed elettronica, prodotta anche con il live coding di Sonic Pi e con player SoundCloud integrato.",
+    link: "/dj-qbit",
+    internal: true,
+    techStack: ["React", "SoundCloud", "Sonic Pi"],
+    category: "react",
+  },
 ];
 
 const TABS = [
@@ -44,6 +59,39 @@ const TABS = [
   { id: "landing", label: "Siti Vetrina / Landing" },
   { id: "fullstack", label: "Fullstack / Backend" },
 ] as const;
+
+// Rende un link interno (SPA) o esterno (nuova scheda) a seconda del progetto.
+function ProjectMediaLink({
+  project,
+  className,
+  children,
+  ariaLabel,
+}: {
+  project: FrontendProject;
+  className?: string;
+  children: ReactNode;
+  ariaLabel?: string;
+}) {
+  if (project.internal) {
+    return (
+      <Link aria-label={ariaLabel} className={className} to={project.link}>
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      aria-label={ariaLabel}
+      className={className}
+      href={project.link}
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      {children}
+    </a>
+  );
+}
 
 export default function Projects() {
   const [repos, setRepos] = useState<Repo[]>([]);
@@ -145,33 +193,37 @@ export default function Projects() {
                     - h-80: Altezza ridotta (320px). Se la vuoi ancora più piccola usa h-72 o h-64.
                     - object-top: Mantiene il focus sulla parte alta del sito.
                 */}
-                <a
+                <ProjectMediaLink
+                  ariaLabel={`Apri ${project.title}`}
                   className="block overflow-hidden h-80 w-full relative"
-                  href={project.link}
-                  rel="noopener noreferrer"
-                  target="_blank"
+                  project={project}
                 >
                   <div className="absolute inset-0 bg-violet-900/0 group-hover:bg-violet-900/5 transition-colors z-10" />
-                  <motion.img
-                    alt={project.title}
-                    className="w-full h-full object-cover object-top"
-                    src={project.imgUrl}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    whileHover={{ scale: 1.05 }}
-                  />
-                </a>
+                  {project.imgUrl ? (
+                    <motion.img
+                      alt={project.title}
+                      className="w-full h-full object-cover object-top"
+                      src={project.imgUrl}
+                      transition={{ duration: 0.6, ease: "easeOut" }}
+                      whileHover={{ scale: 1.05 }}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-violet-600 via-fuchsia-600 to-orange-500 text-white">
+                      <FaSoundcloud className="w-16 h-16 opacity-90" />
+                      <span className="text-3xl font-black tracking-tight drop-shadow">
+                        {project.title}
+                      </span>
+                    </div>
+                  )}
+                </ProjectMediaLink>
 
                 <div className="p-6 flex flex-col flex-grow border-t border-zinc-100 dark:border-zinc-800">
                   <div className="flex-grow">
-                    <a
-                      href={project.link}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
+                    <ProjectMediaLink project={project}>
                       <h3 className="text-xl font-bold text-zinc-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors mb-2">
                         {project.title}
                       </h3>
-                    </a>
+                    </ProjectMediaLink>
                     <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-4 leading-relaxed line-clamp-3">
                       {project.description}
                     </p>
@@ -190,12 +242,12 @@ export default function Projects() {
                     </div>
 
                     <CustomLink
-                      aria-label={`Vedi ${project.title}`}
+                      aria-label={`${project.internal ? "Apri" : "Vedi"} ${project.title}`}
                       className="text-xs font-bold flex items-center gap-1 group/link"
                       href={project.link}
-                      target="_blank"
+                      target={project.internal ? undefined : "_blank"}
                     >
-                      Live{" "}
+                      {project.internal ? "Scopri" : "Live"}{" "}
                       <span className="transition-transform group-hover/link:-rotate-45">
                         →
                       </span>
