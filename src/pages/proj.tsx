@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaSoundcloud, FaReact, FaRocket, FaChartLine } from "react-icons/fa";
+import { FaSoundcloud, FaReact, FaRocket, FaServer } from "react-icons/fa";
 
 import DefaultLayout from "@/layouts/default";
 import Skills from "@/components/skills";
@@ -66,28 +66,27 @@ const manualProjects: FrontendProject[] = [
     techStack: ["React", "TypeScript", "Tailwind", "HeroUI"],
     category: "react",
   },
-  // ⚠️ Launcher & Tracker: due progetti full-stack "uniti".
-  //    Completa link reali, descrizione e techStack qui sotto.
+  // Launch Tracker: progetto full-stack diviso in due repo (frontend + API).
   {
     id: 4,
-    title: "Launcher",
+    title: "Launch Tracker — Frontend",
     description:
-      "Parte del sistema full-stack sviluppato insieme a Tracker. (Descrizione da completare con i dettagli reali del progetto.)",
-    link: "https://github.com/AlessandroGuelpa/Launcher",
+      "Front-end dell'app che traccia i lanci orbitali: countdown T-minus in tempo reale, database dei lanci con ricerca full-text e filtri per provider, e dashboard di statistiche con contatori animati e grafici. Mobile-first e accessibile.",
+    link: "https://github.com/AlessandroGuelpa/launch-tracker-frontend",
     coverIcon: <FaRocket className="w-16 h-16 opacity-90" />,
     coverClass: "from-violet-600 via-indigo-600 to-blue-500",
-    techStack: ["Full-stack"],
+    techStack: ["React", "TypeScript", "Tailwind"],
     category: "fullstack",
   },
   {
     id: 5,
-    title: "Tracker",
+    title: "Launch Tracker — API",
     description:
-      "Parte del sistema full-stack sviluppato insieme a Launcher. (Descrizione da completare con i dettagli reali del progetto.)",
-    link: "https://github.com/AlessandroGuelpa/Tracker",
-    coverIcon: <FaChartLine className="w-16 h-16 opacity-90" />,
+      "REST API in Rails (API-only) che aggrega i dati globali dei lanci orbitali da Launch Library 2 in un database locale ed espone endpoint arricchiti con statistiche, filtri e ricerca full-text non presenti nella fonte. Con consumo di API esterne e job in background.",
+    link: "https://github.com/AlessandroGuelpa/launcher-tracker-api",
+    coverIcon: <FaServer className="w-16 h-16 opacity-90" />,
     coverClass: "from-fuchsia-600 via-violet-600 to-indigo-500",
-    techStack: ["Full-stack"],
+    techStack: ["Ruby on Rails", "PostgreSQL", "REST API"],
     category: "fullstack",
   },
 ];
@@ -154,8 +153,8 @@ export default function Projects() {
                 "alessandroguelpa.github.io",
                 "esami-di-stato-update",
                 "sito-personale-react",
-                "launcher",
-                "tracker",
+                "launch-tracker-frontend",
+                "launcher-tracker-api",
               ].includes(repo.name.toLowerCase()),
           );
 
