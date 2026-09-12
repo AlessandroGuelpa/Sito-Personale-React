@@ -9,6 +9,7 @@ import {
   NavbarMenuItem,
 } from "@heroui/navbar";
 import { Link as RouterLink } from "react-router-dom";
+import { LuCoffee } from "react-icons/lu";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
@@ -59,6 +60,16 @@ export const Navbar = () => {
             <GithubIcon className="text-zinc-700 dark:text-zinc-200 hover:text-violet-600 dark:hover:text-violet-400 transition-colors" />
           </Link>
           <ThemeSwitch />
+          <a
+            aria-label="Offrimi un caffè su Buy Me a Coffee"
+            className="inline-flex h-9 items-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-3 text-xs font-semibold text-amber-950 transition-all hover:border-amber-400 hover:bg-amber-100 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 dark:border-amber-400/40 dark:bg-amber-400/10 dark:text-amber-200 dark:hover:bg-amber-400/20"
+            href={siteConfig.links.buyMeACoffee}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <LuCoffee aria-hidden="true" className="h-4 w-4" />
+            <span className="hidden xl:inline">Offrimi un caffè</span>
+          </a>
           <RouterLink
             className="btn-shine hidden md:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-5 py-2 text-sm font-bold text-white shadow-lg shadow-violet-600/25 hover:shadow-violet-600/40 hover:-translate-y-0.5 transition-all duration-300"
             to="/contact"
@@ -69,6 +80,15 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+        <a
+          aria-label="Offrimi un caffè su Buy Me a Coffee"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-amber-300 bg-amber-50 text-amber-950 transition-colors hover:border-amber-400 hover:bg-amber-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 dark:border-amber-400/40 dark:bg-amber-400/10 dark:text-amber-200 dark:hover:bg-amber-400/20"
+          href={siteConfig.links.buyMeACoffee}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <LuCoffee aria-hidden="true" className="h-4 w-4" />
+        </a>
         <Link isExternal href={siteConfig.links.github}>
           <GithubIcon className="text-zinc-800 dark:text-zinc-100 hover:text-violet-600 transition-colors" />
         </Link>

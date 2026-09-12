@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { LuCoffee } from "react-icons/lu";
 
 import { Navbar } from "@/components/navbar";
 import { Logo } from "@/components/logo";
@@ -99,19 +100,32 @@ export default function DefaultLayout({
               ))}
             </nav>
 
-            <div className="flex items-center gap-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  aria-label={social.label}
-                  className="flex items-center justify-center w-11 h-11 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/60 backdrop-blur text-zinc-600 dark:text-zinc-300 hover:text-violet-600 dark:hover:text-violet-400 hover:border-violet-500/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-violet-500/10 transition-all duration-300"
-                  href={social.href}
-                  rel="noopener noreferrer"
-                  target={social.href.startsWith("mailto:") ? undefined : "_blank"}
-                >
-                  {social.icon}
-                </a>
-              ))}
+            <div className="flex flex-col items-center gap-4">
+              <div className="flex items-center gap-3">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.label}
+                    aria-label={social.label}
+                    className="flex items-center justify-center w-11 h-11 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/60 backdrop-blur text-zinc-600 dark:text-zinc-300 hover:text-violet-600 dark:hover:text-violet-400 hover:border-violet-500/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-violet-500/10 transition-all duration-300"
+                    href={social.href}
+                    rel="noopener noreferrer"
+                    target={
+                      social.href.startsWith("mailto:") ? undefined : "_blank"
+                    }
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
+              <a
+                className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-4 text-sm font-semibold text-amber-950 transition-all hover:border-amber-400 hover:bg-amber-100 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 dark:border-amber-400/40 dark:bg-amber-400/10 dark:text-amber-200 dark:hover:bg-amber-400/20"
+                href={siteConfig.links.buyMeACoffee}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <LuCoffee aria-hidden="true" className="h-4 w-4" />
+                Offrimi un caffè
+              </a>
             </div>
           </div>
 

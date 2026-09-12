@@ -53,6 +53,7 @@ export const siteConfig = {
     },
   ],
   links: {
+    buyMeACoffee: "https://buymeacoffee.com/alessandroguelpa",
     github: "https://github.com/AlessandroGuelpa",
     linkedin: "https://www.linkedin.com/in/alessandro-guelpa-6434551b4",
     instagram: "https://www.instagram.com/ale.guelpa/",
