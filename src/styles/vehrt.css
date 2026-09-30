@@ -172,7 +172,7 @@ html[data-vehrt="true"] ::-webkit-scrollbar-thumb {
 }
 
 .vehrt-wordmark {
-  --vehrt-parallax-distance: 64px;
+  --vehrt-parallax-distance: 128px;
   display: block;
   width: 100%;
   height: auto;
