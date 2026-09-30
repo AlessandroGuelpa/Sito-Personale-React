@@ -16,7 +16,7 @@ import { SITE_URL, SITE_NAME } from "@/utils/seo";
 import "@/styles/vehrt.css";
 
 // Keep the existing catalogue until the new SoundCloud handle is confirmed.
-const SOUNDCLOUD_PROFILE_URL = "https://soundcloud.com/dj_qbit";
+const SOUNDCLOUD_PROFILE_URL = "https://soundcloud.com/vehrtaudio";
 const soundcloudPlayerSrc = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
   SOUNDCLOUD_PROFILE_URL,
 )}&color=%23A32937&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=false`;
