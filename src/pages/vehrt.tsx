@@ -1,8 +1,14 @@
 /* eslint jsx-a11y/no-noninteractive-tabindex: ["error", { "roles": ["region"] }] */
 // Scrollable code regions need keyboard focus.
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
-import { motion, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useMotionTemplate,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+} from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import {
   FaArrowRight,
@@ -69,6 +75,19 @@ function Equalizer() {
 
 export default function VehrtPage() {
   const { hash } = useLocation();
+  const heroRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const parallaxProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    mass: 0.4,
+    restDelta: 0.001,
+  });
+  const logoTransform = useMotionTemplate`translate3d(0, calc(${parallaxProgress} * var(--vehrt-parallax-distance)), 0)`;
   const pageUrl = `${SITE_URL}/vehrt`;
   const pageTitle = `VEHRT — Techno & Live Coding | ${SITE_NAME}`;
   const pageDescription =
@@ -138,6 +157,7 @@ export default function VehrtPage() {
 
       <main id="main-content">
         <section
+          ref={heroRef}
           aria-labelledby="vehrt-title"
           className="vehrt-hero"
           id="vehrt-top"
@@ -153,11 +173,12 @@ export default function VehrtPage() {
             </div>
             <h1 id="vehrt-title">
               <span className="sr-only">VEHRT</span>
-              <img
+              <motion.img
                 alt=""
                 className="vehrt-wordmark"
                 height="244"
                 src="/vehrt/wordmark.svg"
+                style={{ transform: reducedMotion ? "none" : logoTransform }}
                 width="986"
               />
             </h1>
