@@ -172,9 +172,11 @@ html[data-vehrt="true"] ::-webkit-scrollbar-thumb {
 }
 
 .vehrt-wordmark {
+  --vehrt-parallax-distance: 32px;
   display: block;
   width: 100%;
   height: auto;
+  will-change: transform;
 }
 
 .vehrt-hero-bottom {
@@ -475,6 +477,10 @@ html[data-vehrt="true"] ::-webkit-scrollbar-thumb {
     margin-block: 48px 40px;
   }
 
+  .vehrt-wordmark {
+    --vehrt-parallax-distance: 12px;
+  }
+
   .vehrt-eyebrow {
     font-size: 9px;
   }
@@ -532,5 +538,12 @@ html[data-vehrt="true"] ::-webkit-scrollbar-thumb {
     align-items: flex-start;
     flex-direction: column;
     gap: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vehrt-wordmark {
+    transform: none !important;
+    will-change: auto;
   }
 }
