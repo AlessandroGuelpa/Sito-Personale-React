@@ -22,8 +22,8 @@ export const siteConfig = {
       href: "/sports",
     },
     {
-      label: "Dj_QBIT",
-      href: "/dj-qbit",
+      label: "VEHRT",
+      href: "/vehrt",
     },
   ],
   navMenuItems: [
@@ -48,8 +48,8 @@ export const siteConfig = {
       href: "/sports",
     },
     {
-      label: "Dj_QBIT",
-      href: "/dj-qbit",
+      label: "VEHRT",
+      href: "/vehrt",
     },
   ],
   links: {
