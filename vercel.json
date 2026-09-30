@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/dj-qbit",
+      "destination": "/vehrt",
+      "permanent": true
+    },
+    {
       "source": "/compiler",
       "destination": "/",
       "permanent": true

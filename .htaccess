@@ -5,6 +5,9 @@
   RewriteEngine On
   RewriteBase /
 
+  # Keep the former artist URL working after the rebrand.
+  RewriteRule ^dj-qbit/?$ /vehrt [R=301,L,NE]
+
   # Non riscrivere per file o cartelle esistenti
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d

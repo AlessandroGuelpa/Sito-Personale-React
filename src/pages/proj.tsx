@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaSoundcloud, FaReact, FaRocket, FaServer } from "react-icons/fa";
+import { FaReact, FaRocket, FaServer } from "react-icons/fa";
 
 import DefaultLayout from "@/layouts/default";
 import Skills from "@/components/skills";
@@ -46,14 +46,22 @@ const manualProjects: FrontendProject[] = [
   },
   {
     id: 2,
-    title: "Dj_QBIT",
+    title: "VEHRT",
     description:
-      "Il mio progetto musicale: DJ set ed elettronica prodotti con il live coding di Sonic Pi, con player SoundCloud integrato.",
-    link: "/dj-qbit",
+      "Techno project combining live coding in Sonic Pi and production in Ableton, with an integrated SoundCloud catalogue.",
+    link: "/vehrt",
     internal: true,
-    coverIcon: <FaSoundcloud className="w-16 h-16 opacity-90" />,
-    coverClass: "from-violet-600 via-fuchsia-600 to-orange-500",
-    techStack: ["Sonic Pi", "SoundCloud"],
+    coverIcon: (
+      <img
+        alt=""
+        className="w-24 h-24"
+        height="1024"
+        src="/vehrt/monogram.svg"
+        width="1024"
+      />
+    ),
+    coverClass: "from-[#090909] via-[#090909] to-[#1d0d10]",
+    techStack: ["Sonic Pi", "Ableton", "SoundCloud"],
     category: "all",
   },
   {
