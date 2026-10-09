@@ -1,70 +1,113 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
-import tsconfigPaths from "vite-tsconfig-paths"; // se lo stai usando per l'alias "@/"
-import fs from "node:fs";
-import path from "node:path";
+import tsconfigPaths from "vite-tsconfig-paths";
 
-// Importiamo direttamente i dati dei blog post
 import { blogPosts } from "./src/data/blogPosts";
+import { buildExcerpt, readingTimeMinutes } from "./src/utils/seo";
 
-function generateSitemap() {
+// Keep article bodies out of the home and archive bundles without changing the authoring workflow.
+function blogMetadata(): Plugin {
+  const index = [...blogPosts]
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .map((post) => ({
+      id: post.id,
+      title: post.title,
+      date: post.date,
+      excerpt: buildExcerpt(post, 180),
+      tags: post.tags ?? [],
+      minutes: readingTimeMinutes(post.content),
+      icon: typeof post.icon === "string" ? post.icon : undefined,
+    }));
+  let ssr = false;
+
   return {
-    name: 'generate-sitemap',
-    buildStart() {
-      const baseUrl = 'https://alessandroguelpa.it';
-      
-      const today = new Date().toISOString().split('T')[0];
+    name: "blog-metadata",
+    configResolved(config) {
+      ssr = Boolean(config.build.ssr);
+    },
+    resolveId(id) {
+      if (
+        [
+          "virtual:blog-index",
+          "virtual:home-posts",
+          "virtual:blog-loaders",
+        ].includes(id) ||
+        id.startsWith("virtual:blog-post/")
+      )
+        return `\0${id}`;
+    },
+    load(id) {
+      if (id === "\0virtual:blog-index")
+        return `export const blogIndex = ${JSON.stringify(index)};`;
+      if (id === "\0virtual:home-posts")
+        return `export const latestPosts = ${JSON.stringify(index.slice(0, 3))};`;
+      if (id === "\0virtual:blog-loaders")
+        return `export const blogLoaders = {${blogPosts.map((post) => `${JSON.stringify(post.id)}: () => import(${JSON.stringify(`virtual:blog-post/${post.id}`)})`).join(",")}};`;
+      if (id.startsWith("\0virtual:blog-post/")) {
+        const post = blogPosts.find(
+          (post) => post.id === id.slice("\0virtual:blog-post/".length),
+        );
 
-      // 1. Definisci le tue rotte statiche principali
-      const staticPages = [
-        { path: '', priority: '1.0', changefreq: 'weekly' },
-        { path: '/about', priority: '0.8', changefreq: 'monthly' },
-        { path: '/project', priority: '0.8', changefreq: 'weekly' },
-        { path: '/sports', priority: '0.8', changefreq: 'monthly' },
-        { path: '/vehrt', priority: '0.7', changefreq: 'monthly' },
-        { path: '/blog', priority: '0.9', changefreq: 'daily' },
-        { path: '/contact', priority: '0.5', changefreq: 'yearly' },
-      ];
+        if (post)
+          return `export const post = ${JSON.stringify({ ...post, icon: undefined })};`;
+      }
+    },
+    generateBundle() {
+      if (ssr) return;
+      this.emitFile({
+        type: "asset",
+        fileName: "prerender-routes.json",
+        source: JSON.stringify([
+          "/",
+          "/project",
+          "/about",
+          "/contact",
+          "/blog",
+          "/sports",
+          "/vehrt",
+          ...index.map((post) => `/blog/${post.id}`),
+        ]),
+      });
+      const urls = [
+        "",
+        "/project",
+        "/about",
+        "/contact",
+        "/blog",
+        "/sports",
+        "/vehrt",
+      ].map(
+        (path) => `  <url><loc>https://alessandroguelpa.it${path}</loc></url>`,
+      );
 
-      const staticUrls = staticPages.map(page => `  <url>\n    <loc>${baseUrl}${page.path}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${page.changefreq}</changefreq>\n    <priority>${page.priority}</priority>\n  </url>`).join('\n');
-
-      // 2. Genera dinamicamente le rotte per ogni post del blog (più recenti prima)
-      // Usiamo 'any' per evitare errori di compilazione TS nel file di config
-      const dynamicUrls = [...blogPosts]
-        .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
-        .map((post: any) => `  <url>\n    <loc>${baseUrl}/blog/${post.id}</loc>\n    <lastmod>${post.date}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`).join('\n');
-
-      const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${staticUrls}\n${dynamicUrls}\n</urlset>`;
-
-      // 3. Scrive il file sitemap.xml direttamente nella cartella public
-      const sitemapPath = path.resolve(process.cwd(), 'public/sitemap.xml');
-      fs.writeFileSync(sitemapPath, sitemap);
-      
-      console.log('✅ Sitemap.xml generata dinamicamente con i Blog Post!');
-    }
+      urls.push(
+        ...index.map(
+          (post) =>
+            `  <url><loc>https://alessandroguelpa.it/blog/${post.id}</loc><lastmod>${post.date}</lastmod></url>`,
+        ),
+      );
+      this.emitFile({
+        type: "asset",
+        fileName: "sitemap.xml",
+        source: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>`,
+      });
+    },
   };
 }
 
 export default defineConfig({
-  // Aggiungiamo il plugin custom
-  plugins: [react(), tsconfigPaths(), generateSitemap()],
+  plugins: [react(), tsconfigPaths(), blogMetadata()],
+  ssr: { noExternal: ["react-helmet-async"] },
   build: {
-    chunkSizeWarningLimit: 1000,
+    manifest: true,
     rollupOptions: {
       output: {
-        // Dividiamo le librerie pesanti in file separati
         manualChunks(id) {
-          if (id.includes("node_modules")) {
-            if (id.includes("three") || id.includes("@react-three")) {
-              return "vendor-three";
-            }
-            if (id.includes("framer-motion")) {
-              return "vendor-framer-motion";
-            }
-            if (id.includes("@heroui") || id.includes("@react-aria")) {
-              return "vendor-ui";
-            }
-          }
+          if (
+            id.includes("node_modules/framer-motion") ||
+            id.includes("node_modules/motion-")
+          )
+            return "vendor-motion";
         },
       },
     },

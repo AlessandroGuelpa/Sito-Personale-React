@@ -1,139 +1,141 @@
+import type { BlogPost } from "@/data/blogPosts";
+
 import { useParams, Link } from "react-router-dom";
+import { lazy, Suspense, useMemo } from "react";
+import { blogLoaders } from "virtual:blog-loaders";
 import { Helmet } from "react-helmet-async";
-import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
+import "katex/dist/katex.min.css";
 import DefaultLayout from "@/layouts/default";
-import { blogPosts } from "@/data/blogPosts";
+import NotFoundPage from "@/pages/not-found";
+import { PageSeo } from "@/components/page-seo";
 import {
   SITE_URL,
-  SITE_NAME,
   DEFAULT_OG_IMAGE,
-  TWITTER_HANDLE,
   AUTHOR_NAME,
   buildExcerpt,
   blogPostUrl,
   blogPostJsonLd,
   breadcrumbJsonLd,
+  readingTimeMinutes,
 } from "@/utils/seo";
 
 export default function BlogPostPage() {
   const { id } = useParams<{ id: string }>();
-  const post = blogPosts.find((p) => String(p.id) === id);
+  const Post = useMemo(
+    () =>
+      id && Object.prototype.hasOwnProperty.call(blogLoaders, id)
+        ? lazy(async () => {
+            const { post } = await blogLoaders[id]();
 
-  if (!post) {
-    return (
-      <DefaultLayout>
-        <div className="flex flex-col items-center justify-center min-h-[60vh]">
-          <h1 className="text-4xl font-bold mb-4">Post non trovato</h1>
-          <Link to="/blog" className="text-violet-600 hover:underline">
-            Torna al blog
-          </Link>
-        </div>
-      </DefaultLayout>
-    );
-  }
+            return { default: () => <PostContent post={post} /> };
+          })
+        : null,
+    [id],
+  );
 
-  const pageUrl = blogPostUrl(post.id);
-  const seoDescription = buildExcerpt(post);
-  const ogImage = post.coverImage ?? DEFAULT_OG_IMAGE;
-  const articleJsonLd = blogPostJsonLd(post);
-  const breadcrumb = breadcrumbJsonLd([
-    { name: "Home", url: SITE_URL },
-    { name: "Blog", url: `${SITE_URL}/blog` },
-    { name: post.title, url: pageUrl },
-  ]);
+  if (!Post) return <NotFoundPage />;
 
   return (
+    <Suspense
+      fallback={
+        <div
+          className="flex min-h-screen items-center justify-center"
+          role="status"
+        >
+          Caricamento dell’articolo…
+        </div>
+      }
+    >
+      <Post />
+    </Suspense>
+  );
+}
+
+function PostContent({ post }: { post: BlogPost }) {
+  return (
     <DefaultLayout>
+      <PageSeo
+        description={buildExcerpt(post)}
+        image={post.coverImage ?? DEFAULT_OG_IMAGE}
+        path={`/blog/${post.id}`}
+        schema={{
+          "@context": "https://schema.org",
+          "@graph": [
+            blogPostJsonLd(post),
+            breadcrumbJsonLd([
+              { name: "Home", url: SITE_URL },
+              { name: "Blog", url: `${SITE_URL}/blog` },
+              { name: post.title, url: blogPostUrl(post.id) },
+            ]),
+          ],
+        }}
+        title={post.title}
+        type="article"
+      />
       <Helmet>
-        <title>{`${post.title} | ${SITE_NAME}`}</title>
-        <meta name="description" content={seoDescription} />
-        <link rel="canonical" href={pageUrl} />
-
-        {/* Open Graph */}
-        <meta property="og:site_name" content={SITE_NAME} />
-        <meta property="og:locale" content="it_IT" />
-        <meta property="og:title" content={`${post.title} | ${SITE_NAME}`} />
-        <meta property="og:description" content={seoDescription} />
-        <meta property="og:url" content={pageUrl} />
-        <meta property="og:type" content="article" />
-        <meta property="og:image" content={ogImage} />
-        <meta property="article:published_time" content={post.date} />
-        <meta property="article:author" content={AUTHOR_NAME} />
+        <meta content={post.date} property="article:published_time" />
+        <meta content={AUTHOR_NAME} property="article:author" />
         {post.tags?.map((tag) => (
-          <meta key={tag} property="article:tag" content={tag} />
+          <meta key={tag} content={tag} property="article:tag" />
         ))}
-
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content={TWITTER_HANDLE} />
-        <meta name="twitter:title" content={`${post.title} | ${SITE_NAME}`} />
-        <meta name="twitter:description" content={seoDescription} />
-        <meta name="twitter:image" content={ogImage} />
-
-        <script type="application/ld+json">
-          {JSON.stringify(articleJsonLd)}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumb)}
-        </script>
       </Helmet>
-
-      <article className="max-w-3xl mx-auto px-4 py-12 md:py-20 relative z-10">
+      <article className="mx-auto max-w-3xl py-4 sm:py-8">
         <Link
+          className="text-link mb-8 inline-flex min-h-11 items-center"
           to="/blog"
-          className="inline-flex items-center gap-2 text-zinc-500 hover:text-violet-600 transition-colors mb-8 font-medium"
         >
-          <span className="text-xl leading-none">&larr;</span> Torna al blog
+          ← Torna all’archivio
         </Link>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex flex-wrap items-center gap-3 mb-6">
-            <span className="inline-block bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 text-sm font-bold px-3 py-1 rounded-full">
-              {new Date(post.date).toLocaleDateString("it-IT", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
-            </span>
-            <span className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-              {Math.ceil(post.content.trim().split(/\s+/).length / 200)} min di
-              lettura
-            </span>
-          </div>
-
-          <h1 className="text-4xl md:text-5xl font-black mb-8 text-zinc-900 dark:text-zinc-100 leading-tight">
-            {post.title}
-          </h1>
-
-          {post.tags && post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-12">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs font-bold px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800/80 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700"
+        <div className="mb-5 flex flex-wrap gap-3 text-sm text-zinc-600 dark:text-zinc-400">
+          <time dateTime={post.date}>
+            {new Date(post.date).toLocaleDateString("it-IT", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+              timeZone: "UTC",
+            })}
+          </time>
+          <span>· {readingTimeMinutes(post.content)} min di lettura</span>
+        </div>
+        <h1 className="text-3xl sm:text-5xl font-black leading-tight tracking-tight">
+          {post.title}
+        </h1>
+        <p className="mt-5 text-sm text-zinc-600 dark:text-zinc-400">
+          Di {AUTHOR_NAME}
+        </p>
+        {post.tags?.length ? (
+          <ul aria-label="Argomenti" className="mt-6 flex flex-wrap gap-2">
+            {post.tags.map((tag) => (
+              <li key={tag}>
+                <Link
+                  className="tech-tag inline-flex min-h-9 items-center"
+                  to={`/blog?tag=${encodeURIComponent(tag)}`}
                 >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
-
-          <div className="prose prose-zinc dark:prose-invert prose-lg prose-p:leading-relaxed prose-a:text-violet-500 hover:prose-a:text-violet-600 prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100 max-w-none">
-            <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} 
-  rehypePlugins={[rehypeKatex]}>
-              {post.content}
-            </ReactMarkdown>
-          </div>
-        </motion.div>
+                  {tag}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        <div className="article-body prose prose-zinc dark:prose-invert prose-lg prose-a:text-violet-700 dark:prose-a:text-violet-400 mt-10 max-w-none">
+          <ReactMarkdown
+            components={{ h1: ({ children }) => <h2>{children}</h2> }}
+            rehypePlugins={[rehypeKatex]}
+            remarkPlugins={[remarkGfm, remarkMath]}
+          >
+            {post.content}
+          </ReactMarkdown>
+        </div>
+        <div className="mt-12 border-t border-zinc-200 pt-8 dark:border-zinc-800">
+          <Link className="text-link" to="/blog">
+            ← Altri articoli dal blog
+          </Link>
+        </div>
       </article>
     </DefaultLayout>
   );
