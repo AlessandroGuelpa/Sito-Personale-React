@@ -1,111 +1,167 @@
-import { FaDownload } from "react-icons/fa";
-import { Helmet } from "react-helmet-async";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import DefaultLayout from "@/layouts/default";
-import { SkillBento } from "@/components/skill-bento";
+import { PageSeo } from "@/components/page-seo";
+import { trackEvent } from "@/utils/analytics";
 
-export default function DocsPage() {
-  const pageUrl = "https://alessandroguelpa.it/about";
+export default function AboutPage() {
+  const [showCv, setShowCv] = useState(false);
 
   return (
     <DefaultLayout>
-      <Helmet>
-        <title>About me | Alessandro Guelpa</title>
-        <meta
-          content="Scopri chi è Alessandro Guelpa: sviluppatore, creativo e appassionato di tecnologia. Esplora il mio percorso, le mie competenze e la visione dietro ai miei progetti."
-          name="description"
-        />
-        <link href={pageUrl} rel="canonical" />
-
-        {/* Tag Open Graph (per i social) */}
-        <meta content="About me | Alessandro Guelpa" property="og:title" />
-        <meta
-          content="Scopri chi è Alessandro Guelpa: sviluppatore, creativo e appassionato di tecnologia. Esplora il mio percorso, le mie competenze e la visione dietro ai miei progetti."
-          property="og:description"
-        />
-        <meta content={pageUrl} property="og:url" />
-      </Helmet>
-
-      <div className="relative z-10 max-w-4xl mx-auto px-4 pt-8 pb-20 md:pt-12 md:pb-32">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight drop-shadow-sm mb-6">
-            Chi{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-fuchsia-500">
-              Sono
-            </span>
-          </h1>
-          <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-            Una breve introduzione su di me, il mio percorso e le mie passioni.
+      <PageSeo
+        description="Alessandro Guelpa: 5 anni nello sviluppo web, esperienza professionale Shopify e integrazioni API, progetti personali React e Rails. Percorso e curriculum."
+        path="/about"
+        title="Chi sono · Esperienza e competenze"
+      />
+      <header className="max-w-3xl">
+        <p className="eyebrow">Chi sono</p>
+        <h1 className="page-title">
+          Alessandro, tra interfacce e integrazioni.
+        </h1>
+        <p className="page-intro">
+          Sono uno sviluppatore web con 5 anni di esperienza. Il mio lavoro
+          parte spesso da un e-commerce Shopify e arriva fino ai servizi che lo
+          collegano agli altri sistemi.
+        </p>
+      </header>
+      <section
+        aria-labelledby="experience-title"
+        className="mt-10 grid gap-6 md:grid-cols-[1.2fr_0.8fr]"
+      >
+        <div className="surface-card p-6 sm:p-8">
+          <h2 className="text-2xl font-bold" id="experience-title">
+            Il mio percorso
+          </h2>
+          <div className="mt-5 space-y-5 leading-relaxed text-zinc-600 dark:text-zinc-300">
+            <p>
+              Ho maturato la maggior parte della mia esperienza professionale su{" "}
+              <strong className="text-zinc-900 dark:text-white">Shopify</strong>
+              , lavorando allo sviluppo di progetti e-commerce.
+            </p>
+            <p>
+              Mi sono occupato anche di backend e integrazioni con API e
+              gestionali, usando tra le altre tecnologie Ruby on Rails. Mi
+              interessa capire come l’interfaccia e i dati possano funzionare
+              bene insieme.
+            </p>
+            <p>
+              Nei progetti personali approfondisco{" "}
+              <strong className="text-zinc-900 dark:text-white">
+                React, TypeScript e Rails
+              </strong>
+              . Launch Tracker è un esempio concreto: un frontend per consultare
+              i lanci orbitali e un’API per raccogliere e arricchire i dati.
+            </p>
+          </div>
+          <Link
+            className="text-link mt-5 inline-flex min-h-11 items-center"
+            to="/project"
+          >
+            Guarda i progetti →
+          </Link>
+        </div>
+        <aside
+          aria-labelledby="skills-title"
+          className="surface-card p-6 sm:p-8"
+        >
+          <h2 className="text-2xl font-bold" id="skills-title">
+            Dove concentro il lavoro
+          </h2>
+          <dl className="mt-6 space-y-6">
+            {[
+              ["E-commerce", "Shopify · sviluppo web"],
+              ["Integrazioni", "API · gestionali · Ruby on Rails"],
+              [
+                "Progetti personali",
+                "React · TypeScript · PostgreSQL · Tailwind",
+              ],
+            ].map(([label, text]) => (
+              <div key={label}>
+                <dt className="text-sm font-bold text-violet-700 dark:text-violet-400">
+                  {label}
+                </dt>
+                <dd className="mt-2 text-zinc-600 dark:text-zinc-300">
+                  {text}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </aside>
+      </section>
+      <section aria-labelledby="cv-title" className="section-space">
+        <div className="flex flex-wrap items-center justify-between gap-6">
+          <div>
+            <p className="eyebrow">Percorso professionale</p>
+            <h2 className="section-title" id="cv-title">
+              Il mio curriculum
+            </h2>
+          </div>
+          <a
+            download
+            className="button-primary"
+            href="/AlessandroGuelpa_CV.pdf"
+            onClick={() => trackEvent("cv_download")}
+          >
+            Scarica il CV · PDF ↓
+          </a>
+        </div>
+        <details
+          className="surface-card mt-7 p-6"
+          onToggle={(event) => setShowCv(event.currentTarget.open)}
+        >
+          <summary className="cursor-pointer font-semibold">
+            Apri l’anteprima del CV
+          </summary>
+          {showCv && (
+            <iframe
+              className="mt-6 h-[650px] w-full rounded-xl border border-zinc-200"
+              loading="lazy"
+              src="/AlessandroGuelpa_CV.pdf"
+              title="Curriculum di Alessandro Guelpa"
+            />
+          )}
+          <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
+            Se il PDF non viene visualizzato,{" "}
+            <a
+              className="text-link"
+              href="/AlessandroGuelpa_CV.pdf"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              aprilo in una nuova scheda
+            </a>
+            .
           </p>
+        </details>
+      </section>
+      <section
+        aria-labelledby="off-code-title"
+        className="surface-card mt-12 p-6 sm:p-8"
+      >
+        <h2 className="text-2xl font-bold" id="off-code-title">
+          Fuori dal codice
+        </h2>
+        <p className="mt-4 max-w-3xl leading-relaxed text-zinc-600 dark:text-zinc-300">
+          Pratico Jujitsu, mi appassionano le auto e sperimento con la musica.
+          Con VEHRT unisco live coding in Sonic Pi e produzione techno.
+        </p>
+        <div className="mt-5 flex flex-wrap gap-6">
+          <Link
+            className="text-link min-h-11 inline-flex items-center"
+            to="/sports"
+          >
+            Sport e passioni →
+          </Link>
+          <Link
+            className="text-link min-h-11 inline-flex items-center"
+            to="/vehrt"
+          >
+            Ascolta VEHRT →
+          </Link>
         </div>
-
-        <div className="bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 md:p-12 shadow-xl mb-20">
-          <div className="text-lg md:text-xl leading-relaxed space-y-6 text-zinc-700 dark:text-zinc-300">
-            <p>
-              Mi chiamo{" "}
-              <span className="font-bold text-violet-600 dark:text-violet-400">
-                Alessandro
-              </span>{" "}
-              e sono uno sviluppatore front-end specializzato in Shopify.
-            </p>
-            <p>
-              Attualmente lavoro su progetti e-commerce in Shopify ma sto
-              ampliando le mie competenze verso il{" "}
-              <span className="font-bold text-fuchsia-600 dark:text-fuchsia-400">
-                full-stack
-              </span>{" "}
-              e sperimento con tecnologie moderne come React e Ruby on Rails.
-            </p>
-            <p>
-              Nel tempo libero pratico Jujitsu, mi appassionano le auto e adoro
-              sperimentare con nuove idee e tecnologie.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* CV Column */}
-          <div className="flex flex-col">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black mb-8">
-                Il mio CV
-              </h2>
-              <button
-                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-violet-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-600 hover:bg-violet-700 hover:shadow-lg hover:-translate-y-1 hover:shadow-violet-500/50"
-                onClick={() =>
-                  window.open("/AlessandroGuelpa_CV.pdf", "_blank")
-                }
-              >
-                Scarica il PDF
-                <FaDownload className="ml-3 w-5 h-5 group-hover:animate-bounce" />
-              </button>
-            </div>
-
-            <div className="bg-zinc-900 dark:bg-zinc-800 rounded-2xl shadow-2xl overflow-hidden border border-zinc-200 dark:border-zinc-700 transform transition-all hover:scale-[1.01] duration-500">
-              <iframe
-                className="w-full h-[600px]"
-                src="/AlessandroGuelpa_CV.pdf"
-                style={{ border: "none" }}
-                title="CV Alessandro"
-              />
-            </div>
-          </div>
-
-          {/* Skills Column */}
-          <div className="flex flex-col h-full justify-center">
-            <div className="text-center mb-8 lg:mb-12">
-              <h2 className="text-4xl md:text-5xl font-black mb-4">
-                Le Mie Skills
-              </h2>
-              <p className="text-lg text-zinc-600 dark:text-zinc-400">
-                Un approccio moderno e scalabile allo sviluppo Front-end.
-              </p>
-            </div>
-
-            <SkillBento />
-          </div>
-        </div>
-      </div>
+      </section>
     </DefaultLayout>
   );
 }
