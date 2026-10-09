@@ -8,5 +8,8 @@ declare module "virtual:home-posts" {
 }
 
 declare module "virtual:blog-loaders" {
-  export const blogLoaders: Record<string, () => Promise<{ post: import("./data/blogPosts").BlogPost }>>;
+  export const blogLoaders: Record<
+    string,
+    () => Promise<{ post: import("./data/blogPosts").BlogPost }>
+  >;
 }

@@ -1,7 +1,7 @@
 import type { BlogPost } from "@/data/blogPosts";
 
 import { useParams, Link } from "react-router-dom";
-import { lazy, Suspense, useMemo } from "react";
+import { lazy, useMemo } from "react";
 import { blogLoaders } from "virtual:blog-loaders";
 import { Helmet } from "react-helmet-async";
 import ReactMarkdown from "react-markdown";
@@ -40,20 +40,7 @@ export default function BlogPostPage() {
 
   if (!Post) return <NotFoundPage />;
 
-  return (
-    <Suspense
-      fallback={
-        <div
-          className="flex min-h-screen items-center justify-center"
-          role="status"
-        >
-          Caricamento dell’articolo…
-        </div>
-      }
-    >
-      <Post />
-    </Suspense>
-  );
+  return <Post />;
 }
 
 function PostContent({ post }: { post: BlogPost }) {

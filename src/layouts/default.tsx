@@ -59,9 +59,7 @@ export default function DefaultLayout({
         id="main-content"
         tabIndex={-1}
       >
-        <div className="mx-auto py-10 sm:py-14">
-          {children}
-        </div>
+        <div className="mx-auto py-10 sm:py-14">{children}</div>
       </main>
 
       <footer className="relative mt-24 border-t border-zinc-200/60 dark:border-white/10">
