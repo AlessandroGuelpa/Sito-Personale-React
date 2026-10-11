@@ -16,7 +16,7 @@ export default function NotFoundPage() {
       />
       <section className="py-24 text-center">
         <p className="eyebrow">Errore 404</p>
-        <h1 className="page-title">Pagina non trovata</h1>
+        <h1 className="page-title mx-auto">Pagina non trovata</h1>
         <p className="mt-6 text-zinc-600 dark:text-zinc-300">
           Il link potrebbe essere cambiato. Scegli da dove ripartire.
         </p>

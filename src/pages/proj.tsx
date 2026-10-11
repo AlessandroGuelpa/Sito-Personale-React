@@ -8,6 +8,7 @@ import { projects } from "@/data/projects";
 
 const filters = [
   { id: "all", label: "Tutti" },
+  { id: "shopify", label: "Shopify" },
   { id: "react", label: "React" },
   { id: "fullstack", label: "Full stack" },
   { id: "web", label: "Siti web" },
@@ -23,7 +24,7 @@ export default function Projects() {
   return (
     <DefaultLayout>
       <PageSeo
-        description="Esplora Launch Tracker, Ballerini & Sapori, il portfolio React e VEHRT. Contesto, tecnologie e link al codice dei progetti di Alessandro Guelpa."
+        description="Esplora Shopify Mapper, Launch Tracker, Ballerini & Sapori, il portfolio React e VEHRT. Contesto, tecnologie e collegamenti ai progetti di Alessandro Guelpa."
         path="/project"
         title="Progetti e codice"
       />
@@ -35,26 +36,7 @@ export default function Projects() {
           contesto, le scelte tecniche e i link per approfondire.
         </p>
       </header>
-      <aside
-        aria-labelledby="shopify-experience"
-        className="surface-card mt-9 border-l-4 border-l-violet-600 p-6 sm:p-8"
-      >
-        <h2 className="text-xl font-bold" id="shopify-experience">
-          L’esperienza professionale: Shopify e integrazioni
-        </h2>
-        <p className="mt-3 max-w-3xl leading-relaxed text-zinc-600 dark:text-zinc-300">
-          La maggior parte dei miei 5 anni nello sviluppo web riguarda progetti
-          Shopify. Ho lavorato anche sul backend e sulle integrazioni con API e
-          gestionali. Qui raccolgo i progetti che posso mostrare pubblicamente.
-        </p>
-        <Link
-          className="text-link mt-4 inline-flex min-h-11 items-center"
-          to="/about"
-        >
-          Conosci il mio percorso →
-        </Link>
-      </aside>
-      <section aria-labelledby="projects-heading" className="section-space">
+      <section aria-labelledby="projects-heading" className="mt-9">
         <h2 className="sr-only" id="projects-heading">
           Progetti pubblici
         </h2>
@@ -87,6 +69,25 @@ export default function Projects() {
           ))}
         </div>
       </section>
+      <aside
+        aria-labelledby="shopify-experience"
+        className="surface-card mt-12 border-l-4 border-l-violet-600 p-6 sm:p-8"
+      >
+        <h2 className="text-xl font-bold" id="shopify-experience">
+          L’esperienza professionale: Shopify e integrazioni
+        </h2>
+        <p className="mt-3 max-w-3xl leading-relaxed text-zinc-600 dark:text-zinc-300">
+          La maggior parte dei miei 5 anni nello sviluppo web riguarda progetti
+          Shopify. Ho lavorato anche sul backend e sulle integrazioni con API e
+          gestionali. Qui raccolgo i progetti che posso mostrare pubblicamente.
+        </p>
+        <Link
+          className="text-link mt-4 inline-flex min-h-11 items-center"
+          to="/about"
+        >
+          Conosci il mio percorso →
+        </Link>
+      </aside>
       <div className="mt-12 flex flex-wrap items-center justify-between gap-6">
         <p className="text-lg font-semibold">
           Vuoi parlare di un lavoro simile?

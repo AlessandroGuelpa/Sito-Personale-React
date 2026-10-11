@@ -16,7 +16,16 @@ export function ProjectCard({
         aria-hidden="true"
         className={`project-cover project-cover-${project.cover}`}
       >
-        {project.cover === "ballerini" ? (
+        {project.cover === "mapper" ? (
+          <img
+            alt=""
+            decoding="async"
+            height={824}
+            loading="lazy"
+            src="/projects/shopify-mapper.webp"
+            width={1200}
+          />
+        ) : project.cover === "ballerini" ? (
           <img
             alt=""
             decoding="async"
@@ -133,10 +142,12 @@ export function FeaturedProjects() {
           Tutti i progetti →
         </Link>
       </div>
-      <div className="grid gap-6 md:grid-cols-2">
-        {projects.slice(0, 2).map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {projects
+          .filter((project) => project.featured)
+          .map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
       </div>
     </section>
   );

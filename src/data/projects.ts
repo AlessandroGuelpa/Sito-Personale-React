@@ -8,11 +8,32 @@ export interface Project {
   outcome: string;
   stack: string[];
   categories: string[];
-  cover: "launch" | "ballerini" | "portfolio" | "vehrt";
+  cover: "mapper" | "launch" | "ballerini" | "portfolio" | "vehrt";
+  featured?: boolean;
   links: { label: string; href: string }[];
 }
 
 export const projects: Project[] = [
+  {
+    id: "shopify-mapper",
+    title: "Shopify Mapper",
+    kind: "Strumento gratuito · Shopify",
+    description:
+      "Prepara i dati dei prodotti, controllali e genera un CSV da importare su Shopify. Uno strumento nato da un’attività concreta del mio lavoro.",
+    problem:
+      "Preparare a mano un catalogo su un foglio di calcolo richiede tempo e rende facile sbagliare campi, handle o SKU.",
+    approach:
+      "Un’interfaccia guidata per compilare i prodotti, generare handle e SKU, rivedere la lista e scaricare il CSV. L’app è sviluppata con Next.js e TypeScript.",
+    outcome:
+      "Puoi provare gratuitamente l’app pubblicata e generare un CSV per prodotti semplici, con una sola variante per prodotto.",
+    stack: ["Shopify", "Next.js", "TypeScript", "CSV"],
+    categories: ["shopify", "react", "web"],
+    cover: "mapper",
+    featured: true,
+    links: [
+      { label: "Prova l’app", href: "https://shopifymapper.vercel.app/" },
+    ],
+  },
   {
     id: "launch-tracker",
     title: "Launch Tracker",
@@ -28,6 +49,7 @@ export const projects: Project[] = [
     stack: ["React", "TypeScript", "Ruby on Rails", "PostgreSQL"],
     categories: ["react", "fullstack"],
     cover: "launch",
+    featured: true,
     links: [
       {
         label: "Codice frontend",
@@ -54,6 +76,7 @@ export const projects: Project[] = [
     stack: ["WordPress"],
     categories: ["web"],
     cover: "ballerini",
+    featured: true,
     links: [{ label: "Visita il sito", href: "https://balleriniesapori.com/" }],
   },
   {

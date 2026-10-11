@@ -83,6 +83,7 @@ export default function IndexPage() {
           </figcaption>
         </figure>
       </section>
+      <FeaturedProjects />
       <section aria-labelledby="expertise-title" className="section-space">
         <p className="eyebrow">Il mio lavoro</p>
         <h2 className="section-title" id="expertise-title">
@@ -118,7 +119,6 @@ export default function IndexPage() {
           ))}
         </div>
       </section>
-      <FeaturedProjects />
       <section aria-labelledby="latest-title" className="section-space">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
           <div>
