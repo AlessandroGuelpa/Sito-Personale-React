@@ -1,135 +1,76 @@
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Helmet } from "react-helmet-async";
-
 import DefaultLayout from "@/layouts/default";
-import { SITE_URL, SITE_NAME } from "@/utils/seo";
-// @ts-ignore
-import "react-lazy-load-image-component/src/effects/blur.css";
+import { PageSeo } from "@/components/page-seo";
 
-interface SportCardProps {
-  src: string;
-  alt: string;
-  className?: string;
-  isLcp?: boolean;
-}
-
-const SportCard = ({
-  src,
-  alt,
-  className = "",
-  isLcp = false,
-}: SportCardProps) => {
-  return (
-    <div
-      className={`
-        relative w-full h-full rounded-2xl overflow-hidden cursor-pointer
-        bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md
-        border border-zinc-200/50 dark:border-zinc-800/50
-        transition-all duration-500 ease-out
-        group-hover/photos:scale-90 group-hover/photos:opacity-50 group-hover/photos:blur-sm
-        hover:!scale-105 hover:!opacity-100 hover:!blur-none hover:z-20 hover:shadow-2xl hover:shadow-violet-500/20
-        ${className}
-      `}
-    >
-      {isLcp ? (
-        <img alt={alt} className="w-full h-full object-cover" src={src} />
-      ) : (
-        <LazyLoadImage
-          alt={alt}
-          className="w-full h-full object-cover"
-          effect="blur"
-          src={src}
-          wrapperClassName="w-full h-full !block"
-        />
-      )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-        <h3 className="text-white font-bold text-xl drop-shadow-md transform transition-transform duration-300 translate-y-4 hover:translate-y-0">
-          {alt}
-        </h3>
-      </div>
-    </div>
-  );
-};
+const photos = [
+  { src: "/mma5.webp", caption: "Ishirioku Clan" },
+  { src: "/mma1.webp", caption: "Cage Training" },
+  { src: "/summer.webp", caption: "Trinity Summer Camp" },
+  { src: "/jujitsu.webp", caption: "BJJ Training" },
+  { src: "/mma2.webp", caption: "Allenamento in gabbia" },
+  { src: "/mma4.webp", caption: "Verginelli Camp" },
+  { src: "/mma3.webp", caption: "Krav Maga" },
+];
 
 export default function Sports() {
   return (
     <DefaultLayout>
-      <Helmet>
-        <title>{`Sport e Passioni | ${SITE_NAME}`}</title>
-        <meta
-          name="description"
-          content="Jujitsu, MMA, sala pesi e trekking: gli sport e le passioni che mi tengono in equilibrio fuori dal codice."
-        />
-        <link rel="canonical" href={`${SITE_URL}/sports`} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${SITE_URL}/sports`} />
-        <meta property="og:title" content={`Sport e Passioni | ${SITE_NAME}`} />
-        <meta
-          property="og:description"
-          content="Jujitsu, MMA, sala pesi e trekking: gli sport che mi tengono in equilibrio fuori dal codice."
-        />
-      </Helmet>
-
-      <section className="relative z-10 max-w-5xl mx-auto px-4 pt-8 pb-20 md:pt-12 md:pb-32 flex flex-col items-center">
-        <h1 className="text-5xl md:text-7xl font-black text-center mb-8 tracking-tight drop-shadow-sm">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-fuchsia-500">
-            Sport
-          </span>{" "}
-          e Passioni
-        </h1>
-        <p className="text-xl text-zinc-600 dark:text-zinc-400 text-center max-w-3xl mb-20 leading-relaxed">
-          Da sempre appassionato di sport, amo mettermi alla prova attraverso
-          discipline diverse. Il mio percorso è iniziato con il Karate,
-          praticato per quattro anni, per poi evolversi nelle arti marziali
-          miste (MMA).
-          <br />
-          Dopo anni di allenamento ed una lunga pausa, ho scelto di dedicarmi al
-          Jujitsu, una disciplina che mi ha conquistato per tecnica e filosofia.
-          <br />
-          Oltre al tatami, mi alleno regolarmente in sala pesi, faccio lunghi
-          trekking e pratico sport acquatici: modi diversi per mantenermi in
-          forma, scaricare lo stress e spingere sempre un po’ più in là i miei
-          limiti.
+      <PageSeo
+        description="Jujitsu, MMA, sala pesi e trekking: gli sport e le passioni che mi tengono in equilibrio fuori dal codice."
+        path="/sports"
+        title="Sport e passioni"
+      />
+      <header className="max-w-3xl">
+        <p className="eyebrow">Fuori dal codice</p>
+        <h1 className="page-title">Sport e passioni.</h1>
+        <p className="page-intro">
+          Da sempre amo mettermi alla prova attraverso discipline diverse. Ho
+          iniziato con quattro anni di Karate, per poi passare alle arti
+          marziali miste.
         </p>
-
-        <div className="group/photos w-full space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="grid grid-rows-2 gap-6">
-              <SportCard
-                alt="Ishirioku Clan"
-                className="h-72"
-                src="/mma5.webp"
-              />
-              <SportCard
-                alt="Cage Training"
-                className="h-69"
-                src="/mma1.webp"
-              />
-            </div>
-            <div className="md:col-span-2">
-              <SportCard
-                alt="Trinity Summer Camp"
-                className="h-[36rem]"
-                isLcp={true}
-                src="/summer.webp"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <SportCard
-              alt="BJJ Training"
-              className="h-80"
-              src="/jujitsu.webp"
-            />
-            <SportCard alt="Cage Training" className="h-80" src="/mma2.webp" />
-            <SportCard
-              alt="Verginelli Camp"
-              className="h-80"
-              src="/mma4.webp"
-            />
-            <SportCard alt="Krav Maga" className="h-80" src="/mma3.webp" />
-          </div>
+      </header>
+      <div className="mt-6 max-w-3xl space-y-4 leading-relaxed text-zinc-600 dark:text-zinc-300">
+        <p>
+          Dopo anni di allenamento e una lunga pausa, ho scelto il Jujitsu: una
+          disciplina che mi ha conquistato per tecnica e filosofia.
+        </p>
+        <p>
+          Oltre al tatami, mi alleno in sala pesi, faccio trekking e pratico
+          sport acquatici. Sono modi diversi per scaricare lo stress e spingere
+          un po’ più in là i miei limiti.
+        </p>
+      </div>
+      <section aria-labelledby="photos-title" className="section-space">
+        <h2 className="section-title" id="photos-title">
+          Qualche momento sul campo
+        </h2>
+        <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
+          Apri una foto per vederla a dimensione intera.
+        </p>
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {photos.map((photo) => (
+            <figure key={photo.src} className="surface-card overflow-hidden">
+              <a
+                aria-label={`Apri la foto: ${photo.caption} (nuova scheda)`}
+                className="block"
+                href={photo.src}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <img
+                  alt={photo.caption}
+                  className="aspect-[4/3] w-full object-cover transition-transform duration-300 hover:scale-[1.02]"
+                  decoding="async"
+                  height={600}
+                  loading="lazy"
+                  src={photo.src}
+                  width={800}
+                />
+              </a>
+              <figcaption className="p-5 font-semibold">
+                {photo.caption}
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </section>
     </DefaultLayout>

@@ -21,7 +21,7 @@ import { siteConfig } from "@/config/site";
 import { SITE_URL, SITE_NAME } from "@/utils/seo";
 import "@/styles/vehrt.css";
 
-// Keep the existing catalogue until the new SoundCloud handle is confirmed.
+// Official VEHRT catalogue.
 const SOUNDCLOUD_PROFILE_URL = "https://soundcloud.com/vehrtaudio";
 const soundcloudPlayerSrc = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
   SOUNDCLOUD_PROFILE_URL,
@@ -106,6 +106,8 @@ export default function VehrtPage() {
       <Helmet>
         <html data-vehrt="true" lang="en" />
         <title>{pageTitle}</title>
+        <meta content="index, follow, max-image-preview:large" name="robots" />
+        <meta content={SITE_NAME} property="og:site_name" />
         <meta content={pageDescription} name="description" />
         <link href={pageUrl} rel="canonical" />
         <meta content="website" property="og:type" />
@@ -155,7 +157,7 @@ export default function VehrtPage() {
         </div>
       </header>
 
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <section
           ref={heroRef}
           aria-labelledby="vehrt-title"
@@ -231,15 +233,12 @@ export default function VehrtPage() {
               height="450"
               loading="lazy"
               src={soundcloudPlayerSrc}
-              title="VEHRT music — existing SoundCloud catalogue"
+              title="VEHRT music on SoundCloud"
               width="100%"
             />
           </div>
           <div className="vehrt-player-footer">
-            <p>
-              The catalogue stays on the existing profile during the name
-              change.
-            </p>
+            <p>Tracks and mixes are available on the official VEHRT profile.</p>
             <a
               className="vehrt-text-link"
               href={SOUNDCLOUD_PROFILE_URL}

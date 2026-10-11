@@ -1,29 +1,47 @@
-import React from "react";
+import type { AnchorHTMLAttributes } from "react";
+
 import { Link, useLocation } from "react-router-dom";
 
-// Definiamo i "tipi" che il componente accetta
-interface CustomLinkProps {
+type CustomLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   href: string;
-  className?: string;
-  target?: string;
-  children: React.ReactNode; // Accetta testo, icone o altri elementi React
-}
-
-const CustomLink = ({ href, children, target, className }: CustomLinkProps) => {
-  const baseClasses = "group relative inline-block font-medium cursor-pointer";
-  const finalClass = `${baseClasses} ${className || "text-violet-600 dark:text-violet-500"}`;
-  const location = useLocation();
-  const isActive = location.pathname === href;
-
-  return (
-    <Link className={finalClass} target={target} to={href}>
+};
+export default function CustomLink({
+  href,
+  children,
+  className = "",
+  target,
+  rel,
+  ...props
+}: CustomLinkProps) {
+  const { pathname } = useLocation();
+  const classes = `group relative inline-block font-medium ${className || "text-violet-700 dark:text-violet-400"}`;
+  const content = (
+    <>
       {children}
       <span
-        className={`absolute -bottom-0.5 left-0 h-[2px] rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 transition-all duration-300 ease-in-out
-        ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
+        aria-hidden="true"
+        className={`absolute -bottom-0.5 left-0 h-0.5 rounded-full bg-violet-600 transition-all ${pathname === href ? "w-full" : "w-0 group-hover:w-full"}`}
       />
-    </Link>
+    </>
   );
-};
+  const linkProps = {
+    ...props,
+    className: classes,
+    target,
+    rel: rel ?? (target === "_blank" ? "noopener noreferrer" : undefined),
+  };
 
-export default CustomLink;
+  return href.startsWith("/") && target !== "_blank" ? (
+    <Link
+      {...linkProps}
+      aria-current={pathname === href ? "page" : undefined}
+      to={href}
+    >
+      {content}
+    </Link>
+  ) : (
+    <a {...linkProps} href={href}>
+      {content}
+    </a>
+  );
+}

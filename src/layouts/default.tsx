@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -56,18 +55,11 @@ export default function DefaultLayout({
       </a>
       <Navbar />
       <main
-        className="container mx-auto max-w-7xl px-6 flex-grow"
+        className="mx-auto w-full max-w-6xl px-5 sm:px-8 flex-grow outline-none"
         id="main-content"
+        tabIndex={-1}
       >
-        <motion.section
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-5xl mx-auto px-6 py-10 items-center gap-12"
-          exit={{ opacity: 0, y: -20 }}
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-        >
-          {children}
-        </motion.section>
+        <div className="mx-auto py-10 sm:py-14">{children}</div>
       </main>
 
       <footer className="relative mt-24 border-t border-zinc-200/60 dark:border-white/10">

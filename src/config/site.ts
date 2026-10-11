@@ -3,7 +3,7 @@ export type SiteConfig = typeof siteConfig;
 export const siteConfig = {
   name: "Alessandro Guelpa",
   description:
-    "Front-end & Shopify developer. Trasformo idee in esperienze digitali veloci ed eleganti.",
+    "Sviluppo web, e-commerce Shopify e integrazioni API. Progetti personali con React e Rails.",
   navItems: [
     {
       label: "Blog",
@@ -14,7 +14,7 @@ export const siteConfig = {
       href: "/project",
     },
     {
-      label: "About",
+      label: "Chi sono",
       href: "/about",
     },
     {
@@ -40,7 +40,7 @@ export const siteConfig = {
       href: "/contact",
     },
     {
-      label: "About",
+      label: "Chi sono",
       href: "/about",
     },
     {

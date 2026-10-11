@@ -2,7 +2,7 @@ import type { BlogPost } from "@/data/blogPosts";
 
 export const SITE_URL = "https://alessandroguelpa.it";
 export const SITE_NAME = "Alessandro Guelpa";
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/og/logo_black.webp`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og/portfolio.png`;
 export const AUTHOR_NAME = "Alessandro Guelpa";
 export const TWITTER_HANDLE = "@AlessandroGuelpa";
 
@@ -11,16 +11,19 @@ const MARKDOWN_TOKEN_REGEX =
 
 export function stripMarkdown(input: string): string {
   return input
-    .replace(MARKDOWN_TOKEN_REGEX, (_match, codeBlock, inlineCode, image, link) => {
-      if (codeBlock || inlineCode || image) return "";
-      if (link) {
-        const text = link.match(/\[([^\]]*)\]/);
+    .replace(
+      MARKDOWN_TOKEN_REGEX,
+      (_match, codeBlock, inlineCode, image, link) => {
+        if (codeBlock || inlineCode || image) return "";
+        if (link) {
+          const text = link.match(/\[([^\]]*)\]/);
 
-        return text ? text[1] : "";
-      }
+          return text ? text[1] : "";
+        }
 
-      return "";
-    })
+        return "";
+      },
+    )
     .replace(/<[^>]+>/g, "")
     .replace(/\r\n/g, "\n")
     .replace(/\n{2,}/g, "\n\n")
@@ -29,19 +32,17 @@ export function stripMarkdown(input: string): string {
 }
 
 export function buildExcerpt(post: BlogPost, maxLength = 160): string {
-  if (post.excerpt && post.excerpt.trim().length > 0) {
-    return post.excerpt.trim();
-  }
-
-  const plain = stripMarkdown(post.content);
-  const firstParagraph = plain.split(/\n\n/).find((p) => p.trim().length > 0) ?? plain;
+  const plain = post.excerpt?.trim() || stripMarkdown(post.content);
+  const firstParagraph =
+    plain.split(/\n\n/).find((p) => p.trim().length > 0) ?? plain;
   const compact = firstParagraph.replace(/\s+/g, " ").trim();
 
   if (compact.length <= maxLength) return compact;
 
   const truncated = compact.slice(0, maxLength);
   const lastSpace = truncated.lastIndexOf(" ");
-  const safe = lastSpace > maxLength - 30 ? truncated.slice(0, lastSpace) : truncated;
+  const safe =
+    lastSpace > maxLength - 30 ? truncated.slice(0, lastSpace) : truncated;
 
   return `${safe.replace(/[.,;:!?]+$/, "")}…`;
 }
