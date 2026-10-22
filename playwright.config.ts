@@ -10,6 +10,7 @@ export default defineConfig({
   use: {
     baseURL: "http://127.0.0.1:4174",
     browserName: "chromium",
+    channel: process.env.CI ? "chrome" : undefined,
     viewport: { width: 1280, height: 900 },
     colorScheme: "light",
     reducedMotion: "reduce",
