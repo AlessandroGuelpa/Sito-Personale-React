@@ -36,7 +36,7 @@ Gli eventi Analytics descrivono aperture di progetti, download del CV e intenzio
 
 `check:header` verifica la navigazione su Chromium a dieci larghezze, da 320 a 1440 px: controlli visibili, assenza di sovrapposizioni, chiusura del menu, focus e tema persistente. La workflow conserva anche le schermate desktop e mobile, chiare e scure, nell’artefatto `header-browser-checks`.
 
-In CI i test usano Chrome già presente nel runner Ubuntu 24.04; in locale usano Chromium installato con il comando indicato sopra.
+In CI i test usano Chrome già presente nel runner Ubuntu; in locale usano Chromium installato con il comando indicato sopra.
 
 ## Hosting
 
