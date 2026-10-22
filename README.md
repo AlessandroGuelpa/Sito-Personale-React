@@ -13,6 +13,8 @@ npm run typecheck
 npm run build
 npm run check:build
 npm run check:routing
+npx playwright install chromium
+npm run check:header
 npm run preview
 ```
 
@@ -31,6 +33,8 @@ La build genera `dist` con HTML per le pagine del sito e ogni articolo del blog,
 `check:build` verifica le pagine prerenderizzate: titoli unici, un H1 e un canonical per pagina, metadati articolo, JSON-LD valido, risorse presenti, 404 noindex, paginazione e budget dei file della home. `check:routing` avvia un server temporaneo per controllare URL, redirect e risposte 404. La workflow `Site checks` esegue questi controlli per le pull request e per main.
 
 Gli eventi Analytics descrivono aperture di progetti, download del CV e intenzioni di contatto. Non includono nome, email o messaggio del modulo. Il form usa l’integrazione Web3Forms esistente; successi ed errori restano leggibili, il testo viene conservato se l’invio fallisce e le richieste vengono interrotte dopo 15 secondi.
+
+`check:header` verifica la navigazione su Chromium a dieci larghezze, da 320 a 1440 px: controlli visibili, assenza di sovrapposizioni, chiusura del menu, focus e tema persistente. La workflow conserva anche le schermate desktop e mobile, chiare e scure, nell’artefatto `header-browser-checks`.
 
 ## Hosting
 
