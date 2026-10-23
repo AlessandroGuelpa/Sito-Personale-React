@@ -61,7 +61,9 @@ export default function DefaultLayout({
                 className="inline-flex min-h-11 items-center gap-2 font-bold tracking-tight"
                 to="/"
               >
-                <Logo height={30} />
+                <span aria-hidden="true" className="shrink-0">
+                  <Logo markOnly height={30} />
+                </span>
                 <span>
                   Alessandro Guelpa<span className="text-accent">.</span>
                 </span>
