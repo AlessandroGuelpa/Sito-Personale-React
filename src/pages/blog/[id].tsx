@@ -1,7 +1,8 @@
 import type { BlogPost } from "@/data/blogPosts";
+import type { BlogSummary } from "@/types/blog";
 
 import { useParams, Link } from "react-router-dom";
-import { lazy, useMemo } from "react";
+import { lazy } from "react";
 import { blogLoaders } from "virtual:blog-loaders";
 import { Helmet } from "react-helmet-async";
 import ReactMarkdown from "react-markdown";
@@ -13,6 +14,9 @@ import "katex/dist/katex.min.css";
 import DefaultLayout from "@/layouts/default";
 import NotFoundPage from "@/pages/not-found";
 import { PageSeo } from "@/components/page-seo";
+import { ArticleCodeBlock } from "@/components/article-code-block";
+import { rehypeArticleNavigation } from "@/utils/article-navigation";
+import "@/styles/reading.css";
 import {
   SITE_URL,
   DEFAULT_OG_IMAGE,
@@ -24,26 +28,41 @@ import {
   readingTimeMinutes,
 } from "@/utils/seo";
 
+// Keep lazy component identities stable across initial Suspense retries.
+// Creating them inside the page can leave client navigation loading forever.
+const postPages = Object.fromEntries(
+  Object.entries(blogLoaders).map(([id, load]) => [
+    id,
+    lazy(async () => {
+      const { post, relatedPosts } = await load();
+
+      return {
+        default: () => <PostContent post={post} relatedPosts={relatedPosts} />,
+      };
+    }),
+  ]),
+);
+
 export default function BlogPostPage() {
   const { id } = useParams<{ id: string }>();
-  const Post = useMemo(
-    () =>
-      id && Object.prototype.hasOwnProperty.call(blogLoaders, id)
-        ? lazy(async () => {
-            const { post } = await blogLoaders[id]();
-
-            return { default: () => <PostContent post={post} /> };
-          })
-        : null,
-    [id],
-  );
+  const Post =
+    id && Object.prototype.hasOwnProperty.call(postPages, id)
+      ? postPages[id]
+      : null;
 
   if (!Post) return <NotFoundPage />;
 
   return <Post />;
 }
 
-function PostContent({ post }: { post: BlogPost }) {
+function PostContent({
+  post,
+  relatedPosts,
+}: {
+  post: BlogPost;
+  relatedPosts: BlogSummary[];
+}) {
+  const minutes = readingTimeMinutes(post.content);
   return (
     <DefaultLayout>
       <PageSeo
@@ -87,7 +106,7 @@ function PostContent({ post }: { post: BlogPost }) {
               timeZone: "UTC",
             })}
           </time>
-          <span>· {readingTimeMinutes(post.content)} min di lettura</span>
+          <span>· {minutes} min di lettura</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-black leading-tight tracking-tight">
           {post.title}
@@ -111,14 +130,53 @@ function PostContent({ post }: { post: BlogPost }) {
         ) : null}
         <div className="article-body prose prose-zinc dark:prose-invert prose-lg prose-a:text-violet-700 dark:prose-a:text-violet-400 mt-10 max-w-none">
           <ReactMarkdown
-            components={{ h1: ({ children }) => <h2>{children}</h2> }}
-            rehypePlugins={[rehypeKatex]}
+            components={{
+              pre: ({ node: _node, ...props }) => (
+                <ArticleCodeBlock {...props} />
+              ),
+            }}
+            rehypePlugins={[
+              [rehypeArticleNavigation, { showOutline: minutes >= 3 }],
+              rehypeKatex,
+            ]}
             remarkPlugins={[remarkGfm, remarkMath]}
           >
             {post.content}
           </ReactMarkdown>
         </div>
-        <div className="mt-12 border-t border-zinc-200 pt-8 dark:border-zinc-800">
+        {relatedPosts.length > 0 && (
+          <section
+            aria-labelledby="related-title"
+            className="related-posts not-prose"
+          >
+            <p className="eyebrow">Dal blog</p>
+            <h2
+              className="text-2xl font-bold tracking-tight"
+              id="related-title"
+            >
+              Continua a leggere
+            </h2>
+            <ul className="mt-6">
+              {relatedPosts.map((related) => (
+                <li key={related.id}>
+                  <Link
+                    className="related-post-link"
+                    to={`/blog/${related.id}`}
+                  >
+                    <span>
+                      <strong>{related.title}</strong>
+                      <span className="related-post-meta">
+                        {related.minutes} min di lettura
+                      </span>
+                    </span>
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        <div className="mt-10 border-t border-zinc-200 pt-6 dark:border-zinc-800">
           <Link className="text-link" to="/blog">
             ← Altri articoli dal blog
           </Link>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export function BlogCard({ post }: { post: BlogSummary }) {
   return (
-    <article className="surface-card flex flex-col p-6 sm:p-7">
+    <article className="flex min-w-0 flex-col border-t border-zinc-200 py-6 dark:border-zinc-800">
       <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm text-zinc-600 dark:text-zinc-400">
         <time dateTime={post.date}>
           {new Date(post.date).toLocaleDateString("it-IT", {

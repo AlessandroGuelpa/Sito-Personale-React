@@ -71,7 +71,7 @@ export default function Projects() {
       </section>
       <aside
         aria-labelledby="shopify-experience"
-        className="surface-card mt-12 border-l-4 border-l-violet-600 p-6 sm:p-8"
+        className="mt-12 border-l-2 border-violet-600 py-2 pl-6 dark:border-violet-400 sm:pl-8"
       >
         <h2 className="text-xl font-bold" id="shopify-experience">
           L’esperienza professionale: Shopify e integrazioni

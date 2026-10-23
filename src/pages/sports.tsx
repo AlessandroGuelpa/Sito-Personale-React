@@ -48,7 +48,7 @@ export default function Sports() {
         </p>
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {photos.map((photo) => (
-            <figure key={photo.src} className="surface-card overflow-hidden">
+            <figure key={photo.src} className="min-w-0">
               <a
                 aria-label={`Apri la foto: ${photo.caption} (nuova scheda)`}
                 className="block"
@@ -58,7 +58,7 @@ export default function Sports() {
               >
                 <img
                   alt={photo.caption}
-                  className="aspect-[4/3] w-full object-cover transition-transform duration-300 hover:scale-[1.02]"
+                  className="aspect-[4/3] w-full rounded-xl object-cover"
                   decoding="async"
                   height={600}
                   loading="lazy"
@@ -66,7 +66,7 @@ export default function Sports() {
                   width={800}
                 />
               </a>
-              <figcaption className="p-5 font-semibold">
+              <figcaption className="pt-4 font-semibold">
                 {photo.caption}
               </figcaption>
             </figure>
