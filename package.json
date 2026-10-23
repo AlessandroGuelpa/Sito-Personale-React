@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "lint:fix": "eslint . --fix",
     "check:build": "node scripts/check-build.mjs",
-    "check:routing": "node scripts/check-routing.mjs"
+    "check:routing": "node scripts/check-routing.mjs",
+    "check:header": "playwright test tests/header.spec.ts"
   },
   "dependencies": {
     "@tailwindcss/postcss": "4.1.11",
@@ -38,6 +39,7 @@
     "@eslint/compat": "1.2.8",
     "@eslint/eslintrc": "3.3.1",
     "@eslint/js": "9.25.1",
+    "@playwright/test": "1.62.1",
     "@types/node": "20.5.7",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",

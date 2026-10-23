@@ -68,7 +68,7 @@ export default function IndexPage() {
         <figure className="relative mx-auto w-full max-w-xs md:max-w-none">
           <div
             aria-hidden="true"
-            className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-violet-600/20 to-fuchsia-500/20 rotate-3"
+            className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-violet-600/20 to-fuchsia-500/20 rotate-3 sm:-inset-3"
           />
           <img
             alt="Alessandro Guelpa"
