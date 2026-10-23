@@ -4,6 +4,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 import { blogPosts } from "./src/data/blogPosts";
 import { buildExcerpt, readingTimeMinutes } from "./src/utils/seo";
+import { selectRelatedPosts } from "./src/utils/related-posts";
 
 // Keep article bodies out of the home and archive bundles without changing the authoring workflow.
 function blogMetadata(): Plugin {
@@ -48,8 +49,14 @@ function blogMetadata(): Plugin {
           (post) => post.id === id.slice("\0virtual:blog-post/".length),
         );
 
-        if (post)
-          return `export const post = ${JSON.stringify({ ...post, icon: undefined })};`;
+        if (post) {
+          const relatedPosts = selectRelatedPosts(
+            { ...post, tags: post.tags ?? [] },
+            index,
+          );
+
+          return `export const post = ${JSON.stringify({ ...post, icon: undefined })}; export const relatedPosts = ${JSON.stringify(relatedPosts)};`;
+        }
       }
     },
     generateBundle() {
@@ -96,6 +103,7 @@ function blogMetadata(): Plugin {
 }
 
 export default defineConfig({
+  server: { allowedHosts: ["terminal.local"] },
   plugins: [react(), tsconfigPaths(), blogMetadata()],
   ssr: { noExternal: ["react-helmet-async"] },
   build: {

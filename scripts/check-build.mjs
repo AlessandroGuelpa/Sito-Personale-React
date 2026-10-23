@@ -52,13 +52,19 @@ for (const route of [...routes, "/404"]) {
     /<script[^>]+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
   ))
     JSON.parse(json);
-  if (route.startsWith("/blog/"))
+  if (route.startsWith("/blog/")) {
+    const sectionIds = [...html.matchAll(/id="(sezione-[^"]+)"/g)].map((match) => match[1]);
+    assert.equal(new Set(sectionIds).size, sectionIds.length, `Duplicate article anchors: ${route}`);
+    for (const [, target] of html.matchAll(/href="#(sezione-[^"]+)"/g)) {
+      assert(sectionIds.includes(target), `Broken article outline link: ${route}#${target}`);
+    }
     assert(
       /content="article"[^>]*property="og:type"|property="og:type"[^>]*content="article"/.test(
         html,
       ),
       `Article metadata: ${route}`,
     );
+  }
   if (route === "/404")
     assert(html.includes('content="noindex, follow"'), "404 must be noindex");
 }

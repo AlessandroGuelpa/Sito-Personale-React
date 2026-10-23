@@ -61,7 +61,7 @@ export default function BlogPage() {
           scienza. Scegli un argomento o cerca qualcosa che ti incuriosisce.
         </p>
       </header>
-      <div className="surface-card mt-9 grid gap-5 p-6 sm:grid-cols-[2fr_1fr]">
+      <div className="mt-9 grid gap-5 border-y border-zinc-200 py-6 dark:border-zinc-800 sm:grid-cols-[2fr_1fr]">
         <div>
           <label className="field-label" htmlFor="blog-search">
             Cerca nell’archivio
@@ -113,7 +113,7 @@ export default function BlogPage() {
             ))}
           </div>
         ) : (
-          <div className="surface-card p-10 text-center">
+          <div className="py-10 text-center">
             <p>Nessun articolo corrisponde alla ricerca.</p>
             <button
               className="button-secondary mt-5"

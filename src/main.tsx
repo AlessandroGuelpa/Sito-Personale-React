@@ -23,5 +23,5 @@ const app = (
 );
 const root = document.getElementById("root")!;
 
-if (root.hasChildNodes()) ReactDOM.hydrateRoot(root, app);
+if (root.children.length > 0) ReactDOM.hydrateRoot(root, app);
 else ReactDOM.createRoot(root).render(app);

@@ -98,7 +98,7 @@ export default function Contact() {
         </p>
       </header>
       <div className="mt-10 grid items-start gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-        <aside className="surface-card min-w-0 p-6 sm:p-8">
+        <aside className="min-w-0 py-2 lg:pr-6">
           <h2 className="text-2xl font-bold">
             Preferisci scrivermi direttamente?
           </h2>
