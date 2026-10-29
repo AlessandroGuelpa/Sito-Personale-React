@@ -400,22 +400,22 @@ html[data-vehrt="true"] ::-webkit-scrollbar-thumb {
 }
 
 .vehrt-instagram {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 540px);
-  align-items: start;
-  gap: 64px;
+  display: block;
+}
+
+.vehrt-instagram-copy {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 28px;
 }
 
 .vehrt-instagram-copy .vehrt-button {
-  margin-top: 28px;
+  margin-top: 0;
 }
 
-.vehrt-instagram-copy > p:not(.vehrt-eyebrow) {
-  margin-top: 16px;
-  color: var(--vehrt-muted);
-  font-size: 15px;
-  line-height: 1.6;
-}
 .vehrt-button-outline {
   border: 1px solid #f2f0eb40;
   color: var(--vehrt-white);
@@ -426,13 +426,31 @@ html[data-vehrt="true"] ::-webkit-scrollbar-thumb {
   background: #f2f0eb0a;
 }
 .vehrt-instagram-widget {
+  width: min(100%, 900px);
+  margin-inline: auto;
   min-width: 0;
 }
 .vehrt-instagram-viewport {
   position: relative;
   width: 100%;
   overflow: hidden;
-  background: #111110;
+  background: var(--vehrt-black);
+  isolation: isolate;
+}
+
+.vehrt-instagram-chrome {
+  position: absolute;
+  inset-inline: 0;
+  z-index: 1;
+  pointer-events: none;
+  -webkit-backdrop-filter: invert(1) grayscale(1);
+  backdrop-filter: invert(1) grayscale(1);
+}
+.vehrt-instagram-chrome-top {
+  top: 0;
+}
+.vehrt-instagram-chrome-bottom {
+  bottom: 0;
 }
 .vehrt-instagram-content {
   transform-origin: top left;
@@ -484,9 +502,6 @@ html[data-vehrt="true"] ::-webkit-scrollbar-thumb {
 }
 
 @media (max-width: 900px) {
-  .vehrt-instagram {
-    gap: 32px;
-  }
   .vehrt-hero-bottom {
     align-items: flex-start;
     flex-direction: column;
@@ -503,10 +518,6 @@ html[data-vehrt="true"] ::-webkit-scrollbar-thumb {
 }
 
 @media (max-width: 640px) {
-  .vehrt-instagram {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
-  }
   .vehrt-header-inner {
     flex-wrap: wrap;
     padding-block: 12px;
