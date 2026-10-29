@@ -14,11 +14,16 @@ import {
   FaArrowRight,
   FaCode,
   FaHeadphones,
+  FaInstagram,
   FaSoundcloud,
 } from "react-icons/fa";
 
 import { siteConfig } from "@/config/site";
 import { SITE_URL, SITE_NAME } from "@/utils/seo";
+import {
+  InstagramFeed,
+  VEHRT_INSTAGRAM_URL,
+} from "@/components/instagram-feed";
 import "@/styles/vehrt.css";
 
 // Official VEHRT catalogue.
@@ -149,6 +154,7 @@ export default function VehrtPage() {
           <nav aria-label="Main navigation" className="vehrt-nav">
             <a href="#listen">Listen</a>
             <a href="#process">Process</a>
+            <a href="#instagram">Instagram</a>
             <a href="#contact">Contact</a>
           </nav>
           <Link className="vehrt-portfolio-link" to="/">
@@ -319,6 +325,29 @@ export default function VehrtPage() {
         </section>
 
         <section
+          aria-labelledby="instagram-title"
+          className="vehrt-container vehrt-section vehrt-instagram"
+          id="instagram"
+        >
+          <div className="vehrt-section-heading vehrt-instagram-copy">
+            <p className="vehrt-eyebrow">03 / Instagram</p>
+            <h2 id="instagram-title">From the feed.</h2>
+            <p>Reels, sounds and moments from VEHRT.</p>
+            <a
+              className="vehrt-button vehrt-button-outline"
+              href={VEHRT_INSTAGRAM_URL}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <FaInstagram aria-hidden="true" /> @vehrt_audio{" "}
+              <span aria-hidden="true">↗</span>
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
+          <InstagramFeed />
+        </section>
+
+        <section
           aria-labelledby="contact-title"
           className="vehrt-container vehrt-section vehrt-contact"
           id="contact"
@@ -332,7 +361,7 @@ export default function VehrtPage() {
             width="1024"
           />
           <div className="vehrt-contact-copy">
-            <p className="vehrt-eyebrow">03 / Contact</p>
+            <p className="vehrt-eyebrow">04 / Contact</p>
             <h2 id="contact-title">
               Booking &amp;
               <br />
