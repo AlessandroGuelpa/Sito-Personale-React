@@ -26,6 +26,7 @@ La build genera `dist` con HTML per le pagine del sito e ogni articolo del blog,
 - Lettura: `src/utils/article-navigation.ts` genera gli ID dai titoli già interpretati dal parser Markdown, con gestione degli accenti e dei duplicati. L’indice compare negli articoli da almeno tre minuti con almeno tre sezioni. I blocchi di codice hanno un controllo di copia con messaggi di successo e di errore.
 - Progetti: `src/data/projects.ts`. Contesto, stack e link sono riutilizzati in home e nella pagina Progetti.
 - Navigazione: `src/components/navbar.tsx`; link social e descrizione nel file `src/config/site.ts`.
+- Instagram VEHRT: `src/components/instagram-feed.tsx` incorpora il profilo pubblico `@vehrt_audio` tramite lo script ufficiale di Instagram. Lo script viene caricato quando la sezione si avvicina allo schermo; il collegamento diretto al profilo resta disponibile anche se l’embed è bloccato. Non occorrono token nel browser né copie locali dei post. Il profilo deve restare pubblico e consentire l’incorporamento nei siti web.
 - Metadati: `PageSeo` per le pagine del portfolio; metadati dedicati per VEHRT. La sitemap viene generata nella build.
 - Nuove pagine: aggiungere la rotta in `src/App.tsx`, nella lista del plugin di Vite e nella mappa di `scripts/prerender.mjs`.
 
