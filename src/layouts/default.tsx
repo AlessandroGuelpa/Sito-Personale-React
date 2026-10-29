@@ -37,16 +37,6 @@ export default function DefaultLayout({
 }) {
   return (
     <div className="relative flex flex-col min-h-screen">
-      {/* Sfondo coeso per tutte le pagine: dot-grid + bagliori aurora */}
-      <div
-        aria-hidden="true"
-        className="fixed inset-0 -z-10 pointer-events-none overflow-hidden"
-      >
-        <div className="hero-dot-grid absolute inset-0" />
-        <div className="absolute left-1/2 top-[30%] -translate-x-1/2 -translate-y-1/2 w-[44rem] h-[44rem] rounded-full bg-violet-500/15 dark:bg-violet-500/20 blur-3xl" />
-        <div className="absolute -bottom-40 -right-40 w-[34rem] h-[34rem] rounded-full bg-fuchsia-500/10 dark:bg-fuchsia-500/10 blur-3xl" />
-      </div>
-
       <a
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-violet-600 focus:text-white focus:font-bold focus:shadow-lg"
         href="#main-content"
@@ -62,76 +52,78 @@ export default function DefaultLayout({
         <div className="mx-auto py-10 sm:py-14">{children}</div>
       </main>
 
-      <footer className="relative mt-24 border-t border-zinc-200/60 dark:border-white/10">
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent"
-        />
-
-        <div className="container mx-auto max-w-7xl px-6 py-14">
-          <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-10">
-            <div className="flex flex-col items-center md:items-start max-w-sm text-zinc-900 dark:text-zinc-100">
-              <Logo height={42} />
-              <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed text-center md:text-left">
+      <footer className="site-footer mt-20 border-t border-zinc-200 dark:border-zinc-800">
+        <div className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-12">
+          <div className="grid gap-9 md:grid-cols-[1fr_auto] md:gap-16">
+            <div className="max-w-sm">
+              <Link
+                aria-label="Alessandro Guelpa — home"
+                className="inline-flex min-h-11 items-center gap-2 font-bold tracking-tight"
+                to="/"
+              >
+                <span aria-hidden="true" className="shrink-0">
+                  <Logo markOnly height={30} />
+                </span>
+                <span>
+                  Alessandro Guelpa<span className="text-accent">.</span>
+                </span>
+              </Link>
+              <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
                 {siteConfig.description}
               </p>
             </div>
-
             <nav
-              aria-label="Footer"
-              className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm font-semibold"
+              aria-label="Pagine nel footer"
+              className="grid grid-cols-2 gap-x-10 gap-y-1 self-start text-sm font-medium sm:gap-x-16"
             >
               {siteConfig.navMenuItems.map((item) => (
                 <Link
                   key={item.href}
-                  className="text-zinc-500 dark:text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+                  className="footer-link inline-flex min-h-11 items-center"
                   to={item.href}
                 >
                   {item.label}
                 </Link>
               ))}
             </nav>
-
-            <div className="flex flex-col items-center gap-4">
-              <div className="flex items-center gap-3">
-                {socialLinks.map((social) => (
+          </div>
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-t border-zinc-200 pt-5 dark:border-zinc-800">
+            <ul
+              aria-label="Social e contatti"
+              className="flex flex-wrap gap-x-5 gap-y-1"
+            >
+              {socialLinks.map((social) => (
+                <li key={social.label}>
                   <a
-                    key={social.label}
-                    aria-label={social.label}
-                    className="flex items-center justify-center w-11 h-11 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/60 backdrop-blur text-zinc-600 dark:text-zinc-300 hover:text-violet-600 dark:hover:text-violet-400 hover:border-violet-500/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-violet-500/10 transition-all duration-300"
+                    className="footer-link inline-flex min-h-11 items-center gap-2 text-sm"
                     href={social.href}
                     rel="noopener noreferrer"
                     target={
                       social.href.startsWith("mailto:") ? undefined : "_blank"
                     }
                   >
-                    {social.icon}
+                    <span aria-hidden="true">{social.icon}</span>
+                    {social.label}
+                    {!social.href.startsWith("mailto:") && (
+                      <span className="sr-only"> (nuova scheda)</span>
+                    )}
                   </a>
-                ))}
-              </div>
-              <a
-                className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-4 text-sm font-semibold text-amber-950 transition-all hover:border-amber-400 hover:bg-amber-100 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 dark:border-amber-400/40 dark:bg-amber-400/10 dark:text-amber-200 dark:hover:bg-amber-400/20"
-                href={siteConfig.links.buyMeACoffee}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <LuCoffee aria-hidden="true" className="h-4 w-4" />
-                Offrimi un caffè
-              </a>
-            </div>
+                </li>
+              ))}
+            </ul>
+            <a
+              className="footer-link inline-flex min-h-11 items-center gap-2 text-sm"
+              href={siteConfig.links.buyMeACoffee}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <LuCoffee aria-hidden="true" className="h-4 w-4" />
+              Offrimi un caffè<span className="sr-only"> (nuova scheda)</span>
+            </a>
           </div>
-
-          <div className="mt-12 pt-6 border-t border-zinc-200/60 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-400 dark:text-zinc-500">
-            <p>
-              © {new Date().getFullYear()} Alessandro Guelpa. Tutti i diritti
-              riservati.
-            </p>
-            <p>
-              Progettato e sviluppato con{" "}
-              <span className="font-semibold text-violet-500">React</span>,{" "}
-              <span className="font-semibold text-fuchsia-500">Tailwind</span> e
-              tanto caffè.
-            </p>
+          <div className="mt-5 flex flex-col gap-2 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400 sm:flex-row sm:justify-between">
+            <p>© {new Date().getFullYear()} Alessandro Guelpa.</p>
+            <p>Progettato e sviluppato con React e Tailwind.</p>
           </div>
         </div>
       </footer>

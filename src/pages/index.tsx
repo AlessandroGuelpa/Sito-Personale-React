@@ -43,7 +43,7 @@ export default function IndexPage() {
             id="hero-title"
           >
             E-commerce, interfacce e{" "}
-            <span className="text-gradient">integrazioni.</span>
+            <span className="text-accent">integrazioni.</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-300">
             Da 5 anni lavoro nello sviluppo web, principalmente su{" "}
@@ -66,13 +66,9 @@ export default function IndexPage() {
           </div>
         </div>
         <figure className="relative mx-auto w-full max-w-xs md:max-w-none">
-          <div
-            aria-hidden="true"
-            className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-violet-600/20 to-fuchsia-500/20 rotate-3 sm:-inset-3"
-          />
           <img
             alt="Alessandro Guelpa"
-            className="relative aspect-square w-full rounded-3xl object-cover shadow-xl"
+            className="relative aspect-square w-full rounded-2xl object-cover"
             {...{ fetchpriority: "high" }}
             height={400}
             src="/io.jpeg"
@@ -107,7 +103,10 @@ export default function IndexPage() {
               "Progetti personali per sperimentare interfacce, applicazioni e il collegamento tra frontend e API.",
             ],
           ].map(([number, title, text]) => (
-            <article key={title} className="surface-card p-6">
+            <article
+              key={title}
+              className="border-t border-zinc-200 py-6 dark:border-zinc-800"
+            >
               <span className="text-sm font-mono text-violet-700 dark:text-violet-400">
                 {number}
               </span>
@@ -137,13 +136,15 @@ export default function IndexPage() {
           ))}
         </div>
       </section>
-      <section className="surface-card mt-16 p-8 text-center sm:p-12">
-        <h2 className="section-title">Un progetto o una collaborazione?</h2>
-        <p className="mx-auto mt-4 max-w-xl text-zinc-600 dark:text-zinc-300">
-          Raccontami cosa vuoi costruire, oppure confrontiamoci su
-          un’opportunità di lavoro.
-        </p>
-        <Link className="button-primary mt-7" to="/contact">
+      <section className="section-space border-t border-zinc-200 pt-10 dark:border-zinc-800 sm:flex sm:items-center sm:justify-between sm:gap-10">
+        <div className="max-w-xl">
+          <h2 className="section-title">Un progetto o una collaborazione?</h2>
+          <p className="mt-4 text-zinc-600 dark:text-zinc-300">
+            Raccontami cosa vuoi costruire, oppure confrontiamoci su
+            un’opportunità di lavoro.
+          </p>
+        </div>
+        <Link className="button-primary mt-7 shrink-0 sm:mt-0" to="/contact">
           Scrivimi →
         </Link>
       </section>

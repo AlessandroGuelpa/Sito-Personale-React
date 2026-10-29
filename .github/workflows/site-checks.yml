@@ -21,11 +21,11 @@ jobs:
       - run: npm run check:build
       - run: npm run check:routing
       - run: google-chrome --version
-      - run: npm run check:header
+      - run: npm run check:browser
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: header-browser-checks
+          name: site-browser-checks
           path: test-results/
           if-no-files-found: ignore
           retention-days: 7

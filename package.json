@@ -13,7 +13,8 @@
     "lint:fix": "eslint . --fix",
     "check:build": "node scripts/check-build.mjs",
     "check:routing": "node scripts/check-routing.mjs",
-    "check:header": "playwright test tests/header.spec.ts"
+    "check:header": "playwright test tests/header.spec.ts",
+    "check:browser": "playwright test"
   },
   "dependencies": {
     "@tailwindcss/postcss": "4.1.11",

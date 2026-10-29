@@ -28,67 +28,117 @@ export default function AboutPage() {
       </header>
       <section
         aria-labelledby="experience-title"
-        className="mt-10 grid gap-6 md:grid-cols-[1.2fr_0.8fr]"
+        className="section-space grid gap-12 lg:grid-cols-[1.4fr_0.8fr] lg:gap-20"
       >
-        <div className="surface-card p-6 sm:p-8">
-          <h2 className="text-2xl font-bold" id="experience-title">
+        <div>
+          <p className="eyebrow">Esperienza professionale</p>
+          <h2 className="section-title" id="experience-title">
             Il mio percorso
           </h2>
-          <div className="mt-5 space-y-5 leading-relaxed text-zinc-600 dark:text-zinc-300">
-            <p>
-              Ho maturato la maggior parte della mia esperienza professionale su{" "}
-              <strong className="text-zinc-900 dark:text-white">Shopify</strong>
-              , lavorando allo sviluppo di progetti e-commerce.
-            </p>
-            <p>
-              Mi sono occupato anche di backend e integrazioni con API e
-              gestionali, usando tra le altre tecnologie Ruby on Rails. Mi
-              interessa capire come l’interfaccia e i dati possano funzionare
-              bene insieme.
-            </p>
-            <p>
-              Nei progetti personali approfondisco{" "}
-              <strong className="text-zinc-900 dark:text-white">
-                React, TypeScript e Rails
-              </strong>
-              . Launch Tracker è un esempio concreto: un frontend per consultare
-              i lanci orbitali e un’API per raccogliere e arricchire i dati.
-            </p>
-          </div>
-          <Link
-            className="text-link mt-5 inline-flex min-h-11 items-center"
-            to="/project"
+          <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
+            Dal dicembre 2021 in Gesca · E-commerce Developer Senior
+          </p>
+          <ol
+            aria-label="Evoluzione del ruolo"
+            className="career-timeline mt-9"
           >
-            Guarda i progetti →
-          </Link>
+            <li>
+              <p className="career-period">Primi 3 anni</p>
+              <h3 className="mt-2 text-xl font-bold">
+                Front-end ed e-commerce
+              </h3>
+              <p className="mt-3 leading-relaxed text-zinc-600 dark:text-zinc-300">
+                Sviluppo e manutenzione di e-commerce, principalmente su
+                Shopify: interfacce, personalizzazioni dei temi e migrazioni da
+                altre piattaforme.
+              </p>
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+                <li>
+                  Prestazioni, riduzione delle app esterne e maggiore autonomia
+                  nella gestione dello store.
+                </li>
+                <li>
+                  Analisi delle richieste, stime e sviluppo, con confronto
+                  diretto con i clienti.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <p className="career-period">Ultimi 2 anni</p>
+              <h3 className="mt-2 text-xl font-bold">Backend e integrazioni</h3>
+              <p className="mt-3 leading-relaxed text-zinc-600 dark:text-zinc-300">
+                Al lavoro sul front-end ho affiancato lo sviluppo di servizi e
+                integrazioni tra Shopify, API esterne e gestionali, anche con
+                Ruby on Rails.
+              </p>
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+                <li>
+                  Autenticazione OAuth, mapping e persistenza dei dati,
+                  sincronizzazioni schedulate.
+                </li>
+                <li>
+                  Gestione degli errori e dei tentativi successivi, per rendere
+                  gli scambi tra sistemi più affidabili.
+                </li>
+              </ul>
+            </li>
+          </ol>
         </div>
         <aside
-          aria-labelledby="skills-title"
-          className="surface-card p-6 sm:p-8"
+          aria-labelledby="working-title"
+          className="lg:border-l lg:border-zinc-200 lg:pl-8 dark:lg:border-zinc-800"
         >
-          <h2 className="text-2xl font-bold" id="skills-title">
-            Dove concentro il lavoro
+          <h2 className="text-xl font-bold" id="working-title">
+            Come lavoro
           </h2>
           <dl className="mt-6 space-y-6">
-            {[
-              ["E-commerce", "Shopify · sviluppo web"],
-              ["Integrazioni", "API · gestionali · Ruby on Rails"],
-              [
-                "Progetti personali",
-                "React · TypeScript · PostgreSQL · Tailwind",
-              ],
-            ].map(([label, text]) => (
-              <div key={label}>
-                <dt className="text-sm font-bold text-violet-700 dark:text-violet-400">
-                  {label}
-                </dt>
-                <dd className="mt-2 text-zinc-600 dark:text-zinc-300">
-                  {text}
-                </dd>
-              </div>
-            ))}
+            <div>
+              <dt className="font-semibold">Dalla richiesta alla soluzione</dt>
+              <dd className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+                Analisi, scelte tecniche e sviluppo, mantenendo il confronto con
+                chi userà il progetto.
+              </dd>
+            </div>
+            <div>
+              <dt className="font-semibold">Condivisione nel team</dt>
+              <dd className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+                Supporto e formazione ai colleghi junior, insieme al lavoro sui
+                progetti.
+              </dd>
+            </div>
           </dl>
+          <div className="mt-8 border-t border-zinc-200 pt-7 dark:border-zinc-800">
+            <p className="eyebrow">Nei progetti personali</p>
+            <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+              Approfondisco React, TypeScript e Rails. Con Launch Tracker
+              collego un’interfaccia per i lanci orbitali a un’API e a un
+              database PostgreSQL.
+            </p>
+            <Link
+              className="text-link mt-4 inline-flex min-h-11 items-center"
+              to="/project"
+            >
+              Guarda i progetti →
+            </Link>
+          </div>
         </aside>
+      </section>
+      <section
+        aria-labelledby="education-title"
+        className="mt-12 border-y border-zinc-200 py-7 dark:border-zinc-800 sm:flex sm:items-start sm:justify-between sm:gap-8"
+      >
+        <div>
+          <p className="eyebrow">Formazione in corso</p>
+          <h2 className="text-xl font-bold" id="education-title">
+            Ingegneria Informatica
+          </h2>
+          <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
+            Corso di laurea L-8 · Sistemi di elaborazione e controllo
+          </p>
+        </div>
+        <p className="mt-4 shrink-0 text-sm text-zinc-600 dark:text-zinc-400 sm:mt-1">
+          Da settembre 2025
+        </p>
       </section>
       <section aria-labelledby="cv-title" className="section-space">
         <div className="flex flex-wrap items-center justify-between gap-6">
@@ -108,7 +158,7 @@ export default function AboutPage() {
           </a>
         </div>
         <details
-          className="surface-card mt-7 p-6"
+          className="mt-7 rounded-xl border border-zinc-200 p-5 dark:border-zinc-800"
           onToggle={(event) => setShowCv(event.currentTarget.open)}
         >
           <summary className="cursor-pointer font-semibold">
@@ -138,7 +188,7 @@ export default function AboutPage() {
       </section>
       <section
         aria-labelledby="off-code-title"
-        className="surface-card mt-12 p-6 sm:p-8"
+        className="section-space max-w-3xl border-t border-zinc-200 pt-8 dark:border-zinc-800"
       >
         <h2 className="text-2xl font-bold" id="off-code-title">
           Fuori dal codice

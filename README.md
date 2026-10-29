@@ -14,7 +14,7 @@ npm run build
 npm run check:build
 npm run check:routing
 npx playwright install chromium
-npm run check:header
+npm run check:browser
 npm run preview
 ```
 
@@ -22,7 +22,8 @@ La build genera `dist` con HTML per le pagine del sito e ogni articolo del blog,
 
 ## Contenuti
 
-- Articoli: `src/data/blogPosts.ts`. Si continua a scrivere nello stesso array. Il plugin in `vite.config.ts` genera le anteprime del blog, i tre articoli della home e un modulo separato per ogni testo.
+- Articoli: `src/data/blogPosts.ts`. Si continua a scrivere nello stesso array. Il plugin in `vite.config.ts` genera le anteprime del blog, i tre articoli della home e un modulo separato per ogni testo, con al massimo tre letture correlate selezionate per tag e titolo. Se non ci sono affinità, propone altre letture recenti.
+- Lettura: `src/utils/article-navigation.ts` genera gli ID dai titoli già interpretati dal parser Markdown, con gestione degli accenti e dei duplicati. L’indice compare negli articoli da almeno tre minuti con almeno tre sezioni. I blocchi di codice hanno un controllo di copia con messaggi di successo e di errore.
 - Progetti: `src/data/projects.ts`. Contesto, stack e link sono riutilizzati in home e nella pagina Progetti.
 - Navigazione: `src/components/navbar.tsx`; link social e descrizione nel file `src/config/site.ts`.
 - Metadati: `PageSeo` per le pagine del portfolio; metadati dedicati per VEHRT. La sitemap viene generata nella build.
@@ -34,7 +35,7 @@ La build genera `dist` con HTML per le pagine del sito e ogni articolo del blog,
 
 Gli eventi Analytics descrivono aperture di progetti, download del CV e intenzioni di contatto. Non includono nome, email o messaggio del modulo. Il form usa l’integrazione Web3Forms esistente; successi ed errori restano leggibili, il testo viene conservato se l’invio fallisce e le richieste vengono interrotte dopo 15 secondi.
 
-`check:header` verifica la navigazione su Chromium a dieci larghezze, da 320 a 1440 px: controlli visibili, assenza di sovrapposizioni, chiusura del menu, focus e tema persistente. La workflow conserva anche le schermate desktop e mobile, chiare e scure, nell’artefatto `header-browser-checks`.
+`check:browser` verifica la navigazione a dieci larghezze, da 320 a 1440 px, e la lettura degli articoli: indice e ancore, copia del codice, appunti non disponibili, letture correlate, focus dopo la navigazione e layout mobile/desktop. La workflow conserva schermate chiare e scure nell’artefatto `site-browser-checks`. `check:header` resta disponibile per eseguire soltanto i controlli della navigazione.
 
 In CI i test usano Chrome già presente nel runner Ubuntu; in locale usano Chromium installato con il comando indicato sopra.
 
