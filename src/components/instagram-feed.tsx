@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from "react";
 
 export const VEHRT_INSTAGRAM_URL = "https://www.instagram.com/vehrt_audio/";
 const EMBED_SCRIPT = "https://www.instagram.com/embed.js";
+// The native profile preview has six square tiles and a 64px footer.
+// Adjust only its interface bands; the artwork and iframe controls stay intact.
+const PROFILE_GRID_RATIO = 2 / 3;
+const PROFILE_FOOTER_HEIGHT = 64;
 
 type InstagramWindow = Window & {
   instgrm?: { Embeds: { process: () => void } };
@@ -146,8 +150,35 @@ export function InstagramFeed() {
           className="vehrt-instagram-content"
           style={{ width: size.width, transform: `scale(${size.scale})` }}
         />
+        {status === "embedded" &&
+          size.height >
+            size.width * PROFILE_GRID_RATIO + PROFILE_FOOTER_HEIGHT && (
+            <>
+              <span
+                aria-hidden="true"
+                className="vehrt-instagram-chrome vehrt-instagram-chrome-top"
+                style={{
+                  height:
+                    Math.max(
+                      0,
+                      size.height -
+                        size.width * PROFILE_GRID_RATIO -
+                        PROFILE_FOOTER_HEIGHT,
+                    ) * size.scale,
+                }}
+              />
+              <span
+                aria-hidden="true"
+                className="vehrt-instagram-chrome vehrt-instagram-chrome-bottom"
+                style={{ height: PROFILE_FOOTER_HEIGHT * size.scale }}
+              />
+            </>
+          )}
       </div>
-      <p className="vehrt-instagram-note" role="status">
+      <p
+        className={status === "embedded" ? "sr-only" : "vehrt-instagram-note"}
+        role="status"
+      >
         {status === "waiting" && "Loading Instagram…"}
         {status === "unavailable" &&
           "Instagram could not load here. You can still view the posts on the profile."}

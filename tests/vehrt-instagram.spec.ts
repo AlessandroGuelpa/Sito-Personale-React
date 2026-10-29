@@ -5,28 +5,42 @@ const SDK = "https://www.instagram.com/embed.js";
 
 // The external provider is exercised manually with its real public profile.
 // CI isolates the page's loading, layout and SPA lifecycle from Meta outages.
-const sdkFixture = `
+const sdkFixture = (headerHeight: number) => `
   window.instgrm = { Embeds: { process() {
     document.querySelectorAll('blockquote.instagram-media').forEach(quote => {
       const frame = document.createElement('iframe');
       frame.src = quote.dataset.instgrmPermalink + 'embed/';
-      frame.style.cssText = 'display:block;width:100%;height:640px;border:0';
+      frame.style.cssText = 'display:block;width:100%;border:0';
       quote.replaceWith(frame);
+      const fit = () => { frame.style.height = (${headerHeight} + frame.clientWidth * 2 / 3 + 64) + 'px'; };
+      new ResizeObserver(fit).observe(frame);
+      fit();
     });
   } } };
 `;
 
-async function mockProvider(page: import("@playwright/test").Page) {
+async function mockProvider(
+  page: import("@playwright/test").Page,
+  headerHeight = 156,
+) {
   await page.route("https://w.soundcloud.com/**", (route) =>
     route.fulfill({ body: "" }),
   );
   await page.route(SDK, (route) =>
-    route.fulfill({ contentType: "text/javascript", body: sdkFixture }),
+    route.fulfill({
+      contentType: "text/javascript",
+      body: sdkFixture(headerHeight),
+    }),
   );
   await page.route(`${PROFILE}embed/**`, (route) =>
     route.fulfill({
       contentType: "text/html",
-      body: "<!doctype html><html><body>Instagram test frame</body></html>",
+      body: `<!doctype html><html><body style="margin:0">
+        <header style="height:${headerHeight}px;background:white">Instagram test profile</header>
+        <main class="fixture-grid" style="display:grid;grid-template-columns:repeat(3,1fr)">
+          ${Array.from({ length: 6 }, (_, index) => `<a href="#media-${index}" style="aspect-ratio:1;background:#a32937">Test media ${index + 1}</a>`).join("")}
+        </main><footer style="height:64px;background:white"><a href="${PROFILE}">View profile</a></footer>
+      </body></html>`,
     }),
   );
 }
@@ -121,6 +135,38 @@ test("Instagram loads near its section and reuses one SDK after SPA navigation",
   ).toHaveCount(1);
   expect(requests).toBe(1);
 });
+
+for (const headerHeight of [156, 240]) {
+  test(`the dark interface leaves media and links unobstructed with a ${headerHeight}px profile header`, async ({
+    page,
+  }) => {
+    await mockProvider(page, headerHeight);
+    await page.goto("/vehrt#instagram", { waitUntil: "networkidle" });
+    const top = page.locator(".vehrt-instagram-chrome-top");
+    const bottom = page.locator(".vehrt-instagram-chrome-bottom");
+    await expect(top).toBeVisible();
+    await expect(bottom).toBeVisible();
+    const grid = page
+      .frameLocator('iframe[title="VEHRT posts on Instagram"]')
+      .locator(".fixture-grid");
+    await expect
+      .poll(async () => {
+        const gridBox = await grid.boundingBox();
+        const topBox = await top.boundingBox();
+        const bottomBox = await bottom.boundingBox();
+        return (
+          gridBox &&
+          topBox &&
+          bottomBox &&
+          Math.abs(topBox.y + topBox.height - gridBox.y) < 2 &&
+          Math.abs(bottomBox.y - gridBox.y - gridBox.height) < 2
+        );
+      })
+      .toBe(true);
+    await expect(top).toHaveCSS("pointer-events", "none");
+    await expect(bottom).toHaveCSS("pointer-events", "none");
+  });
+}
 
 test("the public profile remains available when Instagram's SDK is blocked", async ({
   page,

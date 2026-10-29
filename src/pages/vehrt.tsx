@@ -330,9 +330,10 @@ export default function VehrtPage() {
           id="instagram"
         >
           <div className="vehrt-section-heading vehrt-instagram-copy">
-            <p className="vehrt-eyebrow">03 / Instagram</p>
-            <h2 id="instagram-title">From the feed.</h2>
-            <p>Reels, sounds and moments from VEHRT.</p>
+            <div>
+              <p className="vehrt-eyebrow">03 / Instagram</p>
+              <h2 id="instagram-title">From the feed.</h2>
+            </div>
             <a
               className="vehrt-button vehrt-button-outline"
               href={VEHRT_INSTAGRAM_URL}
