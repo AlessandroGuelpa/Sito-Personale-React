@@ -42,8 +42,10 @@ precedente non è una fonte aggiornata né un prerequisito del processo.
    Nella template string eseguire l'escape di backslash, backtick e `${`.
 6. Nella stessa modifica avanzare il prossimo tema e aggiungere una riga al
    registro con data locale, tema, slug, titolo e origine `programmata`.
-   Il recupero del 3 novembre comprende 45 uscite editoriali pregresse; le date
-   teoriche di quelle uscite non sono date di pubblicazione retroattive.
+   Per i 45 articoli del recupero conservare le date editoriali distribuite
+   dal 22 luglio al 2 novembre 2026, su lunedì/mercoledì/venerdì, come richiesto
+   dall’autore. Non riportarli alla data del 3 novembre o alla data di esecuzione.
+   Questa scelta riguarda il recupero; i nuovi articoli usano la data odierna.
 
 ## Verifica e pubblicazione
 

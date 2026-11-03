@@ -15,7 +15,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: "osservabilita-log-metriche-tracce",
     title: "Log, metriche e tracce: tre domande sullo stesso guasto",
-    date: "2026-11-03",
+    date: "2026-11-02",
     icon: "🔭",
     excerpt: "Una metrica segnala un cambiamento, un log descrive un evento, una traccia collega i passaggi. La correlazione rende utile il dettaglio.",
     tags: ["Ingegneria", "Monitoraggio", "Backend"],
@@ -49,13 +49,13 @@ Per l'ordine lento vorrei quindi partire dal cambiamento aggregato, raggiungere 
 - [OpenTelemetry — segnali](https://opentelemetry.io/docs/concepts/signals/)
 - [OpenTelemetry — metriche e cardinalità](https://opentelemetry.io/docs/concepts/signals/metrics/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "raee-elettronica-fine-vita",
     title: "Il cassetto dei vecchi dispositivi è una filiera interrotta",
-    date: "2026-11-03",
+    date: "2026-10-30",
     icon: "📱",
     excerpt: "Riuso e raccolta dei RAEE mantengono percorsi distinti. Il recupero dei materiali comincia da una destinazione appropriata.",
     tags: ["Ambiente", "Elettronica", "Risorse"],
@@ -89,13 +89,13 @@ La scelta utile è rendere esplicito lo stato: ancora usabile, riparabile oppure
 - [Commissione europea — RAEE](https://environment.ec.europa.eu/topics/waste-and-recycling/waste-electrical-and-electronic-equipment-weee_en)
 - [EEA — durata dell’elettronica](https://www.eea.europa.eu/en/analysis/publications/europes-consumption-in-a-circular-economy-the-benefits-of-longer-lasting-electronics)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "luna-massa-peso-inerzia",
     title: "Sulla Luna pesi meno. La tua massa non è diventata più piccola",
-    date: "2026-11-03",
+    date: "2026-10-28",
     icon: "⚖️",
     excerpt: "Peso e inerzia dipendono da grandezze diverse. Un carico più leggero resta difficile da accelerare e fermare.",
     tags: ["Spazio", "Fisica", "Luna"],
@@ -128,13 +128,13 @@ Separare massa, peso e condizioni di contatto evita una scorciatoia intuitiva ch
 
 - [NASA Glenn — gravità lunare](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/moon/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "webhook-riconciliazione-sincronizzazione",
     title: "Webhook e job periodici: l’integrazione ha bisogno anche di un controllo",
-    date: "2026-11-03",
+    date: "2026-10-26",
     icon: "🔗",
     excerpt: "L’evento accelera l’aggiornamento, la riconciliazione cerca le differenze. Insieme rendono recuperabile una sincronizzazione.",
     tags: ["Coding", "Shopify", "Integrazioni"],
@@ -167,13 +167,13 @@ La verifica pratica è interrompere il percorso rapido, lasciare una modifica no
 
 - [Shopify — ordinamento e riconciliazione dei webhook](https://shopify.dev/docs/apps/build/webhooks)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "ridondanza-guasti-correlati",
     title: "Due server non bastano se dipendono dallo stesso interruttore",
-    date: "2026-11-03",
+    date: "2026-10-23",
     icon: "🛡️",
     excerpt: "La ridondanza protegge rispetto a un insieme di guasti. Le dipendenze condivise possono far fallire entrambe le copie.",
     tags: ["Ingegneria", "Affidabilità", "Architettura"],
@@ -207,13 +207,13 @@ Non sceglierei la massima ridondanza per qualunque sito. Definirei prima cosa pu
 - [Google Cloud — ridondanza e disponibilità](https://docs.cloud.google.com/architecture/framework/reliability/build-highly-available-systems?hl=en)
 - [Google Cloud — domini di guasto](https://docs.cloud.google.com/architecture/infra-reliability-guide/building-blocks)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "biodiversita-impollinatori-reti",
     title: "La biodiversità non si riassume contando soltanto le api",
-    date: "2026-11-03",
+    date: "2026-10-21",
     icon: "🐝",
     excerpt: "L’impollinazione coinvolge specie e habitat differenti. Proteggere una funzione richiede guardare la rete che la sostiene.",
     tags: ["Ambiente", "Biodiversità", "Ecosistemi"],
@@ -247,13 +247,13 @@ Per parlare seriamente di biodiversità servono quindi più domande e meno simbo
 - [EEA — impollinatori selvatici e habitat](https://www.eea.europa.eu/en/analysis/publications/protecting-and-restoring-europes-wild-pollinators-and-their-habitats)
 - [FAO — impollinazione e biodiversità](https://www.fao.org/agriculture/crops/core-themes/theme/biodiversity/pollination/en/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "navigazione-spaziale-posizione-orientamento",
     title: "Sapere dove sei e sapere dove punti sono due problemi diversi",
-    date: "2026-11-03",
+    date: "2026-10-19",
     icon: "🧭",
     excerpt: "Star tracker, misure radio e immagini contribuiscono a stime differenti. La navigazione combina osservazioni e modelli.",
     tags: ["Spazio", "Navigazione", "Sensori"],
@@ -289,13 +289,13 @@ Prima di aggiungere sensori o dashboard, bisogna quindi distinguere ciò che mis
 - [NASA — avionica e software di Orion](https://www.nasa.gov/reference/avionics-and-software/)
 - [NASA — strumenti di navigazione di Orion](https://www.nasa.gov/missions/lasers-stars-and-sensors-will-guide-nasas-orion-spacecraft/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "react-prerender-html-metadati",
     title: "React e HTML già pronto: cosa cambia quando apri un link diretto",
-    date: "2026-11-03",
+    date: "2026-10-16",
     icon: "📄",
     excerpt: "Il prerender consegna contenuto e metadati prima del JavaScript. Redirect, canonical e vere risposte 404 restano parte del lavoro.",
     tags: ["Coding", "React", "SEO"],
@@ -329,13 +329,13 @@ La prova utile è fuori dal percorso più comodo dello sviluppatore: aprire una 
 - [Google Search Central — siti JavaScript](https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics)
 - [Sorgente del sito — build e prerender](https://github.com/AlessandroGuelpa/Sito-Personale-React/blob/main/scripts/prerender.mjs)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "adr-decisioni-architetturali",
     title: "Fra sei mesi ricorderai perché hai scelto quella soluzione?",
-    date: "2026-11-03",
+    date: "2026-10-14",
     icon: "📝",
     excerpt: "Un ADR conserva contesto, scelta e conseguenze. Aiuta a rivedere una decisione senza ricominciare da zero.",
     tags: ["Ingegneria", "Architettura", "Documentazione"],
@@ -369,13 +369,13 @@ Io scriverei un ADR quando il prossimo manutentore potrebbe altrimenti scambiare
 - [AWS — decisioni architetturali](https://docs.aws.amazon.com/prescriptive-guidance/latest/architectural-decision-records/)
 - [AWS — gestione degli ADR superati](https://docs.aws.amazon.com/prescriptive-guidance/latest/architectural-decision-records/best-practices.html)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "rete-elettrica-flessibilita-domanda",
     title: "La rete elettrica deve funzionare anche quando il sole cambia",
-    date: "2026-11-03",
+    date: "2026-10-12",
     icon: "🔋",
     excerpt: "Accumulo, reti e domanda flessibile rispondono a vincoli diversi. La quantità di energia non basta a descrivere un sistema.",
     tags: ["Ambiente", "Energia", "Infrastrutture"],
@@ -409,13 +409,13 @@ Quando vedo una proposta energetica cerco quindi il profilo, non soltanto il tot
 - [IEA — flessibilità nel sistema elettrico](https://www.iea.org/reports/electricity-2026/flexibility)
 - [IEA — glossario di potenza ed energia](https://www.iea.org/glossary)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "deep-space-network-collegamento",
     title: "Le antenne a Terra fanno parte della missione spaziale",
-    date: "2026-11-03",
+    date: "2026-10-09",
     icon: "📡",
     excerpt: "Il Deep Space Network trasporta dati e contribuisce alla navigazione. Essere nello spazio non elimina i vincoli del collegamento.",
     tags: ["Spazio", "Comunicazioni", "Infrastrutture"],
@@ -449,13 +449,13 @@ Quando valuto un'architettura, cerco anche le risorse lontane dall'oggetto princ
 - [NASA — Deep Space Network](https://www.nasa.gov/communicating-with-missions/dsn/)
 - [NASA — navigazione spaziale](https://science.nasa.gov/learn/basics-of-space-flight/chapter13-1/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "shopify-graphql-budget-query",
     title: "Shopify GraphQL: il limite è un budget, non un invito a insistere",
-    date: "2026-11-03",
+    date: "2026-10-07",
     icon: "🛍️",
     excerpt: "Costo della query e capacità disponibile guidano il ritmo di un’integrazione. I worker dello stesso negozio condividono il problema.",
     tags: ["Coding", "Shopify", "API"],
@@ -489,13 +489,13 @@ Una sincronizzazione ben progettata usa il budget per portare avanti lavoro util
 - [Shopify — limiti GraphQL Admin API](https://shopify.dev/docs/apps/build/apis/graphql-admin/rate-limits)
 - [Shopify — riferimento GraphQL Admin API](https://shopify.dev/docs/api/admin-graphql/latest)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "progressive-enhancement-funzione-base",
     title: "Se il JavaScript arriva tardi, la pagina sa ancora cosa fare?",
-    date: "2026-11-03",
+    date: "2026-10-05",
     icon: "🧱",
     excerpt: "Il progressive enhancement parte da una funzione utilizzabile e aggiunge capacità. È una scelta sui requisiti del servizio.",
     tags: ["Ingegneria", "Web", "Accessibilità"],
@@ -528,13 +528,13 @@ Progettare questa base rende più chiaro anche il sistema completo. Prima di agg
 
 - [MDN — progressive enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "lca-confini-unita-funzionale",
     title: "«Più sostenibile» rispetto a cosa? Il confine cambia il confronto",
-    date: "2026-11-03",
+    date: "2026-10-02",
     icon: "🔄",
     excerpt: "Una valutazione del ciclo di vita deve dichiarare funzione, fasi incluse e ipotesi. La sola CO₂ non descrive ogni impatto.",
     tags: ["Ambiente", "Ciclo di vita", "Misure"],
@@ -568,13 +568,13 @@ Quando leggo «più sostenibile», cerco quindi funzione, confine e condizioni. 
 - [JRC — Environmental Footprint](https://eplca.jrc.ec.europa.eu/EnvironmentalFootprint.html)
 - [Commissione europea — confine del sistema](https://knowledge-for-policy.ec.europa.eu/node/9373_lv)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "finestre-lancio-luna-orbite",
     title: "Perché un lancio verso la Luna non può partire quando vuole",
-    date: "2026-11-03",
+    date: "2026-09-30",
     icon: "🕒",
     excerpt: "Terra, Luna e veicolo si muovono. Una finestra di lancio nasce dall’intersezione di vincoli, non dal solo conto alla rovescia.",
     tags: ["Spazio", "Artemis", "Orbite"],
@@ -607,13 +607,13 @@ Per capire un annuncio guarderei quindi cosa identifica quella finestra e a qual
 
 - [Agenzia spaziale canadese — come funzionano le finestre lunari](https://www.asc-csa.gc.ca/eng/news/articles/2026/2026-01-09-artemis-ii-launch-opportunities-announced.asp)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "react-stato-derivato-carrello",
     title: "React: il totale del carrello deve davvero stare nello state?",
-    date: "2026-11-03",
+    date: "2026-09-28",
     icon: "⚛️",
     excerpt: "Memorizzare dati già ricavabili crea sincronizzazioni inutili. Un valore derivato può essere calcolato durante il render.",
     tags: ["Coding", "React", "Frontend"],
@@ -659,13 +659,13 @@ La domanda che mi faccio quando aggiungo state è quindi: sto memorizzando una s
 
 - [React — quando un Effect non serve](https://react.dev/learn/you-might-not-need-an-effect)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "latenza-percentili-media-p99",
     title: "La media dice che va bene. Quel cinque per cento aspetta ancora",
-    date: "2026-11-03",
+    date: "2026-09-25",
     icon: "📊",
     excerpt: "p50, p95 e p99 mostrano parti diverse della distribuzione. Per leggere la latenza servono anche volume ed errori.",
     tags: ["Ingegneria", "Prestazioni", "Monitoraggio"],
@@ -699,13 +699,13 @@ Non sceglierei un percentile soltanto perché suona professionale. Lo colleghere
 - [Google SRE — obiettivi del servizio e distribuzioni](https://sre.google/sre-book/service-level-objectives/)
 - [Google SRE — monitoraggio](https://sre.google/workbook/monitoring/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "alberi-citta-calore-progetto",
     title: "Un albero in città è anche un’infrastruttura termica",
-    date: "2026-11-03",
+    date: "2026-09-23",
     icon: "🌳",
     excerpt: "Ombra ed evapotraspirazione influenzano il microclima. Il beneficio dipende anche da spazio, acqua e manutenzione.",
     tags: ["Ambiente", "Città", "Clima"],
@@ -738,13 +738,13 @@ La domanda progettuale è quindi più concreta di «quanti alberi?»: quale ombr
 
 - [EEA — raffrescamento sostenibile degli edifici e contesto urbano](https://www.eea.europa.eu/en/analysis/publications/cooling-buildings-sustainably-in-europe-exploring-the-links-between-climate-change-mitigation-and-adaptation-and-their-social-impacts)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "allunaggio-paracadute-propulsione",
     title: "Perché sulla Luna il paracadute non ti aiuta",
-    date: "2026-11-03",
+    date: "2026-09-21",
     icon: "🪂",
     excerpt: "L’esosfera lunare non offre una frenata aerodinamica utile. La discesa deve gestire velocità, propellente e terreno.",
     tags: ["Spazio", "Luna", "Propulsione"],
@@ -778,13 +778,13 @@ Non sono istruzioni per dimensionare un lander: sono domande sui requisiti da di
 - [ESA — discesa e risalita lunari](https://lunarexploration.esa.int/explore/technology/226?ia=291)
 - [NASA — esosfera lunare](https://science.nasa.gov/moon/lunar-atmosphere/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "rails-find-each-batch-memoria",
     title: "Rails: elaborare un catalogo senza caricarlo tutto in memoria",
-    date: "2026-11-03",
+    date: "2026-09-18",
     icon: "📦",
     excerpt: "find_each limita i record istanziati per volta. Per importazioni robuste vanno progettati anche ripartenza e concorrenza.",
     tags: ["Coding", "Rails", "Prestazioni"],
@@ -823,13 +823,13 @@ find_each risolve un problema preciso: non istanziare tutto il risultato in una 
 
 - [Rails — elaborazione a lotti](https://api.rubyonrails.org/classes/ActiveRecord/Batches.html)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "tolleranze-catena-dimensionale",
     title: "Tre pezzi corretti possono non entrare nello spazio previsto",
-    date: "2026-11-03",
+    date: "2026-09-16",
     icon: "🧩",
     excerpt: "Le tolleranze si combinano. Un esempio di catena dimensionale mostra perché controllare ogni pezzo separatamente non basta.",
     tags: ["Ingegneria", "Misure", "Progettazione"],
@@ -862,13 +862,13 @@ Il controllo utile si fa quindi anche sull'assieme. Il fatto che ogni parte risp
 
 - [NIST — incertezza e terminologia delle misure](https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-appendix-d1-terminology)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "riciclo-raccolta-qualita-materiale",
     title: "Metterlo nel contenitore giusto è l’inizio del riciclo",
-    date: "2026-11-03",
+    date: "2026-09-14",
     icon: "♻️",
     excerpt: "Raccolta, selezione e impiego del materiale recuperato sono passaggi diversi. La qualità in ingresso cambia il risultato.",
     tags: ["Ambiente", "Materiali", "Riciclo"],
@@ -902,13 +902,13 @@ Il contenitore giusto è una nostra responsabilità concreta. Per giudicare il r
 - [EPA — fasi e benefici del riciclo](https://www.epa.gov/recycle/recycling-basics-and-benefits)
 - [EEA — economia circolare](https://www.eea.europa.eu/en/topics/in-depth/circular-economy)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "punti-lagrange-equilibrio-instabile",
     title: "Lagrange L2: un buon posto dove stare non è un parcheggio immobile",
-    date: "2026-11-03",
+    date: "2026-09-11",
     icon: "🛰️",
     excerpt: "I punti di Lagrange dipendono da una coppia di corpi. Intorno a L1 e L2 servono orbite e correzioni.",
     tags: ["Spazio", "Orbite"],
@@ -942,13 +942,13 @@ Quando vedo un disegno con un satellite appoggiato su un puntino, lo leggo quind
 - [NASA — punti di Lagrange](https://science.nasa.gov/solar-system/resources/faq/what-are-lagrange-points/)
 - [NASA — orbita di Webb](https://science.nasa.gov/mission/webb/orbit/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "http-etag-cache-rivalidazione",
     title: "ETag: chiedere se è cambiato prima di scaricarlo di nuovo",
-    date: "2026-11-03",
+    date: "2026-09-09",
     icon: "🏷️",
     excerpt: "La rivalidazione HTTP permette di riusare una risposta. no-cache e no-store hanno significati diversi.",
     tags: ["Coding", "HTTP", "Prestazioni"],
@@ -988,13 +988,13 @@ Il vantaggio di ETag è preciso: evitare di ritrasmettere un corpo invariato qua
 - [MDN — ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/ETag)
 - [MDN — cache HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "campionamento-aliasing-segnali",
     title: "Un campione al secondo può farti vedere un segnale che non esiste",
-    date: "2026-11-03",
+    date: "2026-09-07",
     icon: "〰️",
     excerpt: "Il campionamento può confondere frequenze differenti. Frequenza di acquisizione e filtraggio vanno progettati insieme.",
     tags: ["Ingegneria", "Segnali", "Audio"],
@@ -1026,13 +1026,13 @@ Prima di fidarmi di un grafico cerco quindi frequenza di acquisizione, aggregazi
 - [MIT — campionamento e aliasing](https://ocw.mit.edu/courses/res-6-007-signals-and-systems-spring-2011/resources/lecture-16-sampling/)
 - [MIT — ricostruzione e aliasing](https://visionbook.mit.edu/sampling_and_aliasing.html)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "impronta-idrica-contesto",
     title: "Acqua virtuale: il numero di litri non racconta tutta la storia",
-    date: "2026-11-03",
+    date: "2026-09-04",
     icon: "💧",
     excerpt: "Origine dell’acqua, luogo e periodo cambiano il significato dell’impronta idrica. Una classifica senza contesto può ingannare.",
     tags: ["Ambiente", "Acqua", "Risorse"],
@@ -1066,13 +1066,13 @@ L'impronta idrica è interessante quando ci porta a guardare oltre il rubinetto.
 - [Arpae — impronta idrica e sue componenti](https://www.arpae.it/it/temi-ambientali/sostenibilita/strumenti-di-sostenibilita/altri-strumenti/water-footprint)
 - [USGS — scambi e impatti dell’acqua virtuale](https://www.usgs.gov/publications/trends-and-environmental-impacts-virtual-water-trade)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "radiazioni-luna-protezione-massa",
     title: "Radiazioni sulla Luna: la protezione entra nel bilancio di massa",
-    date: "2026-11-03",
+    date: "2026-09-02",
     icon: "☀️",
     excerpt: "Ambiente, durata e schermatura vanno valutati insieme. Trasportare più materiale ha un costo per tutto il sistema.",
     tags: ["Spazio", "Luna", "Ingegneria"],
@@ -1106,13 +1106,13 @@ Quando leggo una proposta di permanenza lunare, cerco quindi il collegamento fra
 - [NASA — protezione dalle radiazioni alla Luna](https://science.nasa.gov/science-research/heliophysics/how-nasa-will-protect-astronauts-from-space-radiation-at-the-moon/)
 - [NASA — tecnologie di Orion](https://www.nasa.gov/missions/artemis/orion/top-five-technologies-needed-for-a-spacecraft-to-survive-deep-space/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "transactional-outbox-invio-erp",
     title: "Salvato nel database, perso nell’invio: a cosa serve l’outbox",
-    date: "2026-11-03",
+    date: "2026-08-31",
     icon: "📤",
     excerpt: "Una transazione locale non include automaticamente il servizio remoto. L’outbox conserva l’intenzione di inviare.",
     tags: ["Coding", "Database", "Integrazioni"],
@@ -1156,13 +1156,13 @@ Mi piace l'outbox perché rende persistente un passaggio che altrimenti vive fra
 
 - [AWS — transactional outbox](https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "legge-little-code-tempi-attesa",
     title: "La coda cresce? Conta anche il tempo che il lavoro passa dentro",
-    date: "2026-11-03",
+    date: "2026-08-28",
     icon: "🚦",
     excerpt: "La legge di Little collega lavoro in corso, throughput e tempo medio. Aggiungere processi non elimina ogni collo di bottiglia.",
     tags: ["Ingegneria", "Prestazioni"],
@@ -1193,13 +1193,13 @@ La relazione non sceglie la soluzione al posto nostro. Aiuta a controllare se nu
 
 - [MIT — modelli di coda e legge di Little](https://ocw.mit.edu/courses/15-763j-manufacturing-system-and-supply-chain-design-spring-2005/568c857501f6785e7b328a3cf3990705_reviw_of_que_mol.pdf)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "spreco-alimentare-misurare-prima",
     title: "Spreco alimentare: prima del consiglio, guarda cosa finisce nel cestino",
-    date: "2026-11-03",
+    date: "2026-08-26",
     icon: "🥕",
     excerpt: "Una piccola registrazione distingue quantità comprate, avanzi e scarti. Misurare aiuta a scegliere un intervento concreto.",
     tags: ["Ambiente", "Risorse", "Misure"],
@@ -1233,13 +1233,13 @@ Mi interessa questo passaggio perché sostituisce un generico senso di colpa con
 - [UNEP — Food Waste Index Report 2024](https://www.unep.org/resources/publication/food-waste-index-report-2024)
 - [UNEP — definizioni e misurazione](https://sdgs.unep.org/article/2a5-food-waste-index)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "polvere-lunare-progettazione",
     title: "La polvere lunare non è un problema da risolvere con una spazzata",
-    date: "2026-11-03",
+    date: "2026-08-24",
     icon: "🌑",
     excerpt: "Abrasione e adesione della regolite coinvolgono guarnizioni, tessuti e pannelli. La manutenzione parte dal progetto.",
     tags: ["Spazio", "Luna", "Materiali"],
@@ -1273,13 +1273,13 @@ Il dettaglio apparentemente secondario può decidere la disponibilità dell'inte
 - [NASA — protezione dalla polvere lunare](https://www.nasa.gov/centers-and-facilities/kennedy/nasa-technology-helps-guard-against-lunar-dust/)
 - [NASA — dimostrazione dello scudo elettrodinamico](https://www.nasa.gov/image-article/nasas-dust-shield-successfully-repels-lunar-regolith-on-moon/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "retry-backoff-jitter-integrazioni",
     title: "Retry: riprovare subito può essere il problema",
-    date: "2026-11-03",
+    date: "2026-08-21",
     icon: "⏳",
     excerpt: "Timeout, limite dei tentativi e attesa casuale evitano che un errore temporaneo diventi una raffica di richieste.",
     tags: ["Coding", "API", "Integrazioni"],
@@ -1318,13 +1318,13 @@ Quando esaurisco il budget, salvo uno stato recuperabile e rendo visibile il pro
 
 - [AWS Builders’ Library — timeout, retry e jitter](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "feedback-controllo-ritardi-oscillazioni",
     title: "Il termostato e il deploy: correggere troppo può far oscillare il sistema",
-    date: "2026-11-03",
+    date: "2026-08-19",
     icon: "🌡️",
     excerpt: "Misurare, agire e aspettare l’effetto: il feedback perde efficacia quando ignori inerzia e ritardo.",
     tags: ["Ingegneria", "Controllo"],
@@ -1357,13 +1357,13 @@ Correggere rapidamente è utile quando la rapidità è compatibile con ciò che 
 
 - [Università di Exeter — feedback e controllo della temperatura](https://newton.ex.ac.uk/teaching/CDHW/Feedback/PracticalMatters.html)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "elettricita-intensita-carbonica",
     title: "Un kWh è sempre un kWh. Le emissioni associate cambiano",
-    date: "2026-11-03",
+    date: "2026-08-17",
     icon: "🌍",
     excerpt: "Consumo e intensità delle emissioni sono indicatori distinti. Per confrontarli servono confini e dati coerenti.",
     tags: ["Ambiente", "Energia", "Misure"],
@@ -1394,13 +1394,13 @@ Non serve trasformare ogni attività quotidiana in un modello complesso. Serve e
 
 - [EEA — intensità delle emissioni della generazione elettrica](https://www.eea.europa.eu/en/analysis/indicators/greenhouse-gas-emission-intensity-of-1)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "ghiaccio-lunare-risorsa-utilizzabile",
     title: "Ghiaccio sulla Luna: trovare una risorsa non significa poterla usare",
-    date: "2026-11-03",
+    date: "2026-08-14",
     icon: "🧊",
     excerpt: "Dall’osservazione dell’acqua alla sua estrazione ci sono misure, energia e condizioni operative da dimostrare.",
     tags: ["Spazio", "Luna", "Risorse"],
@@ -1434,13 +1434,13 @@ La scoperta apre una possibilità. Il progetto deve poi mostrare come mantenerla
 - [NASA — fatti e acqua lunare](https://science.nasa.gov/moon/facts/)
 - [NASA — ambiente termico della Luna](https://science.nasa.gov/moon/weather-on-the-moon/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "rails-unicita-database-concorrenza",
     title: "Rails: validates uniqueness non ferma due richieste contemporanee",
-    date: "2026-11-03",
+    date: "2026-08-12",
     icon: "🔐",
     excerpt: "La validazione migliora il messaggio all’utente. Il vincolo univoco nel database protegge il dato sotto concorrenza.",
     tags: ["Coding", "Rails", "Database"],
@@ -1482,13 +1482,13 @@ L'obiettivo è che l'invariante resti vero: una sola identità commerciale, anch
 
 - [Rails — validazioni e unicità](https://api.rubyonrails.org/classes/ActiveRecord/Validations/ClassMethods.html)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "margine-progetto-budget-capacita",
     title: "Se il progetto usa già il 100%, il margine è finito",
-    date: "2026-11-03",
+    date: "2026-08-10",
     icon: "📐",
     excerpt: "Memoria, potenza e tempi hanno limiti. Un budget esplicito rende visibili le riserve prima che arrivino gli imprevisti.",
     tags: ["Ingegneria", "Progettazione"],
@@ -1519,13 +1519,13 @@ La domanda utile non è «abbiamo ancora spazio?», ma «quanto spazio resta nel
 
 - [NASA — definizione di margine](https://www.nasa.gov/reference/system-engineering-handbook-appendix/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "kw-kwh-potenza-energia",
     title: "kW e kWh: la differenza che cambia i conti",
-    date: "2026-11-03",
+    date: "2026-08-07",
     icon: "⚡",
     excerpt: "La potenza descrive il ritmo del consumo, l’energia il totale. Un esempio numerico aiuta a non confonderle.",
     tags: ["Ambiente", "Energia"],
@@ -1558,13 +1558,13 @@ Prima di fare qualunque confronto controllo quindi tre cose: unità, durata e la
 
 - [EIA — misurare l’elettricità](https://www.eia.gov/energyexplained/electricity/measuring-electricity.php)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "luna-latenza-comunicazioni",
     title: "Parlare con la Luna: quel secondo che il software non può togliere",
-    date: "2026-11-03",
+    date: "2026-08-05",
     icon: "📡",
     excerpt: "La latenza di propagazione impone un limite fisico. Velocità del collegamento e tempo di risposta non sono sinonimi.",
     tags: ["Spazio", "Comunicazioni"],
@@ -1598,13 +1598,13 @@ Il limite fisico resta. Il buon progetto decide cosa fare durante l'attesa, qual
 - [ESA — comunicazione oltre l’orbita bassa](https://nebula.esa.int/4000136202)
 - [NASA — tempo di viaggio della luce](https://science.nasa.gov/mission/webb/science-overview/science-explainers/how-does-webb-see-back-in-time/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "fetch-abortcontroller-risposte-obsolete",
     title: "La ricerca mostra il risultato vecchio? Guarda l’ordine delle risposte",
-    date: "2026-11-03",
+    date: "2026-08-03",
     icon: "⏹️",
     excerpt: "AbortController aiuta a cancellare fetch superate. Un controllo della richiesta corrente protegge anche la UI.",
     tags: ["Coding", "JavaScript", "Browser"],
@@ -1659,13 +1659,13 @@ La regola è piccola ma decisiva: la UI deve rappresentare l'intenzione corrente
 
 - [MDN — AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "misure-incertezza-cifre-decimali",
     title: "Quattro decimali non rendono una misura più affidabile",
-    date: "2026-11-03",
+    date: "2026-07-31",
     icon: "📏",
     excerpt: "Risoluzione, ripetibilità e incertezza sono cose diverse. Anche i benchmark hanno bisogno di un contesto.",
     tags: ["Ingegneria", "Misure"],
@@ -1699,13 +1699,13 @@ Arrotondare non è nascondere dettagli: quando è coerente con la misura, evita 
 - [NIST — terminologia delle misure](https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-appendix-d1-terminology)
 - [NIST — incertezza](https://www.nist.gov/itl/sed/topic-areas/measurement-uncertainty)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "riparabilita-progetto-prodotti",
     title: "La riparabilità si decide prima del primo guasto",
-    date: "2026-11-03",
+    date: "2026-07-29",
     icon: "🪛",
     excerpt: "Viti, ricambi e documentazione cambiano la vita utile di un prodotto. Progettare la manutenzione evita sostituzioni premature.",
     tags: ["Ambiente", "Progettazione", "Riparabilità"],
@@ -1736,13 +1736,13 @@ La domanda che mi interessa è semplice: se si rompe il pezzo più prevedibile, 
 
 - [JRC — perché conta la riparabilità](https://joint-research-centre.ec.europa.eu/jrc-explains/why-repairability-matters-future-tech-products_en)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "orion-rientro-scudo-termico",
     title: "Orion: il viaggio non finisce quando rivedi la Terra",
-    date: "2026-11-03",
+    date: "2026-07-27",
     icon: "🚀",
     excerpt: "Tornare dalla Luna significa gestire molta energia. Scudo termico e traiettoria fanno parte dello stesso problema.",
     tags: ["Spazio", "Artemis", "Ingegneria"],
@@ -1774,13 +1774,13 @@ Per capire il rientro tengo insieme tre elementi: l'energia iniziale, la forma d
 - [NASA — Artemis I, obiettivi e rientro](https://www.nasa.gov/specials/artemis-i-press-kit/)
 - [NASA — Orion](https://www.nasa.gov/missions/meet-nasas-orion-spacecraft/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "webhook-idempotenza-ordini",
     title: "Lo stesso webhook due volte: come evitare due ordini",
-    date: "2026-11-03",
+    date: "2026-07-24",
     icon: "🔁",
     excerpt: "La consegna di un evento può ripetersi. Deduplicazione e idempotenza proteggono il risultato, anche sotto concorrenza.",
     tags: ["Coding", "Integrazioni", "Shopify"],
@@ -1812,13 +1812,13 @@ Il risultato atteso resta un solo ordine commerciale, con una traccia comprensib
 - [Shopify — verifica delle consegne](https://shopify.dev/docs/apps/build/webhooks/verify-deliveries)
 - [Rails — unicità e concorrenza](https://api.rubyonrails.org/classes/ActiveRecord/Validations/ClassMethods.html)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   {
     id: "verifica-validazione-requisiti",
     title: "Passa tutti i test. Ma risolve il problema giusto?",
-    date: "2026-11-03",
+    date: "2026-07-22",
     icon: "🔎",
     excerpt: "Verifica e validazione rispondono a due domande diverse. Un export corretto può essere comunque inutilizzabile.",
     tags: ["Ingegneria", "Requisiti"],
@@ -1849,7 +1849,7 @@ Quando dico «funziona», voglio sapere quale delle due cose ho dimostrato: che 
 
 - [NASA — verifica e validazione](https://www.nasa.gov/reference/2-4-distinctions-between-product-verification-and-product-validation/)
 
-*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+*Recupero editoriale luglio–novembre 2026.*
 `,
   },
   /*
