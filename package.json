@@ -8,7 +8,7 @@
     "build": "tsc && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "node scripts/preview.mjs",
-    "publish-post": "git add . && git commit -m '\ud83d\udcdd Pubblicato nuovo post' && git push",
+    "publish-post": "git add -- src/data/blogPosts.ts blog-topics.md && git commit -m '\ud83d\udcdd Pubblicato nuovo post' && git push origin main",
     "typecheck": "tsc --noEmit",
     "lint:fix": "eslint . --fix",
     "check:build": "node scripts/check-build.mjs",

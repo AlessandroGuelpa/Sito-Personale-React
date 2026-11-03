@@ -12,6 +12,1846 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
+  {
+    id: "osservabilita-log-metriche-tracce",
+    title: "Log, metriche e tracce: tre domande sullo stesso guasto",
+    date: "2026-11-03",
+    icon: "🔭",
+    excerpt: "Una metrica segnala un cambiamento, un log descrive un evento, una traccia collega i passaggi. La correlazione rende utile il dettaglio.",
+    tags: ["Ingegneria", "Monitoraggio", "Backend"],
+    content: `
+Un ordine impiega troppo tempo ad arrivare al gestionale. La dashboard mostra un aumento della latenza, ma non spiega quale passaggio stia rallentando. Cercando nei log troviamo tanti messaggi corretti, senza un legame evidente fra loro.
+
+Raccogliere più dati non risolve automaticamente questa difficoltà. Serve sapere quale domanda può affrontare ciascun segnale.
+
+## La metrica mostra il cambiamento
+
+Contatori, distribuzioni e altre misure aiutano a osservare volume, errori e tempi nel corso del servizio. Nell'esempio, la distribuzione della durata degli invii può mostrare quando il comportamento peggiora.
+
+Non metterei però un identificativo di ordine come etichetta di ogni serie: una cardinalità elevata può rendere la raccolta costosa e poco gestibile. Il dettaglio della singola operazione richiede strumenti coerenti con quel livello.
+
+## Il log descrive un evento
+
+Un evento strutturato può registrare esito, fase e identificativo di correlazione. Campi stabili permettono di cercare e confrontare senza dover interpretare messaggi sempre diversi.
+
+Registrare tutto il payload commerciale non è necessario per ogni diagnosi. Preferisco scegliere i dati utili, considerando anche accesso e conservazione, invece di copiare indiscriminatamente contenuti nei log.
+
+## La traccia collega il percorso
+
+Una traccia distribuita rappresenta l'operazione attraverso span, con relazioni e tempi. Può aiutare a distinguere attesa in coda, lavoro applicativo e chiamata esterna, quando la propagazione del contesto è implementata correttamente.
+
+OpenTelemetry definisce questi segnali e strumenti per raccoglierli ed esportarli. Non è però il sistema che, da solo, decide la causa del guasto o risolve il problema.
+
+Per l'ordine lento vorrei quindi partire dal cambiamento aggregato, raggiungere la singola operazione e ricostruirne i passaggi. Se gli identificativi non collegano quei livelli, tre strumenti separati possono lasciarmi con lo stesso dubbio iniziale. L'osservabilità utile è quella che accorcia una domanda concreta, non quella che riempie più schermate.
+
+## Fonti
+
+- [OpenTelemetry — segnali](https://opentelemetry.io/docs/concepts/signals/)
+- [OpenTelemetry — metriche e cardinalità](https://opentelemetry.io/docs/concepts/signals/metrics/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "raee-elettronica-fine-vita",
+    title: "Il cassetto dei vecchi dispositivi è una filiera interrotta",
+    date: "2026-11-03",
+    icon: "📱",
+    excerpt: "Riuso e raccolta dei RAEE mantengono percorsi distinti. Il recupero dei materiali comincia da una destinazione appropriata.",
+    tags: ["Ambiente", "Elettronica", "Risorse"],
+    content: `
+Un vecchio telefono nel cassetto non è più in uso, ma non è nemmeno entrato in una filiera di recupero. Resta lì insieme a caricabatterie e dispositivi di cui magari non ricordiamo più il difetto.
+
+L'elettronica mette nello stesso oggetto materiali di valore, componenti complessi e informazioni personali. Decidere il suo percorso richiede di distinguere questi aspetti.
+
+## Prima capire se ha ancora una funzione
+
+Un dispositivo funzionante può avere possibilità di riuso o ricondizionamento, a seconda di condizioni, supporto software e bisogno reale. Se non è più utilizzabile, la raccolta appropriata dei rifiuti di apparecchiature elettriche ed elettroniche permette un trattamento specifico.
+
+La Commissione europea evidenzia sia le risorse recuperabili sia le sostanze che rendono importante la gestione corretta dei RAEE. Non sono semplicemente oggetti di plastica con qualche vite.
+
+## Non tutto il recupero è equivalente
+
+Mantenere in uso un prodotto e recuperare alcuni dei suoi materiali sono operazioni diverse. Nel primo caso resta disponibile una funzione; nel secondo servono processi per separare e trattare ciò che compone l'oggetto.
+
+La possibilità di riciclare non rende irrilevanti durata e riparabilità. Ogni nuovo ciclo produttivo continua ad avere fabbisogni e perdite.
+
+## Chiudere anche il percorso dei dati
+
+Prima di cedere un apparecchio considererei backup, disassociazione degli account e procedura di cancellazione prevista dal produttore per quel modello. Non improvviserei una sequenza universale: memoria, cifratura e gestione aziendale possono cambiare il percorso necessario.
+
+Per la consegna come rifiuto seguirei il canale ufficiale locale e le istruzioni relative al dispositivo, senza smontaggi casuali.
+
+La scelta utile è rendere esplicito lo stato: ancora usabile, riparabile oppure da conferire correttamente. Lasciare tutto nel cassetto evita una decisione oggi, ma non conserva automaticamente né la funzione del prodotto né il valore dei materiali per un impiego futuro.
+
+## Fonti
+
+- [Commissione europea — RAEE](https://environment.ec.europa.eu/topics/waste-and-recycling/waste-electrical-and-electronic-equipment-weee_en)
+- [EEA — durata dell’elettronica](https://www.eea.europa.eu/en/analysis/publications/europes-consumption-in-a-circular-economy-the-benefits-of-longer-lasting-electronics)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "luna-massa-peso-inerzia",
+    title: "Sulla Luna pesi meno. La tua massa non è diventata più piccola",
+    date: "2026-11-03",
+    icon: "⚖️",
+    excerpt: "Peso e inerzia dipendono da grandezze diverse. Un carico più leggero resta difficile da accelerare e fermare.",
+    tags: ["Spazio", "Fisica", "Luna"],
+    content: `
+Un oggetto che sulla Terra è pesante diventa molto più facile da sostenere sulla Luna. È tentante concludere che sia anche facile da spostare, accelerare o fermare in qualunque situazione. Ma stiamo mettendo insieme due effetti differenti.
+
+La massa resta la stessa. Il peso cambia con il campo gravitazionale locale.
+
+## La forza con cui vieni attirato
+
+Nel modello elementare vicino alla superficie, il peso vale P = mg. La gravità lunare è circa un sesto di quella terrestre, quindi a parità di massa diminuisce la forza peso.
+
+Un oggetto ipotetico da 12 kg mantiene una massa di 12 kg. Con una gravità di circa 1,62 m/s², il suo peso è circa 19,4 N, mentre usando 9,81 m/s² sulla Terra è circa 117,7 N. Il newton misura una forza; il chilogrammo una massa.
+
+## Fermare il movimento è un'altra domanda
+
+Per ottenere la stessa accelerazione di quella massa, nel modello F = ma serve la stessa forza risultante. Se il carico è già in movimento, la sua quantità di moto non scompare perché il peso è diminuito.
+
+Questo non significa che ogni manovra sia identica nei due ambienti. Contatto con il suolo, attrito disponibile e interazione con attrezzature cambiano anch'essi. È proprio il motivo per cui il solo peso non descrive tutta l'operazione.
+
+## Un esempio da leggere con le condizioni
+
+Immagina un carrello: sostenerne il carico e arrestarne il moto sono requisiti diversi. La gravità ridotta può favorire il primo senza garantire automaticamente il secondo.
+
+Non è un dimensionamento di un mezzo lunare, ma una distinzione utile prima di farlo. Quando leggiamo «sei volte più leggero», dobbiamo sapere quale grandezza è stata confrontata.
+
+Separare massa, peso e condizioni di contatto evita una scorciatoia intuitiva che funziona nella conversazione e smette di funzionare appena dobbiamo progettare un movimento controllato.
+
+## Fonti
+
+- [NASA Glenn — gravità lunare](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/moon/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "webhook-riconciliazione-sincronizzazione",
+    title: "Webhook e job periodici: l’integrazione ha bisogno anche di un controllo",
+    date: "2026-11-03",
+    icon: "🔗",
+    excerpt: "L’evento accelera l’aggiornamento, la riconciliazione cerca le differenze. Insieme rendono recuperabile una sincronizzazione.",
+    tags: ["Coding", "Shopify", "Integrazioni"],
+    content: `
+Un webhook avvisa che qualcosa è cambiato. È veloce e permette di evitare molte interrogazioni inutili. Ma cosa succede se il destinatario è indisponibile, un handler fallisce o un evento viene gestito male?
+
+Una sincronizzazione affidabile deve poter scoprire una differenza anche quando il percorso dell'evento non l'ha risolta.
+
+## Due ruoli distinti
+
+Shopify raccomanda di non dipendere esclusivamente dalla ricezione dei webhook e di predisporre job di riconciliazione. L'evento aiuta ad aggiornare rapidamente; il controllo periodico confronta lo stato e recupera ciò che manca.
+
+Non considererei quindi «webhook oppure polling» una scelta assoluta. Prima definirei il ruolo di ciascun percorso e il ritardo che il servizio può accettare.
+
+## Il cursore deve rappresentare lavoro completato
+
+In uno schema ipotetico salvo un punto di avanzamento e interrogo gli oggetti aggiornati dalla scansione precedente. Se aggiorno il cursore prima di completare tutte le pagine, un arresto può lasciare dati saltati.
+
+Una finestra di sovrapposizione può aiutare a rileggere il bordo temporale, purché l'elaborazione sia idempotente. Cancellazioni e risorse non più visibili possono richiedere strategie aggiuntive: non ogni differenza emerge da un filtro updated_at.
+
+## Stabilire chi decide il valore
+
+Se negozio ed ERP possono modificare lo stesso campo, «sincronizzare» non basta come specifica. Serve sapere quale sistema prevale, come si riconosce un aggiornamento più recente e come viene esposto un conflitto.
+
+Gestirei anche eventi fuori ordine, evitando di applicare ciecamente una versione vecchia sopra una nuova. L'identificativo della consegna protegge dai duplicati, ma non definisce da solo l'ordine commerciale degli stati.
+
+La verifica pratica è interrompere il percorso rapido, lasciare una modifica non allineata e controllare che la riconciliazione la ritrovi. Il risultato atteso è uno stato coerente e spiegabile, non soltanto una lista di chiamate terminate con successo.
+
+## Fonti
+
+- [Shopify — ordinamento e riconciliazione dei webhook](https://shopify.dev/docs/apps/build/webhooks)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "ridondanza-guasti-correlati",
+    title: "Due server non bastano se dipendono dallo stesso interruttore",
+    date: "2026-11-03",
+    icon: "🛡️",
+    excerpt: "La ridondanza protegge rispetto a un insieme di guasti. Le dipendenze condivise possono far fallire entrambe le copie.",
+    tags: ["Ingegneria", "Affidabilità", "Architettura"],
+    content: `
+Due istanze dell'applicazione sembrano più affidabili di una. Poi si scopre che usano lo stesso database, la stessa zona e la stessa configurazione sbagliata. Abbiamo duplicato il processo, ma non tutte le condizioni che gli permettono di funzionare.
+
+La ridondanza ha senso rispetto ai guasti che vogliamo tollerare. Senza definire quel perimetro, «abbiamo due copie» è un'informazione incompleta.
+
+## L'indipendenza è un'ipotesi forte
+
+In un modello didattico, due componenti con probabilità di guasto dell'1% nello stesso intervallo avrebbero una probabilità di guasto simultaneo dello 0,01% se gli eventi fossero indipendenti.
+
+Quel prodotto non è valido quando condividono una causa capace di fermarli entrambi. Un'interruzione comune o un aggiornamento difettoso possono rendere poco significativa l'ipotesi di indipendenza.
+
+## Disegnare i domini di guasto
+
+Le indicazioni Google Cloud distinguono risorse, zone e regioni come livelli utili a ragionare sui domini di guasto. La distribuzione delle copie va scelta in funzione dei requisiti e dei costi, non per ottenere il diagramma con più scatole.
+
+Anche identità, DNS, segreti e procedure di rilascio possono essere dipendenze condivise. Non sono automaticamente risolte spostando una macchina.
+
+## Provare il passaggio, non soltanto la copia
+
+In un ambiente di prova controllato interromperei una delle istanze e osserverei se le richieste raggiungono davvero l'altra, quanto dura il recupero e cosa accade alle operazioni in corso.
+
+Poi verificherei il componente comune che resta più critico. Un failover mai esercitato è una capacità ipotizzata, non una prestazione dimostrata.
+
+Non sceglierei la massima ridondanza per qualunque sito. Definirei prima cosa può fermarsi, per quanto tempo e con quale perdita accettabile di dati. Solo dopo deciderei dove una seconda copia compra un beneficio reale e dove sta semplicemente replicando la stessa fragilità.
+
+## Fonti
+
+- [Google Cloud — ridondanza e disponibilità](https://docs.cloud.google.com/architecture/framework/reliability/build-highly-available-systems?hl=en)
+- [Google Cloud — domini di guasto](https://docs.cloud.google.com/architecture/infra-reliability-guide/building-blocks)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "biodiversita-impollinatori-reti",
+    title: "La biodiversità non si riassume contando soltanto le api",
+    date: "2026-11-03",
+    icon: "🐝",
+    excerpt: "L’impollinazione coinvolge specie e habitat differenti. Proteggere una funzione richiede guardare la rete che la sostiene.",
+    tags: ["Ambiente", "Biodiversità", "Ecosistemi"],
+    content: `
+Quando si parla di impollinazione, il simbolo è quasi sempre un'ape. È comprensibile, ma può far sparire dal ragionamento gli altri impollinatori e le condizioni che permettono loro di vivere.
+
+Proteggere una funzione ecologica richiede di guardare anche la rete di relazioni che la rende possibile.
+
+## Una funzione distribuita
+
+L'impollinazione animale coinvolge gruppi diversi e contribuisce alla riproduzione di molte piante spontanee e coltivate. Le specie non svolgono tutte lo stesso ruolo nello stesso luogo e nello stesso periodo.
+
+L'EEA richiama l'importanza degli impollinatori selvatici, oltre a quelli gestiti, e i rischi associati alla loro perdita. Ridurre la questione al numero di alveari può quindi trascurare una parte sostanziale del sistema.
+
+## Il fiore è solo una delle risorse
+
+Per sostenere una popolazione non basta che ci siano fiori durante un singolo evento di piantumazione. Contano continuità delle risorse, siti adatti alle diverse fasi di vita e qualità degli habitat.
+
+Un'area verde va quindi letta anche nel tempo e in relazione alle zone circostanti. Una fotografia esteticamente riuscita non dimostra da sola che sostenga una comunità biologica diversificata.
+
+## Osservare senza inventare una scorciatoia
+
+In un progetto locale chiederei quali specie si vogliono favorire, quali condizioni mancano e come valutare il risultato. Scelta delle piante e gestione dovrebbero essere coerenti con il contesto ecologico, evitando ricette universali.
+
+L'analogia ingegneristica che trovo utile è quella delle dipendenze: vedere la funzione in uscita non significa conoscere tutto ciò che la sostiene. Però un ecosistema non è una macchina con componenti liberamente sostituibili; l'analogia non deve cancellarne la complessità.
+
+Per parlare seriamente di biodiversità servono quindi più domande e meno simboli isolati. Quali organismi ci sono? Quali relazioni possono mantenere? Quali pressioni li stanno riducendo? È da quelle risposte che può partire una tutela concreta.
+
+## Fonti
+
+- [EEA — impollinatori selvatici e habitat](https://www.eea.europa.eu/en/analysis/publications/protecting-and-restoring-europes-wild-pollinators-and-their-habitats)
+- [FAO — impollinazione e biodiversità](https://www.fao.org/agriculture/crops/core-themes/theme/biodiversity/pollination/en/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "navigazione-spaziale-posizione-orientamento",
+    title: "Sapere dove sei e sapere dove punti sono due problemi diversi",
+    date: "2026-11-03",
+    icon: "🧭",
+    excerpt: "Star tracker, misure radio e immagini contribuiscono a stime differenti. La navigazione combina osservazioni e modelli.",
+    tags: ["Spazio", "Navigazione", "Sensori"],
+    content: `
+Immagina di conoscere perfettamente il punto in cui ti trovi, ma di non sapere in quale direzione sia orientata la tua camera. Oppure il contrario: sai dove punti, ma non quanto sei lontano dalla destinazione.
+
+Nella navigazione spaziale posizione e orientamento sono informazioni collegate, ma non intercambiabili.
+
+## Le stelle come riferimento di orientamento
+
+Uno star tracker confronta le stelle osservate con un catalogo e contribuisce a determinare l'assetto del veicolo. La documentazione di Orion descrive questo ruolo insieme a quello di altri sensori.
+
+Riconoscere una configurazione di stelle non significa ottenere automaticamente tutte le coordinate e la velocità della capsula. Una misura deve essere letta per ciò che osserva realmente.
+
+## Combinare strumenti diversi
+
+Le misure radio effettuate attraverso i collegamenti con Terra contribuiscono alla stima del moto. La navigazione ottica usa immagini di corpi come Terra e Luna, insieme alla geometria prevista e ai modelli.
+
+Queste informazioni hanno incertezze e condizioni di disponibilità. Un sistema di navigazione le combina nel tempo, invece di trattare un singolo sensore come una risposta perfetta a tutte le domande.
+
+## Un'immagine non contiene tutta la distanza
+
+Da una fotografia posso ricavare direzioni e caratteristiche apparenti, ma il significato geometrico dipende dal modello e da ciò che conosco già. Una superficie osservata più grande nell'immagine può suggerire un avvicinamento; per quantificarlo servono calibrazione e ipotesi coerenti.
+
+È un esempio concettuale, non un algoritmo di navigazione utilizzabile per una missione.
+
+La lezione che porto nei sistemi informatici è chiedere sempre quale variabile sia effettivamente osservata. Un indicatore di connessione non dimostra che il dato sia aggiornato; una misura valida non dimostra da sola che l'intero stato sia noto.
+
+Prima di aggiungere sensori o dashboard, bisogna quindi distinguere ciò che misuriamo, ciò che stimiamo e ciò che stiamo soltanto assumendo.
+
+## Fonti
+
+- [NASA — avionica e software di Orion](https://www.nasa.gov/reference/avionics-and-software/)
+- [NASA — strumenti di navigazione di Orion](https://www.nasa.gov/missions/lasers-stars-and-sensors-will-guide-nasas-orion-spacecraft/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "react-prerender-html-metadati",
+    title: "React e HTML già pronto: cosa cambia quando apri un link diretto",
+    date: "2026-11-03",
+    icon: "📄",
+    excerpt: "Il prerender consegna contenuto e metadati prima del JavaScript. Redirect, canonical e vere risposte 404 restano parte del lavoro.",
+    tags: ["Coding", "React", "SEO"],
+    content: `
+Un sito React può funzionare bene dopo la navigazione dalla home e comportarsi diversamente quando qualcuno apre direttamente il link di un articolo. Se il server restituisce sempre la stessa pagina vuota, contenuto e metadati dipendono dall'esecuzione del JavaScript.
+
+Per pagine editoriali note al momento della build, il prerender è una possibilità concreta: produrre prima l'HTML di ogni rotta.
+
+## Separare contenuto e interazione
+
+Il testo dell'articolo, il titolo e i metadati possono essere già presenti nella risposta iniziale. Il codice client aggiunge poi navigazione e interazioni previste dall'applicazione.
+
+Non significa che il sito smetta di essere React. Cambia il momento in cui viene prodotto il contenuto iniziale e ciò che il server può consegnare senza attendere il browser.
+
+## Una rotta deve avere una risposta coerente
+
+Nel caso di questo portfolio, la build genera pagine HTML per le rotte e per i singoli articoli. Verificare che il file esista è soltanto un passaggio: il servizio di hosting deve associare l'URL corretto a quel contenuto.
+
+Un rewrite globale alla home può nascondere gli errori e servire una pagina apparentemente valida per indirizzi inesistenti. Per un contenuto mancante voglio una risposta 404 reale e una pagina comprensibile, non soltanto un messaggio disegnato dentro una risposta 200.
+
+## Leggere l'HTML che arriva
+
+Controllerei un link diretto senza navigazione precedente, il titolo, il canonical e i dati strutturati pertinenti. Per una pagina inesistente controllerei anche lo status della risposta.
+
+Google documenta le possibilità e i limiti del trattamento dei siti JavaScript. Il prerender non garantisce un posizionamento: riduce una dipendenza nella consegna del contenuto e permette controlli più espliciti.
+
+La prova utile è fuori dal percorso più comodo dello sviluppatore: aprire una rotta da zero e osservare cosa riceve davvero chi arriva da un link condiviso.
+
+## Fonti
+
+- [Google Search Central — siti JavaScript](https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics)
+- [Sorgente del sito — build e prerender](https://github.com/AlessandroGuelpa/Sito-Personale-React/blob/main/scripts/prerender.mjs)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "adr-decisioni-architetturali",
+    title: "Fra sei mesi ricorderai perché hai scelto quella soluzione?",
+    date: "2026-11-03",
+    icon: "📝",
+    excerpt: "Un ADR conserva contesto, scelta e conseguenze. Aiuta a rivedere una decisione senza ricominciare da zero.",
+    tags: ["Ingegneria", "Architettura", "Documentazione"],
+    content: `
+Apri un progetto e trovi una scelta che sembra complicata: una coda, un formato intermedio o una dipendenza insolita. La prima reazione è eliminarla. Poi scopri che serviva a gestire un vincolo che il codice, da solo, non racconta più.
+
+La documentazione utile non descrive soltanto cosa esiste. Conserva anche il motivo delle decisioni che sarebbe costoso dover ricostruire.
+
+## Un documento per una scelta
+
+Un Architecture Decision Record registra una decisione significativa e il suo contesto. Non deve diventare un saggio né duplicare tutta la documentazione del sistema.
+
+Per una scelta ipotetica fra chiamata sincrona e job asincrono annoterei il tempo massimo accettabile per l'utente, le caratteristiche del servizio esterno, le alternative considerate e la decisione presa. Poi scriverei le conseguenze, comprese quelle scomode: stato di avanzamento, retry e operazioni di recupero.
+
+## Le condizioni fanno parte della motivazione
+
+«Abbiamo scelto la coda perché scala» dice poco. «La chiamata può durare oltre il tempo di attesa previsto e possiamo mostrare uno stato pendente» permette invece di valutare se il ragionamento sia ancora valido.
+
+Non serve prevedere ogni cambiamento futuro. Serve distinguere le proprietà osservate dalle ipotesi su cui stiamo costruendo.
+
+## Aggiornare senza cancellare il percorso
+
+Se una nuova decisione sostituisce la precedente, conserverei il collegamento e uno stato esplicito. Le indicazioni AWS sugli ADR suggeriscono proprio di mantenere la storia delle decisioni superate.
+
+Questo non rende intoccabile una scelta vecchia. Al contrario, permette di discuterla su basi più precise: è cambiato il requisito, il costo operativo o il comportamento del servizio?
+
+Io scriverei un ADR quando il prossimo manutentore potrebbe altrimenti scambiare una soluzione intenzionale per un errore casuale. Poche righe, vicine al codice e legate a una decisione reale, possono evitare discussioni ripetute e modifiche che reintroducono un problema già risolto.
+
+## Fonti
+
+- [AWS — decisioni architetturali](https://docs.aws.amazon.com/prescriptive-guidance/latest/architectural-decision-records/)
+- [AWS — gestione degli ADR superati](https://docs.aws.amazon.com/prescriptive-guidance/latest/architectural-decision-records/best-practices.html)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "rete-elettrica-flessibilita-domanda",
+    title: "La rete elettrica deve funzionare anche quando il sole cambia",
+    date: "2026-11-03",
+    icon: "🔋",
+    excerpt: "Accumulo, reti e domanda flessibile rispondono a vincoli diversi. La quantità di energia non basta a descrivere un sistema.",
+    tags: ["Ambiente", "Energia", "Infrastrutture"],
+    content: `
+Produrre abbastanza energia nell'arco di un anno non dimostra che un sistema elettrico possa soddisfare la domanda in ogni momento e in ogni luogo. La disponibilità nel tempo e la capacità di trasporto fanno parte del problema.
+
+È per questo che, parlando di transizione energetica, mi interessa anche la flessibilità del sistema.
+
+## Il totale nasconde il profilo
+
+Due impianti con la stessa produzione annuale possono avere profili temporali molto diversi. Allo stesso modo, due consumi annuali uguali possono concentrarsi in ore differenti e creare esigenze diverse sulla rete.
+
+Il rapporto Electricity 2026 dell'IEA mette la flessibilità fra gli elementi necessari per integrare un mix di generazione e domanda in evoluzione. Non esiste un unico intervento che sostituisca automaticamente tutti gli altri.
+
+## L'accumulo ha almeno due dimensioni
+
+Per una batteria contano sia la potenza, espressa per esempio in MW, sia l'energia immagazzinabile, in MWh. Un sistema ipotetico da 1 MW e 4 MWh può sostenere quella potenza per circa quattro ore nel modello ideale, prima di considerare perdite e limiti operativi.
+
+Raddoppiare la potenza non equivale a raddoppiare l'energia disponibile. Sono dimensionamenti che rispondono a esigenze differenti.
+
+## Anche la domanda può adattarsi
+
+Alcune attività possono essere spostate o modulate in risposta alle condizioni del sistema. Questo non significa chiedere indiscriminatamente alle persone di rinunciare a servizi necessari: significa distinguere carichi e vincoli, e usare flessibilità dove esiste.
+
+Reti, accumulo, generazione e gestione della domanda contribuiscono su scale temporali diverse. Valutarli richiede di specificare il problema: picco breve, congestione locale o squilibrio prolungato.
+
+Quando vedo una proposta energetica cerco quindi il profilo, non soltanto il totale. «Quanta energia?» è la prima domanda. «Quando arriva, dove serve e per quanto tempo?» rende il confronto finalmente operativo.
+
+## Fonti
+
+- [IEA — flessibilità nel sistema elettrico](https://www.iea.org/reports/electricity-2026/flexibility)
+- [IEA — glossario di potenza ed energia](https://www.iea.org/glossary)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "deep-space-network-collegamento",
+    title: "Le antenne a Terra fanno parte della missione spaziale",
+    date: "2026-11-03",
+    icon: "📡",
+    excerpt: "Il Deep Space Network trasporta dati e contribuisce alla navigazione. Essere nello spazio non elimina i vincoli del collegamento.",
+    tags: ["Spazio", "Comunicazioni", "Infrastrutture"],
+    content: `
+Nelle immagini di una missione vediamo il veicolo, i pannelli e gli strumenti. Una parte essenziale del sistema resta però sulla Terra: antenne, pianificazione dei collegamenti e persone che gestiscono il flusso dei dati.
+
+Il Deep Space Network della NASA è un esempio di infrastruttura che rende possibile lavorare con mezzi molto lontani.
+
+## Il collegamento è un sistema completo
+
+Il DSN comprende grandi antenne in complessi distribuiti sulla Terra. Questa distribuzione aiuta a seguire le missioni mentre il pianeta ruota. Le capacità disponibili vanno comunque organizzate fra veicoli, attività e opportunità di contatto.
+
+Non basta che un trasmettitore sia acceso. Geometria, potenza del segnale, caratteristiche delle antenne e condizioni del collegamento influenzano ciò che può essere ricevuto.
+
+## Dati scientifici e misure di navigazione
+
+La rete non serve soltanto a consegnare fotografie. Le misure dei segnali radio contribuiscono a stimare moto e posizione del veicolo, insieme agli altri strumenti e ai modelli usati dalla missione.
+
+È importante distinguere una misura da una posizione esatta conosciuta senza incertezza. La navigazione combina osservazioni e calcolo, aggiornando la stima quando arrivano nuove informazioni.
+
+## Una risorsa da pianificare
+
+Immaginiamo uno strumento che produce più dati di quanti il collegamento riesca a trasferire durante una sessione. Servono memoria a bordo, priorità e una strategia di invio. Aumentare la produzione scientifica non aumenta automaticamente la capacità di scaricarla.
+
+Questo esempio è un ragionamento sui vincoli, non una descrizione di una particolare pianificazione del DSN.
+
+Quando valuto un'architettura, cerco anche le risorse lontane dall'oggetto principale. Un veicolo eccellente può dipendere da servizi condivisi che nelle illustrazioni occupano appena una linea tratteggiata. Quella linea, nella realtà, ha capacità, tempi e condizioni d'uso che devono entrare nel progetto fin dall'inizio.
+
+## Fonti
+
+- [NASA — Deep Space Network](https://www.nasa.gov/communicating-with-missions/dsn/)
+- [NASA — navigazione spaziale](https://science.nasa.gov/learn/basics-of-space-flight/chapter13-1/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "shopify-graphql-budget-query",
+    title: "Shopify GraphQL: il limite è un budget, non un invito a insistere",
+    date: "2026-11-03",
+    icon: "🛍️",
+    excerpt: "Costo della query e capacità disponibile guidano il ritmo di un’integrazione. I worker dello stesso negozio condividono il problema.",
+    tags: ["Coding", "Shopify", "API"],
+    content: `
+Un'integrazione può usare poche richieste e consumare comunque molto budget, se ogni query chiede una grande quantità di dati collegati. Contare soltanto le chiamate non basta per comprendere i limiti della GraphQL Admin API di Shopify.
+
+Il modello considera il costo delle query e la combinazione di applicazione e negozio. Anche due worker indipendenti possono quindi competere per la stessa disponibilità.
+
+## Leggere il costo nella risposta
+
+Le risposte possono includere informazioni sotto extensions.cost, fra cui costo richiesto, costo effettivo e throttleStatus. Campi come currentlyAvailable e restoreRate aiutano a capire la capacità residua e il suo recupero.
+
+Non fisserei nel codice un valore universale copiato da un esempio: limiti e condizioni dipendono dal contesto e possono cambiare. Il client deve usare la documentazione della versione adottata e gestire le risposte reali.
+
+## Ridurre il lavoro richiesto
+
+Prima di aumentare i tentativi guarderei i campi selezionati, le connessioni annidate e le dimensioni delle pagine. Se sto esportando soltanto SKU e identificativi, chiedere anche dati che non userò peggiora il lavoro senza migliorare il risultato.
+
+Per grandi esportazioni valuterei le funzionalità bulk disponibili per l'operazione, leggendo i loro limiti specifici. Non sono un sostituto automatico di qualunque query interattiva.
+
+## Coordinare chi chiama
+
+Un esempio ipotetico: due processi vedono una capacità residua sufficiente e partono insieme. Le loro decisioni locali non rappresentano più il carico complessivo. Una coda per negozio o un controllo condiviso della concorrenza può rendere il ritmo più prevedibile.
+
+Gestirei inoltre gli errori GraphQL nel corpo della risposta, senza considerare il solo status HTTP come prova di successo.
+
+Una sincronizzazione ben progettata usa il budget per portare avanti lavoro utile e lascia uno stato recuperabile quando deve attendere. Aggiungere altri retry, da solo, non aumenta la capacità concessa dall'API.
+
+## Fonti
+
+- [Shopify — limiti GraphQL Admin API](https://shopify.dev/docs/apps/build/apis/graphql-admin/rate-limits)
+- [Shopify — riferimento GraphQL Admin API](https://shopify.dev/docs/api/admin-graphql/latest)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "progressive-enhancement-funzione-base",
+    title: "Se il JavaScript arriva tardi, la pagina sa ancora cosa fare?",
+    date: "2026-11-03",
+    icon: "🧱",
+    excerpt: "Il progressive enhancement parte da una funzione utilizzabile e aggiunge capacità. È una scelta sui requisiti del servizio.",
+    tags: ["Ingegneria", "Web", "Accessibilità"],
+    content: `
+Una pagina può caricare la struttura e restare comunque inutilizzabile: il pulsante aspetta il bundle, il menu non si apre, il collegamento esiste soltanto dentro un gestore di click. Il problema non è sempre un errore permanente. A volte basta una connessione lenta o uno script esterno che non arriva.
+
+Il progressive enhancement propone di costruire una funzione di base e aggiungere miglioramenti quando le capacità necessarie sono disponibili.
+
+## Partire dal comportamento
+
+Un collegamento a un documento può essere un normale elemento a con un href reale. JavaScript può poi aggiungere anteprima, misure o transizioni, ma la destinazione non deve essere inventata soltanto dopo un click.
+
+È un esempio piccolo, e proprio per questo utile. La semantica HTML offre già comportamenti come apertura in una nuova scheda e navigazione da tastiera, senza doverli ricostruire uno per uno.
+
+## La funzione di base va progettata
+
+Non significa promettere che qualunque applicazione complessa funzioni integralmente senza JavaScript. Significa decidere quali funzioni debbano restare disponibili quando un miglioramento non può partire.
+
+Per una ricerca potrebbe essere un form con un endpoint server realmente implementato. Per un contenuto informativo, HTML già leggibile. Scrivere solo l'attributo action senza predisporre il servizio non crea un'alternativa funzionante.
+
+## Provare una dipendenza in meno
+
+Durante la verifica rallenterei il caricamento del bundle e bloccherei un'integrazione non essenziale. Guarderei quali attività restano possibili e quali messaggi spiegano i limiti.
+
+La distinzione che mi interessa è fra funzione necessaria e arricchimento. Se un widget social manca, il collegamento al profilo può ancora servire lo scopo; se manca l'unico percorso per inviare un modulo, il servizio è interrotto.
+
+Progettare questa base rende più chiaro anche il sistema completo. Prima di aggiungere interazioni, costringe a rispondere a una domanda concreta: cosa deve riuscire a fare la persona che arriva qui?
+
+## Fonti
+
+- [MDN — progressive enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "lca-confini-unita-funzionale",
+    title: "«Più sostenibile» rispetto a cosa? Il confine cambia il confronto",
+    date: "2026-11-03",
+    icon: "🔄",
+    excerpt: "Una valutazione del ciclo di vita deve dichiarare funzione, fasi incluse e ipotesi. La sola CO₂ non descrive ogni impatto.",
+    tags: ["Ambiente", "Ciclo di vita", "Misure"],
+    content: `
+Due prodotti vengono confrontati usando un solo numero ambientale. Uno sembra migliore, ma il primo dato comprende produzione, trasporto e fine vita; il secondo soltanto l'uso. Il confronto ha una forma numerica e una base incoerente.
+
+Una valutazione del ciclo di vita comincia prima del calcolo: dalla definizione di ciò che stiamo confrontando.
+
+## La funzione prima dell'oggetto
+
+Confrontare un contenitore usa e getta con uno riutilizzabile richiede di scegliere una funzione comune, per esempio un certo numero di utilizzi con prestazioni definite. Il singolo oggetto non è sempre un'unità di confronto sufficiente.
+
+Numero di riusi, lavaggio, trasporti e rotture diventano ipotesi del modello. Non esiste un punto di pareggio universale ricavabile dal solo materiale.
+
+## Disegnare il perimetro
+
+Il confine del sistema stabilisce quali processi entrano nello studio. Estrazione delle materie prime, produzione, distribuzione, uso e fine vita possono essere inclusi con livelli diversi di dettaglio secondo l'obiettivo e il metodo adottato.
+
+Il Joint Research Centre sviluppa metodi per la valutazione dell'impronta ambientale lungo il ciclo di vita. Il valore di questo approccio è rendere visibili effetti che una lettura limitata a una sola fase potrebbe spostare altrove.
+
+## Non fermarsi all'indicatore preferito
+
+Il cambiamento climatico è un impatto importante, ma non l'unico. Uso di risorse, acqua e altre categorie possono raccontare conseguenze differenti. Ridurre un indicatore non dimostra automaticamente un miglioramento su tutti gli altri.
+
+In un esempio didattico farei variare almeno l'ipotesi più incerta, come il numero effettivo di riusi. Se la conclusione cambia facilmente, lo scriverei insieme al risultato.
+
+Quando leggo «più sostenibile», cerco quindi funzione, confine e condizioni. Senza queste informazioni posso apprezzare l'intenzione, ma non verificare il confronto. Un numero ambientale diventa utile quando permette di capire anche cosa non sta contando.
+
+## Fonti
+
+- [JRC — Environmental Footprint](https://eplca.jrc.ec.europa.eu/EnvironmentalFootprint.html)
+- [Commissione europea — confine del sistema](https://knowledge-for-policy.ec.europa.eu/node/9373_lv)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "finestre-lancio-luna-orbite",
+    title: "Perché un lancio verso la Luna non può partire quando vuole",
+    date: "2026-11-03",
+    icon: "🕒",
+    excerpt: "Terra, Luna e veicolo si muovono. Una finestra di lancio nasce dall’intersezione di vincoli, non dal solo conto alla rovescia.",
+    tags: ["Spazio", "Artemis", "Orbite"],
+    content: `
+Il razzo è pronto sulla rampa. Perché aspettare un'ora precisa, invece di lanciare appena tutto è in ordine? Perché la destinazione si muove, la Terra ruota e la traiettoria deve rispettare più condizioni contemporaneamente.
+
+Il conto alla rovescia organizza le operazioni. La finestra di lancio descrive quando una certa missione può soddisfare i suoi vincoli.
+
+## Mirare a dove sarà la destinazione
+
+Un trasferimento non punta semplicemente alla posizione che la Luna occupa al momento della partenza. Il moto del veicolo deve essere compatibile con quello futuro del sistema.
+
+Nella spiegazione delle opportunità di lancio di Artemis II, l'Agenzia spaziale canadese richiama l'allineamento necessario fra Terra, Luna e Orion e la sequenza delle manovre previste. Qui uso quel caso per spiegare il concetto, senza attribuirgli una nuova data di missione.
+
+## Una finestra contiene più vincoli
+
+Geometria orbitale, capacità del lanciatore, illuminazione e condizioni richieste per il ritorno possono contribuire alla selezione dei periodi utilizzabili. Quali fattori siano decisivi dipende dalla missione specifica.
+
+Anche dentro una giornata adatta può esserci soltanto un intervallo limitato. Se un problema impedisce la partenza in quell'intervallo, non è detto che basti spostare di qualche minuto tutto il programma.
+
+## Ritardare non significa rifare la stessa prova
+
+Il sistema continua a muoversi mentre aspettiamo. Una nuova opportunità può richiedere parametri diversi o una diversa sequenza operativa, secondo il progetto.
+
+È un punto che mi piace ricordare quando una diretta presenta il rinvio come un semplice contrattempo logistico. Le operazioni si svolgono dentro un problema dinamico: il tempo è una variabile della soluzione.
+
+Per capire un annuncio guarderei quindi cosa identifica quella finestra e a quali condizioni si riferisce. La disponibilità del razzo è necessaria, ma non rende automaticamente disponibile anche la traiettoria.
+
+## Fonti
+
+- [Agenzia spaziale canadese — come funzionano le finestre lunari](https://www.asc-csa.gc.ca/eng/news/articles/2026/2026-01-09-artemis-ii-launch-opportunities-announced.asp)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "react-stato-derivato-carrello",
+    title: "React: il totale del carrello deve davvero stare nello state?",
+    date: "2026-11-03",
+    icon: "⚛️",
+    excerpt: "Memorizzare dati già ricavabili crea sincronizzazioni inutili. Un valore derivato può essere calcolato durante il render.",
+    tags: ["Coding", "React", "Frontend"],
+    content: `
+Un componente conserva le righe del carrello e anche il totale. Ogni modifica alle righe deve aggiornare entrambi. Poi arriva uno sconto, un cambio quantità o una rimozione e uno dei percorsi dimentica il secondo aggiornamento.
+
+Abbiamo creato due rappresentazioni della stessa informazione e adesso dobbiamo mantenerle d'accordo.
+
+## Una fonte di verità sufficiente
+
+Se il totale dipende soltanto dai dati già disponibili, posso ricavarlo durante il render. Esempio dimostrativo, con prezzi rappresentati in centesimi interi:
+
+\`\`\`javascript
+function CartTotal({ items }) {
+  const totalCents = items.reduce(
+    (sum, item) => sum + item.priceCents * item.quantity,
+    0
+  );
+
+  const formatted = new Intl.NumberFormat('it-IT', {
+    style: 'currency', currency: 'EUR'
+  }).format(totalCents / 100);
+
+  return <output>{formatted}</output>;
+}
+\`\`\`
+
+Qui ipotizziamo quantità intere, prezzi validati e una sola valuta. Non è un motore completo per imposte, arrotondamenti e sconti.
+
+## Un Effect aggiungerebbe un passaggio
+
+Calcolare il totale in un Effect e salvarlo in un altro state può introdurre un render con il valore precedente seguito da un aggiornamento. La documentazione React consiglia di evitare Effects per trasformazioni dei dati che possono avvenire durante il render.
+
+Se il calcolo fosse davvero costoso, valuterei una memoizzazione dopo averlo misurato. useMemo rimane un'ottimizzazione: la correttezza non dovrebbe dipendere dal fatto che il calcolo venga eseguito una sola volta.
+
+## Il confine commerciale resta sul server
+
+Il totale visualizzato è utile per l'interfaccia. Non autorizza il browser a decidere l'importo di un pagamento: il sistema che conclude l'ordine deve verificare prezzi e regole applicabili.
+
+La domanda che mi faccio quando aggiungo state è quindi: sto memorizzando una scelta indipendente oppure una copia di qualcosa che posso già derivare? Eliminare la copia riduce i percorsi che possono divergere e rende il componente più semplice da ragionare.
+
+## Fonti
+
+- [React — quando un Effect non serve](https://react.dev/learn/you-might-not-need-an-effect)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "latenza-percentili-media-p99",
+    title: "La media dice che va bene. Quel cinque per cento aspetta ancora",
+    date: "2026-11-03",
+    icon: "📊",
+    excerpt: "p50, p95 e p99 mostrano parti diverse della distribuzione. Per leggere la latenza servono anche volume ed errori.",
+    tags: ["Ingegneria", "Prestazioni", "Monitoraggio"],
+    content: `
+Un servizio ha un tempo medio di risposta accettabile, ma alcune persone segnalano attese molto lunghe. Le due cose possono essere vere contemporaneamente. Una media riassume la distribuzione senza mostrarne la coda.
+
+Per capire l'esperienza reale guarderei anche percentili, numero di richieste ed errori.
+
+## Cosa dice un percentile
+
+Il cinquantesimo percentile, o mediana, separa la metà inferiore da quella superiore dei valori osservati. Il p95 indica una soglia sotto cui ricade circa il 95% delle osservazioni, secondo il metodo di stima utilizzato.
+
+Il restante 5% non è necessariamente trascurabile. Su un volume ipotetico di centomila richieste, corrisponde a circa cinquemila esperienze nella coda superiore. Il percentile da solo non dice quanto siano lente quelle richieste.
+
+## Il numero richiede un perimetro
+
+Un p99 calcolato su pochissime richieste può essere instabile o poco informativo. Cambia inoltre il significato se mescolo endpoint veloci e lenti, successi ed errori, o periodi di traffico differenti.
+
+Non farei la media dei p95 di più server aspettandomi di ottenere il p95 complessivo. Per aggregare correttamente servono dati o distribuzioni compatibili, non un'operazione aritmetica su riassunti già calcolati.
+
+## Dalla dashboard a una domanda
+
+Separerei le rotte principali e chiederei: quali richieste finiscono nella coda? Dipendono da input grandi, cache fredde o servizi esterni? Gli errori rapidi stanno abbassando una media che sembra migliorare?
+
+Il materiale SRE di Google insiste proprio sul valore delle distribuzioni e dei segnali legati all'esperienza del servizio.
+
+Non sceglierei un percentile soltanto perché suona professionale. Lo collegherei a una decisione: quale comportamento stiamo cercando di garantire e quale parte degli utenti stiamo osservando? Una metrica diventa utile quando permette di individuare il problema che la media stava nascondendo.
+
+## Fonti
+
+- [Google SRE — obiettivi del servizio e distribuzioni](https://sre.google/sre-book/service-level-objectives/)
+- [Google SRE — monitoraggio](https://sre.google/workbook/monitoring/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "alberi-citta-calore-progetto",
+    title: "Un albero in città è anche un’infrastruttura termica",
+    date: "2026-11-03",
+    icon: "🌳",
+    excerpt: "Ombra ed evapotraspirazione influenzano il microclima. Il beneficio dipende anche da spazio, acqua e manutenzione.",
+    tags: ["Ambiente", "Città", "Clima"],
+    content: `
+In estate bastano pochi metri per passare da un marciapiede esposto a uno spazio molto più vivibile sotto una chioma. Non è soltanto una sensazione estetica: l'albero modifica le condizioni di esposizione e il bilancio energetico dell'ambiente vicino.
+
+Per questo considero il verde urbano una parte del progetto della città, non il riempitivo da aggiungere dove avanza spazio.
+
+## L'ombra agisce prima del condizionatore
+
+Una chioma può intercettare parte della radiazione solare che raggiungerebbe persone e superfici. L'evapotraspirazione contribuisce inoltre agli scambi di energia e acqua. Sono meccanismi diversi, con effetti che dipendono da specie, dimensioni e condizioni locali.
+
+La temperatura dell'aria, quella delle superfici e l'esposizione radiativa delle persone non sono intercambiabili. Un solo numero misurato in un punto può non descrivere bene il comfort di chi cammina.
+
+## Piantare è soltanto un passaggio
+
+Per ottenere un beneficio nel tempo servono condizioni perché l'albero cresca: volume di suolo, disponibilità idrica, spazio per le radici e manutenzione coerente. Un progetto che conta soltanto quante piante vengono installate rischia di perdere la funzione che dovrebbe ottenere.
+
+Guarderei anche la distribuzione. Ombreggiare un percorso pedonale usato ogni giorno può rispondere a un bisogno diverso rispetto a concentrare tutto il verde in un'area lontana dalle persone esposte.
+
+## Misurare la funzione
+
+In un confronto ipotetico annoterei orario, condizioni meteo e posizione delle misure, distinguendo aree ombreggiate ed esposte. Valuterei inoltre chi può accedere a quegli spazi e quando.
+
+L'EEA include verde e soluzioni basate sulla natura fra gli strumenti per affrontare il raffrescamento urbano insieme alle caratteristiche degli edifici.
+
+La domanda progettuale è quindi più concreta di «quanti alberi?»: quale ombra, per quali persone, in quali ore e con quali risorse per mantenerla? È così che un intervento decorativo può diventare un servizio durevole.
+
+## Fonti
+
+- [EEA — raffrescamento sostenibile degli edifici e contesto urbano](https://www.eea.europa.eu/en/analysis/publications/cooling-buildings-sustainably-in-europe-exploring-the-links-between-climate-change-mitigation-and-adaptation-and-their-social-impacts)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "allunaggio-paracadute-propulsione",
+    title: "Perché sulla Luna il paracadute non ti aiuta",
+    date: "2026-11-03",
+    icon: "🪂",
+    excerpt: "L’esosfera lunare non offre una frenata aerodinamica utile. La discesa deve gestire velocità, propellente e terreno.",
+    tags: ["Spazio", "Luna", "Propulsione"],
+    content: `
+Un paracadute funziona interagendo con un fluido. Aumenta la superficie che offre resistenza al moto nell'aria, trasformando una caduta rapida in una discesa più lenta nelle condizioni previste dal progetto.
+
+Sulla Luna manca un'atmosfera abbastanza densa da svolgere questo lavoro. È uno di quei dettagli ambientali che cambiano completamente l'architettura di una missione.
+
+## Un'esosfera non è un cuscino d'aria
+
+La Luna possiede un'esosfera estremamente tenue. Questa precisazione è importante scientificamente, ma non rende praticabile una normale frenata con ali o paracadute come sulla Terra.
+
+ESA descrive quindi la propulsione come uno strumento necessario per frenare la discesa lunare. Il veicolo deve modificare attivamente la propria velocità, invece di affidare il rallentamento a un'atmosfera densa.
+
+## Non si parte da una caduta verticale
+
+Un mezzo in orbita ha anche una grande componente di velocità orizzontale. Per raggiungere il suolo in modo controllato occorre gestire il moto complessivo, non soltanto diminuire la distanza dalla superficie.
+
+La scelta della traiettoria influenza il propellente necessario, il tempo disponibile e le condizioni con cui il lander osserva il terreno. Il punto di contatto finale arriva al termine di questa sequenza, non al posto della sequenza.
+
+## L'ambiente entra nelle prove
+
+In un progetto concettuale chiederei come si verificano navigazione, controllo della spinta e riconoscimento degli ostacoli. Poi guarderei cosa succede se una misura arriva in ritardo o il terreno differisce da quello previsto.
+
+Non sono istruzioni per dimensionare un lander: sono domande sui requisiti da dimostrare. La soluzione reale dipende da massa, sensori, motori e profilo della missione.
+
+È il motivo per cui copiare una soluzione terrestre può fallire anche quando il principio sembra semplice. Prima di scegliere il componente, bisogna verificare se nell'ambiente di destinazione esiste ancora il meccanismo fisico che lo fa funzionare.
+
+## Fonti
+
+- [ESA — discesa e risalita lunari](https://lunarexploration.esa.int/explore/technology/226?ia=291)
+- [NASA — esosfera lunare](https://science.nasa.gov/moon/lunar-atmosphere/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "rails-find-each-batch-memoria",
+    title: "Rails: elaborare un catalogo senza caricarlo tutto in memoria",
+    date: "2026-11-03",
+    icon: "📦",
+    excerpt: "find_each limita i record istanziati per volta. Per importazioni robuste vanno progettati anche ripartenza e concorrenza.",
+    tags: ["Coding", "Rails", "Prestazioni"],
+    content: `
+Un ciclo che funziona con cento prodotti può diventare un problema quando il catalogo cresce. Il punto non è soltanto quanto tempo impiega: se istanzia tutti i record insieme, può consumare molta memoria prima ancora di completare il primo lavoro utile.
+
+Active Record mette a disposizione metodi di elaborazione a lotti proprio per evitare questo caricamento indiscriminato.
+
+## Un lotto alla volta
+
+Con find_each Rails recupera gruppi di record e li consegna al blocco uno per volta. Nell'esempio seguente Product e CatalogExporter sono componenti dimostrativi:
+
+\`\`\`ruby
+Product.where(active: true).find_each(batch_size: 500) do |product|
+  CatalogExporter.call(product)
+end
+\`\`\`
+
+Il valore 500 non è una raccomandazione universale. Va scelto osservando dimensione dei record, memoria, query e costo dell'elaborazione. Ridurre il lotto non risolve automaticamente un exporter che conserva tutti gli oggetti in un array.
+
+## Attenzione a ordine e modifiche
+
+La scansione a lotti usa un cursore e ha regole specifiche sull'ordinamento, che dipendono anche dalla versione di Rails. Non darei per scontato che un order applicato alla relation venga seguito come in una normale each.
+
+Se altri processi modificano i dati durante la scansione, serve inoltre definire cosa debba rappresentare l'esportazione. Non è automaticamente una fotografia immutabile dell'intero catalogo.
+
+## Memoria e recuperabilità sono problemi diversi
+
+Se il processo si interrompe all'ultimo lotto, voglio sapere cosa accade al riavvio. Un identificativo di avanzamento, un filtro temporale coerente o un'operazione idempotente possono essere necessari secondo il flusso.
+
+Misurerei anche record completati, errori e durata per lotto, evitando di registrare contenuti sensibili senza motivo.
+
+find_each risolve un problema preciso: non istanziare tutto il risultato in una volta. Un'importazione affidabile nasce quando a quel meccanismo aggiungiamo confini chiari, gestione degli errori e una strategia di ripartenza verificata.
+
+## Fonti
+
+- [Rails — elaborazione a lotti](https://api.rubyonrails.org/classes/ActiveRecord/Batches.html)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "tolleranze-catena-dimensionale",
+    title: "Tre pezzi corretti possono non entrare nello spazio previsto",
+    date: "2026-11-03",
+    icon: "🧩",
+    excerpt: "Le tolleranze si combinano. Un esempio di catena dimensionale mostra perché controllare ogni pezzo separatamente non basta.",
+    tags: ["Ingegneria", "Misure", "Progettazione"],
+    content: `
+Tre distanziali devono occupare insieme uno spazio di 30 millimetri. Ciascuno è indicato come 10 ± 0,2 mm. Il fornitore consegna pezzi conformi al disegno, eppure il montaggio può non comportarsi come suggeriscono i valori nominali.
+
+Il motivo è che il sistema vede la combinazione delle dimensioni, non tre controlli di conformità separati.
+
+## Fare il conto ai limiti
+
+Nel nostro esempio, se tutti e tre i pezzi sono al limite superiore, la somma è 30,6 mm. Se sono al limite inferiore, è 29,4 mm. Il valore nominale di 30 mm è soltanto il centro dell'intervallo ottenuto con questa combinazione peggiore.
+
+Il calcolo è intenzionalmente semplice: una catena lineare di tre lunghezze. Un assieme reale può includere giochi, deformazioni, geometrie e condizioni termiche che richiedono un modello più completo.
+
+## Non sommare concetti diversi
+
+Una tolleranza definisce un intervallo ammesso per una caratteristica. L'incertezza di misura riguarda invece ciò che possiamo attribuire al risultato di una misurazione. Non sono la stessa quantità, anche se entrambe influenzano come giudichiamo il pezzo.
+
+Anche un approccio statistico richiede ipotesi dichiarate: distribuzioni, indipendenza ed eventuali correlazioni. Non sostituirei il caso peggiore con una formula più favorevole soltanto perché produce un numero piccolo.
+
+## Progettare il collegamento
+
+Prima di stringere tutte le tolleranze, chiederei quale dimensione funzionale deve essere garantita. Potrebbe essere più sensato introdurre una regolazione, cambiare il riferimento o ridurre il numero di elementi della catena.
+
+Nelle integrazioni software ritrovo un principio simile: componenti singolarmente corretti possono essere incompatibili quando si incontrano. L'analogia riguarda l'interfaccia, non il metodo di calcolo.
+
+Il controllo utile si fa quindi anche sull'assieme. Il fatto che ogni parte rispetti la propria specifica è necessario, ma non dimostra da solo che il risultato finale soddisfi il requisito.
+
+## Fonti
+
+- [NIST — incertezza e terminologia delle misure](https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-appendix-d1-terminology)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "riciclo-raccolta-qualita-materiale",
+    title: "Metterlo nel contenitore giusto è l’inizio del riciclo",
+    date: "2026-11-03",
+    icon: "♻️",
+    excerpt: "Raccolta, selezione e impiego del materiale recuperato sono passaggi diversi. La qualità in ingresso cambia il risultato.",
+    tags: ["Ambiente", "Materiali", "Riciclo"],
+    content: `
+Un imballaggio finisce nella raccolta differenziata e sparisce dalla nostra vista. È facile pensare che il suo percorso sia concluso. In realtà è appena entrato in una catena che deve selezionarlo, trattarlo e trovare un impiego per il materiale recuperato.
+
+Separare questi passaggi aiuta a capire perché «raccolto» e «riciclato» non siano la stessa cosa.
+
+## Un processo con requisiti in ingresso
+
+Un impianto riceve materiali con proprietà diverse. Oggetti estranei, combinazioni difficili da separare e contaminazioni possono ostacolare la selezione o ridurre la qualità dell'uscita.
+
+È un problema che riconosco nelle integrazioni software: se due sistemi interpretano diversamente lo stesso campo, il fatto che il file sia arrivato non prova che il dato sia utilizzabile. L'analogia riguarda la qualità dell'ingresso, non l'equivalenza dei processi.
+
+## Il simbolo non decide tutto
+
+La riciclabilità di un materiale in certe condizioni non garantisce che ogni servizio locale accetti ogni oggetto fatto con quel materiale. Forma, composizione e filiera disponibile contano.
+
+Per la pratica quotidiana userei le indicazioni aggiornate del gestore locale, senza dedurre la destinazione dal solo aspetto. Le regole operative di un territorio non si ricavano automaticamente da una guida generale internazionale.
+
+## Guardare anche ciò che viene dopo
+
+Per valutare un sistema mi interessano quantità raccolte, scarti di selezione e materiale effettivamente recuperato. Aggiungerei la qualità e la possibilità di sostituire materie prime in un nuovo utilizzo.
+
+Il riciclo rimane utile, ma non cancella automaticamente le risorse impiegate per produrre l'oggetto. Prevenzione dei rifiuti, riuso e durata dei prodotti intervengono in punti diversi della catena.
+
+Il contenitore giusto è una nostra responsabilità concreta. Per giudicare il risultato ambientale, però, dobbiamo seguire il materiale anche oltre il momento in cui il camion lo porta via.
+
+## Fonti
+
+- [EPA — fasi e benefici del riciclo](https://www.epa.gov/recycle/recycling-basics-and-benefits)
+- [EEA — economia circolare](https://www.eea.europa.eu/en/topics/in-depth/circular-economy)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "punti-lagrange-equilibrio-instabile",
+    title: "Lagrange L2: un buon posto dove stare non è un parcheggio immobile",
+    date: "2026-11-03",
+    icon: "🛰️",
+    excerpt: "I punti di Lagrange dipendono da una coppia di corpi. Intorno a L1 e L2 servono orbite e correzioni.",
+    tags: ["Spazio", "Orbite"],
+    content: `
+Quando si sente parlare di un telescopio «a L2», viene naturale immaginare un oggetto fermo in un punto speciale. L'immagine è comoda, ma nasconde sia il movimento del sistema sia il lavoro necessario a mantenere la missione nella regione prevista.
+
+Prima domanda: L2 di quale coppia di corpi?
+
+## Il riferimento conta
+
+Nel modello del problema ristretto dei tre corpi, due masse principali orbitano e un terzo corpo molto meno massiccio non ne modifica significativamente il moto. I punti di Lagrange sono posizioni di equilibrio nel riferimento che ruota con le due masse.
+
+Il sistema Sole–Terra e quello Terra–Luna hanno quindi punti distinti. Dire soltanto «L2» senza specificare il contesto può creare un equivoco enorme sulle distanze.
+
+## Equilibrio non significa stabilità
+
+L1, L2 e L3 sono instabili nel modello: una piccola perturbazione può far crescere lo scostamento. Le missioni nelle loro vicinanze impiegano correzioni di mantenimento e possono seguire orbite attorno alla regione del punto, anziché occupare una posizione immobile.
+
+L4 e L5 hanno caratteristiche di stabilità differenti, sotto condizioni legate anche al rapporto fra le masse principali. Non estenderei quindi la stessa descrizione a tutti e cinque i punti.
+
+## Perché scegliere quella regione
+
+Webb opera vicino al punto L2 del sistema Sole–Terra. La geometria aiuta a mantenere Sole e Terra dalla stessa parte dello scudo termico e a organizzare le osservazioni, ma non elimina controllo e vincoli operativi.
+
+La conseguenza che trovo interessante è questa: in ingegneria un ambiente favorevole non equivale a un ambiente che si gestisce da solo. Una regione orbitale può ridurre alcuni costi e contemporaneamente imporre attività di mantenimento.
+
+Quando vedo un disegno con un satellite appoggiato su un puntino, lo leggo quindi come una mappa concettuale. Per capire il funzionamento reale servono riferimento, traiettoria e modalità di controllo.
+
+## Fonti
+
+- [NASA — punti di Lagrange](https://science.nasa.gov/solar-system/resources/faq/what-are-lagrange-points/)
+- [NASA — orbita di Webb](https://science.nasa.gov/mission/webb/orbit/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "http-etag-cache-rivalidazione",
+    title: "ETag: chiedere se è cambiato prima di scaricarlo di nuovo",
+    date: "2026-11-03",
+    icon: "🏷️",
+    excerpt: "La rivalidazione HTTP permette di riusare una risposta. no-cache e no-store hanno significati diversi.",
+    tags: ["Coding", "HTTP", "Prestazioni"],
+    content: `
+Un browser possiede già una risorsa, ma non sa se la copia sia ancora utilizzabile. Deve scaricarla tutta ogni volta? Non necessariamente. Può chiedere al server se la rappresentazione che conosce è cambiata.
+
+ETag è uno dei meccanismi che rendono possibile questo dialogo.
+
+## Una versione da confrontare
+
+Il server associa alla rappresentazione un identificativo e lo invia nell'header ETag. Quando serve rivalidare, il client può restituirlo con If-None-Match.
+
+\`\`\`http
+GET /catalogo.json HTTP/1.1
+Host: example.com
+If-None-Match: "catalogo-v7"
+\`\`\`
+
+Se la rappresentazione coincide e le condizioni della richiesta sono soddisfatte, il server può rispondere 304 Not Modified, senza ritrasmettere il corpo. Il client usa allora la copia memorizzata secondo le regole della cache.
+
+## no-cache non vuol dire non conservare
+
+Cache-Control: no-cache permette la memorizzazione ma richiede una rivalidazione prima del riuso nei casi disciplinati dalla cache HTTP. no-store indica invece di non memorizzare la risposta.
+
+La differenza è pratica. Un documento che deve essere controllato prima del riuso può beneficiare di un 304; vietarne la memorizzazione elimina quella possibilità. La navigazione nella cronologia e la back/forward cache hanno però regole proprie, quindi non tratterei questi header come un controllo universale dello stato del browser.
+
+## Scegliere in base alla risorsa
+
+Per un asset statico con nome contenente un hash del contenuto, una durata lunga può essere appropriata: quando cambia il file cambia anche l'URL. Per HTML aggiornabile mantenendo lo stesso indirizzo serve una politica diversa.
+
+Nelle risposte personalizzate bisogna valutare inoltre chi può conservarle e quali varianti esistono. Copiare un header da un tutorial senza guardare autenticazione e cache condivise può creare problemi.
+
+Il vantaggio di ETag è preciso: evitare di ritrasmettere un corpo invariato quando una rivalidazione è sufficiente. Non serve promettergli il compito di risolvere ogni problema di freschezza.
+
+## Fonti
+
+- [MDN — ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/ETag)
+- [MDN — cache HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "campionamento-aliasing-segnali",
+    title: "Un campione al secondo può farti vedere un segnale che non esiste",
+    date: "2026-11-03",
+    icon: "〰️",
+    excerpt: "Il campionamento può confondere frequenze differenti. Frequenza di acquisizione e filtraggio vanno progettati insieme.",
+    tags: ["Ingegneria", "Segnali", "Audio"],
+    content: `
+Nei video una ruota può sembrare ferma o girare al contrario. Non è cambiata la meccanica: stiamo osservando il movimento attraverso una sequenza di immagini discrete. Fra un fotogramma e il successivo perdiamo informazioni.
+
+È un modo intuitivo per avvicinarsi all'aliasing, un problema che riguarda audio, immagini e acquisizione di segnali.
+
+## Punti identici, storie differenti
+
+Se misuro una sinusoide soltanto in certi istanti, frequenze diverse possono produrre gli stessi campioni. Una volta raccolti quei punti, non posso scegliere la storia corretta senza ipotesi aggiuntive sul segnale.
+
+Il teorema del campionamento dice che un segnale limitato in banda può essere ricostruito idealmente campionando a una frequenza superiore al doppio della sua frequenza massima. Le condizioni «limitato in banda» e «idealmente» fanno parte dell'enunciato.
+
+## Il filtro viene prima della perdita
+
+Nell'acquisizione reale serve gestire le componenti oltre la banda utile prima del campionamento, con un filtraggio anti-alias appropriato. Tentare di separarle dopo che si sono sovrapposte in frequenza non recupera automaticamente l'informazione originale.
+
+È uno dei motivi per cui non basta scegliere una frequenza di campionamento sulla base del solo numero più alto che vogliamo mostrare a schermo.
+
+## Un esempio per chi misura software
+
+Immaginiamo un processo che alterna brevi picchi di attività e pause. Una lettura molto rada della CPU può cadere sempre nelle pause e suggerire un carico basso. Non sto applicando senza condizioni il teorema a una dashboard: il punto comune è che il metodo di osservazione limita ciò che possiamo concludere.
+
+Prima di fidarmi di un grafico cerco quindi frequenza di acquisizione, aggregazione e filtri. La linea può essere pulita anche quando l'osservazione è insufficiente. Un dato ben disegnato non diventa, per questo, una rappresentazione completa del fenomeno.
+
+## Fonti
+
+- [MIT — campionamento e aliasing](https://ocw.mit.edu/courses/res-6-007-signals-and-systems-spring-2011/resources/lecture-16-sampling/)
+- [MIT — ricostruzione e aliasing](https://visionbook.mit.edu/sampling_and_aliasing.html)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "impronta-idrica-contesto",
+    title: "Acqua virtuale: il numero di litri non racconta tutta la storia",
+    date: "2026-11-03",
+    icon: "💧",
+    excerpt: "Origine dell’acqua, luogo e periodo cambiano il significato dell’impronta idrica. Una classifica senza contesto può ingannare.",
+    tags: ["Ambiente", "Acqua", "Risorse"],
+    content: `
+Un prodotto può richiedere acqua molto prima di arrivare nelle nostre mani: coltivazione delle materie prime, trasformazione e altri passaggi della filiera. Il concetto di acqua virtuale aiuta a rendere visibile questa parte del consumo.
+
+Ma appena compare una classifica in litri mi viene da chiedere: quale acqua, dove e in quale periodo?
+
+## Dietro il totale ci sono componenti diverse
+
+Nella metodologia dell'impronta idrica si distinguono comunemente acqua verde, blu e grigia. La verde riguarda l'acqua piovana utilizzata nel processo produttivo; la blu le risorse superficiali e sotterranee consumate. La componente grigia è un indicatore del volume teorico necessario ad assimilare un carico inquinante entro criteri definiti.
+
+Quest'ultima non va letta come una quantità fisicamente prelevata e versata nel prodotto. Le definizioni contano prima ancora del confronto numerico.
+
+## Un litro non ha sempre lo stesso contesto
+
+Un consumo in un bacino con disponibilità abbondante e uno durante una fase di scarsità non hanno necessariamente la stessa conseguenza ambientale. Provenienza e stagionalità aggiungono informazioni che il totale aggregato può nascondere.
+
+Per questo non userei due numeri raccolti con metodi diversi per proclamare un vincitore assoluto fra prodotti. Controllerei unità, confini della filiera e luogo cui si riferiscono i dati.
+
+## Rendere utile la misura
+
+In un confronto ipotetico fra forniture dello stesso materiale, chiederei almeno la ripartizione delle componenti, il bacino interessato e l'anno dei dati. Poi valuterei la relazione con la disponibilità locale.
+
+Il punto non è rendere impossibile ogni scelta. È evitare una semplificazione che perde proprio l'informazione necessaria per decidere.
+
+L'impronta idrica è interessante quando ci porta a guardare oltre il rubinetto. Diventa molto meno utile se sostituisce una filiera complessa con un numero isolato da condividere senza leggerne la definizione.
+
+## Fonti
+
+- [Arpae — impronta idrica e sue componenti](https://www.arpae.it/it/temi-ambientali/sostenibilita/strumenti-di-sostenibilita/altri-strumenti/water-footprint)
+- [USGS — scambi e impatti dell’acqua virtuale](https://www.usgs.gov/publications/trends-and-environmental-impacts-virtual-water-trade)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "radiazioni-luna-protezione-massa",
+    title: "Radiazioni sulla Luna: la protezione entra nel bilancio di massa",
+    date: "2026-11-03",
+    icon: "☀️",
+    excerpt: "Ambiente, durata e schermatura vanno valutati insieme. Trasportare più materiale ha un costo per tutto il sistema.",
+    tags: ["Spazio", "Luna", "Ingegneria"],
+    content: `
+Sulla Terra l'atmosfera e il campo magnetico contribuiscono alla protezione dall'ambiente spaziale. Quando ragioniamo su missioni oltre l'orbita bassa, non possiamo assumere che quelle condizioni ci seguano.
+
+Il tema delle radiazioni mostra bene quanto una scelta locale possa cambiare il progetto di un'intera missione.
+
+## Non esiste un solo tipo di esposizione
+
+Occorre distinguere fenomeni come gli eventi di particelle solari dal contributo dei raggi cosmici galattici. Cambiano caratteristiche, variabilità e strategie di mitigazione. Anche durata e profilo della missione influenzano la valutazione.
+
+Per questo «quanto deve essere spesso lo scudo?» non ha una risposta universale ricavabile da una sola proprietà del materiale. Servono analisi specifiche dell'ambiente e della geometria del sistema.
+
+## La massa fa parte del problema
+
+NASA descrive, per Orion, strategie che sfruttano materiali già a bordo per aumentare la schermatura in una zona di riparo durante eventi solari. L'idea ingegneristica è usare una risorsa per più funzioni, invece di pensare soltanto ad aggiungere massa dedicata.
+
+Ogni chilogrammo trasportato influenza infatti altre parti del progetto. Nel ragionamento complessivo bisogna tenere insieme protezione, struttura, propulsione e organizzazione degli spazi.
+
+## Una mitigazione non è una garanzia assoluta
+
+Da sviluppatore trovo familiare il principio: la protezione non coincide con un singolo componente acquistato alla fine. Dipende da architettura, misure, procedure e condizioni operative.
+
+L'analogia si ferma qui; la dosimetria e la sicurezza di una missione richiedono competenze e modelli specifici. Non si possono dedurre prestazioni reali da un esempio divulgativo.
+
+Quando leggo una proposta di permanenza lunare, cerco quindi il collegamento fra ambiente previsto e soluzione verificata. Un disegno con una parete spessa dice poco. Sapere quale esposizione considera, per quanto tempo e con quali limiti permette invece di iniziare una valutazione tecnica.
+
+## Fonti
+
+- [NASA — protezione dalle radiazioni alla Luna](https://science.nasa.gov/science-research/heliophysics/how-nasa-will-protect-astronauts-from-space-radiation-at-the-moon/)
+- [NASA — tecnologie di Orion](https://www.nasa.gov/missions/artemis/orion/top-five-technologies-needed-for-a-spacecraft-to-survive-deep-space/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "transactional-outbox-invio-erp",
+    title: "Salvato nel database, perso nell’invio: a cosa serve l’outbox",
+    date: "2026-11-03",
+    icon: "📤",
+    excerpt: "Una transazione locale non include automaticamente il servizio remoto. L’outbox conserva l’intenzione di inviare.",
+    tags: ["Coding", "Database", "Integrazioni"],
+    content: `
+Salvo un ordine nel database e poi mando un messaggio al gestionale. Se il processo si arresta fra le due operazioni, l'ordine esiste ma il destinatario non lo sa. Invertire la sequenza sposta il problema: il messaggio potrebbe partire anche se il salvataggio fallisce.
+
+È il problema della doppia scrittura su sistemi distinti. Una transazione del database locale non si estende magicamente alla rete.
+
+## Conservare dato e intenzione insieme
+
+Il transactional outbox propone di salvare la modifica commerciale e un evento da inviare nella stessa transazione locale. Un processo separato legge l'outbox e prova a consegnare l'evento.
+
+Schema dimostrativo, con modelli ipotetici nello stesso database:
+
+\`\`\`ruby
+Order.transaction do
+  order = Order.create!(order_attributes)
+  OutboxEvent.create!(
+    event_type: 'order.created',
+    aggregate_id: order.id,
+    payload: { order_id: order.id }
+  )
+end
+\`\`\`
+
+Se il commit riesce, rimangono entrambi. Se fallisce, nessuno dei due deve essere considerato completato. Il worker deve poi poter ritrovare gli eventi non consegnati.
+
+## Non promette una consegna unica
+
+Il processo può inviare il messaggio e arrestarsi prima di registrare la conferma. Al riavvio potrebbe inviarlo ancora. Il destinatario deve quindi gestire i duplicati, per esempio attraverso un identificativo stabile dell'evento e un'elaborazione idempotente.
+
+Anche concorrenza fra worker, ordine degli eventi e pulizia della tabella richiedono una scelta esplicita. Il frammento illustra il punto di atomicità, non implementa da solo tutto il protocollo.
+
+## Rendere visibile il ritardo
+
+Misurerei numero ed età degli eventi pendenti, oltre ai tentativi falliti. Un database pieno di intenzioni mai consegnate non è una sincronizzazione riuscita.
+
+Mi piace l'outbox perché rende persistente un passaggio che altrimenti vive fra due righe di codice. Non cancella i guasti: crea le condizioni per recuperarli senza dover indovinare cosa il processo stesse facendo prima di fermarsi.
+
+## Fonti
+
+- [AWS — transactional outbox](https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "legge-little-code-tempi-attesa",
+    title: "La coda cresce? Conta anche il tempo che il lavoro passa dentro",
+    date: "2026-11-03",
+    icon: "🚦",
+    excerpt: "La legge di Little collega lavoro in corso, throughput e tempo medio. Aggiungere processi non elimina ogni collo di bottiglia.",
+    tags: ["Ingegneria", "Prestazioni"],
+    content: `
+Una coda contiene molti job e la tentazione è aumentare subito i worker. Prima mi farei una domanda più semplice: quanto lavoro entra, quanto ne esce e quanto tempo rimane nel sistema?
+
+La legge di Little collega proprio queste grandezze. In un sistema stabile, con confini e medie coerenti, il numero medio di elementi presenti è uguale al tasso medio di attraversamento moltiplicato per il tempo medio trascorso dentro: **L = λW**.
+
+## Un conto con le unità
+
+Immaginiamo un processo stabile che completa in media 12 job al minuto. Ogni job trascorre nel sistema, attesa compresa, una media di 5 minuti. Il lavoro medio in corso è 12 × 5 = 60 job.
+
+Non significa che ogni fotografia della coda debba mostrare esattamente sessanta elementi. Stiamo collegando medie, non descrivendo tutti gli istanti del processo.
+
+## Il confine cambia il significato
+
+Se conto sia i job in attesa sia quelli in esecuzione, il tempo deve comprendere entrambi. Se misuro soltanto la fila prima del worker, devo usare il tempo di attesa in quella fila. Mischiare i due perimetri rende il conto fuorviante.
+
+Anche l'ipotesi di stabilità conta. Una coda che cresce senza controllo perché gli arrivi superano stabilmente la capacità non si descrive assegnandole una media di equilibrio inventata.
+
+## Dalla formula alla diagnosi
+
+Se il tempo totale aumenta, distinguerei attesa, esecuzione e dipendenze esterne. Più worker possono ridurre l'attesa soltanto se la risorsa condivisa regge il carico aggiuntivo.
+
+La relazione non sceglie la soluzione al posto nostro. Aiuta a controllare se numeri e ragionamento stanno insieme. Prima di discutere quanti processi avviare, preferisco avere una definizione leggibile di ciò che sto misurando: evita di ottimizzare una parte mentre il resto del lavoro continua ad accumularsi altrove.
+
+## Fonti
+
+- [MIT — modelli di coda e legge di Little](https://ocw.mit.edu/courses/15-763j-manufacturing-system-and-supply-chain-design-spring-2005/568c857501f6785e7b328a3cf3990705_reviw_of_que_mol.pdf)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "spreco-alimentare-misurare-prima",
+    title: "Spreco alimentare: prima del consiglio, guarda cosa finisce nel cestino",
+    date: "2026-11-03",
+    icon: "🥕",
+    excerpt: "Una piccola registrazione distingue quantità comprate, avanzi e scarti. Misurare aiuta a scegliere un intervento concreto.",
+    tags: ["Ambiente", "Risorse", "Misure"],
+    content: `
+«Bisogna sprecare meno cibo» è un obiettivo facile da condividere. Il problema operativo comincia dopo: stiamo comprando troppo, cucinando porzioni grandi o dimenticando prodotti che avevamo già?
+
+Sono cause diverse. Dare a tutte lo stesso consiglio significa rischiare di non correggerne nessuna.
+
+## Trasformare un'impressione in un dato
+
+Il Food Waste Index di UNEP distingue ambiti come famiglie, ristorazione e vendita al dettaglio e dedica attenzione alla misurazione. Io ne ricavo un principio applicabile anche in piccolo: prima definire cosa osserviamo, poi confrontare i risultati.
+
+Un diario dimostrativo potrebbe annotare alimento, quantità, motivo dello scarto e se la parte fosse commestibile. Separare bucce o altri scarti inevitabili dal cibo ancora utilizzabile evita di attribuire lo stesso significato a tutto il peso del cestino.
+
+## Collegare il problema all'azione
+
+Se ricorrono prodotti dimenticati, proverei a rendere visibili quelli da usare prima e a controllare le scorte prima della spesa. Se ricorrono porzioni avanzate, rivedrei le quantità preparate.
+
+Queste sono ipotesi operative, non risultati di un esperimento personale. Per capire se aiutano occorre osservare un altro periodo comparabile, tenendo conto anche del numero di pasti e delle persone presenti.
+
+## Non farsi ingannare dal totale
+
+Due settimane possono avere lo stesso peso di scarti e raccontare storie differenti. In una si cucina di più; nell'altra si buttano prodotti interi. Un unico numero perde queste informazioni.
+
+Non serve registrare per sempre ogni grammo. Basta una misura sufficientemente chiara da suggerire una modifica e verificare se sta andando nella direzione desiderata.
+
+Mi interessa questo passaggio perché sostituisce un generico senso di colpa con una decisione concreta. Un sistema migliore di acquisto, conservazione e preparazione può rendere la scelta utile anche quella più semplice da ripetere.
+
+## Fonti
+
+- [UNEP — Food Waste Index Report 2024](https://www.unep.org/resources/publication/food-waste-index-report-2024)
+- [UNEP — definizioni e misurazione](https://sdgs.unep.org/article/2a5-food-waste-index)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "polvere-lunare-progettazione",
+    title: "La polvere lunare non è un problema da risolvere con una spazzata",
+    date: "2026-11-03",
+    icon: "🌑",
+    excerpt: "Abrasione e adesione della regolite coinvolgono guarnizioni, tessuti e pannelli. La manutenzione parte dal progetto.",
+    tags: ["Spazio", "Luna", "Materiali"],
+    content: `
+Una superficie grigia coperta di polvere può sembrare un ambiente semplice. Nessuna pioggia, nessun fango, nessuna vegetazione. Poi provi a immaginare una guarnizione, un giunto o un tessuto che devono funzionare dopo ogni uscita.
+
+La regolite lunare rende molto meno banale l'idea di lavorare sulla Luna per periodi prolungati.
+
+## Non è sabbia levigata dall'acqua
+
+La NASA descrive la polvere lunare come abrasiva, con particelle che non hanno subito gli stessi processi di erosione tipici di molti ambienti terrestri. Le proprietà elettrostatiche contribuiscono inoltre alla sua adesione alle superfici.
+
+Questo significa che la polvere può diventare parte del comportamento del sistema: usura, contaminazione delle superfici e difficoltà di pulizia entrano nelle condizioni operative da considerare.
+
+## Proteggere l'interfaccia
+
+Se dovessi impostare uno schema concettuale, separerei tre problemi: evitare l'ingresso, tollerare la presenza e rimuovere il materiale depositato. Sono strategie complementari, con costi e limiti differenti.
+
+Una copertura può proteggere una connessione, ma deve potersi aprire e richiudere. Un sistema di pulizia può funzionare su un pannello senza essere adatto a tutte le geometrie. Non darei per scontata una soluzione universale.
+
+## Anche la prova deve essere rappresentativa
+
+NASA studia tecniche come l'Electrodynamic Dust Shield, che usa campi elettrici per spostare particelle. La sua esistenza non elimina la necessità di verificare materiali, superfici e condizioni d'uso del singolo sistema.
+
+Per valutare una proposta chiederei quante esposizioni sopporta, quale polvere viene usata nelle prove e quali prestazioni conserva dopo la pulizia. «Ha rimosso la polvere una volta» è un'evidenza diversa da «mantiene la funzione durante la missione».
+
+Il dettaglio apparentemente secondario può decidere la disponibilità dell'intero mezzo. È una ragione in più per progettare manutenzione e ambiente insieme all'hardware, fin dall'inizio.
+
+## Fonti
+
+- [NASA — protezione dalla polvere lunare](https://www.nasa.gov/centers-and-facilities/kennedy/nasa-technology-helps-guard-against-lunar-dust/)
+- [NASA — dimostrazione dello scudo elettrodinamico](https://www.nasa.gov/image-article/nasas-dust-shield-successfully-repels-lunar-regolith-on-moon/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "retry-backoff-jitter-integrazioni",
+    title: "Retry: riprovare subito può essere il problema",
+    date: "2026-11-03",
+    icon: "⏳",
+    excerpt: "Timeout, limite dei tentativi e attesa casuale evitano che un errore temporaneo diventi una raffica di richieste.",
+    tags: ["Coding", "API", "Integrazioni"],
+    content: `
+Un servizio risponde lentamente. Cento client vanno in timeout e riprovano nello stesso istante. Il servizio, già in difficoltà, riceve un'altra ondata di lavoro. Ogni singolo client sta cercando di recuperare; tutti insieme peggiorano il guasto.
+
+Un retry è una nuova richiesta, con un costo reale. Non è una parentesi gratuita attorno all'errore.
+
+## Prima decidere se riprovare
+
+Un errore temporaneo può meritare un nuovo tentativo. Un payload non valido, invece, non diventa corretto aspettando. Prima distinguerei le categorie di errore previste dall'API e rispetterei le sue indicazioni, compreso Retry-After quando pertinente.
+
+Per un'operazione con effetti esterni c'è un'altra domanda: il timeout significa davvero che non è stata eseguita? Potrebbe essere andata a buon fine mentre si perdeva soltanto la risposta. Senza idempotenza un retry può duplicare l'effetto.
+
+## Distribuire i tentativi nel tempo
+
+Il backoff aumenta l'attesa fra i tentativi. Il jitter aggiunge una componente casuale per evitare che tutti ripartano insieme. AWS descrive entrambi come strumenti per contenere le conseguenze dei guasti temporanei.
+
+Un esempio di sola attesa, da usare dentro una politica con tentativi limitati:
+
+\`\`\`javascript
+const capMs = Math.min(30_000, 500 * 2 ** attempt);
+const delayMs = Math.random() * capMs;
+await new Promise(resolve => setTimeout(resolve, delayMs));
+\`\`\`
+
+Qui attempt è un intero non negativo. Il frammento non decide quali errori ritentare, non applica una scadenza complessiva e non rende idempotente l'operazione: quelle sono responsabilità separate.
+
+## Il recupero deve avere una fine
+
+Imposterei timeout della singola chiamata, numero massimo di tentativi e durata massima dell'intera operazione. Eviterei anche politiche indipendenti a ogni livello dello stack: i tentativi possono moltiplicarsi.
+
+Quando esaurisco il budget, salvo uno stato recuperabile e rendo visibile il problema. Un'integrazione affidabile sa riprovare, ma sa anche quando smettere di martellare il sistema da cui dipende.
+
+## Fonti
+
+- [AWS Builders’ Library — timeout, retry e jitter](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "feedback-controllo-ritardi-oscillazioni",
+    title: "Il termostato e il deploy: correggere troppo può far oscillare il sistema",
+    date: "2026-11-03",
+    icon: "🌡️",
+    excerpt: "Misurare, agire e aspettare l’effetto: il feedback perde efficacia quando ignori inerzia e ritardo.",
+    tags: ["Ingegneria", "Controllo"],
+    content: `
+La stanza sembra fredda, quindi alzi molto il riscaldamento. Dopo poco non percepisci ancora il cambiamento e lo alzi di nuovo. Quando il calore arriva, la temperatura supera quella desiderata. Allora spegni tutto e ricominci il ciclo.
+
+È un esempio intuitivo del perché un controllo basato sul feedback deve considerare anche i tempi del sistema.
+
+## Il valore misurato racconta il passato
+
+In un controllo ad anello chiuso confrontiamo una misura con un obiettivo e usiamo la differenza per scegliere un'azione. Ma misura, attuatore e processo possono introdurre ritardi e inerzia.
+
+Correggere energicamente uno scostamento che sta già scomparendo può produrre una sovracorrezione. Le dispense sul controllo della temperatura dell'Università di Exeter mostrano anche come un termine integrale possa accumularsi e contribuire al superamento dell'obiettivo.
+
+## Un'analogia operativa, con i suoi limiti
+
+Penso a una coda di job che cresce. Aumentare i worker sembra sensato, ma se il vincolo è il database, più processi possono aumentare la contesa. Quando la nuova configurazione produce effetti, abbiamo magari già effettuato altre tre modifiche.
+
+Non sto dicendo che una coda e un impianto termico abbiano la stessa dinamica. L'analogia utile è più circoscritta: prima di un'altra correzione devo sapere quale risposta aspettarmi e con quale ritardo.
+
+## Osservare una modifica alla volta
+
+In un esperimento controllato annoterei istante dell'intervento, variabile modificata e segnali da seguire. Aspetterei una finestra coerente con il processo, senza scambiarla per un tempo universale.
+
+Se cambio insieme concorrenza, query e limiti di memoria, un miglioramento finale mi dice poco su cosa abbia funzionato. Il feedback richiede una relazione leggibile fra azione e risposta.
+
+Correggere rapidamente è utile quando la rapidità è compatibile con ciò che stiamo controllando. Altrimenti rischia di diventare soltanto un modo più veloce di inseguire le oscillazioni.
+
+## Fonti
+
+- [Università di Exeter — feedback e controllo della temperatura](https://newton.ex.ac.uk/teaching/CDHW/Feedback/PracticalMatters.html)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "elettricita-intensita-carbonica",
+    title: "Un kWh è sempre un kWh. Le emissioni associate cambiano",
+    date: "2026-11-03",
+    icon: "🌍",
+    excerpt: "Consumo e intensità delle emissioni sono indicatori distinti. Per confrontarli servono confini e dati coerenti.",
+    tags: ["Ambiente", "Energia", "Misure"],
+    content: `
+Due elaborazioni consumano la stessa energia elettrica. Possiamo concludere che abbiano anche le stesse emissioni associate? Non senza sapere con quali dati stiamo facendo il conto.
+
+Il consumo in kWh descrive una quantità di energia. L'intensità delle emissioni associa a ogni unità di elettricità una quantità di gas serra, espressa per esempio in grammi di CO₂ equivalente per kWh.
+
+## Il prodotto è semplice, il dato meno
+
+In un esempio puramente didattico, 10 kWh moltiplicati per 100 g CO₂e/kWh danno 1 kg CO₂e. Con un fattore di 400 g, il risultato è 4 kg. Non sono valori attribuiti a un paese o a un fornitore: servono a mostrare il ruolo del fattore.
+
+L'Agenzia europea dell'ambiente pubblica un indicatore sull'intensità delle emissioni della generazione elettrica. Per usarlo occorre leggere anche metodologia, periodo e perimetro.
+
+## Una media non descrive ogni ora
+
+Un dato annuale è utile per alcuni confronti, ma non permette da solo di dichiarare quale fosse il valore di una specifica ora. Anche generazione nazionale e consumo elettrico hanno confini differenti quando entrano in gioco gli scambi fra paesi.
+
+E una stima delle emissioni operative non coincide automaticamente con una valutazione dell'intero ciclo di vita di impianti e apparecchiature. Cambiare confine senza dirlo può rendere incomparabili due risultati apparentemente identici.
+
+## Come leggere un numero ambientale
+
+Quando incontro una stima controllo energia misurata, origine del fattore e anno di riferimento. Poi cerco le esclusioni: cosa è stato contato e cosa è rimasto fuori?
+
+Non serve trasformare ogni attività quotidiana in un modello complesso. Serve evitare che una cifra molto precisa nasconda ipotesi vaghe. Il conto diventa utile quando posso ripeterlo con gli stessi dati e capire quali condizioni lo farebbero cambiare.
+
+## Fonti
+
+- [EEA — intensità delle emissioni della generazione elettrica](https://www.eea.europa.eu/en/analysis/indicators/greenhouse-gas-emission-intensity-of-1)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "ghiaccio-lunare-risorsa-utilizzabile",
+    title: "Ghiaccio sulla Luna: trovare una risorsa non significa poterla usare",
+    date: "2026-11-03",
+    icon: "🧊",
+    excerpt: "Dall’osservazione dell’acqua alla sua estrazione ci sono misure, energia e condizioni operative da dimostrare.",
+    tags: ["Spazio", "Luna", "Risorse"],
+    content: `
+«Sulla Luna c'è acqua» è una notizia affascinante. Il passaggio successivo, però, non è automaticamente «allora possiamo rifornirci lì». Fra riconoscere una risorsa e trasformarla in un servizio affidabile c'è un intero problema ingegneristico.
+
+È la parte che trovo più interessante quando si parla di esplorazione e permanenza lunare.
+
+## Prima capire dove e in quale forma
+
+Le osservazioni hanno mostrato acqua e ghiaccio lunari in condizioni differenti. Alcune regioni polari permanentemente in ombra offrono temperature molto basse, favorevoli alla conservazione del ghiaccio. Questo non equivale a immaginare un lago sotterraneo facile da raggiungere.
+
+Contano distribuzione, concentrazione, profondità e proprietà del materiale che contiene l'acqua. Una rilevazione scientifica e una mappa utile a un impianto di estrazione rispondono a domande diverse.
+
+## L'ombra è anche un vincolo
+
+Un luogo freddo e buio può conservare una risorsa e, contemporaneamente, rendere complicate alimentazione, comunicazioni e operazioni dei mezzi. L'ambiente favorevole al deposito non è necessariamente favorevole all'attrezzatura.
+
+In uno schema ipotetico distinguerei ricerca del deposito, raccolta del materiale, separazione dell'acqua, trattamento e stoccaggio. Ogni passaggio richiede energia e introduce perdite o manutenzione. Non basta dimostrare che il primo sia possibile per considerare risolta l'intera catena.
+
+## La domanda è quanta ne ottieni davvero
+
+Per valutare un processo vorrei conoscere la quantità recuperata per unità di materiale trattato e per energia utilizzata, oltre alla continuità operativa. Senza questi dati è difficile confrontare alternative.
+
+Non sto attribuendo prestazioni a un impianto esistente: è il tipo di verifica che chiederei a qualunque proposta di utilizzo della risorsa.
+
+La scoperta apre una possibilità. Il progetto deve poi mostrare come mantenerla disponibile nel tempo. È lì che una risorsa naturale comincia a diventare un'infrastruttura.
+
+## Fonti
+
+- [NASA — fatti e acqua lunare](https://science.nasa.gov/moon/facts/)
+- [NASA — ambiente termico della Luna](https://science.nasa.gov/moon/weather-on-the-moon/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "rails-unicita-database-concorrenza",
+    title: "Rails: validates uniqueness non ferma due richieste contemporanee",
+    date: "2026-11-03",
+    icon: "🔐",
+    excerpt: "La validazione migliora il messaggio all’utente. Il vincolo univoco nel database protegge il dato sotto concorrenza.",
+    tags: ["Coding", "Rails", "Database"],
+    content: `
+Due processi cercano lo stesso codice esterno. Nessuno dei due lo trova, quindi entrambi provano a creare il record. Se la protezione è soltanto una ricerca prima del salvataggio, tutti e due possono aver ragione nello stesso momento.
+
+È il limite della validazione di unicità a livello applicativo: il controllo e la scrittura non diventano automaticamente un'unica operazione indivisibile.
+
+## Il vincolo vive nel database
+
+In Rails terrei la validazione per dare un errore leggibile, ma aggiungerei anche un indice univoco coerente con l'identità del dato. In una tabella ipotetica di ordini importati, il codice può essere unico dentro un negozio senza esserlo globalmente.
+
+\`\`\`ruby
+# Nel modello ImportedOrder
+validates :external_id, presence: true,
+  uniqueness: { scope: :shop_id }
+
+# Dentro la migrazione
+add_index :imported_orders,
+  [:shop_id, :external_id],
+  unique: true
+\`\`\`
+
+Prima di applicare la migrazione controllerei duplicati esistenti e valori nulli. L'indice non decide da solo quali campi siano obbligatori: i vincoli NOT NULL vanno progettati separatamente quando necessari.
+
+## Gestire la collisione prevista
+
+Sotto concorrenza il database può rifiutare l'inserimento e Rails può sollevare ActiveRecord::RecordNotUnique. Non trasformerei automaticamente questa eccezione in un errore generico né la ignorerei.
+
+Il comportamento dipende dall'operazione. Per un'importazione idempotente potrei recuperare il record già presente e verificare che corrisponda all'oggetto atteso. Per una creazione interattiva potrebbe essere giusto chiedere un valore diverso. Se c'è una transazione, il recupero deve rispettarne lo stato e le regole dell'adapter.
+
+## Provare il caso difficile
+
+Un test sequenziale con due create controlla solo una parte della storia. Il caso interessante sono due connessioni che tentano contemporaneamente lo stesso inserimento.
+
+L'obiettivo è che l'invariante resti vero: una sola identità commerciale, anche quando il codice viene eseguito da più worker. Il messaggio applicativo aiuta le persone; il vincolo protegge il sistema.
+
+## Fonti
+
+- [Rails — validazioni e unicità](https://api.rubyonrails.org/classes/ActiveRecord/Validations/ClassMethods.html)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "margine-progetto-budget-capacita",
+    title: "Se il progetto usa già il 100%, il margine è finito",
+    date: "2026-11-03",
+    icon: "📐",
+    excerpt: "Memoria, potenza e tempi hanno limiti. Un budget esplicito rende visibili le riserve prima che arrivino gli imprevisti.",
+    tags: ["Ingegneria", "Progettazione"],
+    content: `
+Un sistema ha un limite di memoria di 1 GB. Durante una prova ne usa 990 MB e qualcuno conclude: «Ci stiamo dentro». Formalmente è vero in quella prova. Progettualmente, però, restano dieci megabyte per tutto ciò che non abbiamo ancora osservato.
+
+Per questo mi interessa il margine: la distanza dichiarata fra una risorsa disponibile e quella prevista o misurata nelle condizioni considerate.
+
+## Scrivere anche il denominatore
+
+Nel nostro esempio semplificato restano 10 MB, cioè l'1% del limite. Se un altro team esprime il margine rispetto al consumo anziché alla capacità disponibile, ottiene una percentuale diversa. Senza definire il calcolo, persino due numeri corretti possono creare confusione.
+
+Il Systems Engineering Handbook della NASA descrive i margini come riserve rispetto a incertezze e rischi in parametri quali massa, potenza e memoria. Non sono una risorsa immaginaria da aggiungere quando qualcosa va storto.
+
+## Il budget deve avere condizioni
+
+Per un processo software distinguerei almeno avvio, funzionamento ordinario e picco rappresentativo. Un file grande, più richieste concorrenti o una cache in riempimento possono cambiare il fabbisogno.
+
+Annoterei limite, scenario, misura e riserva residua. Poi stabilirei cosa fare quando il margine si riduce: ottimizzare, limitare la concorrenza, cambiare una configurazione o rivedere un requisito.
+
+## Nessuna percentuale magica
+
+Non esiste un valore universale valido per ogni progetto. La riserva necessaria dipende da variabilità, conseguenze del superamento e possibilità di recupero. Un esempio numerico non sostituisce un dimensionamento reale.
+
+La domanda utile non è «abbiamo ancora spazio?», ma «quanto spazio resta nelle condizioni che dobbiamo sostenere, e quanto sono attendibili le stime?». Un progetto che risponde a questa domanda permette decisioni; uno che si limita a non superare il limite vive di speranza.
+
+## Fonti
+
+- [NASA — definizione di margine](https://www.nasa.gov/reference/system-engineering-handbook-appendix/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "kw-kwh-potenza-energia",
+    title: "kW e kWh: la differenza che cambia i conti",
+    date: "2026-11-03",
+    icon: "⚡",
+    excerpt: "La potenza descrive il ritmo del consumo, l’energia il totale. Un esempio numerico aiuta a non confonderle.",
+    tags: ["Ambiente", "Energia"],
+    content: `
+«Questo apparecchio consuma 800 watt all'ora». È una frase che si sente spesso, ma mescola grandezze diverse. Per capire un consumo non basta leggere una potenza: serve sapere anche per quanto tempo viene assorbita.
+
+Separare kW e kWh permette di ragionare meglio su elettrodomestici, computer e batterie.
+
+## Il ritmo e il totale
+
+Il watt è un'unità di potenza, cioè di energia trasferita nell'unità di tempo. Un kilowatt vale mille watt. Il kilowattora misura invece energia: è quella associata a una potenza costante di un kilowatt mantenuta per un'ora.
+
+Prendiamo un carico ipotetico costante da 800 W acceso per tre ore. Il conto è 0,8 kW × 3 h = 2,4 kWh. Qui «costante» è una condizione del problema, non un dettaglio da saltare.
+
+## La targa non è una registrazione
+
+Un apparecchio può modulare, alternare fasi attive e pause oppure assorbire una potenza diversa in base all'uso. Il valore nominale non descrive automaticamente tutto il suo funzionamento.
+
+Per un dispositivo con assorbimento variabile, l'energia totale si ottiene accumulando la potenza nel tempo. Un misuratore adatto può fornire quel totale; un singolo valore istantaneo racconta soltanto un momento.
+
+## Confrontare la stessa attività
+
+Se due computer hanno potenze diverse, non deduco il consumo di un'elaborazione guardando soltanto i watt. Mi interessa anche quanto tempo impiegano a completarla e in quali condizioni sono stati misurati.
+
+Lo stesso vale per una batteria: la capacità energetica in Wh e la potenza erogabile rispondono a domande diverse. Una indica quanta energia può fornire nelle condizioni specificate, l'altra quanto rapidamente.
+
+Prima di fare qualunque confronto controllo quindi tre cose: unità, durata e lavoro svolto. È meno spettacolare di uno slogan sul risparmio, ma rende il numero finalmente utilizzabile.
+
+## Fonti
+
+- [EIA — misurare l’elettricità](https://www.eia.gov/energyexplained/electricity/measuring-electricity.php)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "luna-latenza-comunicazioni",
+    title: "Parlare con la Luna: quel secondo che il software non può togliere",
+    date: "2026-11-03",
+    icon: "📡",
+    excerpt: "La latenza di propagazione impone un limite fisico. Velocità del collegamento e tempo di risposta non sono sinonimi.",
+    tags: ["Spazio", "Comunicazioni"],
+    content: `
+Quando una videochiamata risponde in ritardo pensiamo subito alla connessione. Ma fra Terra e Luna una parte dell'attesa esiste anche immaginando apparati perfetti. Il segnale deve attraversare lo spazio, e non può farlo istantaneamente.
+
+La latenza è un buon punto d'incontro fra fisica e progettazione del software.
+
+## Andata e ritorno sono due viaggi
+
+Alla distanza media Terra–Luna la propagazione della luce richiede circa 1,3 secondi in una direzione. Il valore cambia con la distanza. Una domanda seguita da una risposta richiede quindi circa 2,6 secondi di sola propagazione, prima di aggiungere elaborazione, trasmissione e altri ritardi.
+
+È una stima fisica, non la promessa di un tempo di risposta operativo. Una rete reale deve gestire anche visibilità delle antenne, disponibilità del collegamento e protocolli.
+
+## Più banda non significa meno distanza
+
+Immagino il trasferimento di una fotografia. Aumentare il bitrate riduce il tempo necessario a immettere tutti i suoi bit sul collegamento. Non elimina il tempo che il primo bit impiega ad attraversare lo spazio.
+
+Questo distingue la capacità del canale dalla latenza. Sono entrambe importanti, ma risolvono problemi diversi: una strada con più corsie non accorcia automaticamente il percorso.
+
+## Progettare intorno all'attesa
+
+In uno scenario ipotetico di controllo remoto eviterei un'interfaccia che richiede una conferma terrestre per ogni microazione. Preferirei comandi di livello più alto, stato chiaramente datato e procedure locali per gestire gli eventi previsti.
+
+È una conseguenza progettuale del ritardo, non una descrizione delle procedure di una missione specifica. Per capire quelle servono i documenti del relativo sistema.
+
+Il limite fisico resta. Il buon progetto decide cosa fare durante l'attesa, quali informazioni rendere visibili e quali operazioni possono procedere senza un dialogo continuo con chi è dall'altra parte.
+
+## Fonti
+
+- [ESA — comunicazione oltre l’orbita bassa](https://nebula.esa.int/4000136202)
+- [NASA — tempo di viaggio della luce](https://science.nasa.gov/mission/webb/science-overview/science-explainers/how-does-webb-see-back-in-time/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "fetch-abortcontroller-risposte-obsolete",
+    title: "La ricerca mostra il risultato vecchio? Guarda l’ordine delle risposte",
+    date: "2026-11-03",
+    icon: "⏹️",
+    excerpt: "AbortController aiuta a cancellare fetch superate. Un controllo della richiesta corrente protegge anche la UI.",
+    tags: ["Coding", "JavaScript", "Browser"],
+    content: `
+Scrivi «Roma», poi correggi subito in «Romania». La seconda ricerca termina prima della prima. Per un istante vedi il risultato giusto, poi la risposta più lenta lo sovrascrive. Il server non ha necessariamente sbagliato: il frontend ha confuso l'ordine di arrivo con l'intenzione più recente.
+
+Questo è uno dei casi in cui aggiungere un caricamento animato non risolve niente.
+
+## Due protezioni complementari
+
+AbortController permette di interrompere una fetch attraverso il suo signal. Un identificativo progressivo permette invece di ignorare una risposta che non appartiene più alla ricerca corrente.
+
+Ecco una funzione dimostrativa: restituisce i dati soltanto se la richiesta è ancora attuale. Chi la chiama deve gestire gli errori reali e ignorare il risultato undefined.
+
+\`\`\`javascript
+let controller;
+let latest = 0;
+
+async function search(query) {
+  const request = ++latest;
+  controller?.abort();
+  const current = new AbortController();
+  controller = current;
+
+  try {
+    const response = await fetch(
+      '/api/search?q=' + encodeURIComponent(query),
+      { signal: current.signal }
+    );
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const data = await response.json();
+    if (request === latest) return data;
+  } catch (error) {
+    if (request === latest && !current.signal.aborted) throw error;
+  }
+}
+\`\`\`
+
+## Cancellare non annulla il passato
+
+Interrompere la richiesta dal browser non garantisce che il server abbia fermato un'operazione già ricevuta. Per una ricerca è soprattutto una gestione del lavoro e delle risposte; per pagamenti o scritture servono garanzie applicative diverse.
+
+Anche lo stato di caricamento deve seguire l'identificativo corrente. Altrimenti il finally di una richiesta superata può spegnere lo spinner mentre quella nuova è ancora attiva.
+
+## Il test utile
+
+Simula due risposte con ritardi invertiti e verifica che resti visibile quella associata all'ultimo input. Prova anche un errore della richiesta vecchia: non deve cancellare il risultato nuovo né mostrare un allarme fuori contesto.
+
+La regola è piccola ma decisiva: la UI deve rappresentare l'intenzione corrente, non l'ultimo pacchetto arrivato.
+
+## Fonti
+
+- [MDN — AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "misure-incertezza-cifre-decimali",
+    title: "Quattro decimali non rendono una misura più affidabile",
+    date: "2026-11-03",
+    icon: "📏",
+    excerpt: "Risoluzione, ripetibilità e incertezza sono cose diverse. Anche i benchmark hanno bisogno di un contesto.",
+    tags: ["Ingegneria", "Misure"],
+    content: `
+Una dashboard mostra 23,1472 millisecondi. Il numero sembra serio: quattro decimali danno immediatamente l'impressione di una misura precisa. Ma come è stato ottenuto? Quante volte è stata ripetuta la prova? E quanto cambia il risultato se la macchina sta facendo altro?
+
+Prima di confrontare numeri, preferisco capire cosa permettono davvero di affermare.
+
+## Visualizzare non significa conoscere
+
+La risoluzione descrive la più piccola variazione distinguibile da uno strumento o dalla sua rappresentazione. La ripetibilità riguarda quanto concordano misure ripetute in condizioni specificate. L'incertezza caratterizza la dispersione dei valori ragionevolmente attribuibili alla grandezza misurata.
+
+Queste idee non sono intercambiabili. Un sensore può restituire molte cifre e avere uno scostamento sistematico; un cronometro software può essere finissimo mentre l'ambiente introduce variazioni molto maggiori.
+
+## Un confronto onesto
+
+Prendiamo due funzioni ipotetiche. Una esecuzione dura 20 ms, l'altra 19 ms. Se nelle ripetizioni entrambe oscillano fra 15 e 30 ms, il singolo millisecondo non dimostra da solo un miglioramento stabile.
+
+Fisserei prima carico, dimensione degli input e condizioni della macchina. Ripeterei le misure e osserverei la distribuzione, distinguendo le prove a freddo da quelle a caldo. Solo dopo sceglierei come riassumerle.
+
+## Scrivere anche le condizioni
+
+Il NIST dedica indicazioni specifiche alla valutazione e alla comunicazione dell'incertezza. Il messaggio operativo che ricavo è questo: un risultato numerico ha bisogno delle sue condizioni e dei suoi limiti.
+
+In un report preferisco leggere «tempo mediano su cento esecuzioni, con questi dati» piuttosto che un numero pieno di decimali senza metodo. Non perché la seconda misura sia necessariamente sbagliata, ma perché non ho abbastanza informazioni per giudicarla.
+
+Arrotondare non è nascondere dettagli: quando è coerente con la misura, evita di fingere una conoscenza che non abbiamo.
+
+## Fonti
+
+- [NIST — terminologia delle misure](https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-appendix-d1-terminology)
+- [NIST — incertezza](https://www.nist.gov/itl/sed/topic-areas/measurement-uncertainty)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "riparabilita-progetto-prodotti",
+    title: "La riparabilità si decide prima del primo guasto",
+    date: "2026-11-03",
+    icon: "🪛",
+    excerpt: "Viti, ricambi e documentazione cambiano la vita utile di un prodotto. Progettare la manutenzione evita sostituzioni premature.",
+    tags: ["Ambiente", "Progettazione", "Riparabilità"],
+    content: `
+Un dispositivo può funzionare bene per anni e diventare improvvisamente inutilizzabile per un componente economico. La domanda interessante non è soltanto quanto duri la batteria o il connettore. È cosa succede quando quel pezzo smette di funzionare.
+
+La riparabilità è una caratteristica del progetto, non un favore da chiedere a prodotto rotto.
+
+## Il guasto piccolo che diventa grande
+
+Immaginiamo due apparecchi con lo stesso difetto al connettore di alimentazione. Nel primo il componente è accessibile e sostituibile. Nel secondo è inglobato in un gruppo costoso, difficile da aprire senza danneggiare altro.
+
+Il problema elettrico può essere identico, mentre cambiano tempi, costi e probabilità che qualcuno tenti la riparazione. Anche la disponibilità di ricambi e istruzioni influenza il risultato: poter smontare qualcosa non significa poterlo ripristinare.
+
+## Guardare il sistema di manutenzione
+
+Il Joint Research Centre europeo collega la riparabilità a scelte concrete di progettazione e supporto. Quando valuto questa qualità guardo la sequenza necessaria per raggiungere le parti soggette a usura, gli attrezzi richiesti e la possibilità di richiudere correttamente il prodotto.
+
+Poi considero il software. Un componente sostituibile perde utilità se il dispositivo smette di ricevere il supporto necessario alle sue funzioni. Durata fisica e durata del servizio vanno lette insieme.
+
+## Una domanda prima dell'acquisto
+
+Non trasformerei tutto in «riparare conviene sempre». Un confronto serio considera il difetto, la vita residua, l'efficienza e l'impatto della sostituzione. Però partire direttamente dal nuovo elimina un'opzione prima ancora di valutarla.
+
+La domanda che mi interessa è semplice: se si rompe il pezzo più prevedibile, devo buttare anche quelli che funzionano? Se la risposta è sì, il prezzo sullo scaffale racconta soltanto una parte del costo del prodotto.
+
+## Fonti
+
+- [JRC — perché conta la riparabilità](https://joint-research-centre.ec.europa.eu/jrc-explains/why-repairability-matters-future-tech-products_en)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "orion-rientro-scudo-termico",
+    title: "Orion: il viaggio non finisce quando rivedi la Terra",
+    date: "2026-11-03",
+    icon: "🚀",
+    excerpt: "Tornare dalla Luna significa gestire molta energia. Scudo termico e traiettoria fanno parte dello stesso problema.",
+    tags: ["Spazio", "Artemis", "Ingegneria"],
+    content: `
+Guardando una missione lunare è facile concentrarsi sul lancio. Il razzo sale, le telecamere seguono la scia e sembra che la parte difficile sia tutta lì. A me interessa anche il problema opposto: riportare una capsula verso terra senza trasformare la sua energia di movimento in un disastro.
+
+Orion è un buon esempio per ragionare sul rientro, senza confondere i principi fisici con il calendario delle missioni Artemis.
+
+## L'energia cresce con il quadrato
+
+L'energia cinetica è proporzionale alla massa e al quadrato della velocità: E = ½mv². In un confronto ideale, a parità di massa, raddoppiare la velocità significa quadruplicare l'energia da gestire.
+
+Il ritorno da una traiettoria lunare impone condizioni più impegnative di un rientro dall'orbita terrestre bassa. La NASA ha incluso la dimostrazione dello scudo termico fra gli obiettivi centrali di Artemis I.
+
+## Non basta un materiale resistente
+
+Davanti alla capsula l'aria viene fortemente compressa e riscaldata. La protezione termica deve limitare il calore che raggiunge la struttura; la traiettoria determina come la decelerazione e il riscaldamento si distribuiscono nel tempo.
+
+Lo scudo ablativo di Orion sfrutta una trasformazione controllata del materiale. Non è una coperta da conservare intatta: una parte della protezione viene consumata nel processo previsto dal progetto.
+
+## Un sistema, non un singolo pezzo
+
+Per capire il rientro tengo insieme tre elementi: l'energia iniziale, la forma del veicolo e il percorso nell'atmosfera. Valutare soltanto la temperatura massima lascia fuori una parte importante della storia, compresa la durata dell'esposizione.
+
+È una lezione che porto anche nei problemi più piccoli: un componente eccellente non compensa automaticamente condizioni d'uso sbagliate. La missione riesce quando materiali, controllo e profilo operativo sono progettati insieme.
+
+## Fonti
+
+- [NASA — Artemis I, obiettivi e rientro](https://www.nasa.gov/specials/artemis-i-press-kit/)
+- [NASA — Orion](https://www.nasa.gov/missions/meet-nasas-orion-spacecraft/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "webhook-idempotenza-ordini",
+    title: "Lo stesso webhook due volte: come evitare due ordini",
+    date: "2026-11-03",
+    icon: "🔁",
+    excerpt: "La consegna di un evento può ripetersi. Deduplicazione e idempotenza proteggono il risultato, anche sotto concorrenza.",
+    tags: ["Coding", "Integrazioni", "Shopify"],
+    content: `
+Un ordine arriva dal negozio, l'integrazione lo salva e inoltra la conferma. La risposta si perde. Il mittente riprova: il server riceve di nuovo una richiesta che sembra perfettamente valida. Se ogni consegna crea un ordine nuovo, il problema è già nel database.
+
+I webhook possono essere duplicati. Shopify lo documenta e fornisce identificativi delle consegne. Io parto da qui: **ricevere due volte non deve significare eseguire due volte lo stesso effetto**.
+
+## L'identificativo non basta da solo
+
+Memorizzare l'ID della consegna permette di riconoscere un duplicato, ma il controllo deve reggere due richieste contemporanee. Un semplice «cerco, non trovo, inserisco» lascia una finestra di gara.
+
+Serve un vincolo univoco nel database e una gestione coerente della transazione. Inoltre distinguerei l'identità della consegna da quella dell'operazione commerciale: due eventi diversi possono riguardare lo stesso ordine. Per quest'ultimo può servire una chiave composta da negozio e ID esterno.
+
+## Il punto delicato è il confine
+
+Se l'effetto è una scrittura nello stesso database, registrare ricezione e modifica nella stessa transazione rende più semplice il recupero. Se bisogna chiamare un ERP, il commit locale non rende atomica anche quella chiamata.
+
+In quel caso occorre un protocollo aggiuntivo: per esempio una chiave idempotente accettata dal destinatario, oppure uno stato persistente da riconciliare. Segnare «completato» prima dell'invio può perdere il lavoro; farlo dopo senza protezioni può duplicarlo.
+
+## Una prova concreta
+
+Invia la stessa consegna due volte, poi inviala contemporaneamente da due processi. Interrompi anche il flusso dopo il salvataggio e prima della risposta.
+
+Il risultato atteso resta un solo ordine commerciale, con una traccia comprensibile dei tentativi. L'affidabilità si vede proprio quando la rete smette di collaborare.
+
+## Fonti
+
+- [Shopify — verifica delle consegne](https://shopify.dev/docs/apps/build/webhooks/verify-deliveries)
+- [Rails — unicità e concorrenza](https://api.rubyonrails.org/classes/ActiveRecord/Validations/ClassMethods.html)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
+  {
+    id: "verifica-validazione-requisiti",
+    title: "Passa tutti i test. Ma risolve il problema giusto?",
+    date: "2026-11-03",
+    icon: "🔎",
+    excerpt: "Verifica e validazione rispondono a due domande diverse. Un export corretto può essere comunque inutilizzabile.",
+    tags: ["Ingegneria", "Requisiti"],
+    content: `
+Un esportatore genera il CSV senza errori. Le colonne sono quelle richieste, il file si apre e tutti i test passano. Poi chi deve usarlo scopre che gli identificativi non coincidono con quelli del gestionale. Il software è conforme alla specifica, ma il lavoro resta manuale.
+
+Questo esempio ipotetico spiega una distinzione dell'ingegneria dei sistemi che trovo utile anche nello sviluppo web: **verifica** e **validazione**.
+
+## Due domande da tenere separate
+
+Verificare significa raccogliere evidenze che il prodotto rispetta i requisiti. Validare significa controllare che, nelle condizioni previste, soddisfi il bisogno per cui è stato costruito. La NASA distingue esplicitamente questi due passaggi nel suo Systems Engineering Handbook.
+
+Un test sul separatore del CSV verifica un requisito. Fare completare l'importazione a un operatore, con dati rappresentativi e nel suo ambiente, aiuta a validare il flusso. Entrambe le attività servono: una non sostituisce automaticamente l'altra.
+
+## Partire dal risultato osservabile
+
+Per l'esportatore scriverei due criteri distinti. Il primo: il file contiene tutte le righe e i campi concordati. Il secondo: l'operatore importa gli ordini senza ricopiare identificativi o modificare colonne a mano.
+
+Così emergono prima domande che il solo codice non può risolvere. Quale sistema assegna il codice cliente? Come vengono rappresentati gli ordini annullati? Chi interviene quando un record viene rifiutato?
+
+## La prova che conta
+
+Non serve organizzare una simulazione enorme per ogni modifica. Serve scegliere un caso realistico, definire cosa dovrebbe accadere e guardare se accade davvero.
+
+Quando dico «funziona», voglio sapere quale delle due cose ho dimostrato: che ho costruito ciò che era scritto, oppure che qualcuno riesce a raggiungere il proprio obiettivo. Per consegnare bene, mi servono entrambe.
+
+## Fonti
+
+- [NASA — verifica e validazione](https://www.nasa.gov/reference/2-4-distinctions-between-product-verification-and-product-validation/)
+
+*Recupero editoriale luglio–novembre 2026. Pubblicato il 3 novembre 2026.*
+`,
+  },
   /*
   {
     id: "overshoot-day-trogloditi",

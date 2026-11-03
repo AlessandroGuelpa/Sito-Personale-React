@@ -22,6 +22,12 @@ La build genera `dist` con HTML per le pagine del sito e ogni articolo del blog,
 
 ## Contenuti
 
+Il blog viene scritto e pubblicato dall'attività programmata ChatGPT **Blog sito
+personale** lunedì, mercoledì e venerdì in mattinata (`Europe/Rome`). Rotazione e
+registro sono in `blog-topics.md`; procedura e controlli in
+[`docs/blog-publishing.md`](docs/blog-publishing.md). Il precedente generatore
+giornaliero Claude è stato ritirato.
+
 - Articoli: `src/data/blogPosts.ts`. Si continua a scrivere nello stesso array. Il plugin in `vite.config.ts` genera le anteprime del blog, i tre articoli della home e un modulo separato per ogni testo, con al massimo tre letture correlate selezionate per tag e titolo. Se non ci sono affinità, propone altre letture recenti.
 - Lettura: `src/utils/article-navigation.ts` genera gli ID dai titoli già interpretati dal parser Markdown, con gestione degli accenti e dei duplicati. L’indice compare negli articoli da almeno tre minuti con almeno tre sezioni. I blocchi di codice hanno un controllo di copia con messaggi di successo e di errore.
 - Progetti: `src/data/projects.ts`. Contesto, stack e link sono riutilizzati in home e nella pagina Progetti.
