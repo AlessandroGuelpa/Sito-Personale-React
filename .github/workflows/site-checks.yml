@@ -15,7 +15,12 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - run: npm ci
+      - run: python3 -m pip install Pillow==12.3.0
+      - run: node --test scripts/sync-instagram-feed.test.mjs
       - run: npm run typecheck
       - run: npm run build
       - run: npm run check:build
