@@ -5,21 +5,26 @@ import { blogIndex } from "virtual:blog-index";
 import DefaultLayout from "@/layouts/default";
 import { PageSeo } from "@/components/page-seo";
 import { BlogCard } from "@/components/blog-card";
+import {
+  BLOG_CATEGORIES,
+  blogCategoryLabel,
+  isBlogCategory,
+} from "@/config/blog";
 
 const PAGE_SIZE = 12;
-const tags = [...new Set(blogIndex.flatMap((post) => post.tags))].sort((a, b) =>
-  a.localeCompare(b, "it"),
-);
 
 export default function BlogPage() {
   const [params, setParams] = useSearchParams();
   const resultsHeading = useRef<HTMLHeadingElement>(null);
   const query = params.get("q") || "";
   const tag = params.get("tag") || "";
+  const requestedCategory = params.get("category");
+  const category = isBlogCategory(requestedCategory) ? requestedCategory : "";
   const filtered = blogIndex.filter(
     (post) =>
+      (!category || post.category === category) &&
       (!tag || post.tags.includes(tag)) &&
-      `${post.title} ${post.excerpt} ${post.tags.join(" ")}`
+      `${post.title} ${post.excerpt} ${post.tags.join(" ")} ${blogCategoryLabel(post.category)}`
         .toLocaleLowerCase("it")
         .includes(query.trim().toLocaleLowerCase("it")),
   );
@@ -33,6 +38,7 @@ export default function BlogPage() {
 
     if (value) next.set(key, value);
     else next.delete(key);
+    if (key === "category") next.delete("tag");
     next.delete("page");
     setParams(next, { replace: true });
   }
@@ -76,24 +82,37 @@ export default function BlogPage() {
           />
         </div>
         <div>
-          <label className="field-label" htmlFor="blog-tag">
-            Argomento
+          <label className="field-label" htmlFor="blog-category">
+            Categoria
           </label>
           <select
             className="form-field"
-            id="blog-tag"
-            value={tag}
-            onChange={(event) => change("tag", event.target.value)}
+            id="blog-category"
+            value={category}
+            onChange={(event) => change("category", event.target.value)}
           >
-            <option value="">Tutti gli argomenti</option>
-            {tags.map((item) => (
-              <option key={item} value={item}>
-                {item}
+            <option value="">Tutte le categorie</option>
+            {BLOG_CATEGORIES.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.label}
               </option>
             ))}
           </select>
         </div>
       </div>
+      {tag && (
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
+          <span>Argomento specifico:</span>
+          <button
+            aria-label={`Rimuovi filtro ${tag}`}
+            className="tech-tag inline-flex min-h-9 items-center gap-2"
+            type="button"
+            onClick={() => change("tag", "")}
+          >
+            {tag} <span aria-hidden="true">×</span>
+          </button>
+        </div>
+      )}
       <section aria-labelledby="blog-results" className="mt-10">
         <h2
           ref={resultsHeading}

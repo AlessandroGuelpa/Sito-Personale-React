@@ -16,6 +16,7 @@ L'utente ha autorizzato scrittura e pubblicazione automatica degli articoli.
 
 - `src/data/blogPosts.ts`: contenuti e metadati effettivamente pubblicati.
 - `blog-topics.md`: rotazione, prossimo tema e registro delle uscite.
+- `src/config/blog.ts`: le cinque categorie principali del filtro.
 - Questo documento: procedura di pubblicazione e verifiche.
 
 Ogni esecuzione legge la versione corrente del repository. Un checkout locale
@@ -37,9 +38,15 @@ precedente non è una fonte aggiornata né un prerequisito del processo.
    fonti in fondo all'articolo. Non dedurre o inventare date di lanci e missioni.
    Dichiarare gli esempi ipotetici e le condizioni delle semplificazioni.
 5. Inserire un solo oggetto in cima all'array, con `id` univoco kebab-case,
-   `title`, data di pubblicazione reale `AAAA-MM-GG`, `icon`, `excerpt`,
+   `title`, data di pubblicazione reale `AAAA-MM-GG`, `category`, `icon`, `excerpt`,
    `tags` e `content` Markdown. Conservare tutti gli articoli precedenti.
    Nella template string eseguire l'escape di backslash, backtick e `${`.
+   Scegliere una sola `category` fra `sviluppo-software`, `ingegneria`, `spazio`,
+   `ambiente`, `musica-audio`, in base all'argomento principale. Non creare
+   categorie nuove per tecnologie o singoli temi: Rails, JavaScript, Artemis,
+   materiali ed effetti audio restano tag specifici. Il filtro mostra soltanto
+   le cinque categorie; i tag sono cercabili e i loro link continuano a filtrare
+   l'archivio tramite `?tag=`.
 6. Nella stessa modifica avanzare il prossimo tema e aggiungere una riga al
    registro con data locale, tema, slug, titolo e origine `programmata`.
    Per i 45 articoli del recupero conservare le date editoriali distribuite

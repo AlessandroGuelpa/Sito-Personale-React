@@ -29,6 +29,7 @@ registro sono in `blog-topics.md`; procedura e controlli in
 giornaliero Claude è stato ritirato.
 
 - Articoli: `src/data/blogPosts.ts`. Si continua a scrivere nello stesso array. Il plugin in `vite.config.ts` genera le anteprime del blog, i tre articoli della home e un modulo separato per ogni testo, con al massimo tre letture correlate selezionate per tag e titolo. Se non ci sono affinità, propone altre letture recenti.
+- Categorie del blog: `src/config/blog.ts` definisce Sviluppo software, Ingegneria, Spazio, Ambiente e Musica e audio. Ogni articolo ha una sola `category`; i tag restano specifici e cercabili. Il selettore usa `?category=`, mantiene ricerca e paginazione e cancella il tag specifico quando si cambia categoria. I vecchi link `?tag=` continuano a funzionare e mostrano un filtro rimovibile.
 - Lettura: `src/utils/article-navigation.ts` genera gli ID dai titoli già interpretati dal parser Markdown, con gestione degli accenti e dei duplicati. L’indice compare negli articoli da almeno tre minuti con almeno tre sezioni. I blocchi di codice hanno un controllo di copia con messaggi di successo e di errore.
 - Progetti: `src/data/projects.ts`. Contesto, stack e link sono riutilizzati in home e nella pagina Progetti.
 - Navigazione: `src/components/navbar.tsx`; link social e descrizione nel file `src/config/site.ts`.

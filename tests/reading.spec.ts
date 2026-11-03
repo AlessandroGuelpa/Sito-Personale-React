@@ -49,6 +49,7 @@ test("related reading prefers shared subjects, excludes the current post and fal
     title,
     tags,
     date,
+    category: "sviluppo-software",
     excerpt: "",
     minutes: 1,
   });
