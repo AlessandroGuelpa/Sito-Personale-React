@@ -15,6 +15,39 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "shopify-inventario-scritture-concorrenti",
+    title: "Shopify, scorte e ordini: come evitare di sovrascrivere una vendita",
+    date: "2026-11-04",
+    category: "sviluppo-software",
+    icon: "📦",
+    excerpt: "Una vendita arriva mentre il gestionale aggiorna le scorte. Il confronto sulla quantità attesa evita di sovrascrivere la disponibilità con un dato vecchio.",
+    tags: ["Shopify", "Inventario", "Concorrenza"],
+    content: `
+Un job legge 10 pezzi disponibili su Shopify. Il gestionale ha appena registrato una rettifica e vuole portare il totale a 12. Tra la lettura e la scrittura arriva però un ordine, che fa scendere la disponibilità a 9. Se il job scrive comunque 12, quella vendita sparisce dal conteggio delle disponibilità.
+
+## Scrivere solo se il valore di partenza coincide
+
+Nella GraphQL Admin API di Shopify 2026-10, la mutazione \`inventorySetQuantities\` imposta un valore assoluto. Con \`changeFromQuantity\` si indica anche il valore atteso per lo stesso articolo, nella stessa sede e per lo stesso stato di inventario.
+
+Nell'esempio ipotetico il job chiede di impostare la disponibilità a 12 a condizione che sia ancora 10. Shopify trova 9 e restituisce \`CHANGE_FROM_QUANTITY_STALE\`. Il confronto avviene al momento della scrittura. Una lettura separata, anche fatta subito prima, lascerebbe comunque un intervallo in cui può entrare un ordine.
+
+## Gestire il conflitto senza cancellare la vendita
+
+Al rifiuto rileggerei lo stato e cercherei di capire se l'ordine è già stato recepito dal gestionale. Se il 12 rappresentava una rettifica di due pezzi su una base di 10 e l'ordine da un pezzo deve ancora essere contabilizzato, il totale coerente è 11. Se il gestionale ha già recepito l'ordine, sottrarlo di nuovo sarebbe un secondo errore.
+
+Shopify riserva l'impostazione assoluta ai sistemi che fanno da fonte autorevole per le quantità. Se l'integrazione deve registrare una variazione relativa, la mutazione da valutare è \`inventoryAdjustQuantities\`. Per \`inventorySetQuantities\` la versione 2026-10 richiede anche una chiave tramite \`@idempotent\`. Riutilizzerei la chiave se ripeto la stessa richiesta dopo un timeout, mentre un aggiornamento ricalcolato dopo un conflitto richiede una nuova chiave.
+
+## Una prova prima del rilascio
+
+In un negozio di test fermerei il job subito dopo la lettura, cambierei la disponibilità e lascerei ripartire la scrittura. Verificherei che il primo tentativo venga rifiutato, che la quantità intermedia resti intatta e che il job ricalcoli il totale solo dopo aver riconciliato i movimenti.
+
+**Fonti**
+
+- [Shopify — inventorySetQuantities, API 2026-10](https://shopify.dev/docs/api/admin-graphql/2026-10/mutations/inventorySetQuantities)
+- [Shopify — richieste idempotenti](https://shopify.dev/docs/api/usage/idempotent-requests)
+`,
+  },
+  {
     id: "osservabilita-log-metriche-tracce",
     title: "Log, metriche e tracce: tre domande sullo stesso guasto",
     date: "2026-11-02",
