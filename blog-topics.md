@@ -15,7 +15,7 @@ Per la procedura completa leggere [docs/blog-publishing.md](docs/blog-publishing
 
 ## Stato
 
-Prossimo tema: 3
+Prossimo tema: 4
 
 ## Storico
 
@@ -72,6 +72,7 @@ La rotazione parte dal tema 1 già indicato nel registro precedente.
 | 2026-10-30 | 2026-10-30 | 4 — Salvaguardia del pianeta | raee-elettronica-fine-vita | Il cassetto dei vecchi dispositivi è una filiera interrotta | recupero |
 | 2026-11-02 | 2026-11-02 | 1 — Ingegneria generale | osservabilita-log-metriche-tracce | Log, metriche e tracce: tre domande sullo stesso guasto | recupero |
 | 2026-11-04 | 2026-11-04 | 2 — Coding | shopify-inventario-scritture-concorrenti | Shopify, scorte e ordini: come evitare di sovrascrivere una vendita | programmata |
+| 2026-11-06 | 2026-11-06 | 3 — Spazio e Artemis | orion-controllo-termico-radiatori-vuoto | Orion: nel vuoto il calore non se ne va con una ventola | programmata |
 
 Le nuove esecuzioni aggiungono una riga con origine `programmata` e uscita
 odierna. Una riga programmata già presente per la data locale impedisce un

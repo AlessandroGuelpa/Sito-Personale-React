@@ -15,6 +15,46 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "orion-controllo-termico-radiatori-vuoto",
+    title: "Orion: nel vuoto il calore non se ne va con una ventola",
+    date: "2026-11-06",
+    category: "spazio",
+    icon: "🌡️",
+    excerpt: "Nel vuoto manca l’aria a cui cedere calore. Il controllo termico di Orion collega apparecchiature, circuiti fluidi e radiatori: un bilancio da chiudere anche quando cambia l’esposizione al Sole.",
+    tags: ["Spazio", "Artemis", "Orion", "Controllo termico"],
+    content: `
+Una ventola raffredda un computer facendo passare aria sui dissipatori. Portare lo stesso schema all'esterno di una navicella non funziona: nel vuoto manca l'aria che trasporta via il calore. Anche lontano dalla Terra, però, elettronica e altri sistemi continuano a produrlo.
+
+Orion, la capsula del programma Artemis, permette di vedere come si affronta questo vincolo senza confondere raffreddamento interno e scambio con l'ambiente esterno.
+
+## Dal componente al radiatore
+
+Dentro una cabina pressurizzata l'aria può circolare. Verso il vuoto esterno, invece, il veicolo cede calore per irraggiamento: le superfici emettono energia sotto forma di radiazione elettromagnetica.
+
+Il modulo di servizio europeo di Orion raccoglie il calore attraverso piastre di raffreddamento e scambiatori. Un fluido lo trasporta ai radiatori esterni. ESA descrive due circuiti indipendenti, entrambi in funzione, e sei pannelli radianti. Il fluido resta nei circuiti: non viene scaricato nello spazio per raffreddare la capsula.
+
+La pompa sposta il calore fra parti del veicolo; sono i radiatori a permetterne la cessione verso l'esterno. Aumentare soltanto la circolazione non garantisce che la superficie disponibile riesca a smaltire tutto.
+
+## Un bilancio con numeri ipotetici
+
+Immaginiamo un apparato che produca 600 W di calore e un radiatore che, nelle condizioni considerate, ne smaltisca 450. Trascuriamo Sole e altri scambi: restano 150 W che si accumulano nel sistema.
+
+Se quello squilibrio restasse costante per dieci minuti, l'energia accumulata sarebbe 150 × 600 = 90.000 joule, cioè 90 kJ. Per ricavarne l'aumento di temperatura servirebbero anche capacità termica e distribuzione del calore. Questi numeri illustrano un bilancio semplificato; non sono prestazioni dichiarate di Orion.
+
+## Il controllo deve funzionare anche al freddo
+
+Un radiatore assorbe anche energia dall'ambiente. Esposizione al Sole, orientamento e proprietà delle superfici cambiano il bilancio. Nelle condizioni opposte può servire trattenere calore o aggiungerlo: Orion usa anche isolamento multistrato e riscaldatori elettrici.
+
+Per valutare un sistema spaziale chiederei quindi dove nasce il calore, quale percorso segue e quanto può uscire nelle condizioni peggiori. Poi ripeterei il controllo sul caso freddo. La potenza elettrica disponibile dice cosa possiamo accendere; il bilancio termico aiuta a stabilire per quanto tempo e in quali condizioni possiamo tenerlo acceso.
+
+**Fonti**
+
+- [ESA — controllo della temperatura del modulo di servizio europeo](https://www.esa.int/Science_Exploration/Human_and_Robotic_Exploration/Orion/European_Service_Module_Temperature_control)
+- [NASA — modulo di servizio europeo, controllo termico](https://www.nasa.gov/reference/european-service-module/)
+- [NASA — principi e tecnologie del controllo termico](https://www.nasa.gov/smallsat-institute/sst-soa/thermal-control/)
+`,
+  },
+  {
     id: "shopify-inventario-scritture-concorrenti",
     title: "Shopify, scorte e ordini: come evitare di sovrascrivere una vendita",
     date: "2026-11-04",
