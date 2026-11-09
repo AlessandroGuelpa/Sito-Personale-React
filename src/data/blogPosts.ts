@@ -15,6 +15,41 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "giardini-pioggia-deflusso-tetti",
+    title: "Dove va la pioggia del tetto? Un giardino può rallentarla",
+    date: "2026-11-09",
+    category: "ambiente",
+    icon: "🌧️",
+    excerpt: "Quindici millimetri di pioggia su un tetto da 80 metri quadrati fanno 1.200 litri. Un giardino della pioggia può trattenerne una parte e darle tempo di infiltrarsi.",
+    tags: ["Acque meteoriche", "Drenaggio urbano", "Suolo"],
+    content: `
+Durante un acquazzone, la grondaia convoglia nel pluviale la pioggia che cade sul tetto. Se il pluviale sbocca su un cortile asfaltato, l’acqua continua a scorrere in superficie. Quando molti tetti e piazzali scaricano in fretta nella stessa rete, la portata può salire rapidamente. Un giardino della pioggia interviene lungo questo percorso.
+
+## Un’aiuola che riceve acqua
+
+Un giardino della pioggia è una depressione poco profonda, piantumata, verso cui si convoglia il deflusso. La conca trattiene l’acqua e le dà tempo di infiltrarsi. Quanta ne passa nel terreno dipende dalle caratteristiche del suolo e da quanto è già bagnato. Alcune soluzioni prevedono anche un drenaggio sotto lo strato filtrante.
+
+Conta anche il percorso d’ingresso. Se la pendenza del cortile porta l’acqua verso la strada, un’aiuola a fianco può restare quasi asciutta mentre la caditoia riceve tutto.
+
+## Gli stessi 1.200 litri, in due tempi diversi
+
+Immaginiamo un tetto con una superficie di 80 m² vista dall’alto. Un millimetro di pioggia su un metro quadrato equivale a un litro, quindi 15 mm su quel tetto fanno 1.200 litri.
+
+Se tutta l’acqua raggiungesse il pluviale nello stesso intervallo in cui cade, in un’ora arriverebbero in media 20 litri al minuto. In dieci minuti ne arriverebbero 120 al minuto. Il volume è identico, ma nel secondo caso l’acqua può riempire la conca molto più in fretta. Sono portate medie di un esempio semplificato. Per dimensionare l’intervento servono anche le caratteristiche della pioggia locale e la capacità di infiltrazione del terreno.
+
+## Seguire l’acqua fino all’uscita
+
+Partirei da una mappa del cortile. Segnerei dove scarica il pluviale, in che direzione scorre l’acqua e dove potrebbe andare quando la conca è piena. In un progetto serve un troppo pieno che convogli l’eccesso verso un recapito previsto, lontano da ingressi e fondazioni. Dopo una pioggia controllerei che l’imbocco sia libero da foglie e annoterei quanto impiega la conca a svuotarsi. Se l’acqua le passa accanto, ricontrollerei imbocco e pendenza prima di allargarla.
+
+**Fonti**
+
+- [USGS — deflusso superficiale e ciclo dell’acqua](https://www.usgs.gov/water-science-school/science/surface-runoff-and-water-cycle)
+- [US EPA — infrastrutture verdi e giardini della pioggia](https://www.epa.gov/green-infrastructure/types-green-infrastructure)
+- [US EPA — collocazione e manutenzione dei giardini della pioggia](https://www.epa.gov/system/files/documents/2022-04/green-infrastructure-toolbox_raingardens.pdf)
+- [Città metropolitana di Torino e Politecnico di Torino — scheda H.02 sui giardini della pioggia](https://www.cittametropolitana.torino.it/cms/risorse/ambiente/dwd/riqualificazioni-ambientali/pdf/abaco_compensazioni_CMTO_DIST_web.pdf)
+`,
+  },
+  {
     id: "orion-controllo-termico-radiatori-vuoto",
     title: "Orion: nel vuoto il calore non se ne va con una ventola",
     date: "2026-11-06",

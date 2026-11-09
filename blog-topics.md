@@ -15,7 +15,7 @@ Per la procedura completa leggere [docs/blog-publishing.md](docs/blog-publishing
 
 ## Stato
 
-Prossimo tema: 4
+Prossimo tema: 1
 
 ## Storico
 
@@ -73,6 +73,7 @@ La rotazione parte dal tema 1 già indicato nel registro precedente.
 | 2026-11-02 | 2026-11-02 | 1 — Ingegneria generale | osservabilita-log-metriche-tracce | Log, metriche e tracce: tre domande sullo stesso guasto | recupero |
 | 2026-11-04 | 2026-11-04 | 2 — Coding | shopify-inventario-scritture-concorrenti | Shopify, scorte e ordini: come evitare di sovrascrivere una vendita | programmata |
 | 2026-11-06 | 2026-11-06 | 3 — Spazio e Artemis | orion-controllo-termico-radiatori-vuoto | Orion: nel vuoto il calore non se ne va con una ventola | programmata |
+| 2026-11-09 | 2026-11-09 | 4 — Salvaguardia del pianeta | giardini-pioggia-deflusso-tetti | Dove va la pioggia del tetto? Un giardino può rallentarla | programmata |
 
 Le nuove esecuzioni aggiungono una riga con origine `programmata` e uscita
 odierna. Una riga programmata già presente per la data locale impedisce un
