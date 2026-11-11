@@ -551,13 +551,14 @@ Prima di aggiungere sensori o dashboard, bisogna quindi distinguere ciò che mis
   },
   {
     id: "react-prerender-html-metadati",
-    title: "React e HTML già pronto: cosa cambia quando apri un link diretto",
+    title: "React prerendering e SEO: HTML iniziale, canonical e link diretti",
     date: "2026-10-16",
+    updatedAt: "2026-11-11",
     firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
     hub: "react-frontend",
     icon: "📄",
-    excerpt: "Un sito React può funzionare bene dopo la navigazione dalla home e comportarsi diversamente quando qualcuno apre direttamente il link di un articolo. Se il server…",
+    excerpt: "Come verificare che una pagina React offra HTML prerenderizzato, title, canonical e collegamenti navigabili anche senza JavaScript.",
     tags: ["Coding", "React", "SEO"],
     content: `
 Un sito React può funzionare bene dopo la navigazione dalla home e comportarsi diversamente quando qualcuno apre direttamente il link di un articolo. Se il server restituisce sempre la stessa pagina vuota, contenuto e metadati dipendono dall'esecuzione del JavaScript.
@@ -585,6 +586,36 @@ Controllerei un link diretto senza navigazione precedente, il titolo, il canonic
 Google documenta le possibilità e i limiti del trattamento dei siti JavaScript. Il prerender non garantisce un posizionamento: riduce una dipendenza nella consegna del contenuto e permette controlli più espliciti.
 
 La prova utile è fuori dal percorso più comodo dello sviluppatore: aprire una rotta da zero e osservare cosa riceve davvero chi arriva da un link condiviso.
+
+
+## Il browser vede due momenti diversi
+
+In una SPA il browser può ricevere una shell HTML essenziale e costruire il contenuto dopo aver scaricato ed eseguito JavaScript. Google può effettuare il rendering delle pagine JavaScript, ma la scansione e il rendering sono fasi distinte. Se il contenuto principale è già presente nella prima risposta, riduci la dipendenza da questa seconda elaborazione e rendi più semplice diagnosticare problemi.
+
+Prerendering e SSR non sono sinonimi: nel primo caso l'HTML viene normalmente generato prima delle richieste, per un insieme di route note; nel secondo può essere generato lato server in risposta alla visita. Entrambi possono consegnare testo iniziale, ma la scelta dipende anche da frequenza degli aggiornamenti, autenticazione e dati personalizzati.
+
+## Un controllo riproducibile su una route
+
+Apri direttamente la URL di un articolo in una nuova sessione, senza passare dalla home. Verifica che restituisca HTTP 200 e che l'HTML di risposta contenga H1, titolo, descrizione e link agli altri articoli. Il solo DOM mostrato dopo l'idratazione React non dimostra che gli stessi contenuti fossero presenti nella risposta iniziale.
+
+~~~bash
+# Esempio: verificare status e HTML server-side.
+curl -I https://alessandroguelpa.it/blog
+curl -s https://alessandroguelpa.it/blog | grep -E 'canonical|<title|<h1'
+~~~
+
+Il comando è una verifica manuale illustrativa: una pipeline grep semplificata non sostituisce il parsing completo dell'HTML. Controlla che il canonical punti alla URL pubblica desiderata e non alla preview Vercel. La sitemap serve a scoprire le route, ma deve essere accompagnata da link HTML veri.
+
+## Errori che un test di build non vede
+
+Una pagina può compilare e tuttavia avere title duplicati, canonical errati, una route diretta che risponde 404 o contenuto esclusivo del client. Per questo un test completo deve aprire le route prerenderizzate dalla prima visita e ispezionare anche il codice sorgente ricevuto.
+
+Il [progressive enhancement](/blog/progressive-enhancement-funzione-base) aggiunge la prospettiva dell'utente con JavaScript limitato; le [performance del bundle](/blog/equazione-del-razzo-e-il-problema-del-bundle-da-830kb) aiutano a ridurre il costo successivo all'HTML iniziale.
+
+**Documentazione aggiuntiva**
+
+- [Google Search Central — SEO JavaScript](https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics)
+- [React — Server rendering](https://react.dev/reference/react-dom/server)
 
 ## Fonti
 
@@ -1125,13 +1156,14 @@ Non sono istruzioni per dimensionare un lander: sono domande sui requisiti da di
   },
   {
     id: "rails-find-each-batch-memoria",
-    title: "Rails: elaborare un catalogo senza caricarlo tutto in memoria",
+    title: "Rails find_each e find_in_batches: import massivi senza saturare la memoria",
     date: "2026-09-18",
+    updatedAt: "2026-11-11",
     firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "📦",
-    excerpt: "Un ciclo che funziona con cento prodotti può diventare un problema quando il catalogo cresce. Il punto non è soltanto quanto tempo impiega: se istanzia tutti i record…",
+    excerpt: "Come elaborare grandi cataloghi Rails a batch: memoria, cursori, record modificati durante il job, retry e checkpoint di ripartenza.",
     tags: ["Coding", "Rails", "Prestazioni"],
     content: `
 Un ciclo che funziona con cento prodotti può diventare un problema quando il catalogo cresce. Il punto non è soltanto quanto tempo impiega: se istanzia tutti i record insieme, può consumare molta memoria prima ancora di completare il primo lavoro utile.
@@ -1165,6 +1197,39 @@ Se il processo si interrompe all'ultimo lotto, voglio sapere cosa accade al riav
 Misurerei anche record completati, errori e durata per lotto, evitando di registrare contenuti sensibili senza motivo.
 
 find_each risolve un problema preciso: non istanziare tutto il risultato in una volta. Un'importazione affidabile nasce quando a quel meccanismo aggiungiamo confini chiari, gestione degli errori e una strategia di ripartenza verificata.
+
+
+## Che cosa risolve davvero find_each
+
+Quando carichi tutti i record con to_a o each dopo aver materializzato una relazione, la memoria può crescere in proporzione al catalogo. find_each e find_in_batches elaborano gruppi di record senza instanziare l'intero risultato nello stesso momento. Il primo produce un record per volta al chiamante, il secondo consegna un array per ogni batch. Entrambi richiedono comunque che ciascun gruppo venga letto dal database; non eliminano il costo della query.
+
+~~~ruby
+Product.where(active: true).find_each(batch_size: 500) do |product|
+  # Elaborazione illustrativa: deve essere sicura se ripetuta.
+  ProductExporter.call(product)
+end
+~~~
+
+Lo snippet presuppone che ProductExporter sia una classe applicativa esistente. Non fornisce una politica di idempotenza, né garantisce che le righe viste rimangano immutate durante l'intera elaborazione.
+
+## Concorrenza e cursori
+
+Un batch usa un ordinamento basato su un cursore. Se il dataset viene modificato mentre il job procede, puoi incontrare risultati differenti da una fotografia immutabile del database. Scegli un cursore stabile e, quando necessario, definisci un confine temporale o di identificativo per il lavoro. Aggiornare proprio il campo usato come cursore può introdurre nuove condizioni di corsa.
+
+Con più worker, suddividi il lavoro in intervalli disgiunti o usa una coda con identificativi dei record da processare. Non affidarti alla semplice creazione di due job identici per aumentare il throughput: potrebbero elaborare gli stessi elementi. La pagina del catalogo e la transazione commerciale sono due problemi diversi, da modellare separatamente.
+
+## Ripartenza dopo un errore
+
+Se il job si interrompe dopo aver esportato parte di un lotto, il prossimo tentativo può ripetere quegli elementi. Una strategia affidabile conserva un checkpoint solo dopo la persistenza dell'esito, mentre il destinatario protegge i duplicati. In altri flussi è sufficiente un upsert idempotente per identificativo esterno.
+
+Misura righe elaborate, durata e memoria per batch, errori e record rimasti in sospeso. Un batch_size elevato riduce alcuni round trip ma aumenta l'uso di memoria; il valore corretto va misurato con dati realistici.
+
+Il problema di [unicità sotto concorrenza](/blog/rails-unicita-database-concorrenza) riemerge quando più batch tentano di inserire lo stesso identificativo.
+
+**Documentazione aggiuntiva**
+
+- [Rails — Active Record Batches](https://api.rubyonrails.org/classes/ActiveRecord/Batches.html)
+- [Rails — Active Record Querying](https://guides.rubyonrails.org/active_record_querying.html)
 
 ## Fonti
 
@@ -1899,13 +1964,14 @@ La scoperta apre una possibilità. Il progetto deve poi mostrare come mantenerla
   },
   {
     id: "rails-unicita-database-concorrenza",
-    title: "Rails: validates uniqueness non ferma due richieste contemporanee",
+    title: "Rails validates uniqueness e concorrenza: vincoli unici nel database",
     date: "2026-08-12",
+    updatedAt: "2026-11-11",
     firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "🔐",
-    excerpt: "Due processi cercano lo stesso codice esterno. Nessuno dei due lo trova, quindi entrambi provano a creare il record. Se la protezione è soltanto una ricerca prima del…",
+    excerpt: "Perché validates uniqueness non basta con due richieste simultanee; vincoli SQL, chiavi composte e test concorrenti in Rails.",
     tags: ["Coding", "Rails", "Database"],
     content: `
 Due processi cercano lo stesso codice esterno. Nessuno dei due lo trova, quindi entrambi provano a creare il record. Se la protezione è soltanto una ricerca prima del salvataggio, tutti e due possono aver ragione nello stesso momento.
@@ -1942,6 +2008,40 @@ Il comportamento dipende dall'operazione. Per un'importazione idempotente potrei
 Un test sequenziale con due create controlla solo una parte della storia. Il caso interessante sono due connessioni che tentano contemporaneamente lo stesso inserimento.
 
 L'obiettivo è che l'invariante resti vero: una sola identità commerciale, anche quando il codice viene eseguito da più worker. Il messaggio applicativo aiuta le persone; il vincolo protegge il sistema.
+
+
+## Due richieste, un solo identificativo
+
+Immagina due worker che ricevono lo stesso ordine esterno. Entrambi verificano che il record non esista: senza un vincolo sul database, potrebbero creare due righe. validates uniqueness fornisce un messaggio applicativo utile, ma esegue una verifica separata dalla scrittura e non elimina la race condition.
+
+Quando il requisito è «un ordine esterno per negozio», la chiave reale potrebbe essere composta da shop_id ed external_id. Un indice univoco sulla sola external_id potrebbe invece impedire a due negozi diversi di usare identificativi legittimamente uguali.
+
+~~~ruby
+# Esempio di migrazione per un dominio con identità composta.
+add_index :external_orders,
+  [:shop_id, :external_id],
+  unique: true,
+  name: "idx_external_orders_on_shop_and_external_id"
+~~~
+
+Questo frammento presume che esista la tabella, che le colonne abbiano i tipi adeguati e che i dati correnti rispettino già l'unicità. Prima di aggiungere l'indice a una tabella popolata devi rilevare e risolvere i duplicati.
+
+## Creare o recuperare in modo coerente
+
+create_or_find_by può essere una scelta appropriata quando il database possiede davvero il vincolo richiesto. Non usarlo come garanzia universale: la creazione può fallire per altri motivi e l'operazione deve essere compatibile con la transazione e con la semantica del record. Una violazione di unicità può essere recuperabile; una collisione fra payload discordanti deve invece essere investigata.
+
+Valuta anche normalizzazione e confronto case-insensitive. Se «ABC» e «abc» rappresentano la stessa identità, un indice binario tradizionale potrebbe non esprimere correttamente il requisito. La scelta dell'indice deve corrispondere alle regole di business.
+
+## Un test che prova la concorrenza
+
+Il test interessante usa due connessioni che tentano lo stesso inserimento prima che una delle due possa osservare l'esito dell'altra. L'invariante è una sola riga con quella chiave, indipendentemente da quale richiesta abbia prevalso. Verifica inoltre la risposta applicativa del processo perdente e l'assenza di effetti remoti duplicati.
+
+Per i grandi import il [batching Rails](/blog/rails-find-each-batch-memoria) limita la memoria, ma non sostituisce questo vincolo: i due problemi devono essere protetti separatamente.
+
+**Documentazione aggiuntiva**
+
+- [Rails Guides — Active Record Validations](https://guides.rubyonrails.org/active_record_validations.html)
+- [Rails Guides — Active Record Querying](https://guides.rubyonrails.org/active_record_querying.html)
 
 ## Fonti
 
@@ -2083,13 +2183,14 @@ Il limite fisico resta. Il buon progetto decide cosa fare durante l'attesa, qual
   },
   {
     id: "fetch-abortcontroller-risposte-obsolete",
-    title: "La ricerca mostra il risultato vecchio? Guarda l’ordine delle risposte",
+    title: "Fetch e AbortController: evitare risultati obsoleti in React",
     date: "2026-08-03",
+    updatedAt: "2026-11-11",
     firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
     hub: "react-frontend",
     icon: "⏹️",
-    excerpt: "Scrivi «Roma», poi correggi subito in «Romania». La seconda ricerca termina prima della prima. Per un istante vedi il risultato giusto, poi la risposta più lenta lo…",
+    excerpt: "Gestire ricerche asincrone React con AbortController, cleanup degli Effect, response.ok e stato di caricamento coerente.",
     tags: ["Coding", "JavaScript", "Browser"],
     content: `
 Scrivi «Roma», poi correggi subito in «Romania». La seconda ricerca termina prima della prima. Per un istante vedi il risultato giusto, poi la risposta più lenta lo sovrascrive. Il server non ha necessariamente sbagliato: il frontend ha confuso l'ordine di arrivo con l'intenzione più recente.
@@ -2139,6 +2240,64 @@ Anche lo stato di caricamento deve seguire l'identificativo corrente. Altrimenti
 Simula due risposte con ritardi invertiti e verifica che resti visibile quella associata all'ultimo input. Prova anche un errore della richiesta vecchia: non deve cancellare il risultato nuovo né mostrare un allarme fuori contesto.
 
 La regola è piccola ma decisiva: la UI deve rappresentare l'intenzione corrente, non l'ultimo pacchetto arrivato.
+
+
+## La richiesta corrente è un concetto di UI
+
+Se una persona scrive prima «Roma» e subito dopo «Romania», le due richieste possono terminare nell'ordine opposto a quello di partenza. Il problema non è necessariamente la rete: è l'interfaccia che applica una risposta relativa a un'intenzione ormai superata. Il debounce riduce quante richieste partono, ma non elimina questa race condition.
+
+Un AbortController permette di segnalare alla Fetch API che una richiesta non è più necessaria. Tuttavia è prudente verificare anche che il risultato appartenga ancora all'Effect corrente, perché potrebbero esistere trasformazioni asincrone ulteriori.
+
+## Un Effect con cleanup esplicito
+
+L'esempio seguente assume che query, setResults, setLoading e setError siano già definiti nel componente React; è intenzionalmente circoscritto al flusso della ricerca.
+
+~~~tsx
+useEffect(() => {
+  const controller = new AbortController();
+  let active = true;
+
+  setLoading(true);
+  setError(null);
+
+  fetch("/api/search?q=" + encodeURIComponent(query), {
+    signal: controller.signal,
+  })
+    .then(async (response) => {
+      if (!response.ok) throw new Error("HTTP " + response.status);
+      return response.json();
+    })
+    .then((data) => {
+      if (active) setResults(data);
+    })
+    .catch((error) => {
+      if (active && error.name !== "AbortError") {
+        setError(error.message);
+      }
+    })
+    .finally(() => {
+      if (active) setLoading(false);
+    });
+
+  return () => {
+    active = false;
+    controller.abort();
+  };
+}, [query]);
+~~~
+
+Una richiesta può essere completata mentre il suo parsing del body è ancora in corso: annullamento e guardia active coprono aspetti complementari. In Strict Mode l'Effect può ricevere setup e cleanup aggiuntivi in sviluppo, per aiutare a individuare proprio queste risorse non rilasciate.
+
+## Testare il caso peggiore
+
+Simula due risposte con ritardi invertiti e verifica che lo schermo mostri sempre il risultato dell'ultima query. Poi fallisci intenzionalmente la prima richiesta: non deve nascondere lo spinner della seconda né mostrare un errore ormai irrilevante. Verifica infine la navigazione via dalla pagina mentre fetch è attiva.
+
+Approfondisci la differenza fra riduzione delle richieste e correttezza in [debounce e throttle](/blog/javascript-debounce-throttle), e la distinzione fra errori HTTP e network in [Fetch API](/blog/javascript-fetch-api).
+
+**Documentazione aggiuntiva**
+
+- [MDN — AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)
+- [React — useEffect](https://react.dev/reference/react/useEffect)
 
 ## Fonti
 
@@ -6267,13 +6426,13 @@ Un calcolo CPU-bound può trarre beneficio dal parallelismo, ma la suddivisione 
   },
   {
     id: "rails-problema-n-piu-1",
-    title: "Rails N+1: includes, preload ed eager_load",
+    title: "Rails N+1: includes, preload, eager_load e analisi delle query",
     date: "2026-06-23",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "🛤️",
-    excerpt: "Una lista che fa una query per riga: il killer silenzioso delle performance. includes lo risolve.",
+    excerpt: "Diagnosticare e risolvere N+1 in Rails con associazioni Active Record, caricamento anticipato e misure di query e memoria.",
     tags: ["Ruby on Rails", "Performance", "ActiveRecord"],
     content: `
 Il bug di performance più comune in Rails è il **problema N+1**: una query per prendere la lista, più una query per ogni elemento. Con 100 lanci, 101 query.
@@ -6307,6 +6466,30 @@ includes può evitare le query ripetute caricando preventivamente le associazion
 ## Confrontare numero di query e memoria
 
 In una pagina di ordini con il nome del cliente, senza preload il caricamento può produrre una query iniziale più una query per ogni cliente. Con includes la quantità di chiamate può diminuire, ma il piano esatto dipende dalla query e dai filtri. Un join ampio può duplicare righe e far crescere il volume trasferito. Misura un caso con pochi record e uno con molti, confrontando numero di query, tempo e memoria. Se l'associazione viene letta soltanto in una pagina specifica, caricarla indiscriminatamente in ogni endpoint può essere uno spreco. L'obiettivo non è usare includes ovunque, ma eliminare lavoro ripetuto dove serve.
+
+
+## Perché includes non equivale sempre a due query
+
+Una relazione con includes può risolvere un N+1 tramite query separate per gli oggetti associati; a seconda dei filtri e delle join richieste, Rails può scegliere una strategia differente. preload richiede esplicitamente il caricamento separato, mentre eager_load costruisce un LEFT OUTER JOIN. Il numero effettivo di query dipende dalle associazioni coinvolte e dalla forma della relazione.
+
+Per questo una regola come «includes riduce sempre a due query» è troppo assoluta. Controlla i log SQL e verifica che non vengano introdotte righe duplicate, oggetti inutilmente materializzati o filtri applicati in memoria anziché nel database.
+
+## Misurare il costo reale
+
+Prendi una lista di cento ordini che mostra cliente e righe d'ordine. La prima implementazione potrebbe eseguire una query per gli ordini, una per ogni cliente e altre query per le righe. Dopo il preload, confronta il numero totale di round trip, il tempo trascorso e la memoria allocata. È possibile eliminare un N+1 e peggiorare comunque la risposta se carichi migliaia di associazioni che la pagina non mostra.
+
+Una vista che elenca solo nome del cliente e totale può non aver bisogno di materializzare ogni riga. In alcuni casi un'aggregazione SQL o una proiezione più piccola è più adatta del caricamento di oggetti completi.
+
+## Proteggere il miglioramento
+
+Prepara un test o una misurazione che fallisca se il numero di query cresce linearmente al numero di record. strict_loading può aiutare a intercettare accessi alle associazioni non caricati dove è opportuno, ma non sostituisce l'analisi degli endpoint reali.
+
+Distingui i problemi di query da quelli della [cache Rails](/blog/rails-caching-basi): memorizzare una risposta lenta non corregge la causa di un N+1. Se devi percorrere un catalogo esteso, considera [find_each e batching](/blog/rails-find-each-batch-memoria) per controllare anche la memoria.
+
+**Documentazione aggiuntiva**
+
+- [Rails Guides — Eager Loading Associations](https://guides.rubyonrails.org/active_record_querying.html)
+- [Rails API — ActiveRecord::Relation](https://api.rubyonrails.org/classes/ActiveRecord/Relation.html)
 
 **Documentazione**
 
