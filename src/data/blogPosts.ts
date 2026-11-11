@@ -2877,7 +2877,7 @@ Premi Run: hai appena fatto musica con tre righe di codice. Da qui in poi è tut
   },
   {
     id: "ruby-tutto-e-un-oggetto",
-    title: "Ruby: perché davvero tutto è un oggetto",
+    title: "Ruby: oggetti, metodi e classi",
     date: "2026-04-23",
     category: "sviluppo-software",
     icon: "💎",
@@ -2898,7 +2898,15 @@ nil.to_a          # => []
 Non esistono "funzioni globali" appiccicate ai tipi primitivi: chiami sempre un metodo su un oggetto. Anche \`3.times\` è un metodo dell'oggetto \`3\`.
 
 Il bello è la coerenza: una volta capito il modello, esplori qualsiasi valore con \`.methods\` e scopri cosa sa fare. Ruby premia la curiosità.
-`,
+
+
+## Da tenere a mente
+
+In Ruby numeri, stringhe e simboli sono oggetti che rispondono a metodi. Non significa però che ogni operazione abbia lo stesso costo o che il linguaggio nasconda automaticamente tutti i dettagli della memoria. Usa classi per descrivere responsabilità coerenti ed evita gerarchie profonde quando basta una composizione di oggetti.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://www.ruby-lang.org/en/documentation/)`,
   },
   {
     id: "rails-mvc-in-tre-minuti",
@@ -3018,7 +3026,7 @@ Due \`live_loop\` girano in parallelo, ognuno col suo tempo. Cambia un valore, p
   },
   {
     id: "ruby-blocchi-proc-lambda",
-    title: "Ruby: blocchi, Proc e lambda senza confusione",
+    title: "Ruby blocchi, Proc e lambda: differenze",
     date: "2026-04-28",
     category: "sviluppo-software",
     icon: "💎",
@@ -3040,7 +3048,15 @@ somma.call(2, 3)             # => 5
 Blocco, \`Proc\` e \`lambda\` sono tutti "pezzi di codice trasportabili", ma con due differenze chiave: la \`lambda\` controlla il numero di argomenti (errore se sbagli), la \`Proc\` no; e un \`return\` dentro una \`lambda\` esce dalla lambda, dentro una \`Proc\` esce dal metodo che la contiene.
 
 Regola pratica: usa la \`lambda\` quando vuoi qualcosa che si comporta come una funzione vera.
-`,
+
+
+## Da tenere a mente
+
+Un blocco è una porzione di codice passata a un metodo. Proc permette di conservarlo in un oggetto; lambda introduce regole più simili a un metodo per il numero di argomenti e per il comportamento di return. Prova i casi con yield, blocco opzionale e chiamata da più punti prima di scegliere una forma per un'API pubblica.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Proc.html)`,
   },
   {
     id: "rails-activerecord-le-basi",
@@ -3155,7 +3171,7 @@ Scrivi \`sample\` e usa l'autocompletamento per esplorare le famiglie: \`:drum_\
   },
   {
     id: "ruby-enumerable-map-select-reduce",
-    title: "Ruby: map, select e reduce, il tridente di Enumerable",
+    title: "Ruby Enumerable: map, select e reduce",
     date: "2026-05-03",
     category: "sviluppo-software",
     icon: "💎",
@@ -3176,7 +3192,15 @@ numeri.sum                             # => 21 (scorciatoia)
 \`map\` trasforma, \`select\` filtra, \`reduce\` aggrega. Si concatenano: \`numeri.select(&:even?).map { |n| n ** 2 }\`.
 
 Quel \`&:even?\` è la forma compatta di \`{ |n| n.even? }\`. Una volta presa la mano, i cicli manuali ti sembreranno rumore inutile.
-`,
+
+
+## Da tenere a mente
+
+map trasforma ogni elemento, select ne filtra una parte e reduce accumula un risultato. Le tre operazioni non sono equivalenti e possono richiedere allocazioni differenti. Per elaborare raccolte molto grandi valuta Enumerator e lazy; per operazioni che accedono al database controlla se una query SQL potrebbe evitare di materializzare tutti i record in memoria.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Enumerable.html)`,
   },
   {
     id: "rails-migrazioni-versionare-il-database",
@@ -3297,7 +3321,7 @@ Prova a suonare la stessa sequenza cambiando solo \`use_synth\`: è il modo più
   },
   {
     id: "ruby-symbol-vs-string",
-    title: "Ruby: symbol o string? Quando usare :cosa",
+    title: "Ruby symbol vs string: quando usarli",
     date: "2026-05-08",
     category: "sviluppo-software",
     icon: "💎",
@@ -3316,7 +3340,15 @@ In Ruby vedi ovunque cose come \`:name\` e ti chiedi perché non una stringa \`"
 Un **symbol** è immutabile e unico in memoria: esiste una sola istanza di \`:ciao\` in tutto il programma. Una **string** è mutabile e ogni letterale crea un nuovo oggetto.
 
 Per questo i simboli sono perfetti come chiavi di hash e nomi/identificatori (\`user[:email]\`, \`validates :name\`), mentre le stringhe servono per il testo che manipoli o mostri all'utente. Regola spannometrica: se è un'etichetta, usa un simbolo; se è contenuto, usa una stringa.
-`,
+
+
+## Da tenere a mente
+
+Una String è una sequenza di caratteri modificabile, salvo congelamento; un Symbol rappresenta un identificatore immutabile. Non sostituire tutte le stringhe con simboli per presunte ottimizzazioni: scegli il tipo in base al significato dei dati. Per input provenienti dall'esterno, valida sempre i valori consentiti prima di trasformarli in chiavi di logica applicativa.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Symbol.html)`,
   },
   {
     id: "rails-associazioni-has-many-belongs-to",
@@ -3439,7 +3471,7 @@ Il riverbero dà profondità, l'echo crea il ritmo, la distorsione aggiunge grin
   },
   {
     id: "ruby-hash-metodi-utili",
-    title: "Ruby: l'hash e i suoi metodi più comodi",
+    title: "Ruby Hash: chiavi, default e trasformazioni",
     date: "2026-05-13",
     category: "sviluppo-software",
     icon: "💎",
@@ -3463,7 +3495,15 @@ prezzi.sum { |_, v| v }         # 3
 \`fetch\` con un default evita i \`nil\` a sorpresa; \`dig\` naviga strutture annidate senza mille controlli; \`transform_values\` e \`each_with_object\` costruiscono nuovi hash in modo pulito.
 
 Conoscere questi metodi significa scrivere meno \`if key\`, e lasciare che sia l'hash a gestire i casi limite.
-`,
+
+
+## Da tenere a mente
+
+Un Hash associa chiavi a valori e conserva l'ordine d'inserimento. fetch è utile quando una chiave mancante deve essere distinguibile da un valore nil. Non usare un default mutabile condiviso senza capire i riferimenti: un array riutilizzato accidentalmente può contaminare chiavi diverse. Verifica merge, transform_values e dig sui casi limite.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Hash.html)`,
   },
   {
     id: "rails-validazioni-dati-puliti",
@@ -3597,7 +3637,7 @@ Combinali con \`.choose\` per melodie casuali sempre "in chiave", o con \`.tick\
   },
   {
     id: "ruby-metaprogrammazione-basi",
-    title: "Ruby: metaprogrammazione, codice che scrive codice",
+    title: "Ruby metaprogrammazione: quando evitarla",
     date: "2026-05-18",
     category: "sviluppo-software",
     icon: "💎",
@@ -3622,7 +3662,15 @@ c.host            # => "localhost"
 Con \`define_method\` crei metodi in un ciclo invece di scriverli a mano uno per uno. Con \`method_missing\` intercetti chiamate a metodi che non esistono e reagisci al volo.
 
 È potentissima, ma va dosata: codice generato dinamicamente è più difficile da leggere e da debuggare. Usala quando elimina ripetizione reale, non per fare colpo.
-`,
+
+
+## Da tenere a mente
+
+La metaprogrammazione consente di definire metodi e comportamenti dinamicamente. È potente ma rende meno immediato capire da dove provenga una chiamata. Usa define_method e method_missing soltanto quando il vantaggio è concreto; documenta la superficie pubblica ed evita di nascondere errori di battitura dietro fallback generici. Test e introspezione diventano particolarmente importanti.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Module.html)`,
   },
   {
     id: "rails-api-only-mode",
@@ -3759,7 +3807,7 @@ Per irrobustire, aggiungi variazione: \`sample :sn_dolf if one_in(4)\` fa scatta
   },
   {
     id: "ruby-pattern-matching",
-    title: "Ruby 3: il pattern matching con case/in",
+    title: "Ruby pattern matching: case/in",
     date: "2026-05-23",
     category: "sviluppo-software",
     icon: "💎",
@@ -3784,7 +3832,15 @@ end
 Nota la potenza: \`name:\` e \`provider:\` non solo verificano che le chiavi esistano, ma **estraggono** i valori in variabili locali. Puoi fare match su array, tipi (\`in Integer\`), condizioni (\`in n if n > 0\`).
 
 È perfetto per gestire risposte di API con forme diverse: descrivi la forma che ti aspetti e Ruby ti dà i dati già spacchettati.
-`,
+
+
+## Da tenere a mente
+
+Il pattern matching permette di verificare struttura e contenuto di array e hash con case/in. È utile con payload eterogenei, ma il pattern non convalida automaticamente l'intero contratto dei dati. Definisci una gestione esplicita per i casi non previsti e prova differenze fra chiavi mancanti, valori nil e tipi incompatibili.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/syntax/pattern_matching_rdoc.html)`,
   },
   {
     id: "rails-consumare-api-esterne",
@@ -3921,7 +3977,7 @@ Cambia il seme e ottieni una variazione completamente diversa, ma altrettanto ri
   },
   {
     id: "ruby-duck-typing",
-    title: "Ruby: duck typing, non chiedere il tipo",
+    title: "Ruby duck typing e protocolli impliciti",
     date: "2026-05-28",
     category: "sviluppo-software",
     icon: "💎",
@@ -3943,7 +3999,15 @@ stampa_tutto(1..3)
 Nessuno di questi è "un Array", ma tutti rispondono a \`each\`, quindi funzionano. Invece di \`if x.is_a?(Array)\`, ti fidi dell'interfaccia.
 
 Se proprio devi controllare, usa \`respond_to?(:each)\` invece della classe: verifichi il comportamento, non l'etichetta. Questo rende il codice flessibile e facile da estendere: aggiungi una nuova classe che risponde a \`each\` e tutto continua a funzionare.
-`,
+
+
+## Da tenere a mente
+
+Il duck typing si basa sui metodi supportati da un oggetto più che sull'appartenenza a una classe specifica. Un oggetto che risponde a un metodo non garantisce però che restituisca il risultato atteso. Per API condivise documenta argomenti, eccezioni e valori di ritorno e scrivi test di contratto sui diversi oggetti che devono sostituirsi a vicenda.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://www.ruby-lang.org/en/documentation/)`,
   },
   {
     id: "rails-background-job-active-job",
@@ -4078,7 +4142,7 @@ Il loop \`:metronomo\` fa da direttore d'orchestra: a ogni battuta emette \`cue 
   },
   {
     id: "ruby-moduli-mixin",
-    title: "Ruby: moduli e mixin, ereditarietà senza catene",
+    title: "Ruby module e mixin: include, prepend, extend",
     date: "2026-06-02",
     category: "sviluppo-software",
     icon: "💎",
@@ -4108,7 +4172,15 @@ Launch.new.log("creato")   # entrambe hanno .log
 Con \`include\` i metodi del modulo diventano metodi di istanza; con \`extend\` diventano metodi di classe. È il pattern dei **mixin**: componi comportamenti come mattoncini invece di ereditare da una super-classe gigante.
 
 Rails ne è pieno (\`Comparable\`, \`Enumerable\`, i \`Concern\`). Un modulo per responsabilità, incluso dove serve: codice condiviso senza gerarchie fragili.
-`,
+
+
+## Da tenere a mente
+
+I moduli permettono di condividere comportamento senza costruire una lunga catena di ereditarietà. include, prepend ed extend agiscono in modi diversi sulla ricerca dei metodi. Se due mixin definiscono lo stesso metodo, controlla l'ordine degli antenati e il comportamento di super. Preferisci moduli con responsabilità limitate e nomi chiari.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Module.html)`,
   },
   {
     id: "rails-hotwire-turbo",
@@ -4243,7 +4315,7 @@ Aggiungi un \`with_fx :distortion\` attorno e ottieni quel ringhio sporco tipico
   },
   {
     id: "ruby-gestione-errori",
-    title: "Ruby: gestire gli errori con begin/rescue/ensure",
+    title: "Ruby begin/rescue/ensure: gestione degli errori",
     date: "2026-06-07",
     category: "sviluppo-software",
     icon: "💎",
@@ -4268,7 +4340,15 @@ end
 Cattura **classi specifiche**, non tutto: un \`rescue\` nudo (senza classe) prende anche errori che non ti aspetti e nasconde bug veri. \`ensure\` gira sempre, con o senza errore: perfetto per chiudere file e connessioni.
 
 Puoi anche usare \`retry\` dentro un \`rescue\` per ritentare (utile con le reti instabili). Ma metti un contatore, o rischi un loop infinito. La regola: cattura solo ciò che sai gestire, lascia esplodere il resto.
-`,
+
+
+## Da tenere a mente
+
+rescue dovrebbe intercettare gli errori che il codice sa realmente gestire. Catturare tutto e continuare può nascondere condizioni gravi. ensure è utile per rilasciare risorse anche quando un'operazione fallisce; non sostituisce transazioni o meccanismi di retry. Registra il contesto minimo necessario senza esporre segreti e mantieni visibile l'errore originale.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/syntax/exceptions_rdoc.html)`,
   },
   {
     id: "rails-stimulus-js-leggero",
@@ -4401,7 +4481,7 @@ Rimescola l'ordine delle fette (con \`choose\` invece di \`tick\`) e lo stesso b
   },
   {
     id: "ruby-creare-una-gem",
-    title: "Ruby: creare e pubblicare la tua prima gem",
+    title: "Ruby gem: packaging, dipendenze e versioni",
     date: "2026-06-12",
     category: "sviluppo-software",
     icon: "💎",
@@ -4435,7 +4515,15 @@ gem push saluti-0.1.0.gem   # su rubygems.org
 I punti chiave: versiona con cura (segui il semantic versioning nel file \`version.rb\`), scrivi un README chiaro e aggiungi qualche test. Da quel momento chiunque installa il tuo codice con \`gem install saluti\`.
 
 È il modo con cui l'ecosistema Ruby cresce: piccoli mattoni condivisi. La tua prima gem può essere anche solo un'utility che usi in più progetti.
-`,
+
+
+## Da tenere a mente
+
+Una gem distribuisce codice Ruby e metadati di dipendenza. Prima della pubblicazione verifica file inclusi, licenza, versione e compatibilità con i runtime supportati. Non pubblicare credenziali o artefatti locali nel pacchetto. Usa versioning coerente e test di installazione da un progetto distinto, non soltanto dall'ambiente di sviluppo.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubygems.org/make-your-own-gem/)`,
   },
   {
     id: "rails-caching-basi",
@@ -4576,7 +4664,7 @@ Poca scrittura, tanta musica: è il fascino del generativo.
   },
   {
     id: "ruby-rspec-testare",
-    title: "Ruby: testare con RSpec, la rete di sicurezza",
+    title: "RSpec in Ruby: test affidabili e leggibili",
     date: "2026-06-17",
     category: "sviluppo-software",
     icon: "💎",
@@ -4603,7 +4691,15 @@ end
 \`describe\` raggruppa, \`it\` descrive un comportamento, \`expect(...).to ...\` fa l'asserzione. Lanci \`rspec\` e hai la conferma (o la smentita) che il codice fa ciò che dici.
 
 Il valore vero non è "trovare bug": è **progettare meglio**. Se un metodo è difficile da testare, di solito è mal disegnato. Scrivere il test prima ti costringe a pensare all'interfaccia. E quando rifattorizzi, i test ti dicono se hai rotto qualcosa.
-`,
+
+
+## Da tenere a mente
+
+Un test utile descrive un comportamento e fallisce se il requisito viene violato. Evita aspettative che replicano l'implementazione riga per riga: diventano fragili durante il refactoring. Prepara esempi per input validi, valori limite ed errori; isola chiamate esterne e tempo quando rendono l'esecuzione non deterministica.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://rspec.info/documentation/)`,
   },
   {
     id: "rails-service-objects",
@@ -4753,7 +4849,7 @@ Il risultato: un'esibizione dove la tastiera controlla le note e le manopole pla
   },
   {
     id: "ruby-ractor-concorrenza",
-    title: "Ruby 3: i Ractor e la concorrenza vera",
+    title: "Ruby Ractor: isolamento e concorrenza",
     date: "2026-06-22",
     category: "sviluppo-software",
     icon: "💎",
@@ -4778,7 +4874,15 @@ La regola d'oro: i Ractor **non condividono** stato mutabile. Comunicano solo pa
 È un modello alla "actor" (come Erlang): isolamento invece di lock. In cambio dell'assenza di stato condiviso, ottieni parallelismo reale per lavori CPU-bound.
 
 Ancora sperimentale in alcuni aspetti, ma è la direzione di Ruby per sfruttare i core moderni senza il caos dei thread condivisi.
-`,
+
+
+## Da tenere a mente
+
+Ractor permette un modello di concorrenza basato sull'isolamento di oggetti e messaggi. Non rende automaticamente ogni programma parallelo o più veloce: trasferimento dei dati, API supportate e carichi di lavoro incidono sul risultato. Misura l'overhead e verifica la compatibilità delle librerie prima di usarlo in una pipeline di produzione.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Ractor.html)`,
   },
   {
     id: "rails-problema-n-piu-1",
@@ -4910,7 +5014,7 @@ Puoi anche usare \`use_bpm_mul 2\` per raddoppiare localmente il tempo di un loo
   },
   {
     id: "ruby-ampersand-symbol-shorthand",
-    title: "Ruby: il misterioso &:metodo spiegato",
+    title: "Ruby &:method: sintassi e limiti",
     date: "2026-06-27",
     category: "sviluppo-software",
     icon: "💎",
@@ -4931,7 +5035,15 @@ Il meccanismo: \`&\` converte l'oggetto che segue in un blocco. Quando lo applic
 Funziona con qualsiasi metodo senza argomenti: \`.map(&:to_i)\`, \`.select(&:even?)\`, \`.reject(&:nil?)\`, \`.each(&:save)\`.
 
 Puoi usare \`&\` anche per passare un blocco già pronto: \`def stampa(&blocco); blocco.call; end\`. Ma il caso d'uso quotidiano è quello: trasformare "chiama questo metodo su tutti" in tre caratteri. Idiomatico, conciso, ovunque nel codice Ruby.
-`,
+
+
+## Da tenere a mente
+
+La forma &:method converte un simbolo in un blocco che invoca il metodo indicato su ciascun elemento. È una scorciatoia leggibile per trasformazioni semplici, non una sostituzione universale dei blocchi: quando occorrono argomenti o logica condizionale un blocco esplicito è spesso più chiaro. Valuta la leggibilità prima di ogni micro-ottimizzazione.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Symbol.html)`,
   },
   {
     id: "rails-strong-parameters",
@@ -5070,7 +5182,7 @@ Il WAV che ottieni lo porti in qualsiasi editor per il mastering. Il codice dive
   },
   {
     id: "ruby-comparable-enumerable-custom",
-    title: "Ruby: rendere ordinabili i tuoi oggetti con Comparable",
+    title: "Ruby Comparable: implementare <=>",
     date: "2026-07-02",
     category: "sviluppo-software",
     icon: "💎",
@@ -5102,7 +5214,15 @@ Launch.new(1) < Launch.new(2)  # true
 Definendo un solo metodo (\`<=>\`), \`Comparable\` te ne regala una decina: \`<\`, \`>\`, \`==\`, \`between?\`, \`clamp\`. Allo stesso modo, includere \`Enumerable\` e definire \`each\` ti dà gratis \`map\`, \`select\`, \`sort\`, \`min\`, \`max\` su una tua classe collezione.
 
 È il potere dei mixin: implementi il metodo minimo (\`<=>\` o \`each\`) e Ruby costruisce tutto il resto. I tuoi oggetti si comportano come quelli nativi.
-`,
+
+
+## Da tenere a mente
+
+Comparable usa il risultato dell'operatore <=> per offrire confronti come < e >=. La funzione deve rispettare un ordinamento coerente; se due oggetti non sono confrontabili può restituire nil. Testa transitività, uguaglianza e valori limite. Un confronto incoerente può rendere ordinamenti e ricerche difficili da prevedere.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Comparable.html)`,
   },
   {
     id: "rails-routing-restful",
@@ -5230,7 +5350,7 @@ Niente \`sample :bd_haus\`, niente sedicesimi: qui il tempo si dilata. Aggiungi 
   },
   {
     id: "ruby-stringhe-gsub-regex",
-    title: "Ruby: manipolare stringhe con gsub e le regex",
+    title: "Ruby String gsub e regex: casi limite",
     date: "2026-07-07",
     category: "sviluppo-software",
     icon: "💎",
@@ -5258,7 +5378,15 @@ testo.scan(/[\\w.]+@[\\w.]+/)
 \`gsub\` sostituisce tutte le occorrenze e accetta un blocco per trasformazioni dinamiche; \`scan\` raccoglie tutti i match in un array; \`match\` e \`=~\` verificano la presenza di un pattern.
 
 I gruppi di cattura tornano comodi: \`"2026-07-07".match(/(\\d+)-(\\d+)-(\\d+)/)\` ti dà anno, mese e giorno separati. Con una manciata di metodi domini qualsiasi elaborazione di testo: parsing, pulizia, validazione, generazione di slug.
-`,
+
+
+## Da tenere a mente
+
+gsub sostituisce tutte le occorrenze che corrispondono a una regex o stringa. Prima di usarlo su dati reali valuta Unicode, escaping e caratteri speciali. Una regex troppo permissiva può alterare testo non previsto; su input non attendibile considera anche il costo di pattern complessi. Scrivi test per stringhe vuote, sequenze ripetute e caratteri accentati.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/String.html)`,
   },
   {
     id: "rails-active-storage-allegati",
@@ -5411,7 +5539,7 @@ Registra partendo dalla sola cassa e aggiungi i loro uno a uno commentando/scomm
   },
   {
     id: "ruby-benchmark-misurare",
-    title: "Ruby: misurare prima di ottimizzare con Benchmark",
+    title: "Ruby Benchmark: evitare confronti falsati",
     date: "2026-07-12",
     category: "sviluppo-software",
     icon: "💎",
@@ -5439,7 +5567,15 @@ end
 \`Benchmark.bm\` esegue ogni blocco e stampa il tempo impiegato, così vedi nero su bianco quale strada è più veloce. Per confronti più rigorosi (con riscaldamento e statistica) c'è la gem \`benchmark-ips\`, che misura le iterazioni al secondo.
 
 Perché conta: le intuizioni sulle performance sbagliano di continuo. Quella che "sembra" più veloce spesso non lo è, e l'ottimizzazione prematura complica il codice senza guadagni. Prima misuri, poi ottimizzi solo ciò che i numeri indicano come lento davvero. Il resto lascialo leggibile.
-`,
+
+
+## Da tenere a mente
+
+Una misurazione va ripetuta su dati rappresentativi e in condizioni comparabili. Il primo avvio può includere costi di inizializzazione, cache e compilazione che alterano il confronto. Distingui tempo CPU, memoria e attesa I/O. Se il collo di bottiglia è nel database, ottimizzare una piccola funzione Ruby potrebbe non avere alcun effetto sull'esperienza dell'utente.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Benchmark.html)`,
   },
   {
     id: "rails-full-text-search-postgres",
@@ -5578,7 +5714,7 @@ La lezione va oltre la musica: qualsiasi strumento didattico dovrebbe puntare a 
   },
   {
     id: "ruby-programmazione-funzionale",
-    title: "Ruby: il lato funzionale con then e curry",
+    title: "Ruby then, curry e composizione di funzioni",
     date: "2026-07-17",
     category: "sviluppo-software",
     icon: "💎",
@@ -5605,7 +5741,15 @@ aggiungi10[5][5]      # => 20
 \`then\` (alias \`yield_self\`) passa l'oggetto a un blocco e ne restituisce il risultato: incatena trasformazioni senza variabili intermedie, leggendosi come una pipeline. \`curry\` trasforma una funzione a più argomenti in una serie di funzioni a un argomento, così puoi "pre-caricare" alcuni valori e riusare il resto.
 
 Non trasformano Ruby in Haskell, ma per pulire una stringa o costruire funzioni specializzate sono comodissimi. La programmazione funzionale non è un dogma: sono strumenti da tenere nella cassetta, da tirare fuori quando rendono il codice più chiaro.
-`,
+
+
+## Da tenere a mente
+
+then permette di concatenare trasformazioni leggibili e curry adatta funzioni con più argomenti in applicazioni parziali. Non sono automaticamente preferibili al codice imperativo: una catena troppo lunga nasconde stati intermedi ed errori. Preferisci funzioni con effetti collaterali espliciti e verifica che i nomi rendano comprensibile il flusso.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Method.html)`,
   },
   {
     id: "rails-request-specs-testare-api",
