@@ -2910,6 +2910,7 @@ Inserisci un test di regressione, controlla scenari vicini e conserva le informa
     icon: "🤖",
     date: "2026-04-04",
     category: "sviluppo-software",
+    hub: "rails-backend",
     content: ` 
 Vi è mai capitato di fare una simulazione d'esame seduti comodamente sul divano di casa, in pigiama, e sentirvi dei geni assoluti, per poi fare scena muta il giorno del test vero e proprio? 
 
@@ -2939,6 +2940,7 @@ Fare gli esercizi con il libro aperto o il codice sorgente già configurato ti d
     icon: "📝",
     date: "2026-03-30",
     category: "sviluppo-software",
+    hub: "rails-backend",
     content: ` 
 L'altro giorno ho ripreso in mano i miei appunti di Fisica per un ripasso veloce prima di un test. Ho fissato la pagina per buoni dieci minuti, cercando di decifrare una formula circondata da frecce caotiche e note a margine mezza cancellate. 
 
@@ -2968,6 +2970,7 @@ Usa nomi di variabili che abbiano senso (meglio \`user_cart_total\` che \`uct\`)
     icon: "⚠️",
     date: "2026-03-15",
     category: "sviluppo-software",
+    hub: "rails-backend",
     content: ` 
 Esiste un riflesso incondizionato che colpisce quasi tutti gli studenti e i programmatori junior: la reazione di panico davanti al rosso.
 
@@ -3070,6 +3073,7 @@ title: "Il Caffè, l'Università e la Magia del Codice Asincrono",
 icon: "☕️",
 date: "2026-04-01",
 category: "sviluppo-software",
+    hub: "react-frontend",
 content: ` 
 Essere uno studente di Ingegneria Informatica e lavorare come sviluppatore web significa una cosa sola: il tempo è la risorsa più scarsa dell'Universo. 
 
