@@ -2853,7 +2853,7 @@ Avviare i compiti lunghi, non restare bloccati a fissare lo schermo aspettando c
 },
   {
     id: "sonic-pi-primo-suono-play-sleep",
-    title: "Sonic Pi: il tuo primo suono in due righe",
+    title: "Sonic Pi: play e sleep per iniziare",
     date: "2026-04-22",
     category: "musica-audio",
     icon: "🎛️",
@@ -2873,7 +2873,15 @@ play 67      # Sol
 \`play\` accetta i numeri MIDI oppure i nomi delle note come \`:c4\`, \`:e4\`, \`:g4\`. \`sleep\` non è una pausa "morta": è il metronomo del programma. Togli i \`sleep\` e le tre note suoneranno tutte insieme, come un accordo.
 
 Premi Run: hai appena fatto musica con tre righe di codice. Da qui in poi è tutto un gioco di stratificazione.
-`,
+
+
+## Da provare e verificare
+
+Il comando play genera una nota usando il synth corrente; sleep controlla il tempo musicale prima dell'istruzione successiva. Non corrisponde a un'attesa bloccante dell'intera applicazione: Sonic Pi organizza gli eventi musicali nel proprio sistema temporale. Per iniziare prova due note a distanze diverse e confronta il risultato cambiando soltanto sleep, poi aggiungi un ciclo quando il pattern è stabile.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-tutto-e-un-oggetto",
@@ -3016,7 +3024,7 @@ AudioContext gestisce il grafo audio del browser. Un OscillatorNode produce un s
   },
   {
     id: "sonic-pi-live-loop-cuore-del-live-coding",
-    title: "Sonic Pi: live_loop, il cuore del live coding",
+    title: "Sonic Pi live_loop: scrivere musica in tempo reale",
     date: "2026-04-27",
     category: "musica-audio",
     icon: "🔁",
@@ -3038,7 +3046,15 @@ end
 \`\`\`
 
 Due \`live_loop\` girano in parallelo, ognuno col suo tempo. Cambia un valore, premi Run, ascolti la differenza all'istante. Questa immediatezza è ciò che negli algorave chiamano "suonare il codice": aggiungi un layer, ne togli un altro, tutto dal vivo.
-`,
+
+
+## Da provare e verificare
+
+live_loop ripete una sequenza identificata da un nome e permette di modificarla durante l'esecuzione. Ogni iterazione deve avere un avanzamento temporale adeguato: un loop privo di sleep o di un altro meccanismo di temporizzazione può produrre errori. Dai nomi significativi ai loop, come kick o hats, e mantieni una responsabilità musicale distinta per ciascuno.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-blocchi-proc-lambda",
@@ -3179,7 +3195,7 @@ Un oscillatore genera onde periodiche. Le forme sine, square, sawtooth e triangl
   },
   {
     id: "sonic-pi-sample-libreria-integrata",
-    title: "Sonic Pi: campioni pronti all'uso con sample",
+    title: "Sonic Pi sample: scegliere e trasformare i suoni",
     date: "2026-05-02",
     category: "musica-audio",
     icon: "🥁",
@@ -3199,7 +3215,15 @@ sample :bd_haus, amp: 2, rpan: -1 # più forte, a sinistra
 I parametri sono la parte divertente: \`rate\` cambia velocità e intonazione, \`amp\` il volume, \`pan\` la posizione stereo, \`start\` e \`finish\` tagliano il campione (da 0 a 1).
 
 Scrivi \`sample\` e usa l'autocompletamento per esplorare le famiglie: \`:drum_\`, \`:ambi_\`, \`:loop_\`, \`:elec_\`. È una miniera per costruire ritmi in pochi secondi.
-`,
+
+
+## Da provare e verificare
+
+sample riproduce un campione dalla libreria disponibile o da un percorso supportato. Amp controlla l'ampiezza, rate modifica velocità e altezza e beat_stretch adatta un campione a una durata musicale. Queste opzioni non hanno sempre lo stesso effetto percettivo: valori estremi possono produrre artefatti. Controlla la durata effettiva del sample rispetto al tuo pattern.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-enumerable-map-select-reduce",
@@ -3342,7 +3366,7 @@ GainNode moltiplica il segnale in ingresso e può essere automatizzato tramite A
   },
   {
     id: "sonic-pi-use-synth-scegliere-sintetizzatori",
-    title: "Sonic Pi: cambiare voce con use_synth",
+    title: "Sonic Pi use_synth: timbri e parametri",
     date: "2026-05-07",
     category: "musica-audio",
     icon: "🎹",
@@ -3365,7 +3389,15 @@ play :e3, release: 1
 Ogni synth ha i suoi parametri: \`cutoff\` (quanto è aperto il filtro), \`release\` (quanto dura la coda), \`sustain\`, \`attack\`. Il \`:tb303\` con un \`cutoff\` che si muove è la firma della musica acid.
 
 Prova a suonare la stessa sequenza cambiando solo \`use_synth\`: è il modo più veloce per capire quanto il timbro conti più delle note.
-`,
+
+
+## Da provare e verificare
+
+use_synth sceglie il sintetizzatore usato dalle chiamate play successive nello stesso contesto. Due synth possono avere parametri differenti e rispondere diversamente a cutoff, release e inviluppo. Non scegliere un timbro soltanto dal nome: confronta più synth sulla stessa nota e durata, regolando il livello per evitare di confondere volume e carattere sonoro.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-symbol-vs-string",
@@ -3505,7 +3537,7 @@ Nel Web Audio API i nodi formano un grafo: una sorgente passa attraverso filtri,
   },
   {
     id: "sonic-pi-with-fx-effetti",
-    title: "Sonic Pi: dare spazio al suono con with_fx",
+    title: "Sonic Pi with_fx: riverbero e delay",
     date: "2026-05-12",
     category: "musica-audio",
     icon: "🌫️",
@@ -3531,7 +3563,15 @@ end
 Puoi **annidarli**: nel secondo esempio la nota passa prima nella distorsione, poi nell'echo. I parametri (\`mix\`, \`phase\`, \`decay\`, \`room\`) plasmano l'effetto.
 
 Il riverbero dà profondità, l'echo crea il ritmo, la distorsione aggiunge grinta. Con \`with_fx\` lo spazio sonoro diventa un altro strumento da programmare.
-`,
+
+
+## Da provare e verificare
+
+with_fx applica un effetto al codice eseguito nel blocco. Puoi annidare più effetti, ma l'ordine cambia il risultato: un delay prima del riverbero non è equivalente a un riverbero seguito da delay. Mantieni un equilibrio tra segnale diretto e processato tramite mix e verifica che le code degli effetti non invadano i colpi successivi.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-hash-metodi-utili",
@@ -3685,7 +3725,7 @@ BiquadFilterNode offre filtri comuni e parametri di frequenza, Q e guadagno. Non
   },
   {
     id: "sonic-pi-scale-accordi",
-    title: "Sonic Pi: scale e accordi senza sapere la teoria",
+    title: "Sonic Pi scale e chord: costruire melodie",
     date: "2026-05-17",
     category: "musica-audio",
     icon: "🎼",
@@ -3713,7 +3753,15 @@ play chord(:a3, :major7)  # accordo suonato insieme
 \`scale\` prende una tonica e un tipo (\`:minor\`, \`:major\`, \`:minor_pentatonic\`, \`:dorian\`...) e ti dà le note; \`chord\` fa lo stesso per gli accordi.
 
 Combinali con \`.choose\` per melodie casuali sempre "in chiave", o con \`.tick\` per scorrerle in ordine. La teoria musicale diventa un'API.
-`,
+
+
+## Da provare e verificare
+
+scale genera note appartenenti a una scala, chord note di un accordo. Il fatto che due note siano nella stessa scala non garantisce automaticamente una melodia efficace: contano ritmo, registro e progressione armonica. Usa una scala limitata all'inizio e varia una nota alla volta. Se compaiono ottave troppo alte o basse, definisci esplicitamente il registro desiderato.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-metaprogrammazione-basi",
@@ -3867,7 +3915,7 @@ ConvolverNode elabora il segnale usando una risposta all'impulso caricata in Aud
   },
   {
     id: "sonic-pi-drum-machine",
-    title: "Sonic Pi: costruire una drum machine",
+    title: "Sonic Pi drum machine: kick, snare e hi-hat",
     date: "2026-05-22",
     category: "musica-audio",
     icon: "🥁",
@@ -3899,7 +3947,15 @@ end
 La cassa sul battere, il rullante in levare, il charleston a scandire i sedicesimi: è lo schema di mezza musica elettronica. Cambia i \`sleep\` e cambi il groove.
 
 Per irrobustire, aggiungi variazione: \`sample :sn_dolf if one_in(4)\` fa scattare il rullante solo a volte, e il ritmo smette di suonare meccanico.
-`,
+
+
+## Da provare e verificare
+
+Una drum machine programmata in Sonic Pi combina eventi di sample con una griglia di sleep. Prima di aggiungere casualità, costruisci un pattern ripetibile su quattro battute e verifica l'allineamento tra kick, snare e hi-hat. Regola amp e la distanza tra colpi per evitare sovrapposizioni che mascherano i transienti. Solo dopo introduci variazioni ritmiche.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-pattern-matching",
@@ -4062,7 +4118,7 @@ Un metronomo affidabile non dovrebbe affidare ogni colpo al solo setInterval, pe
   },
   {
     id: "sonic-pi-randomizzazione-controllata",
-    title: "Sonic Pi: casualità che si ripete con use_random_seed",
+    title: "Sonic Pi use_random_seed: pattern riproducibili",
     date: "2026-05-27",
     category: "musica-audio",
     icon: "🎲",
@@ -4085,7 +4141,15 @@ end
 \`choose\` pesca da una lista, \`rrand(1, 5)\` dà un numero casuale, \`one_in(4)\` è vero una volta su quattro. Ma \`use_random_seed 42\` "riavvolge" il generatore: ogni giro del loop riparte dalla stessa sequenza, così il tuo pattern casuale suona sempre uguale.
 
 Cambia il seme e ottieni una variazione completamente diversa, ma altrettanto ripetibile. È il modo per improvvisare e poi "salvare" il caso che ti piaceva.
-`,
+
+
+## Da provare e verificare
+
+use_random_seed inizializza una sequenza pseudocasuale riproducibile, utile quando vuoi conservare lo stesso groove durante un live. La riproducibilità dipende anche dall'ordine in cui vengono consumati i valori casuali: aggiungere una chiamata rand può cambiare i risultati successivi. Imposta il seed in punti coerenti del ciclo e annota i valori che producono sequenze interessanti.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-duck-typing",
@@ -4241,7 +4305,7 @@ Una drum machine può usare AudioBufferSourceNode distinti per ogni colpo, progr
   },
   {
     id: "sonic-pi-sync-cue",
-    title: "Sonic Pi: tenere i loop insieme con sync e cue",
+    title: "Sonic Pi sync e cue: sincronizzare i loop",
     date: "2026-06-01",
     category: "musica-audio",
     icon: "🔗",
@@ -4266,7 +4330,15 @@ end
 Il loop \`:metronomo\` fa da direttore d'orchestra: a ogni battuta emette \`cue :tick\`. Gli altri loop iniziano il giro solo quando ricevono quel segnale con \`sync :tick\`, restando perfettamente allineati.
 
 È il modo giusto per costruire un brano a più strati che non "scivola": un loop guida, tutti gli altri lo seguono. Il groove resta bloccato anche dopo minuti.
-`,
+
+
+## Da provare e verificare
+
+cue emette un evento temporizzato e sync può attendere un evento specifico, rendendo possibile il coordinamento tra thread e live loop. Una dipendenza circolare, in cui due loop attendono entrambi un evento che nessuno invia, può bloccare la progressione musicale. Scegli un loop master per la pulsazione, dai nomi distinti ai segnali e testa l'avvio da zero.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-moduli-mixin",
@@ -4429,7 +4501,7 @@ Uno step sequencer rappresenta una griglia temporale di eventi. Per convertirla 
   },
   {
     id: "sonic-pi-bassline-tb303",
-    title: "Sonic Pi: una bassline acid con il TB-303",
+    title: "Sonic Pi TB-303: bassline acid e cutoff",
     date: "2026-06-06",
     category: "musica-audio",
     icon: "🎚️",
@@ -4455,7 +4527,15 @@ end
 Le chiavi: \`cutoff\` casuale a ogni nota fa "cantare" il filtro, \`res\` alta enfatizza la frequenza di taglio, \`.tick\` scorre le note in ordine. Cambia il \`ring\` di note e cambi la linea di basso.
 
 Aggiungi un \`with_fx :distortion\` attorno e ottieni quel ringhio sporco tipico dell'acid techno.
-`,
+
+
+## Da provare e verificare
+
+Il synth tb303 richiama un carattere acid attraverso risonanza, cutoff, inviluppo e note ripetute. Il risultato dipende anche dal registro e dalla durata delle note, non soltanto dalla velocità del pattern. Evita livelli eccessivi quando aumenti la risonanza e confronta variazioni sullo stesso groove. Prima costruisci una sequenza stabile, poi automatizza il filtro.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-gestione-errori",
@@ -4612,7 +4692,7 @@ Web MIDI API permette di ricevere e inviare messaggi MIDI su browser compatibili
   },
   {
     id: "sonic-pi-slicing-campioni",
-    title: "Sonic Pi: affettare i campioni con slice e stretch",
+    title: "Sonic Pi sample slicing: start, finish e stretch",
     date: "2026-06-11",
     category: "musica-audio",
     icon: "✂️",
@@ -4637,7 +4717,15 @@ end
 \`start\` e \`finish\` vanno da 0 a 1 (inizio e fine del campione): qui prendo una fetta da 1/8 per volta. \`.tick\` avanza a ogni giro, così scorro tutto il break un pezzo alla volta. \`beat_stretch\` allunga o comprime il campione per farlo stare in un numero di battute.
 
 Rimescola l'ordine delle fette (con \`choose\` invece di \`tick\`) e lo stesso break Amen diventa un ritmo completamente nuovo. È l'arte del chopping, in una manciata di righe.
-`,
+
+
+## Da provare e verificare
+
+Puoi isolare sezioni di un sample con parametri di inizio e fine e adattare la durata con opzioni di stretch. La frazione selezionata si riferisce al campione originale: cambiare i punti di taglio modifica anche il contenuto ritmico. Usa campioni di durata conosciuta e verifica che i confini non generino click. Quando serve, applica inviluppi brevi ai frammenti.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-creare-una-gem",
@@ -4808,7 +4896,7 @@ AnalyserNode espone dati nel dominio del tempo e della frequenza senza modificar
   },
   {
     id: "sonic-pi-generative-ring-tick",
-    title: "Sonic Pi: musica generativa con ring, tick e look",
+    title: "Sonic Pi ring e tick: sequenze generative",
     date: "2026-06-16",
     category: "musica-audio",
     icon: "🌱",
@@ -4836,7 +4924,15 @@ end
 \`.tick\` avanza di uno a ogni chiamata e torna all'inizio quando finisce; \`.look\` guarda il valore corrente senza avanzare. La magia nasce quando combini \`ring\` di lunghezze diverse: le note e le durate si sfasano, generando pattern che si evolvono per decine di battute prima di ripetersi.
 
 Poca scrittura, tanta musica: è il fascino del generativo.
-`,
+
+
+## Da provare e verificare
+
+ring crea una sequenza ciclica, mentre tick avanza lungo i valori nel contesto di esecuzione. È utile per note, durate e filtri che seguono pattern ripetuti. Quando due parti usano lo stesso contatore senza nomi distinti possono influenzarsi nel modo di avanzare: separa i contatori per responsabilità. Un pattern generativo diventa musicale se limiti scelta delle note, ritmo e densità.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-rspec-testare",
@@ -5010,7 +5106,7 @@ AudioWorklet permette elaborazione audio personalizzata nel thread di rendering 
   },
   {
     id: "sonic-pi-midi-controllo",
-    title: "Sonic Pi: controllare tutto con una tastiera MIDI",
+    title: "Sonic Pi MIDI: input e controllo dal vivo",
     date: "2026-06-21",
     category: "musica-audio",
     icon: "🎛️",
@@ -5037,7 +5133,15 @@ end
 Ogni evento MIDI diventa un messaggio che intercetti con \`sync "/midi:.../note_on"\`. I valori delle manopole li leggi con \`get\`/\`set\`, aggiornandoli mentre suoni.
 
 Il risultato: un'esibizione dove la tastiera controlla le note e le manopole plasmano il suono, mentre il codice resta il motore. Hardware ed editing dal vivo che si fondono: l'essenza di un set di live coding.
-`,
+
+
+## Da provare e verificare
+
+Sonic Pi può ricevere eventi MIDI, ma i nomi delle porte e dei dispositivi dipendono dalla configurazione locale. Prima di assegnare un controller a un parametro, controlla gli eventi in ingresso e il formato dei messaggi. Gestisci input mancanti e valori fuori intervallo. Un controller fisico rende comodo il live coding, ma la traccia dovrebbe poter funzionare anche senza periferiche.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-ractor-concorrenza",
@@ -5192,7 +5296,7 @@ Tone.js fornisce strumenti musicali ad alto livello sopra Web Audio, come sintet
   },
   {
     id: "sonic-pi-use-bpm-tempo",
-    title: "Sonic Pi: il tempo con use_bpm e le durate musicali",
+    title: "Sonic Pi use_bpm: battute e suddivisioni",
     date: "2026-06-26",
     category: "musica-audio",
     icon: "🕰️",
@@ -5218,7 +5322,15 @@ end
 A 128 BPM, \`sleep 1\` dura circa 0,47 secondi. Il vantaggio è enorme: ragioni in **termini musicali** (movimenti, sedicesimi) invece che in secondi. Cambia il \`use_bpm\` e tutto il brano accelera o rallenta restando in sync.
 
 Puoi anche usare \`use_bpm_mul 2\` per raddoppiare localmente il tempo di un loop. Pensare in beat invece che in secondi è il passaggio mentale che ti fa smettere di calcolare e iniziare a comporre.
-`,
+
+
+## Da provare e verificare
+
+use_bpm modifica la relazione tra beat e tempo reale. sleep 1 rappresenta normalmente un beat nel contesto attivo; valori frazionari permettono suddivisioni come ottavi e sedicesimi. Cambiare BPM senza rivedere le durate dei sample può produrre disallineamenti, soprattutto con loop preregistrati. Per pattern complessi documenta la lunghezza in battute, non soltanto in secondi.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-ampersand-symbol-shorthand",
@@ -5372,7 +5484,7 @@ I file audio vengono scaricati e decodificati in AudioBuffer prima di poter esse
   },
   {
     id: "sonic-pi-registrare-esportare",
-    title: "Sonic Pi: dalla jam alla traccia registrata",
+    title: "Sonic Pi recording: registrare e controllare il livello",
     date: "2026-07-01",
     category: "musica-audio",
     icon: "💾",
@@ -5402,7 +5514,15 @@ end
 Per un take ordinato: avvia con pochi elementi, poi introduci i layer uno alla volta (commenta e scommenta i loop mentre registri). Usa \`sync\` per tenere tutto agganciato, così il file esportato non ha loop che scivolano.
 
 Il WAV che ottieni lo porti in qualsiasi editor per il mastering. Il codice diventa lo spartito, la registrazione il disco.
-`,
+
+
+## Da provare e verificare
+
+La registrazione del set permette di riascoltare transizioni, livelli e durata effettiva delle sequenze. Prima della cattura definitiva prepara un breve test e controlla che il segnale non saturi. Registra una versione riproducibile dello script e annota BPM e parametri critici. L'editing e il mastering richiedono strumenti separati quando vuoi distribuire un brano rifinito.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-comparable-enumerable-custom",
@@ -5556,7 +5676,7 @@ Gli esperimenti di Chrome Music Lab mostrano relazioni tra ritmo, frequenza, int
   },
   {
     id: "sonic-pi-ambient-pad-riverbero",
-    title: "Sonic Pi: paesaggi ambient con pad e riverbero",
+    title: "Sonic Pi ambient pad: inviluppo e spazio",
     date: "2026-07-06",
     category: "musica-audio",
     icon: "🌌",
@@ -5586,7 +5706,15 @@ end
 Le chiavi dell'ambient: \`attack\` lungo (il suono entra piano, niente percussione), \`release\` lungo (le note si sovrappongono e sfumano), \`room: 1\` per un riverbero enorme, e campioni allungati con \`rate\` basso.
 
 Niente \`sample :bd_haus\`, niente sedicesimi: qui il tempo si dilata. Aggiungi un secondo pad su un accordo diverso e ottieni armonie che si incrociano lentamente. La musica smette di scandire il tempo e inizia a creare uno spazio.
-`,
+
+
+## Da provare e verificare
+
+Un pad ambient nasce spesso da note lunghe con attacco graduale, filtri dolci e una coda di riverbero controllata. Se release supera il tempo tra note, più voci restano sovrapposte: può essere desiderato, ma aumenta densità e livello. Prova a ridurre il numero di note prima di alzare il riverbero. Gli spazi fra gli eventi sono parte della composizione.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-stringhe-gsub-regex",
@@ -5752,7 +5880,7 @@ Un sistema generativo produce variazioni secondo regole: scale, intervalli, prob
   },
   {
     id: "sonic-pi-brano-techno-passo-passo",
-    title: "Sonic Pi: un brano techno costruito da zero",
+    title: "Sonic Pi techno: struttura di un brano",
     date: "2026-07-11",
     category: "musica-audio",
     icon: "🎚️",
@@ -5791,7 +5919,15 @@ end
 La ricetta: la cassa detta il tempo, l'hi-hat riempie gli off-beat, il basso acido dà il movimento ipnotico, lo stab di accordo (solo \`one_in(4)\`) aggiunge tensione a sorpresa.
 
 Registra partendo dalla sola cassa e aggiungi i loro uno a uno commentando/scommentando: è così che si costruisce un arrangiamento dal vivo.
-`,
+
+
+## Da provare e verificare
+
+Una traccia techno leggibile può essere costruita per livelli: kick, hi-hat, basso e variazioni. Parti da un groove stabile, introduce un elemento alla volta e mantieni allineate le sezioni con durate esplicite. Automazioni troppo rapide dei parametri possono rendere confuso il mix; usa cambiamenti progressivi e verifica le transizioni registrando il set. Un buon loop non basta: serve anche una struttura nel tempo.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-benchmark-misurare",
@@ -5959,7 +6095,7 @@ Ogni nota può usare una o più sorgenti con il proprio inviluppo. Un sintetizza
   },
   {
     id: "sonic-pi-didattica-codice-e-musica",
-    title: "Sonic Pi: perché insegna a programmare così bene",
+    title: "Imparare a programmare con Sonic Pi",
     date: "2026-07-16",
     category: "musica-audio",
     icon: "🎓",
@@ -5982,7 +6118,15 @@ end
 Il terzo: il **basso costo dell'errore**. Non rompi niente, non c'è compilazione, premi Run e riprovi. Sperimentare è gratis, e sperimentare è il modo in cui si impara davvero.
 
 La lezione va oltre la musica: qualsiasi strumento didattico dovrebbe puntare a un feedback rapido, concreto e a un basso costo dell'errore. Sonic Pi lo fa suonando.
-`,
+
+
+## Da provare e verificare
+
+Sonic Pi rende osservabili cicli, condizioni, variabili e temporizzazione attraverso il suono. L'immediatezza del feedback aiuta nell'apprendimento, ma non garantisce da sola la comprensione dei concetti: conviene chiedere di prevedere cosa accadrà prima di premere Run. Modifica una sola istruzione per volta e confronta risultato atteso e risultato ascoltato.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-programmazione-funzionale",
@@ -6152,7 +6296,7 @@ DelayNode ritarda il segnale; aggiungendo un collegamento di feedback puoi produ
   },
   {
     id: "sonic-pi-e-web-audio-stessa-idea",
-    title: "Sonic Pi e Web Audio: due strumenti, la stessa idea",
+    title: "Sonic Pi vs Web Audio: somiglianze e differenze",
     date: "2026-07-21",
     category: "musica-audio",
     icon: "🎧",
@@ -6182,6 +6326,14 @@ Cambiano la sintassi e le API, ma i concetti sono gli stessi: forme d'onda, filt
 È esattamente lo spirito del mio progetto **Dj_QBIT**: fare musica scrivendo codice, e trattare la programmazione come uno strumento creativo, non solo come lavoro. Da sviluppatore, è la cosa più naturale del mondo — e la più divertente.
 
 Grazie per aver seguito questi tre mesi di articoli quotidiani. Ci si sente in cuffia.
-`,
+
+
+## Da provare e verificare
+
+Sonic Pi è pensato per la composizione e il live coding musicale con un linguaggio vicino a Ruby. Web Audio è un'API del browser per costruire grafi audio programmabili in JavaScript. Condividono concetti come oscillatori, inviluppi e timing, ma hanno obiettivi e interfacce diverse. Scegli Sonic Pi per sperimentare rapidamente con un set; scegli Web Audio quando il suono deve essere integrato in un'applicazione web.
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   }
 ];
