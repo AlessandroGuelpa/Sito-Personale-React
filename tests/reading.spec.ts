@@ -173,7 +173,7 @@ test("an article opens from the archive without getting stuck in Suspense", asyn
     .getByRole("link")
     .click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "JavaScript: salvare dati nel browser con localStorage",
+    "localStorage: persistenza e sicurezza nel browser",
   );
   await expect(
     page
