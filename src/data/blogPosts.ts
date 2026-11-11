@@ -4038,6 +4038,8 @@ map trasforma ogni elemento, select ne filtra una parte e reduce accumula un ris
 
 Prendi un elenco di importi. Con map puoi convertire ciascun importo in centesimi; con select puoi conservare solo gli importi positivi; con reduce puoi calcolarne il totale. Concatenare tre trasformazioni rende il flusso espressivo, ma può allocare raccolte intermedie. Se il risultato finale è soltanto un totale, considera una singola aggregazione oppure un enumeratore lazy quando serve elaborare una sequenza grande. Un test utile parte da array vuoto, valori negativi e numeri decimali, verificando anche quale tipo viene restituito. In ambito finanziario conviene definire precisione e arrotondamento prima di applicare questi metodi.
 
+
+Quando il risultato deve essere restituito da una API, verifica anche la semantica dell'array vuoto: una collezione senza elementi non corrisponde necessariamente a un errore di elaborazione.
 **Documentazione**
 
 - [Ruby Core — Enumerable](https://docs.ruby-lang.org/en/master/Enumerable.html)`,
@@ -4528,6 +4530,8 @@ Le validazioni di Active Record migliorano feedback e coerenza applicativa, ma n
 
 Supponi che due richieste provino a registrare contemporaneamente lo stesso identificativo. Entrambe possono superare validates uniqueness prima che una delle due righe venga salvata. Per questo motivo un vincolo unico nel database è indispensabile quando l'unicità è un requisito del dominio. La validazione applicativa continua a servire per offrire un messaggio comprensibile, ma devi gestire anche l'eccezione che il database restituisce quando la concorrenza produce un conflitto. Prova il percorso con due richieste simultanee, non soltanto con due salvataggi sequenziali. Per i valori opzionali considera la semantica di null del database e verifica che il vincolo rifletta esattamente il requisito.
 
+
+Prima di introdurre un indice univoco su una tabella già popolata, cerca eventuali duplicati storici: una migrazione non deve fallire in produzione perché i dati precedenti violano il nuovo requisito.
 **Documentazione**
 
 - [Rails Guides — Active Record Validations](https://guides.rubyonrails.org/active_record_validations.html)`,
