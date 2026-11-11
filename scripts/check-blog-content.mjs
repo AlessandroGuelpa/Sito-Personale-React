@@ -3,6 +3,19 @@ import { readFile } from "node:fs/promises";
 
 const source = await readFile("src/data/blogPosts.ts", "utf8");
 const matches = [...source.matchAll(/^  \{\s*\n\s*id: "([^"]+)"/gm)];
+const NO_LONGER_ALLOWED_BOILERPLATE = "I casi sono diversi, ma evidenziano precondizioni";
+const DEEP_DIVES = new Set([
+  "shopify-inventario-scritture-concorrenti",
+  "webhook-riconciliazione-sincronizzazione",
+  "shopify-graphql-budget-query",
+  "transactional-outbox-invio-erp",
+  "webhook-idempotenza-ordini",
+  "rails-find-each-batch-memoria",
+  "rails-unicita-database-concorrenza",
+  "rails-problema-n-piu-1",
+  "react-prerender-html-metadati",
+  "fetch-abortcontroller-risposte-obsolete",
+]);
 const ALLOWED_HUBS = new Set([
   "shopify-integrazioni",
   "react-frontend",
@@ -67,6 +80,10 @@ for (const post of entries) {
   minWords = Math.min(minWords, count);
   wordCounts.push(count);
   assert(count >= 251, `Article ${post.id} has ${count} editorial words: minimum 251`);
+  assert(!post.content.includes(NO_LONGER_ALLOWED_BOILERPLATE), `Generic linking filler remains in ${post.id}`);
+  if (DEEP_DIVES.has(post.id)) {
+    assert(count >= 500, `Specialist article ${post.id} must have at least 500 substantive words, got ${count}`);
+  }
   const links = [...post.content.matchAll(/\]\(\/blog\/([a-z0-9-]+)\)/g)].map((match) => match[1]);
   assert(links.length > 0, `Article ${post.id} needs at least one contextual internal link`);
   for (const slug of links) {
