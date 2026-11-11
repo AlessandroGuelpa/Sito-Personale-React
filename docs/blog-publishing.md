@@ -30,13 +30,17 @@ precedente non è una fonte aggiornata né un prerequisito del processo.
 2. Controllare il registro per la data odierna in `Europe/Rome`: se esiste già
    una voce `programmata`, verificare il relativo articolo e terminare senza
    duplicare il contenuto o avanzare il prossimo tema.
-3. Scrivere circa 250–450 parole in italiano, con un problema concreto, un
+3. Scrivere indicativamente 350–750 parole in italiano (senza riempitivi), con un problema concreto, un
    esempio e una conseguenza pratica. Usare paragrafi brevi e sezioni leggibili.
    La prima persona può esprimere un ragionamento; non attribuire all'autore
    clienti, esperienze, risultati professionali o personali non documentati.
 4. Verificare i fatti con fonti primarie ufficiali correnti. Inserire link alle
    fonti in fondo all'articolo. Non dedurre o inventare date di lanci e missioni.
    Dichiarare gli esempi ipotetici e le condizioni delle semplificazioni.
+   Collegare contestualmente uno o due approfondimenti già pubblicati realmente pertinenti,
+   preservando gli URL esistenti; non aggiungere link solo per aumentare il loro numero.
+   Evitare titoli puramente narrativi che nascondono la domanda o la tecnologia cercata.
+   Il titolo, l'introduzione, le sezioni e l'estratto devono rispondere allo stesso intento di ricerca.
 5. Inserire un solo oggetto in cima all'array, con `id` univoco kebab-case,
    `title`, data di pubblicazione reale `AAAA-MM-GG`, `category`, `icon`, `excerpt`,
    `tags` e `content` Markdown. Conservare tutti gli articoli precedenti.
