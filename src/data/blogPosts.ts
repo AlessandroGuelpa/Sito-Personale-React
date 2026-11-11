@@ -3195,6 +3195,11 @@ Il bello è la coerenza: una volta capito il modello, esplori qualsiasi valore c
 
 In Ruby numeri, stringhe e simboli sono oggetti che rispondono a metodi. Non significa però che ogni operazione abbia lo stesso costo o che il linguaggio nasconda automaticamente tutti i dettagli della memoria. Usa classi per descrivere responsabilità coerenti ed evita gerarchie profonde quando basta una composizione di oggetti.
 
+
+## Oggetti e identità
+
+Un numero intero risponde a metodi come next, mentre una stringa supporta trasformazioni che non sono disponibili sugli stessi tipi. Questo non significa che tutti gli oggetti debbano essere trattati allo stesso modo. Considera due istanze con valori uguali: il loro confronto tramite == non è necessariamente una verifica dell'identità dell'oggetto. Il metodo equal? serve a un obiettivo diverso. Comprendere la distinzione aiuta quando si condividono riferimenti tra funzioni e quando si mutano strutture dati. Un piccolo esercizio consiste nel creare due stringhe con lo stesso testo, modificarne una e confrontare nuovamente contenuto e identità. Evita di fondare la logica applicativa sulla rappresentazione interna di un oggetto.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://www.ruby-lang.org/en/documentation/)`,
@@ -3389,6 +3394,11 @@ Regola pratica: usa la \`lambda\` quando vuoi qualcosa che si comporta come una 
 
 Un blocco è una porzione di codice passata a un metodo. Proc permette di conservarlo in un oggetto; lambda introduce regole più simili a un metodo per il numero di argomenti e per il comportamento di return. Prova i casi con yield, blocco opzionale e chiamata da più punti prima di scegliere una forma per un'API pubblica.
 
+
+## Un caso di riutilizzo
+
+Immagina un'operazione che filtra numeri e riutilizza la regola in due punti. Un blocco inline è sufficiente se viene eseguito una sola volta; un Proc può rendere quella regola un valore passabile tra metodi. Una lambda, invece, segue controlli sugli argomenti e sul return differenti rispetto a un Proc creato con Proc.new. Queste differenze si notano soprattutto in metodi che restituiscono valori anticipatamente. Per verificarle, crea due callable con gli stessi argomenti, usa call e osserva il comportamento con un argomento mancante. Scegli la forma più chiara per chi leggerà il codice, non quella con meno caratteri.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Proc.html)`,
@@ -3576,6 +3586,11 @@ Quel \`&:even?\` è la forma compatta di \`{ |n| n.even? }\`. Una volta presa la
 ## Da tenere a mente
 
 map trasforma ogni elemento, select ne filtra una parte e reduce accumula un risultato. Le tre operazioni non sono equivalenti e possono richiedere allocazioni differenti. Per elaborare raccolte molto grandi valuta Enumerator e lazy; per operazioni che accedono al database controlla se una query SQL potrebbe evitare di materializzare tutti i record in memoria.
+
+
+## Tre risultati differenti
+
+Prendi un elenco di importi. Con map puoi convertire ciascun importo in centesimi; con select puoi conservare solo gli importi positivi; con reduce puoi calcolarne il totale. Concatenare tre trasformazioni rende il flusso espressivo, ma può allocare raccolte intermedie. Se il risultato finale è soltanto un totale, considera una singola aggregazione oppure un enumeratore lazy quando serve elaborare una sequenza grande. Un test utile parte da array vuoto, valori negativi e numeri decimali, verificando anche quale tipo viene restituito. In ambito finanziario conviene definire precisione e arrotondamento prima di applicare questi metodi.
 
 **Documentazione**
 
@@ -3768,6 +3783,11 @@ Per questo i simboli sono perfetti come chiavi di hash e nomi/identificatori (\`
 ## Da tenere a mente
 
 Una String è una sequenza di caratteri modificabile, salvo congelamento; un Symbol rappresenta un identificatore immutabile. Non sostituire tutte le stringhe con simboli per presunte ottimizzazioni: scegli il tipo in base al significato dei dati. Per input provenienti dall'esterno, valida sempre i valori consentiti prima di trasformarli in chiavi di logica applicativa.
+
+
+## Chiavi e dati provenienti dall'esterno
+
+Un Hash di configurazione può usare simboli come :timeout o :host perché rappresentano nomi stabili controllati dal programma. Un valore inserito da una persona, invece, non diventa automaticamente un identificatore valido solo perché lo si converte in simbolo. Se ricevi JSON da un'API, chiarisci se le chiavi sono stringhe e applica una normalizzazione in un solo punto. Il test più semplice verifica cosa accade quando accedi allo stesso Hash tramite "name" e :name: in Ruby sono chiavi distinte. Preferire una convenzione coerente è più importante di una presunta differenza di prestazioni non misurata.
 
 **Documentazione**
 
@@ -3967,6 +3987,11 @@ Conoscere questi metodi significa scrivere meno \`if key\`, e lasciare che sia l
 ## Da tenere a mente
 
 Un Hash associa chiavi a valori e conserva l'ordine d'inserimento. fetch è utile quando una chiave mancante deve essere distinguibile da un valore nil. Non usare un default mutabile condiviso senza capire i riferimenti: un array riutilizzato accidentalmente può contaminare chiavi diverse. Verifica merge, transform_values e dig sui casi limite.
+
+
+## Default mutabili e chiavi mancanti
+
+Se scrivi Hash.new([]), più chiavi mancanti possono restituire lo stesso array predefinito. Modificarlo può creare risultati sorprendenti, senza aver inserito davvero la chiave nel contenitore. Per costruire gruppi indipendenti è più sicuro usare un blocco che inizializzi un array per ogni nuova chiave. Distinguere fetch da un accesso con [] aiuta anche a non trattare un campo assente come un valore nil intenzionale. Prova una struttura annidata in cui un campo manca: dig può restituire nil, mentre un controllo più rigoroso potrebbe richiedere un errore esplicito. L'API scelta deve riflettere il contratto dei dati.
 
 **Documentazione**
 
@@ -4178,6 +4203,11 @@ Con \`define_method\` crei metodi in un ciclo invece di scriverli a mano uno per
 ## Da tenere a mente
 
 La metaprogrammazione consente di definire metodi e comportamenti dinamicamente. È potente ma rende meno immediato capire da dove provenga una chiamata. Usa define_method e method_missing soltanto quando il vantaggio è concreto; documenta la superficie pubblica ed evita di nascondere errori di battitura dietro fallback generici. Test e introspezione diventano particolarmente importanti.
+
+
+## Metodi dinamici con responsabilità esplicita
+
+Creare metodi con define_method può essere utile quando molte proprietà condividono una regola uniforme. Ma se la lista cambia spesso o dipende da input esterni, il codice dinamico diventa difficile da analizzare. Una parte del programma potrebbe chiamare un metodo che non compare nella ricerca testuale del progetto. Prima di introdurre metaprogrammazione, chiediti se una tabella di configurazione o un metodo esplicito renderebbe più semplice il debug. Prova respond_to?, l'elenco degli instance_methods e il comportamento di un metodo non previsto. Un sistema che gestisce le assenze con method_missing deve offrire errori coerenti, non assorbire ogni chiamata sconosciuta.
 
 **Documentazione**
 
@@ -4393,6 +4423,11 @@ Nota la potenza: \`name:\` e \`provider:\` non solo verificano che le chiavi esi
 
 Il pattern matching permette di verificare struttura e contenuto di array e hash con case/in. È utile con payload eterogenei, ma il pattern non convalida automaticamente l'intero contratto dei dati. Definisci una gestione esplicita per i casi non previsti e prova differenze fra chiavi mancanti, valori nil e tipi incompatibili.
 
+
+## Pattern parziali e input non attendibili
+
+Un payload API potrebbe contenere un hash con status e data. Un pattern può verificare entrambi i campi e assegnare nomi locali, ma l'assenza di una chiave o un valore di tipo imprevisto deve essere gestita. Non confondere un match riuscito con una validazione completa del documento: il payload potrebbe avere altri campi malformati. Un test utile passa un hash valido, uno senza status e uno con status nullo. Prevedi un ramo else che produca un risultato comprensibile, soprattutto quando i dati arrivano da servizi esterni. È preferibile rifiutare esplicitamente i casi non supportati anziché farli procedere per errore.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/syntax/pattern_matching_rdoc.html)`,
@@ -4603,6 +4638,11 @@ Se proprio devi controllare, usa \`respond_to?(:each)\` invece della classe: ver
 ## Da tenere a mente
 
 Il duck typing si basa sui metodi supportati da un oggetto più che sull'appartenenza a una classe specifica. Un oggetto che risponde a un metodo non garantisce però che restituisca il risultato atteso. Per API condivise documenta argomenti, eccezioni e valori di ritorno e scrivi test di contratto sui diversi oggetti che devono sostituirsi a vicenda.
+
+
+## Definire un contratto senza ereditarietà
+
+Due oggetti possono esporre entrambi un metodo calculate e comportarsi diversamente. Il duck typing facilita la sostituzione di implementazioni, ma funziona bene soltanto quando i chiamanti conoscono il significato degli argomenti e dell'output. Per esempio, una classe potrebbe restituire un numero e un'altra un hash: la semplice presenza del metodo non evita un errore successivo. Prepara un set di test condiviso che eserciti entrambe le implementazioni sugli stessi input. Il contratto deve includere anche gli errori che i chiamanti possono gestire. Non è necessario introdurre una superclasse per documentare aspettative chiare.
 
 **Documentazione**
 
@@ -4821,6 +4861,11 @@ Rails ne è pieno (\`Comparable\`, \`Enumerable\`, i \`Concern\`). Un modulo per
 
 I moduli permettono di condividere comportamento senza costruire una lunga catena di ereditarietà. include, prepend ed extend agiscono in modi diversi sulla ricerca dei metodi. Se due mixin definiscono lo stesso metodo, controlla l'ordine degli antenati e il comportamento di super. Preferisci moduli con responsabilità limitate e nomi chiari.
 
+
+## Capire l'ordine di risoluzione dei metodi
+
+Una classe può includere due moduli che definiscono metodi con lo stesso nome. Quale implementazione viene usata dipende dalla catena degli antenati; prepend modifica ulteriormente il percorso. Prima di inserire un modulo in una libreria esistente, stampa la lista ancestors e controlla le chiamate a super. Un test utile crea una classe minima con include e prepend, poi osserva l'ordine delle chiamate. Questo esercizio evita di attribuire i risultati a una precedenza intuitiva che non corrisponde al linguaggio. I moduli sono più facili da mantenere quando espongono poche responsabilità e non modificano silenziosamente comportamento non correlato.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Module.html)`,
@@ -5032,6 +5077,11 @@ Puoi anche usare \`retry\` dentro un \`rescue\` per ritentare (utile con le reti
 ## Da tenere a mente
 
 rescue dovrebbe intercettare gli errori che il codice sa realmente gestire. Catturare tutto e continuare può nascondere condizioni gravi. ensure è utile per rilasciare risorse anche quando un'operazione fallisce; non sostituisce transazioni o meccanismi di retry. Registra il contesto minimo necessario senza esporre segreti e mantieni visibile l'errore originale.
+
+
+## Non intercettare ciò che non sai correggere
+
+Una chiamata HTTP può fallire per timeout, autorizzazione o dati non validi. Mettere ogni operazione dentro rescue StandardError e restituire sempre un array vuoto nasconde questi casi e rende impossibile distinguere assenza di dati e guasto. Identifica prima le eccezioni recuperabili, definisci un risultato per chi chiama e lascia propagare quelle inattese. Se apri un file o una risorsa, ensure può essere necessario per la chiusura; quando esiste un blocco di gestione automatica della risorsa, valutane l'utilizzo. Prova che cosa accade con errori diversi e verifica che i log non contengano token o payload sensibili.
 
 **Documentazione**
 
@@ -5252,6 +5302,11 @@ I punti chiave: versiona con cura (segui il semantic versioning nel file \`versi
 
 Una gem distribuisce codice Ruby e metadati di dipendenza. Prima della pubblicazione verifica file inclusi, licenza, versione e compatibilità con i runtime supportati. Non pubblicare credenziali o artefatti locali nel pacchetto. Usa versioning coerente e test di installazione da un progetto distinto, non soltanto dall'ambiente di sviluppo.
 
+
+## Versioni e distribuzione affidabile
+
+Quando una gem espone una classe pubblica, altre applicazioni iniziano a dipendere dal suo comportamento. Una modifica incompatibile può rompere progetti anche se i test locali passano. Prima della prima release definisci gli entry point, la dipendenza minima da Ruby e la struttura dei file inclusi nel pacchetto. Controlla il contenuto effettivo dell'archivio costruito e prova l'installazione in un progetto separato. Un piccolo CHANGELOG aiuta a spiegare cosa è cambiato fra versioni. Se la libreria legge configurazioni o segreti, non includere file di sviluppo personali nell'artefatto pubblicato.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://guides.rubygems.org/make-your-own-gem/)`,
@@ -5471,6 +5526,11 @@ Il valore vero non è "trovare bug": è **progettare meglio**. Se un metodo è d
 ## Da tenere a mente
 
 Un test utile descrive un comportamento e fallisce se il requisito viene violato. Evita aspettative che replicano l'implementazione riga per riga: diventano fragili durante il refactoring. Prepara esempi per input validi, valori limite ed errori; isola chiamate esterne e tempo quando rendono l'esecuzione non deterministica.
+
+
+## Test di comportamento, non di implementazione
+
+Un test che si aspetta una chiamata a un metodo privato può fallire dopo un refactoring innocuo. Un test che verifica l'output pubblico rimane valido se il comportamento non cambia. Prepara esempi chiari per il caso ordinario, gli input limite e gli errori. Dove il tempo influenza il risultato, inietta un orologio controllabile o usa il supporto di test per congelare il tempo. Dove il codice invoca un'API esterna, un mock è utile per il contratto locale, ma non può garantire che il servizio remoto sia rimasto compatibile. Mantieni almeno una verifica di integrazione appropriata quando il sistema lo richiede.
 
 **Documentazione**
 
@@ -5699,6 +5759,11 @@ Ancora sperimentale in alcuni aspetti, ma è la direzione di Ruby per sfruttare 
 
 Ractor permette un modello di concorrenza basato sull'isolamento di oggetti e messaggi. Non rende automaticamente ogni programma parallelo o più veloce: trasferimento dei dati, API supportate e carichi di lavoro incidono sul risultato. Misura l'overhead e verifica la compatibilità delle librerie prima di usarlo in una pipeline di produzione.
 
+
+## Misurare prima di parallelizzare
+
+Un calcolo CPU-bound può trarre beneficio dal parallelismo, ma la suddivisione del lavoro introduce costi di creazione, comunicazione e raccolta dei risultati. Con Ractor, inoltre, i dati non liberamente condivisibili vanno trasferiti o copiati seguendo le regole del modello. Se il lavoro dura pochi millisecondi, l'overhead potrebbe superare il beneficio. Confronta una versione sequenziale e una concorrente usando lo stesso dataset, poi valuta anche memoria e variabilità dei tempi. Il vantaggio non è garantito e dipende dalla versione di Ruby e dalle librerie coinvolte. Se il collo di bottiglia è la rete, servono strategie diverse.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Ractor.html)`,
@@ -5903,6 +5968,11 @@ Puoi usare \`&\` anche per passare un blocco già pronto: \`def stampa(&blocco);
 ## Da tenere a mente
 
 La forma &:method converte un simbolo in un blocco che invoca il metodo indicato su ciascun elemento. È una scorciatoia leggibile per trasformazioni semplici, non una sostituzione universale dei blocchi: quando occorrono argomenti o logica condizionale un blocco esplicito è spesso più chiaro. Valuta la leggibilità prima di ogni micro-ottimizzazione.
+
+
+## Leggibilità di una pipeline Enumerable
+
+Nella trasformazione users.map(&:name), la scorciatoia evita di scrivere un blocco che invoca soltanto name. Se però la logica richiede di gestire elementi nil, formattare una stringa o passare parametri, una lambda esplicita può essere più chiara. Una pipeline con molte abbreviazioni non diventa migliore soltanto perché è più corta. Verifica il comportamento quando gli elementi non implementano il metodo richiesto: la conversione da Symbol non fornisce un fallback automatico. Durante una code review privilegia una forma immediatamente comprensibile, soprattutto quando il codice verrà modificato da persone che non conoscono ancora tutte le scorciatoie del linguaggio.
 
 **Documentazione**
 
@@ -6127,6 +6197,11 @@ Definendo un solo metodo (\`<=>\`), \`Comparable\` te ne regala una decina: \`<\
 
 Comparable usa il risultato dell'operatore <=> per offrire confronti come < e >=. La funzione deve rispettare un ordinamento coerente; se due oggetti non sono confrontabili può restituire nil. Testa transitività, uguaglianza e valori limite. Un confronto incoerente può rendere ordinamenti e ricerche difficili da prevedere.
 
+
+## Ordinamenti coerenti in presenza di valori mancanti
+
+Se confronti prodotti per prezzo, devi decidere cosa accade quando uno dei due prezzi non è disponibile. Un operatore <=> che restituisce risultati incompatibili tra confronti diversi rende l'ordinamento imprevedibile. Non sostituire i valori mancanti con zero senza un requisito: potrebbe cambiare il significato del confronto. Scrivi test con valori uguali, crescenti e nulli e verifica la transitività. Quando il dominio ammette solo ordinamenti parziali, può essere più sicuro usare una funzione di ordinamento esplicita per la singola vista, anziché dichiarare che tutti gli oggetti sono universalmente comparabili.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Comparable.html)`,
@@ -6334,6 +6409,11 @@ I gruppi di cattura tornano comodi: \`"2026-07-07".match(/(\\d+)-(\\d+)-(\\d+)/)
 ## Da tenere a mente
 
 gsub sostituisce tutte le occorrenze che corrispondono a una regex o stringa. Prima di usarlo su dati reali valuta Unicode, escaping e caratteri speciali. Una regex troppo permissiva può alterare testo non previsto; su input non attendibile considera anche il costo di pattern complessi. Scrivi test per stringhe vuote, sequenze ripetute e caratteri accentati.
+
+
+## Espressioni regolari e input reale
+
+Una sostituzione gsub può sembrare corretta su una stringa semplice e fallire con caratteri accentati, punteggiatura o testo multilinea. Se il pattern contiene contenuto proveniente dall'utente, verifica che venga trattato come testo quando questo è il requisito, evitando di interpretarlo involontariamente come sintassi regex. Gli esempi di test dovrebbero includere un testo senza corrispondenze, uno con più occorrenze e uno con caratteri non ASCII. Per elaborazioni ripetute su input molto lunghi misura il costo del pattern e valuta se una trasformazione più semplice potrebbe essere sufficiente.
 
 **Documentazione**
 
@@ -6568,6 +6648,11 @@ Perché conta: le intuizioni sulle performance sbagliano di continuo. Quella che
 
 Una misurazione va ripetuta su dati rappresentativi e in condizioni comparabili. Il primo avvio può includere costi di inizializzazione, cache e compilazione che alterano il confronto. Distingui tempo CPU, memoria e attesa I/O. Se il collo di bottiglia è nel database, ottimizzare una piccola funzione Ruby potrebbe non avere alcun effetto sull'esperienza dell'utente.
 
+
+## Misure ripetibili e variabili esterne
+
+Per confrontare due implementazioni devi usare lo stesso input e ridurre il rumore dovuto a inizializzazione, garbage collector e processi concorrenti. Una singola misura isolata non dimostra che una soluzione sia più veloce. Ripeti le prove, osserva distribuzione e differenze relative, poi verifica che l'ottimizzazione abbia effetto nel percorso reale dell'applicazione. Un metodo Ruby più rapido di qualche microsecondo non migliora una request dominata da una query lenta. Formula prima l'ipotesi e scegli una misura pertinente al requisito, come tempo totale o memoria allocata.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Benchmark.html)`,
@@ -6785,6 +6870,11 @@ Non trasformano Ruby in Haskell, ma per pulire una stringa o costruire funzioni 
 ## Da tenere a mente
 
 then permette di concatenare trasformazioni leggibili e curry adatta funzioni con più argomenti in applicazioni parziali. Non sono automaticamente preferibili al codice imperativo: una catena troppo lunga nasconde stati intermedi ed errori. Preferisci funzioni con effetti collaterali espliciti e verifica che i nomi rendano comprensibile il flusso.
+
+
+## Effetti collaterali e funzioni composte
+
+Una catena con then è facile da seguire quando ogni passaggio restituisce un valore ben definito. Diventa più difficile da comprendere se alcune funzioni modificano oggetti esterni o sollevano eccezioni senza un contratto chiaro. Prima di comporre trasformazioni su dati API, decidi dove validare la struttura e dove gestire gli errori. Prova un input vuoto, un valore inatteso e un caso in cui una funzione intermedia fallisce. La composizione è utile quando rende esplicito il percorso dei dati; non è un obiettivo di stile da applicare a ogni metodo.
 
 **Documentazione**
 
