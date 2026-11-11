@@ -1,4 +1,5 @@
 import type { BlogPost } from "@/data/blogPosts";
+import { effectiveArticleDates } from "@/utils/blog-dates";
 import { blogHubForPost, blogHubPath, getBlogHub } from "@/config/blog-hubs";
 import type { BlogSummary } from "@/types/blog";
 
@@ -64,6 +65,7 @@ function PostContent({
   relatedPosts: BlogSummary[];
 }) {
   const minutes = readingTimeMinutes(post.content);
+  const { publishedAt, modifiedAt } = effectiveArticleDates(post);
   const hub = getBlogHub(blogHubForPost(post));
   return (
     <DefaultLayout>
@@ -86,8 +88,8 @@ function PostContent({
         type="article"
       />
       <Helmet>
-        <meta content={post.firstPublishedAt ?? post.date} property="article:published_time" />
-        <meta content={post.updatedAt ?? post.date} property="article:modified_time" />
+        <meta content={publishedAt} property="article:published_time" />
+        <meta content={modifiedAt} property="article:modified_time" />
         <meta content={AUTHOR_NAME} property="article:author" />
         {post.tags?.map((tag) => (
           <meta key={tag} content={tag} property="article:tag" />

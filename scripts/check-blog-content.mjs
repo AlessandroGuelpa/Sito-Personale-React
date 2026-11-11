@@ -44,6 +44,9 @@ const entries = matches.map((match, i) => {
     id,
     block,
     hub: block.match(/\n\s*hub: "([^"]+)"/)?.[1],
+    date: block.match(/\n\s*date: "([^"]+)"/)?.[1],
+    firstPublishedAt: block.match(/\n\s*firstPublishedAt: "([^"]+)"/)?.[1],
+    updatedAt: block.match(/\n\s*updatedAt: "([^"]+)"/)?.[1],
     content: contentOf(block, id),
   };
 }).filter((post) => post.id !== "overshoot-day-trogloditi"); // Commented-out draft.
@@ -56,6 +59,9 @@ const wordCounts = [];
 let internalLinks = 0;
 
 for (const post of entries) {
+  const expectedPublishedAt = post.firstPublishedAt ?? post.date;
+  const expectedModifiedAt = [post.date, post.firstPublishedAt, post.updatedAt].filter(Boolean).sort().at(-1);
+  assert(expectedModifiedAt >= expectedPublishedAt, `Invalid publication chronology: ${post.id}`);
   assert(ALLOWED_HUBS.has(post.hub), `Invalid or missing editorial hub: ${post.id}`);
   const count = editorialWordCount(post.content);
   minWords = Math.min(minWords, count);

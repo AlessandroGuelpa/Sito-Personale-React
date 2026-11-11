@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 import { blogPosts } from "./src/data/blogPosts";
+import { effectiveArticleDates } from "./src/utils/blog-dates";
 import { BLOG_HUBS, BLOG_PAGE_SIZE, blogHubForPost, blogArchivePath } from "./src/config/blog-hubs";
 import { buildExcerpt, readingTimeMinutes } from "./src/utils/seo";
 import { selectRelatedPosts } from "./src/utils/related-posts";
@@ -108,7 +109,7 @@ function blogMetadata(): Plugin {
         ),
         ...index.map(
           (post) =>
-            `  <url><loc>https://alessandroguelpa.it/blog/${post.id}</loc><lastmod>${post.updatedAt ?? post.firstPublishedAt ?? post.date}</lastmod></url>`,
+            `  <url><loc>https://alessandroguelpa.it/blog/${post.id}</loc><lastmod>${effectiveArticleDates(post).modifiedAt}</lastmod></url>`,
         ),
       );
       this.emitFile({
