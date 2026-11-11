@@ -15,6 +15,7 @@ function blogMetadata(): Plugin {
       id: post.id,
       title: post.title,
       date: post.date,
+      updatedAt: post.updatedAt,
       category: post.category,
       excerpt: buildExcerpt(post, 180),
       tags: post.tags ?? [],
