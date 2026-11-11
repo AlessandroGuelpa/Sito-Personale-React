@@ -1,5 +1,5 @@
 import type { BlogPost } from "@/data/blogPosts";
-import { effectiveArticleDates } from "@/utils/blog-dates";
+import { effectiveArticleDates } from "./blog-dates";
 
 export const SITE_URL = "https://alessandroguelpa.it";
 export const SITE_NAME = "Alessandro Guelpa";
