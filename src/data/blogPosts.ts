@@ -2080,772 +2080,328 @@ Oggi è così. L'unico "drop" che vorrei fare è prendere queste persone e butta
 },*/
   {
     id: "principio-di-archimede-e-i-container-docker",
-    title: "Il Principio di Archimede: Fai Galleggiare le Tue App con Docker",
+    title: "Docker: container, immagini e dipendenze isolate",
     date: "2026-03-31",
     category: "sviluppo-software",
     icon: "🐳",
+    excerpt: "Come funzionano i container Docker, cosa isolano davvero e come creare un'immagine riproducibile senza confonderla con una macchina virtuale.",
+    tags: ["Docker","Container","DevOps","Node.js"],
     content: `
+Un progetto funziona sul computer di sviluppo e fallisce quando passa su un'altra macchina. Spesso la differenza è nell'ambiente: versione del runtime, dipendenze, variabili di configurazione o librerie di sistema. Docker permette di distribuire un'applicazione insieme a una parte definita di questo ambiente.
 
-A Siracusa, nel III secolo a.C., Archimede si immerse in una vasca da bagno, notò che l'acqua traboccava e capì il principio del galleggiamento. Leggenda vuole che sia uscito nudo per strada urlando *"Eureka!"*.
+## Container e macchine virtuali non sono la stessa cosa
 
-Noi sviluppatori non urliamo "Eureka" in vasca da bagno. Lo urliamo alle tre di notte quando, dopo due giorni di errori incomprensibili, l'applicazione finalmente si avvia. E spesso, la "vasca" che ci salva la vita è un container Docker.
+Un container esegue processi isolati condividendo il kernel dell'host, dove l'architettura lo consente. Una macchina virtuale esegue invece un proprio sistema operativo guest. L'isolamento dei container non è assoluto: permessi, rete, file montati e gestione dei segreti richiedono configurazione. La metafora della nave che galleggia è utile solo fino a un certo punto: il container non elimina tutte le differenze tra ambienti.
 
-## La Spinta Idrostatica del Software
+## Come rendere riproducibile una build
 
-Il Principio di Archimede afferma che un corpo immerso in un fluido riceve una spinta verso l'alto pari al peso del fluido spostato. In pratica, se la densità del corpo è strutturata bene, il corpo galleggia, indipendente da quanto sia profondo o turbolento l'oceano sotto di lui.
+Un Dockerfile definisce l'immagine a partire da un'immagine base, copia i file necessari e installa le dipendenze. Per Node.js è utile fissare una versione di runtime supportata, mantenere un lockfile e preferire un'installazione deterministica con **npm ci**. Un file .dockerignore evita di copiare node_modules, credenziali e artefatti locali.
 
-Nello sviluppo moderno, l'oceano turbolento è il sistema operativo del vostro computer (o del server). Tra versioni di Node.js incompatibili, variabili d'ambiente mancanti e librerie globali in conflitto, far girare un progetto vecchio sul vostro Mac nuovo è un incubo. 
+L'immagine andrebbe costruita nella CI e testata prima del rilascio. In produzione, i segreti vanno forniti dall'ambiente di esecuzione, non inseriti nell'immagine. I volumi servono quando i dati devono sopravvivere al ciclo di vita del container.
 
-I Container sono l'applicazione pratica del galleggiamento: chiudiamo il nostro codice e le sue dipendenze in una "nave" stagna. La nave galleggia sul Kernel del sistema operativo host, ma non si allaga mai con i problemi locali.
+## Quando ha senso usarlo
 
-## Il Fango: L'Incompatibilità Globale
+Docker è utile per uniformare sviluppo, test e deploy, ma introduce un livello di configurazione da mantenere. Un semplice progetto statico può non averne bisogno. Prima di adottarlo, verifica cosa devi riprodurre: dipendenze, servizi collegati, versione del database o strumenti di build.
 
-Qualche mese fa ho clonato il repository di un vecchio progetto React + Express universitario per fare una piccola modifica. 
+**Fonti**
 
-Non ho usato Docker. Ho semplicemente fatto \`npm install\` e \`npm start\`.
-
-\`\`\`bash
-// Bad Code: Affogare nell'oceano delle dipendenze globali
-$ npm start
-
-Error: error:0308010C:digital envelope routines::unsupported
-    at new Hash (node:internal/crypto/hash:71:19)
-    at Object.createHash (node:crypto:133:10)
-    ...
-\`\`\`
-
-Il progetto usava Node.js v14. Il mio Mac aveva installato Node.js v20. L'algoritmo di hashing di Webpack era deprecato nelle versioni nuove. Ho passato tre ore a disinstallare e reinstallare versioni di Node con NVM, rompendo nel processo altri due progetti moderni a cui stavo lavorando. Ero letteralmente andato a fondo.
-
-## L'Ingegneria: Costruire lo Scafo (Dockerfile)
-
-L'ingegneria software seria non tollera il "funziona solo se hai esattamente il mio stesso computer". L'ingegneria richiede ambienti immutabili. 
-
-Ho cancellato tutto, ho fatto un bel respiro e ho scritto un \`Dockerfile\`. Ho creato una barca su misura che conteneva la vecchia e rassicurante versione di Node.js, isolandola dal mio Mac.
-
-\`\`\`dockerfile
-# Good Code: Il nostro scafo stagno
-# Partiamo da un "fluido" isolato con la versione esatta che ci serve
-FROM node:14-alpine
-
-# Creiamo la cabina di pilotaggio
-WORKDIR /app
-
-# Imbarchiamo i file
-COPY package*.json ./
-RUN npm install
-
-COPY . .
-
-# Salpiamo
-EXPOSE 3000
-CMD ["npm", "start"]
-\`\`\`
-
-Con un banale \`docker build\` e \`docker run\`, l'applicazione è partita al primo colpo, galleggiando felicemente nel suo container, totalmente all'oscuro del fatto che fuori ci fosse Node 20.
-
-## Il Takeaway
-
-L'ecosistema del vostro computer locale è caotico e in continua mutazione. Se non isolate le vostre applicazioni, prima o poi verranno affondate da un aggiornamento di sistema o da una libreria globale sovrascritta.
-
-Imparate a "containerizzare" i vostri progetti fin dal giorno zero. Non solo vi salverà la sanità mentale quando cambierete PC, ma sarete certi che la vostra app galleggerà esattamente allo stesso modo sia sul vostro localhost che sui server di produzione. Archimede ne sarebbe orgoglioso.
-
-    `
+- [Docker Docs — panoramica dei container](https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/)
+- [Docker Docs — best practice per Dockerfile](https://docs.docker.com/build/building/best-practices/)
+`
   },
   {
     id: "forza-di-attrito-e-la-ux-dei-form",
-    title: "La Forza di Attrito: Perché gli Utenti Abbandonano il Tuo Sito",
+    title: "Form UX: ridurre l'abbandono e gli errori",
     date: "2026-04-15",
     category: "sviluppo-software",
     icon: "🛹",
+    excerpt: "Etichette chiare, campi essenziali, messaggi di errore e accessibilità: come migliorare un form senza affidarsi a trucchi visivi.",
+    tags: ["UX","Form","Accessibilità","Conversione"],
     content: `
+Ogni campo aggiuntivo chiede tempo, attenzione e informazioni. In un modulo di contatto o durante il checkout, la complessità può aumentare gli errori e scoraggiare la compilazione. Non basta però ridurre il numero dei campi: occorre chiedere le informazioni corrette, nel momento opportuno.
 
-Chiunque abbia preparato l'esame di Fisica I sa che i problemi sul "piano inclinato senza attrito" sono una meravigliosa menzogna. Nella realtà, i cubetti di legno non scivolano all'infinito. Si fermano. 
+## Prima il compito dell'utente
 
-L'attrito è la forza che si oppone al movimento di due superfici a contatto. Dissipa energia sotto forma di calore, rallenta gli oggetti e, se è abbastanza forte (attrito statico), impedisce persino che il movimento inizi.
+Identifica lo scopo del form. Per un primo contatto possono bastare un recapito e una descrizione della richiesta; per una spedizione sono indispensabili altri dati. Evita i campi obbligatori che non servono al completamento del compito e spiega chiaramente quali informazioni sono necessarie.
 
-Se c'è un campo in cui l'attrito fa più danni che in meccanica, è la User Experience (UX) dello sviluppo web. Ogni click inutile, ogni campo form in più e ogni secondo di caricamento è pura forza di attrito che agisce contro l'utente, consumando la sua pazienza fino a farlo fermare del tutto (e fargli chiudere la scheda del browser).
+Un placeholder non sostituisce un'etichetta visibile. Usa label associate ai controlli, suggerimenti persistenti quando la compilazione è complessa e tipi di input appropriati. Il comportamento deve funzionare anche da tastiera e con tecnologie assistive.
 
-## L'Attrito Statico del Checkout
+## Errori che aiutano a correggere
 
-In fisica, l'attrito statico è sempre maggiore dell'attrito dinamico. Significa che serve molta più spinta per far partire un blocco fermo rispetto a quanta ne serve per mantenerlo in movimento.
+Un messaggio generico come «Dati non validi» costringe a indovinare. Meglio indicare il campo interessato e il vincolo violato, conservando quanto già inserito. La validazione nel browser migliora l'esperienza, ma non sostituisce la validazione lato server.
 
-Nel web, la registrazione è il nostro attrito statico. Un utente vuole comprare un prodotto (vuole muoversi). Ma prima di pagare, tu sviluppatore gli piazzi davanti un muro: "Crea un account, inserisci nome, cognome, indirizzo, codice fiscale, data di nascita, e confermami la mail". Lo sforzo iniziale è così alto che l'utente molla la presa. Hai perso una vendita.
+## Come misurare il risultato
 
-## Il Fango: Form Infiniti e Pazienza Esaurita
+Definisci un evento di avvio, uno di invio e uno di errore. Confronta completamenti ed errori prima e dopo la modifica, tenendo conto di dispositivo, traffico e intenzione dell'utente. Una modifica esteticamente gradevole non è automaticamente un miglioramento: servono osservazioni e test.
 
-Per un e-commerce locale di vestiti, ho sviluppato la pagina di checkout. Il cliente (il negoziante) mi aveva detto: *"Prendi più dati possibili, voglio sapere tutto di loro per fare marketing!"*.
+**Fonti**
 
-Da bravo soldatino, ho costruito un mostro in React. 
-
-\`\`\`jsx
-// Bad Code: Il piano inclinato ricoperto di carta vetrata
-function CheckoutForm() {
-  return (
-    <form>
-      <h2>Per favore, compila questi 15 campi per comprare una t-shirt</h2>
-      <input type="text" placeholder="Nome" required />
-      <input type="text" placeholder="Cognome" required />
-      <input type="email" placeholder="Email" required />
-      <input type="password" placeholder="Crea Password" required />
-      <input type="password" placeholder="Conferma Password" required />
-      <input type="text" placeholder="Codice Fiscale" required />
-      <input type="text" placeholder="Come ci hai conosciuto?" />
-      {/* Altre 50 righe di noia mortale... */}
-      <button>Forse, prima o poi, Paga</button>
-    </form>
-  );
-}
-\`\`\`
-
-Il tasso di abbandono del carrello superava l'85%. Gli utenti mettevano la maglietta nel carrello, vedevano il questionario stile interrogatorio della polizia e scappavano a comprarla su Amazon, dove basta uno swipe.
-
-## L'Ingegneria: Lubrificare il Flusso
-
-L'ingegneria dei materiali usa i lubrificanti per ridurre il coefficiente di attrito. L'ingegneria del software usa l'autenticazione rapida e il **Guest Checkout**.
-
-Per risolvere la crisi, ho cancellato due terzi del form. Ho aggiunto l'accesso tramite Google e ho permesso agli utenti di pagare senza creare un account permanente, chiedendo solo l'indirizzo di spedizione essenziale.
-
-\`\`\`jsx
-// Good Code: Attrito azzerato (Il ghiaccio perfetto)
-function SmoothCheckout() {
-  return (
-    <div className="checkout-flow">
-      <h2>Pagamento Rapido</h2>
-      
-      {/* 1. Lubrificante sociale: un solo click */}
-      <GoogleLoginButton text="Continua con Google" />
-      
-      <Divider text="oppure" />
-      
-      {/* 2. Zero barriere: Guest Checkout essenziale */}
-      <form>
-        <input type="email" placeholder="Email per la ricevuta" required />
-        <AddressAutocomplete /> {/* Autocompilazione da Google Maps! */}
-        <button>Vai al Pagamento Sicuro</button>
-      </form>
-    </div>
-  );
-}
-\`\`\`
-
-Risultato? Conversioni raddoppiate la settimana successiva. La spinta per "iniziare il moto" era diventata talmente bassa che l'acquisto sembrava naturale.
-
-## Il Takeaway
-
-Non c'è niente di più prezioso della forza di inerzia di un utente motivato. Quando naviga sul tuo sito con un intento, ha una certa velocità.
-
-Il tuo compito come sviluppatore non è testare quanto forte sia la sua motivazione mettendogli ostacoli (campi form inutili, popup, conferme captcha incomprensibili). Il tuo compito è creare una superficie di ghiaccio in cui possa scivolare verso l'obiettivo senza nemmeno accorgersene. Riduci l'attrito, e le tue metriche ti ringrazieranno.
-
-    `
+- [W3C WAI — istruzioni per i form](https://www.w3.org/WAI/tutorials/forms/instructions/)
+- [W3C WAI — identificazione degli errori](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html)
+`
   },
   {
     id: "principio-di-inerzia-e-la-sindrome-del-non-toccare",
-    title: "Il Principio di Inerzia: Perché Nessuno Vuole Toccare il Legacy Code",
+    title: "Legacy code: come intervenire senza regressioni",
     date: "2026-04-17",
     category: "sviluppo-software",
     icon: "🍏",
+    excerpt: "Strategia per modificare codice legacy con test di caratterizzazione, piccoli cambiamenti e osservabilità, senza riscrivere tutto.",
+    tags: ["Legacy code","Refactoring","Testing","Manutenzione software"],
     content: `
-Mentre preparavo il primo esonero di Fisica I, c'è una legge di Newton che mi ha fatto sorridere amaramente: il Principio di Inerzia. 
+Il codice legacy non è necessariamente vecchio o scritto male: è soprattutto codice che oggi è difficile modificare con sicurezza. Può contenere regole di business che nessuno ha documentato o dipendenze che emergono soltanto quando si cambia un comportamento.
 
-> *"Un corpo mantiene il suo stato di quiete, o di moto rettilineo uniforme, finché una forza esterna non interviene a modificarlo."*
+## Prima di modificare, capire
 
-Sostituite "corpo" con "file JavaScript scritto nel 2018" e avrete descritto la filosofia di ogni azienda IT. Il codice legacy gode di un'inerzia mostruosa. Funziona? Più o meno. Nessuno sa perché, chi l'ha scritto ha cambiato lavoro tre anni fa, ma guai a chi lo tocca. Serve un'energia spaventosa (e il rischio di rompere tutto) per alterare quello stato di quiete.
+Parti dal flusso visibile all'utente o dal processo che devi correggere. Individua ingressi, uscite, effetti collaterali e sistemi esterni. Se non hai test, introduci piccoli test di caratterizzazione: descrivono il comportamento attuale, anche quando non è quello ideale. Servono come rete di sicurezza per una modifica mirata.
 
-## La Paura della Forza Esterna
+## Ridurre la superficie del cambiamento
 
-Nello sviluppo, la forza esterna siamo noi. Quando ci viene assegnato un task per aggiungere una piccola feature a un monolite, la reazione istintiva non è "rifattorizziamo l'architettura per accogliere questa modifica". La reazione è "come posso incastrare il mio codice senza turbare il mostro?".
+Preferisci interventi piccoli e verificabili a una riscrittura totale. Isola le dipendenze complesse dietro interfacce esplicite, conserva un percorso di rollback e misura gli effetti. Una nuova architettura che replica gli stessi bug senza monitoraggio non ha risolto il problema.
 
-E così, strato dopo strato, aggiungiamo cerotti. L'inerzia del sistema inghiotte la nostra voglia di fare le cose per bene.
+Le revisioni del codice dovrebbero distinguere refactoring e cambiamento funzionale. Quando vengono mescolati, è più difficile capire cosa ha causato una regressione.
 
-## Il Fango: Il Cerotto sul Monolite
+## Quando riscrivere
 
-Qualche tempo fa, dovevo aggiungere un controllo sui permessi utente in un componente React gigantesco, un vero e proprio "God Component" da 1500 righe che gestiva l'intera dashboard clienti.
+Una riscrittura può essere giustificata se costi di manutenzione, rischi o vincoli tecnologici sono documentati. Prima, considera una migrazione graduale: sostituisci un comportamento alla volta e confronta gli output. L'obiettivo non è avere codice «nuovo», ma un sistema che si possa evolvere e verificare.
 
-Avevo due esami alle porte, la scadenza aziendale era vicina. L'idea di spezzare il componente in piccoli pezzi gestibili mi terrorizzava: e se avessi rotto una prop passata al decimo livello?
+**Fonti**
 
-Ho ceduto all'inerzia. Ho aggiunto l'ennesimo \`if\`.
-
-\`\`\`javascript
-// Bad Code: Seguire la corrente dell'inerzia
-function GodDashboard({ user, data, config, ...props }) {
-  // ... 500 righe di logica ...
-
-  // Il mio cerotto per non toccare il resto:
-  const canSeeButton = user.role === 'admin' || (user.role === 'editor' && config.allowEditors);
-
-  return (
-    <div>
-      {/* ... 800 righe di JSX incasinato ... */}
-      {canSeeButton && <button>Azione Pericolosa</button>}
-    </div>
-  );
-}
-\`\`\`
-
-Il risultato? Il mese dopo serviva un altro permesso. Poi un altro. Il file è arrivato a 2000 righe. Il componente era diventato così pesante che anche l'editor di VS Code laggava ad aprirlo.
-
-## L'Ingegneria: Rompere la Quiete
-
-In fisica, per cambiare lo stato di un corpo massiccio serve l'applicazione mirata di una forza. In programmazione, questa forza si chiama "Astrazione".
-
-Invece di assecondare l'inerzia del monolite, avrei dovuto estrarre la logica in un Custom Hook indipendente. Costava un'ora in più quel giorno, ma avrebbe salvato settimane di debug nei mesi successivi.
-
-\`\`\`javascript
-// Good Code: Applicare una forza (Astrazione)
-function usePermissions(user, config) {
-  // Tutta la logica di business incapsulata e testabile
-  const canEdit = user.role === 'admin' || (user.role === 'editor' && config.allowEditors);
-  const canDelete = user.role === 'superadmin';
-  
-  return { canEdit, canDelete };
-}
-
-// Il componente rimane "leggero"
-function CleanDashboard({ user, config }) {
-  const { canEdit } = usePermissions(user, config);
-
-  return (
-    <div>
-      {canEdit && <button>Azione Pericolosa</button>}
-    </div>
-  );
-}
-\`\`\`
-
-## Il Takeaway
-
-Il codice non è una reliquia sacra. Se un file vi fa paura solo ad aprirlo, significa che l'inerzia ha preso il sopravvento. 
-
-Vincere la resistenza al cambiamento costa fatica ed energia all'inizio, esattamente come spostare un macigno. Ma è l'unico modo per impedire al vostro progetto di fossilizzarsi sotto il peso dei propri cerotti. Non abbiate paura di essere la forza esterna che rimette in moto il sistema.
-    `
+- [Martin Fowler — Strangler Fig Application](https://martinfowler.com/bliki/StranglerFigApplication.html)
+- [GitHub Docs — code review](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests)
+`
   },
   {
     id: "dilatazione-temporale-interstellar-e-optimistic-ui",
-    title: "Dilatazione Temporale: Interstellar e l'Attesa delle API",
+    title: "Optimistic UI: gestire latenza e rollback",
     date: "2026-04-18",
     category: "sviluppo-software",
     icon: "⏳",
+    excerpt: "Interfacce ottimistiche: aggiornare lo stato prima della risposta server, gestire gli errori e riconciliare i dati senza mostrare successi falsi.",
+    tags: ["React","Optimistic UI","Latenza","Frontend"],
     content: `
-Nel film *Interstellar*, c'è una scena angosciante in cui i protagonisti scendono sul pianeta di Miller. A causa dell'estrema gravità del buco nero vicino, subiscono una brutale dilatazione temporale: un'ora passata su quel pianeta equivale a 7 anni sulla Terra.
+Un'interfaccia può sembrare lenta anche quando il server impiega soltanto qualche centinaio di millisecondi. Un aggiornamento ottimistico mostra subito il risultato previsto di un'azione mentre la richiesta di rete è ancora in corso.
 
-Ogni volta che vedo quella scena, penso ai miei utenti quando cliccano "Salva" su una mia applicazione web mal ottimizzata.
+## La differenza fra intenzione e conferma
 
-La percezione del tempo non è assoluta, né in astrofisica né in UI/UX Design. Per un server backend, elaborare una richiesta al database in 800 millisecondi è un trionfo di efficienza. Ma per un essere umano che fissa uno schermo congelato aspettando che un bottone cambi colore, 800 millisecondi sono un'eternità frustrante.
+Quando un utente mette «Mi piace», l'interfaccia può aggiornarsi immediatamente. Ma il dato sul server non è ancora stato confermato. Devi quindi distinguere uno stato provvisorio da uno definitivo. Se l'operazione fallisce, ripristina il valore precedente e spiega il problema senza perdere il contesto.
 
-## Il Fango: L'Attesa Bloccante
+L'aggiornamento ottimistico non è adatto a ogni azione. Pagamenti, eliminazioni irreversibili e operazioni con effetti importanti richiedono conferme esplicite.
 
-Nel mio primo vero progetto freelance (un gestionale per un magazzino), dovevo implementare il pulsante "Metti nei Preferiti".
+## Concorrenza e richieste fuori ordine
 
-Seguendo alla lettera i tutorial di base, ho implementato il flusso classico: l'utente clicca, mostro un loader, aspetto la risposta del server, se va bene aggiorno l'interfaccia. 
+Immagina due modifiche successive allo stesso elemento. La seconda richiesta può terminare prima della prima: applicare semplicemente ogni risposta può riportare l'interfaccia a uno stato precedente. Associa ogni risposta all'operazione che l'ha prodotta, gestisci le versioni e definisci una politica di riconciliazione.
 
-\`\`\`javascript
-// Bad Code: Sottomettere l'utente alla dilatazione temporale
-async function handleLikeRushed() {
-  setLoading(true); // Blocco l'interfaccia. Inizia l'ansia.
-  
-  try {
-    // Il server è in America, il database è lento. Passa 1 secondo.
-    await api.post('/like', { itemId });
-    setIsLiked(true); // Finalmente, dopo "7 anni", l'icona si colora.
-  } catch (e) {
-    showError();
-  } finally {
-    setLoading(false);
-  }
-}
-\`\`\`
+## Verificare l'esperienza
 
-Cosa facevano gli utenti del magazzino? Cliccavano. Vedevano la rotellina girare. Si infastidivano per la latenza, pensavano che non avesse preso il click, e cliccavano di nuovo. Inviavano cinque richieste identiche al backend prima ancora che la prima fosse risolta, mandando in tilt il database.
+Simula una rete lenta, errori HTTP e richieste contemporanee. Controlla il comportamento con tastiera e screen reader, le indicazioni di caricamento e l'eventuale rollback. La percezione di rapidità è utile soltanto se non compromette la fiducia nell'interfaccia.
 
-## L'Ingegneria: Optimistic UI
+**Fonti**
 
-L'ingegneria moderna del frontend ha inventato una soluzione per "ingannare" questa dilatazione temporale: la **Optimistic UI**.
-
-Il trucco è semplice ma psicologicamente devastante: assumi (ottimisticamente) che il server dirà di sì, e aggiorni l'interfaccia *immediatamente*. L'azione sembra istantanea. Nel frattempo, in background (nello spazio profondo), la richiesta viaggia verso il server. Se miracolosamente dovesse fallire, farai un "rollback" annullando l'azione.
-
-\`\`\`javascript
-// Good Code: Aggiornamento Ottimistico
-async function handleLikeEngineering() {
-  // 1. Salvo lo stato precedente in caso di disastro
-  const previousState = isLiked;
-  
-  // 2. Inganno il tempo: aggiorno IMMEDIATAMENTE la UI.
-  // L'utente percepisce zero latenza. È felice.
-  setIsLiked(!isLiked); 
-
-  try {
-    // 3. Comunico col buco nero (il backend) in modo silenzioso
-    await api.post('/like', { itemId, like: !isLiked });
-  } catch (error) {
-    // 4. Rollback: se l'universo ci rema contro, ripristino il passato.
-    setIsLiked(previousState);
-    toast.error("Ops, salvataggio fallito.");
-  }
-}
-\`\`\`
-
-## Il Takeaway
-
-Il tempo è relativo. Una latenza di mezzo secondo è invisibile nei log di sistema, ma è uno scoglio enorme per l'esperienza utente. 
-
-Quando progettate un'interfaccia, smettetela di tenere i vostri utenti in ostaggio sul pianeta di Miller. Applicate l'Optimistic UI alle azioni reversibili (come i like, le spunte, i toggle). Date l'illusione di una velocità sovrumana; lasciate che sia il codice asincrono sotto il cofano a fare i conti con i buchi neri della rete.
-    `
+- [React — useOptimistic](https://react.dev/reference/react/useOptimistic)
+- [MDN — Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+`
   },
   {
     id: "radiazione-di-fondo-e-il-cimitero-dei-console-log",
-    title: "Radiazione di Fondo: L'Eco dei console.log Dimenticati",
+    title: "Logging JavaScript: cosa registrare e cosa evitare",
     date: "2026-04-19",
     category: "sviluppo-software",
     icon: "📡",
+    excerpt: "Come usare log strutturati, livelli, correlation ID e monitoraggio degli errori senza esporre dati personali o riempire la console.",
+    tags: ["JavaScript","Logging","Debugging","Osservabilità"],
     content: `
-Nel 1964, i radioastronomi Arno Penzias e Robert Wilson stavano testando una sensibilissima antenna nei laboratori Bell. Continuavano a captare un fastidioso e inspiegabile ronzio di fondo, una radiazione statica presente ovunque puntassero lo strumento. 
+I log possono chiarire un guasto, ma una quantità indiscriminata di messaggi rende più difficile individuare il problema. La console del browser è utile in sviluppo; in produzione servono segnali intenzionali e una politica di raccolta.
 
-Pensarono fosse colpa dei piccioni che avevano nidificato nell'antenna. Invece, avevano appena scoperto la Radiazione Cosmica di Fondo (CMB): l'eco primordiale, raffreddato e indebolito, della colossale esplosione del Big Bang, avvenuto 13,8 miliardi di anni prima.
+## Un log deve rispondere a una domanda
 
-Anche i nostri browser hanno la loro radiazione di fondo. Solo che noi non l'abbiamo ereditata dal Big Bang. L'abbiamo creata noi, dimenticando i \`console.log()\` in giro per l'applicazione.
+Registra l'evento, il contesto minimo necessario e l'esito. Per esempio, un errore nella sincronizzazione di un ordine dovrebbe identificare l'operazione e la tipologia di errore, non riportare l'intero payload con dati personali o segreti.
 
-## L'Eco delle Battaglie di Debugging
+Distingui i livelli: debug per l'indagine locale, info per eventi significativi, warn per condizioni anomale ma recuperabili, error per guasti che richiedono attenzione. Evita che una procedura periodica produca migliaia di messaggi identici.
 
-Ogni \`console.log("QUI CI ARRIVA")\` o \`console.log("DATI:", response)\` è l'eco di un momento di panico. È il residuo fossile di una notte in cui non capivi perché un \`useEffect\` scattasse tre volte invece di una.
+## Correlare senza esporre dati
 
-Il problema è che, una volta risolto il bug (il "Big Bang" della tua fix), chiudi il file, fai commit e deploy. E quel log rimane lì, silente nel codice sorgente, ma pronto a riempire la console del browser di ogni singolo utente che visiterà la tua pagina.
+Un identificativo di richiesta permette di seguire un'operazione tra frontend, backend e servizio esterno. Non usare token, cookie o credenziali come identificatori. Per i messaggi destinati a sistemi di raccolta, preferisci campi strutturati rispetto a stringhe create concatenando oggetti.
 
-## Il Fango: Esporre Dati Sensibili all'Etere
+## Dal log al monitoraggio
 
-Preparando il progetto per il corso di Basi di Dati, avevo costruito una fantastica dashboard con React. C'era un bug strano sul login, così, preso dalla foga, ho stampato in console l'intero oggetto utente appena restituito dalle API per capire cosa mancasse.
+Una metrica aggregata può segnalare un aumento degli errori; i log servono per analizzare casi specifici. Definisci soglie e periodi di conservazione. Quando aggiungi un nuovo evento, verifica anche quanto può costare raccoglierlo e se davvero aiuta durante un incidente.
 
-\`\`\`javascript
-// Bad Code: Il Big Bang della negligenza
-async function loginUser(credentials) {
-  const user = await api.auth(credentials);
-  
-  // Dimenticato qui alle 3 del mattino.
-  // Contiene nome, cognome, token JWT, e forse il gruppo sanguigno.
-  console.log("USER LOGGATO: ", user); 
-  
-  setGlobalUser(user);
-}
-\`\`\`
+**Fonti**
 
-Il progetto va online. Due settimane dopo, apro i DevTools in produzione per un fix CSS e noto quel blocco di log. Qualsiasi utente (o estensione malevola del browser) avesse aperto la console in quel periodo, avrebbe trovato in chiaro i propri token di sessione spiattellati come un cartellone pubblicitario. 
-
-Oltre a consumare cicli di memoria preziosi del browser per il rendering del JSON in console, stavo esponendo dati sensibili.
-
-## L'Ingegneria: Il Silenziatore Dinamico
-
-In un'applicazione di livello ingegneristico, non ci si affida alla memoria del singolo programmatore per pulire i log. Si delega il compito al sistema di build (come Vite o Webpack) o si crea un'astrazione.
-
-Il codice non dovrebbe mai urlare in produzione. Se proprio devi stampare qualcosa, usa un Logger strutturato che sa in quale ambiente si trova.
-
-\`\`\`javascript
-// Good Code: Filtrare la Radiazione di Fondo
-const Logger = {
-  debug: (...args) => {
-    // La magia: Stampo SOLO se sono sul mio PC in fase di sviluppo
-    if (process.env.NODE_ENV !== 'production') {
-      console.log("[DEBUG]:", ...args);
-    }
-  },
-  error: (...args) => {
-    // Gli errori veri li mando a un sistema esterno come Sentry
-    if (process.env.NODE_ENV === 'production') {
-      Sentry.captureException(args);
-    } else {
-      console.error("[ERROR]:", ...args);
-    }
-  }
-};
-
-// Utilizzo
-Logger.debug("USER LOGGATO: ", user); // Sparisce silenziosamente in Prod!
-\`\`\`
-
-## Il Takeaway
-
-Penzias e Wilson hanno vinto il Premio Nobel per aver ascoltato la radiazione di fondo dell'universo. Voi non vincerete nulla se costringete i browser dei vostri utenti a renderizzare mille stringhe inutili di log a ogni scroll di pagina.
-
-Prendetevi cura della console di produzione. Configurate i vostri linter (es. la regola \`no-console\` di ESLint) o configurate i vostri bundler per rimuovere i log durante la build. L'ambiente di produzione dovrebbe essere muto e buio come lo spazio profondo, rotto solo da eccezioni critiche rigorosamente tracciate.
-    `
+- [OpenTelemetry — log e correlazione](https://opentelemetry.io/docs/concepts/signals/logs/)
+- [OWASP — Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
+`
   },
   {
     id: "entanglement-quantistico-e-i-disastri-del-global-state",
-    title: "Entanglement Quantistico e l'Incubo del Global State",
+    title: "React state: evitare dipendenze globali inutili",
     date: "2026-04-20",
     category: "sviluppo-software",
     icon: "🔗",
+    excerpt: "Quando usare stato locale, Context e store condivisi in React, distinguendo dati derivati, server state e aggiornamenti concorrenti.",
+    tags: ["React","State management","Context","Architettura frontend"],
     content: `
-Albert Einstein era un genio assoluto, ma c'era un fenomeno della meccanica quantistica che proprio non riusciva a digerire, tanto da definirlo *"spettrale azione a distanza"*. 
+Quando molti componenti dipendono dallo stesso stato, una modifica può produrre effetti inattesi. Il problema non è la condivisione in sé, ma la proprietà poco chiara dei dati e l'accoppiamento fra componenti che non dovrebbero conoscersi.
 
-Parliamo dell'Entanglement Quantistico. Se due particelle sono "entangled" (intrecciate), tutto ciò che accade a una di esse si riflette istantaneamente sull'altra, anche se si trovano ai lati opposti della galassia. Modifichi lo spin della Particella A, e la Particella B muta nello stesso istante, senza alcun canale di comunicazione visibile.
+## Conserva lo stato vicino a chi lo usa
 
-Sembra magia nera da film di fantascienza, eppure è scienza. Ed è esattamente la stessa sensazione di impotenza che si prova quando si gestisce male lo stato globale in React. Muti una variabile nel componente Footer e, improvvisamente, il componente Header esplode e l'intera applicazione va in re-render. Azione spettrale a distanza.
+Una selezione temporanea o l'apertura di una finestra possono restare nello stato locale. Sposta lo stato verso un antenato comune quando più componenti devono sincronizzarsi. Context distribuisce un valore nella gerarchia, ma non è automaticamente un database né sostituisce una strategia per gli aggiornamenti.
 
-## L'Illusione della Comodità
+Evita di salvare valori che puoi calcolare dai dati già disponibili: il totale di un carrello è spesso derivabile dalle righe e dalle quantità. Duplicare le informazioni obbliga a mantenerle coerenti.
 
-Agli albori dello sviluppo con React, il problema principale era passare i dati dal componente padre ai figli (il *prop-drilling*). Poi scopri la Context API (o Redux, o Zustand) e ti sembra di aver trovato il Santo Graal. 
+## Distinguere stato client e server
 
-Pensi: *"Fantastico! Butto tutte le variabili dell'app in un unico enorme Global State, così qualsiasi componente può accedere a qualsiasi dato da ovunque!"*. 
+Dati provenienti da API possono diventare obsoleti, fallire o arrivare fuori ordine. Definisci invalidazione, gestione degli errori e riconciliazione. Non copiare indiscriminatamente ogni risposta di rete in uno store globale.
 
-Hai appena entanglato la tua intera base di codice.
+## Come decidere
 
-## Il Fango: L'Oggetto Divino
+Scrivi chi modifica ciascun dato, chi lo legge e quanto deve vivere. Se più aggiornamenti concorrenti sono possibili, scegli un modello di transizione prevedibile. Le librerie aggiuntive possono aiutare, ma una gerarchia di stato chiara vale più dell'aggiunta precoce di un nuovo strumento.
 
-In un progetto per un cliente, ho creato un unico \`AppContext\` che conteneva letteralmente tutto: i dati dell'utente, i prodotti nel carrello, il tema chiaro/scuro e persino lo stato di apertura di un singolo modale.
+**Fonti**
 
-\`\`\`javascript
-// Bad Code: L'Entanglement Globale
-const AppContext = createContext();
-
-function AppProvider({ children }) {
-  const [state, setState] = useState({
-    user: null,
-    cart: [],
-    isModalOpen: false, // <-- Attenzione qui
-  });
-
-  return (
-    <AppContext.Provider value={{ state, setState }}>
-      {children}
-    </AppContext.Provider>
-  );
-}
-\`\`\`
-
-Il disastro? Ogni volta che l'utente cliccava un bottone per aprire un banale popup (modificando \`isModalOpen\`), il reference dell'intero oggetto \`state\` cambiava. 
-
-Siccome la Navbar leggeva lo \`state\` per mostrare il nome utente, e la pagina Prodotti lo leggeva per mostrare il carrello, l'atto di aprire un popup scatenava il re-rendering spettrale di *tutta* l'applicazione. L'app andava a scatti, le ventole del PC decollavano.
-
-## L'Ingegneria: Rompere il Legame
-
-In fisica non puoi spezzare facilmente l'entanglement. In Ingegneria del Software, per fortuna, sì. La soluzione si chiama **Separation of Concerns** (Separazione delle Responsabilità).
-
-Non mettere in un Context globale dati che cambiano frequentemente e dati statici. Isola gli stati in base al loro dominio di competenza.
-
-\`\`\`javascript
-// Good Code: Atomi isolati
-// 1. Context solo per roba che cambia raramente
-const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
-}
-
-// 2. Context specifico per il carrello
-const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
-  return <CartContext.Provider value={cart}>{children}</CartContext.Provider>;
-}
-
-// 3. Gestire lo stato del modale LOCALMENTE, 
-// o usare librerie come Zustand con "selectors" per evitare re-render.
-\`\`\`
-
-Con questo approccio granulare, se il carrello viene modificato, solo i componenti che ascoltano il \`CartContext\` reagiscono. La Navbar con i dati dell'utente se ne sta in pace, imperturbabile.
-
-## Il Takeaway
-
-L'accesso globale e facile ai dati è una trappola mortale travestita da comodità. Più estendete il raggio d'azione di una variabile, più componenti diventeranno dipendenti (entangled) dalle sue mutazioni.
-
-Mantenete lo stato il più locale possibile. Promuovetelo a globale solo quando è strettamente indispensabile, e frammentatelo per logica di business. L'azione fantasma a distanza lasciatela ai fisici quantistici; il vostro codice deve essere prevedibile, isolato e noioso.
-    `
+- [React — Choosing the State Structure](https://react.dev/learn/choosing-the-state-structure)
+- [React — Sharing State Between Components](https://react.dev/learn/sharing-state-between-components)
+`
   },
   {
     id: "velocita-della-luce-ping-e-content-delivery-network",
-    title: "Il Limite di c: Perché la Luce è Troppo Lenta per il Tuo Sito",
+    title: "CDN e latenza: perché la distanza conta",
     date: "2026-04-21",
     category: "sviluppo-software",
     icon: "⚡",
+    excerpt: "Come CDN, caching e distribuzione geografica riducono i tempi di trasferimento, senza eliminare il costo delle richieste dinamiche.",
+    tags: ["CDN","Latenza","Caching","Web Performance"],
     content: `
-Nessuna informazione nell'universo può viaggiare più veloce della luce nel vuoto. La costante *c* (circa 300.000 chilometri al secondo) è il limite di velocità insuperabile imposto dalla Relatività Ristretta.
+Una richiesta HTTP attraversa una rete fatta di tratte, apparati e server. La velocità di propagazione impone un limite fisico, ma la latenza reale comprende anche instradamento, code, negoziazione della connessione e tempo di elaborazione.
 
-Trecentomila chilometri al secondo sembrano tanti. Ma quando sei in Italia e stai cercando di caricare un'immagine in alta risoluzione salvata su un server a Tokyo, improvvisamente la luce inizia a sembrare terribilmente lenta. 
+## Cosa può fare una CDN
 
-È la dura lezione che ogni studente di Reti di Calcolatori impara a sue spese: la larghezza di banda si può comprare, ma con la latenza fisica ci puoi solo convivere.
+Una Content Delivery Network distribuisce copie di risorse cacheabili su nodi più vicini agli utenti. File statici, immagini e asset versionati sono candidati naturali. Una cache hit evita il percorso completo fino al server di origine; una cache miss continua invece a richiederlo.
 
-## La Dittatura della Distanza
+La CDN non velocizza automaticamente tutte le API. Endpoint personalizzati, contenuti privati e pagine dinamiche hanno regole diverse e possono non essere cacheabili.
 
-Facciamo due conti veloci. In fibra ottica, la luce viaggia a circa 200.000 km/s (il vetro la rallenta rispetto al vuoto). Un pacchetto dati da Milano a Tokyo deve percorrere circa 10.000 km. Solo per fare andata e ritorno (*ping*), la fisica richiede un tempo incomprimibile di circa 100 millisecondi. Aggiungete i vari ritardi di router, switch e handshake SSL, e arrivate facilmente a 250-300ms.
+## Configurazione e rischi
 
-Se la vostra bellissima landing page React richiede 40 file tra immagini, font e bundle JavaScript, e il server è lontano, i vostri utenti stanno aspettando i comodi della meccanica celeste per vedere il sito.
+Le intestazioni Cache-Control determinano per quanto tempo una risposta può essere riutilizzata. Un asset immutabile con nome versionato può avere una durata lunga; un documento HTML che cambia spesso richiede una politica differente.
 
-## Il Fango: L'Hosting Monolitico a Basso Costo
+Prima di aggiungere caching, chiarisci cosa deve succedere quando pubblichi una modifica. Una configurazione aggressiva senza invalidazione può distribuire informazioni obsolete.
 
-Alle prime armi, comprai un server VPS super economico ospitato in un data center in Ohio (USA), perché costava due dollari in meno. Lì ci caricai i file sorgenti, i font giganti non compressi e un video di background in 4K per il portafoglio di un amico fotografo.
+## Misura l'effetto
 
-\`\`\`html
-<video autoPlay loop muted>
-  <source src="https://mio-server-economico-in-ohio.com/heavy-bg.mp4" type="video/mp4" />
-</video>
-\`\`\`
+Confronta TTFB, hit ratio e tempi osservati da regioni diverse. Distingui laboratorio e utenti reali. Se il tempo dominante è nel database o nell'elaborazione del backend, avvicinare i file statici non risolve quel collo di bottiglia.
 
-Il cliente, che operava a Roma, mi chiamò infuriato. *"Il sito è rotto, si vede solo una pagina bianca"*. 
-Non era rotto. Stava semplicemente lottando contro la costanza della velocità della luce e le inefficienze dei cavi sottomarini. Ci metteva 12 secondi interi a renderizzare la prima schermata.
+**Fonti**
 
-## L'Ingegneria: CDN e Edge Computing
-
-Poiché non possiamo accelerare la luce (Einstein non ce lo permette), l'ingegneria ha aggirato il problema con una soluzione geniale: avvicinare fisicamente il dato all'utente. Questa magia si chiama **CDN (Content Delivery Network)**.
-
-Invece di avere un unico server sperduto in America, la CDN copia le nostre immagini, video e file JavaScript in centinaia di server distribuiti in tutto il mondo (Edge node). 
-
-\`\`\`javascript
-// Good Code: Ingannare la distanza geografica
-// Utilizzando Next.js/Vercel o una CDN come Cloudflare
-import Image from 'next/image';
-
-export default function HeroSection() {
-  return (
-    // Questo componente ottimizza in automatico e serve l'immagine 
-    // dal server CDN geograficamente più vicino all'utente in millisecondi.
-    <Image 
-      src="https://cdn.miosito.com/optimized-hero.webp" 
-      alt="Hero"
-      width={1920}
-      height={1080}
-      priority 
-    />
-  );
-}
-\`\`\`
-
-Quando l'utente da Roma richiede il sito, non attraversa l'oceano. Il suo router dialoga con un server Edge situato magari proprio a Roma, abbattendo la latenza fisica da 150ms a miseri 10ms.
-
-## Il Takeaway
-
-Viviamo nell'illusione che il Cloud sia un'entità astratta, fluttuante nell'etere. Ma il Cloud è fatto di cavi interrati, fondali marini e distanze reali.
-
-Smettiamola di caricare mega-asset locali in cartelle pubbliche aspettandoci miracoli. Appoggiate i file statici, i font e i bundle pesanti su CDN globali (Vercel, Cloudflare, AWS CloudFront). 
-
-Non potete corrompere le leggi della fisica per far viaggiare i vostri dati più velocemente, ma potete (e dovete) essere furbi abbastanza da accorciare il tragitto.
-    `
+- [MDN — HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)
+- [web.dev — Time to First Byte](https://web.dev/articles/ttfb)
+`
   },
   {
     id: "gatto-di-schrodinger-e-allucinazioni-ia",
-    title: "Il Gatto di Schrödinger e l'IA: Perché Copilot non ti Salverà",
+    title: "AI coding assistant: verificare codice e suggerimenti",
     date: "2026-04-16",
     category: "sviluppo-software",
     icon: "🐈",
+    excerpt: "Come controllare le risposte degli assistenti AI nel coding con test, documentazione, review e verifiche di sicurezza.",
+    tags: ["AI coding","Testing","Code review","Sicurezza"],
     content: `
-Aprite LinkedIn in questi giorni e vi sembrerà che nessuno scriva più codice a mano. La timeline è inondata di "guru" che si vantano: *"Ho creato un clone di Netflix in 4 secondi usando solo un prompt!"*.
+Un assistente AI può accelerare la scrittura di bozze, test o spiegazioni, ma non conosce automaticamente i vincoli reali del progetto. Un suggerimento plausibile può contenere API inesistenti, errori di compatibilità o assunzioni sbagliate sui dati.
 
-Certo. E io ho preso 30 e Lode all'esame di Fisica Quantistica guardando *Interstellar* sul divano.
+## Trattare l'output come una proposta
 
-La verità che nessuno vi racconta è che stiamo vivendo un'era di pura pigrizia ammantata da innovazione tecnologica. Abbiamo delegato il lavoro sporco ai vari LLM (ChatGPT, Copilot, Gemini), dimenticandoci che questi modelli non "pensano". Calcolano probabilità. E a volte, hanno allucinazioni così realistiche da ingannare anche lo sviluppatore più navigato.
+Prima di integrare codice generato, verifica che le librerie esistano nella versione in uso e che i metodi citati siano documentati. Controlla gli input limite, i percorsi di errore e le operazioni che modificano dati. Una risposta formulata con sicurezza non è una prova.
 
-## La Sovrapposizione Quantistica del Codice Generato
+## Un processo minimo di validazione
 
-Nel 1935, Erwin Schrödinger ideò il suo famoso paradosso: un gatto chiuso in una scatola con un meccanismo letale legato al decadimento di un atomo. Finché non apri la scatola per guardare, la meccanica quantistica ci dice che il gatto è in una "sovrapposizione di stati". È contemporaneamente vivo e morto.
+Prepara un test che riproduca il requisito. Esegui typecheck, test unitari e integrazioni pertinenti. Confronta l'implementazione con le guide ufficiali e fai code review delle modifiche, soprattutto quando coinvolgono autorizzazioni, query, accesso a file o chiamate esterne.
 
-Oggi, il codice che l'IA ti suggerisce nell'editor vive esattamente nello stesso stato.
+I test sono necessari ma non sufficienti: una suite incompleta può confermare una soluzione che implementa il requisito sbagliato.
 
-Quando premi \`Tab\` per accettare quelle venti righe di logica complessa scritte magicamente da Copilot, quel codice è in sovrapposizione quantistica. È contemporaneamente un capolavoro di ingegneria super-ottimizzato e un bug critico che corromperà l'intero database di produzione. Finché non lo esegui, non puoi sapere quale dei due sia.
+## Dati e responsabilità
 
-## Il Fango: L'Allucinazione della Regex
+Non inviare credenziali, dati personali o codice riservato a strumenti senza una valutazione delle regole di utilizzo. Mantieni tracciabili le decisioni tecniche e attribuisci agli sviluppatori la verifica finale.
 
-Qualche mese fa, ero sommerso dallo studio per l'esame di Reti Logiche e avevo una scadenza di lavoro assurda: implementare un validatore per codici fiscali e partiva IVA internazionali in un gestionale React.
+**Fonti**
 
-Ero stanco. Ho aperto ChatGPT e ho scritto: *"Scrivimi una Regex JavaScript infallibile per validare P.IVA europee e codici fiscali"*.
-
-L'IA mi ha sputato fuori un papiro di simboli incomprensibili. Sembrava esoterismo puro, ma aveva l'aria di essere corretto. L'ho copiato, incollato e ho fatto push in produzione alle 18:30 di venerdì.
-
-\`\`\`javascript
-// Bad Code: Fiducia cieca nel Gatto di Schrödinger
-function validateTaxId(taxId) {
-  // Regex generata dall'IA. Non so minimamente come funzioni,
-  // ma me l'ha data con tanta sicurezza che le ho creduto.
-  const aiGeneratedRegex = /^(?:[A-Z]{2})?(?:\\d{2,11}|[A-Z0-9]{16})$/i;
-  
-  if (aiGeneratedRegex.test(taxId)) {
-    saveToDatabase(taxId);
-  }
-}
-\`\`\`
-
-Lunedì mattina il telefono squilla. Il cliente è su tutte le furie. Il sistema stava accettando letteralmente di tutto. C'erano utenti registrati con Partita IVA "PIZZA123" e "BOH".
-
-L'IA aveva avuto un'allucinazione: aveva creato una Regex che validava quasi qualsiasi stringa alfanumerica, e io, per pigrizia, non avevo "aperto la scatola" per controllare se il gatto fosse vivo.
-
-## L'Ingegneria: Collassare la Funzione d'Onda
-
-In meccanica quantistica, l'unico modo per far uscire il sistema dalla sovrapposizione di stati e costringerlo a scegliere una realtà definitiva (vivo o morto) è compiere un'osservazione. Questo processo si chiama *collasso della funzione d'onda*.
-
-Nello sviluppo software moderno, l'osservazione ha un nome ben preciso: **Automated Testing**.
-
-Non puoi fermare l'uso dell'IA, ed è giusto sfruttarla per scrivere codice più velocemente. Ma sei obbligato moralmente e professionalmente a collassare la funzione d'onda prima di mandare quella roba in produzione. Devi scrivere i test.
-
-\`\`\`javascript
-// Good Code: Aprire la scatola con i Test (Vitest / Jest)
-import { describe, it, expect } from 'vitest';
-import { validateTaxId } from './taxUtils';
-
-// L'IA può anche scrivermi la funzione,
-// ma i limiti fisici li decido io con i test.
-describe('validateTaxId', () => {
-  it('dovrebbe accettare una P.IVA italiana valida', () => {
-    expect(validateTaxId('IT12345678901')).toBe(true);
-  });
-
-  it('NON dovrebbe accettare stringhe casuali', () => {
-    // Questo test avrebbe salvato il mio weekend
-    expect(validateTaxId('PIZZA123')).toBe(false);
-    expect(validateTaxId('IT-12')).toBe(false);
-  });
-});
-\`\`\`
-
-## Il Takeaway
-
-L'Intelligenza Artificiale è un copilota straordinario, ma si chiama "copilota" per un motivo. Non è il comandante. Non ha responsabilità penali, non risponde al telefono quando il server va a fuoco di domenica e non deve passare l'esame di Ingegneria del Software al posto vostro.
-
-Usate l'IA per scrivere le funzioni tediose, certo. Ma non incollate *mai* codice di cui non capite il funzionamento intimo, e soprattutto, non consideratelo valido finché non lo avete testato in ogni caso limite.
-
-Ricordatevi sempre: finché non scrivete un Unit Test, il codice della vostra IA è solo un gatto morto in una scatola.
-    `
+- [GitHub Docs — responsible use of Copilot](https://docs.github.com/en/copilot/responsible-use)
+- [OWASP — Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/)
+`
 },
   {
     id: "shopify-custom-fields-app-vs-codice-nativo",
-    title: "Shopify: Perché pagare 15€ al mese per un <input>? (Spoiler: Non serve)",
+    title: "Shopify line item properties: campi personalizzati",
     date: "2026-04-14",
     category: "sviluppo-software",
     icon: "💸",
+    excerpt: "Aggiungere campi personalizzati nel form prodotto Shopify con line item properties, distinguendoli dagli attributi del carrello.",
+    tags: ["Shopify","Liquid","Line item properties","Product form"],
     content: `
-Siamo a metà gennaio e l'aria inizia già a puzzare di quel romanticismo forzato che precede San Valentino. Puntuale come una tazzina di caffè versata sulla tastiera, arriva la chiamata del cliente.
+Un prodotto può richiedere un testo da incidere, una dedica o un'informazione specifica per la singola riga d'ordine. Prima di installare un'app aggiuntiva, verifica se le **line item properties** native di Shopify risolvono il requisito.
 
-*"Senti, dobbiamo assolutamente far incidere una parola o una frase sugli anelli per San Valentino. Ho visto che c'è un'app fantastica sullo store, costa solo 15€ al mese e fa apparire un campo di testo in pagina prodotto. La installiamo?"*
+## Come acquisire una proprietà nel product form
 
-In quel momento, senti un brivido lungo la schiena. Non è il freddo, è l'orrore di vedere un ecosistema software appesantito da un'ennesima dipendenza esterna (e un abbonamento ricorrente) per fare una cosa che il browser inventato negli anni '90 sa già fare benissimo.
+Shopify riconosce i campi con un attributo name nel formato **properties[Nome proprietà]** quando sono inviati insieme al form prodotto. Ecco un esempio essenziale per un tema Liquid:
 
-## La trappola delle "App Tuttofare"
-
-Il problema di molte app di Shopify che aggiungono "Custom Fields" è che spesso caricano script pesanti sul frontend, rallentano il caricamento della pagina (ciao ciao, punteggio Core Web Vitals) e, soprattutto, ti chiedono soldi ogni mese per un'operazione che richiede letteralmente cinque minuti di codice.
-
-Il cliente era convinto: *"Se costa 15€ al mese, deve essere la soluzione professionale"*. 
-
-La mia risposta è stata: *"Dammi dieci minuti. Ti risparmio 180€ l'anno e l'app non la vedrai neanche nei log del server"*.
-
-## La Magia (Nativa) delle Line Item Properties
-
-Shopify ha una feature "nascosta" ma potentissima: le **Line Item Properties**. Sono attributi che puoi attaccare a un prodotto nel momento in cui viene aggiunto al carrello. La cosa incredibile? Non serve nessuna API complessa o script in React. Shopify legge automaticamente qualsiasi input HTML che si trova dentro il form dell'Add to Cart, a patto che abbia il nome giusto.
-
-Se l'input ha l'attributo \`name="properties[Nome della tua proprietà]"\`, Shopify lo cattura, lo porta attraverso il checkout (senza perderlo nel "buco nero" della transazione) e te lo mostra dritto nel pannello ordini del magazzino.
-
-Ecco il codice che ho scritto per sostituire l'app da 15€ al mese:
-
-\`\`\`html
+~~~liquid
 {% form 'product', product %}
-  
-  <div class="product-custom-field">
-    <label for="engraving">Testo da incidere (Max 20 caratteri):</label>
-    <input 
-      type="text" 
-      id="engraving" 
-      name="properties[Incisione Personalizzata]" 
-      maxlength="20"
-      placeholder="Es: Per sempre"
-    >
-  </div>
-
-  <div class="product-custom-field">
-    <label for="delivery-date">Data di consegna desiderata:</label>
-    <input 
-      type="date" 
-      id="delivery-date" 
-      name="attributes[Data di Consegna]"
-    >
-  </div>
-
-  <button type="submit" class="btn-add-to-cart">
-    Aggiungi al carrello
-  </div>
-
+  <label for="engraving">Testo da incidere</label>
+  <input
+    id="engraving"
+    type="text"
+    name="properties[Incisione]"
+    maxlength="20"
+  >
+  <button type="submit">Aggiungi al carrello</button>
 {% endform %}
-\`\`\`
+~~~
 
-## Perché questo approccio è superiore
+Questo snippet è illustrativo: in un tema reale il form deve anche gestire la variante selezionata e le altre funzioni previste dalla sezione prodotto. La proprietà riguarda la singola riga; gli **attributes** del carrello hanno uno scopo diverso.
 
-1. **Costo Zero**: Nessun abbonamento SaaS inutile.
-2. **Performance**: Zero millisecondi di tempo di caricamento aggiuntivo. Nessun file JS esterno che "scimmiotta" il DOM.
-3. **Affidabilità**: Essendo una funzione nativa di Shopify, non smetterà mai di funzionare a causa di un aggiornamento dell'app o di un server esterno che va down.
-4. **Clean Backend**: Il magazziniere vede l'incisione direttamente sotto il nome del prodotto nell'ordine. Niente giri strani tra dashboard diverse.
+## Quando basta la funzionalità nativa
 
-## Il Takeaway
+Per un campo semplice, la soluzione nativa può evitare una dipendenza esterna. Non significa che ogni app sia superflua: regole complesse, anteprime, sovrapprezzi, validazioni avanzate o integrazioni con sistemi produttivi richiedono una valutazione tecnica.
 
-Il cliente, dopo aver visto che il campo appariva perfettamente integrato nel design del sito e che i dati arrivavano correttamente negli ordini di test, ha disinstallato l'app prima ancora di finire il periodo di prova.
+## Verifiche prima di pubblicare
 
-A volte il nostro lavoro non è scrivere il codice più complesso del mondo, ma proteggere il progetto (e il portafoglio del cliente) dall'entusiasmo per le soluzioni "pronte all'uso" che nascondono solo costi e inefficienze. Se Shopify ti dà gli strumenti gratis, usarli è l'unica scelta tecnica sensata.
-    `
+Prova più varianti, quantità, carrelli AJAX e passaggi di checkout. Verifica che il dato sia visibile nella riga dell'ordine e disponibile ai processi downstream che devono usarlo. Il limite HTML maxlength migliora la UX, ma i controlli importanti non devono affidarsi soltanto al browser.
+
+**Fonti**
+
+- [Shopify Developer — line item properties](https://shopify.dev/docs/api/liquid/objects/line_item)
+- [Shopify Developer — product template e form](https://shopify.dev/docs/storefronts/themes/architecture/templates/product/overview)
+`
 },
   {
     id: "principio-di-esclusione-di-pauli-e-i-conflitti-git",
-    title: "Il Principio di Pauli e il Dramma dei Conflitti su Git",
+    title: "Git merge conflict: come risolverlo senza perdere codice",
     date: "2026-04-12",
     category: "sviluppo-software",
     icon: "🔀",
+    excerpt: "Che cosa causa un merge conflict in Git, come risolverlo e come evitare force push pericolosi sui branch condivisi.",
+    tags: ["Git","Merge conflict","Branch","Code review"],
     content: `
+Un conflitto di merge non significa che due sviluppatori hanno modificato lo stesso file nello stesso momento. Si verifica quando Git non riesce a combinare automaticamente modifiche concorrenti, per esempio sulle stesse righe o dopo una modifica strutturale.
 
-Nella meccanica quantistica esiste una regola fondamentale chiamata Principio di Esclusione di Pauli. Formulato nel 1925, afferma una cosa tanto semplice quanto categorica: due fermioni identici non possono occupare lo stesso stato quantico contemporaneamente.
+## Che cosa mostra Git
 
-In pratica, l'universo vieta a due particelle della materia di trovarsi nello stesso identico posto, con le stesse esatte proprietà, nello stesso istante.
+Durante il merge, Git può inserire marcatori che separano le due versioni in conflitto. Non devi conservarli nel sorgente finale: confronta il comportamento desiderato, scegli o combina le modifiche e risolvi eventuali dipendenze fra file.
 
-Se Wolfgang Pauli fosse stato un Web Developer, avrebbe probabilmente formulato lo stesso principio per Git: due sviluppatori non possono modificare la stessa riga di codice nello stesso file, nello stesso istante, senza generare un'esplosione nucleare chiamata *Merge Conflict*.
+Prima di procedere, controlla **git status** e il diff. Dopo la risoluzione, esegui i test e verifica che la versione risultante mantenga entrambe le funzionalità necessarie.
 
-## La Collisione Inevitabile
+## Branch e aggiornamenti
 
-Quando lavori in team, il repository Git è il tuo universo condiviso. Finché tu lavori sul frontend e il tuo collega sul backend, state occupando "stati quantici" diversi. Tutto fila liscio.
+I feature branch isolano il lavoro fino alla review, ma non eliminano i conflitti. Integrare regolarmente il branch principale può ridurne la dimensione. Un rebase riscrive la cronologia del branch: evita di farlo senza coordinamento su branch condivisi.
 
-Ma quando il manager assegna due task separati che, sfortunatamente, toccano lo stesso componente React, state letteralmente forzando due fermioni nello stesso spazio per rispettare la solita scadenza "era per ieri".
+## Perché non forzare main
 
-> *"Due sviluppatori non possono modificare lo stesso index.js lo stesso venerdì sera senza che uno dei due pianga."*
+Un force push su un branch condiviso può sovrascrivere riferimenti a commit su cui altre persone stanno lavorando. Usa protezioni, pull request e controlli automatici dove possibile. La strategia migliore non è «mai avere conflitti», ma saperli risolvere in modo verificabile e senza perdere lavoro.
 
-## Il Fango: Mergiare a Occhi Chiusi
+**Fonti**
 
-Ricordo il mio primo progetto collaborativo all'università per l'esame di Ingegneria del Software. Eravamo in due e, clamorosamente in ritardo, lavoravamo direttamente sul branch \`main\`. 
-
-Lui stava modificando la navbar, io pure. Ho finito la mia parte, ho fatto \`git commit\` e poi un disastroso \`git push --force\` perché il terminale mi dava un errore e volevo andare a dormire.
-
-\`\`\`javascript
-// Bad Code: L'Esplosione Quantica nel Sorgente
-<<<<<<< HEAD
-export const Navbar = () => {
-  return <nav className="bg-red-500">Menu di Alessandro</nav>;
-}
-=======
-export const Navbar = () => {
-  return <nav className="bg-blue-800 text-white">Menu di Marco</nav>;
-}
->>>>>>> feature-navbar
-\`\`\`
-
-Il giorno dopo, Marco ha pullato, ha visto i marker di conflitto di Git inseriti brutalmente nel codice e, non sapendo cosa fossero, ha fatto il commit di *tutto* il blocco. Frecce incluse. L'app React è morta sul colpo. Abbiamo passato la notte prima della consegna a fare copia-incolla dei file a mano.
-
-## L'Ingegneria: Spazio Quantico Isolato
-
-Come si evita che le particelle collidano? Dando loro stati quantici diversi. Nello sviluppo, questo significa usare i Feature Branch e comunicare. 
-
-Invece di sovrascriverci a vicenda sul file centrale, creiamo universi paralleli isolati, facciamo le nostre modifiche, e poi usiamo la diplomazia per decidere come fonderli.
-
-\`\`\`bash
-// Good Engineering: Il Flusso Corretto e Isolato
-
-# 1. Creo il mio universo personale
-git checkout -b feature/la-mia-nuova-navbar
-
-# 2. Lavoro tranquillo e chiudo il pacchetto
-git commit -m "feat: aggiorna colore navbar"
-
-# 3. Prima di mergiare, sincronizzo il mio universo con quello base
-git fetch origin
-git rebase origin/main
-
-# 4. Risolvo i conflitti in pace locale, non urlando in produzione
-git push origin feature/la-mia-nuova-navbar
-\`\`\`
-
-## Il Takeaway
-
-L'universo ci impedisce di compenetrarci fisicamente per un ottimo motivo: evitare il collasso. 
-
-Se lavorate in team, rispettate il Principio di Pauli. Isolate il vostro lavoro in branch dedicati, fate commit frequenti e aggiornatevi spesso sulle modifiche altrui. Git non è un Google Drive gigante per fare i backup; è un simulatore spazio-temporale. Usatelo con il dovuto rispetto.
-
-    `
+- [GitHub Docs — About merge conflicts](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts)
+- [Git — git-merge](https://git-scm.com/docs/git-merge)
+`
   },
   {
     id: "conservazione-della-massa-e-memory-leaks-in-react",
