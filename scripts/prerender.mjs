@@ -20,6 +20,7 @@ function assetsFor(key, seen = new Set()) {
   return result;
 }
 function pageKey(route) {
+  if (route.startsWith("/blog/page/") || route.startsWith("/blog/temi/")) return "src/pages/blog/index.tsx";
   if (route.startsWith("/blog/")) return "src/pages/blog/[id].tsx";
   return ({ "/": "src/pages/index.tsx", "/project": "src/pages/proj.tsx", "/about": "src/pages/about.tsx", "/contact": "src/pages/contact.tsx", "/blog": "src/pages/blog/index.tsx", "/sports": "src/pages/sports.tsx", "/vehrt": "src/pages/vehrt.tsx" })[route] ?? "src/pages/not-found.tsx";
 }

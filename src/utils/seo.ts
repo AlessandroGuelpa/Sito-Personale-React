@@ -70,12 +70,13 @@ export function blogPostJsonLd(post: BlogPost) {
     description,
     image,
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.updatedAt ?? post.date,
     inLanguage: "it-IT",
     author: {
       "@type": "Person",
       name: AUTHOR_NAME,
-      url: SITE_URL,
+      url: `${SITE_URL}/about`,
+      "@id": `${SITE_URL}/#author`,
     },
     publisher: {
       "@type": "Person",

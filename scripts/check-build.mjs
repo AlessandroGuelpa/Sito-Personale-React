@@ -52,7 +52,7 @@ for (const route of [...routes, "/404"]) {
     /<script[^>]+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
   ))
     JSON.parse(json);
-  if (route.startsWith("/blog/")) {
+  if (route.startsWith("/blog/") && !route.startsWith("/blog/temi/") && !route.startsWith("/blog/page/")) {
     const sectionIds = [...html.matchAll(/id="(sezione-[^"]+)"/g)].map((match) => match[1]);
     assert.equal(new Set(sectionIds).size, sectionIds.length, `Duplicate article anchors: ${route}`);
     for (const [, target] of html.matchAll(/href="#(sezione-[^"]+)"/g)) {
@@ -67,6 +67,14 @@ for (const route of [...routes, "/404"]) {
   }
   if (route === "/404")
     assert(html.includes('content="noindex, follow"'), "404 must be noindex");
+}
+const sitemap = await readFile(path.join(dist, "sitemap.xml"), "utf8");
+for (const route of routes) {
+  assert(sitemap.includes(`<loc>https://alessandroguelpa.it${route === "/" ? "" : route}</loc>`), `Sitemap missing route: ${route}`);
+}
+for (const route of routes.filter(route => route.startsWith("/blog/temi/") || route.startsWith("/blog/page/"))) {
+  const html = await readFile(path.join(dist, `${route.slice(1)}.html`), "utf8");
+  assert(html.includes('href="/blog/'), `Archive missing internal links: ${route}`);
 }
 const home = await readFile(path.join(dist, "index.html"), "utf8");
 const blog = await readFile(path.join(dist, "blog.html"), "utf8");

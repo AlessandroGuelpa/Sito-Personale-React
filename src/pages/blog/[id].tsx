@@ -1,4 +1,5 @@
 import type { BlogPost } from "@/data/blogPosts";
+import { blogHubForPost, blogHubPath, getBlogHub } from "@/config/blog-hubs";
 import type { BlogSummary } from "@/types/blog";
 
 import { useParams, Link } from "react-router-dom";
@@ -63,6 +64,7 @@ function PostContent({
   relatedPosts: BlogSummary[];
 }) {
   const minutes = readingTimeMinutes(post.content);
+  const hub = getBlogHub(blogHubForPost(post));
   return (
     <DefaultLayout>
       <PageSeo
@@ -85,6 +87,7 @@ function PostContent({
       />
       <Helmet>
         <meta content={post.date} property="article:published_time" />
+        <meta content={post.updatedAt ?? post.date} property="article:modified_time" />
         <meta content={AUTHOR_NAME} property="article:author" />
         {post.tags?.map((tag) => (
           <meta key={tag} content={tag} property="article:tag" />
@@ -112,8 +115,16 @@ function PostContent({
           {post.title}
         </h1>
         <p className="mt-5 text-sm text-zinc-600 dark:text-zinc-400">
-          Di {AUTHOR_NAME}
+          Di <Link className="text-link" to="/about" rel="author">{AUTHOR_NAME}</Link>
+          {post.updatedAt && post.updatedAt !== post.date ? (
+            <> · Aggiornato il <time dateTime={post.updatedAt}>{new Date(post.updatedAt).toLocaleDateString("it-IT", {day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})}</time></>
+          ) : null}
         </p>
+        {hub && (
+          <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
+            Percorso: <Link className="text-link" to={blogHubPath(hub.slug)}>{hub.title}</Link>
+          </p>
+        )}
         {post.tags?.length ? (
           <ul aria-label="Argomenti" className="mt-6 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
@@ -176,6 +187,14 @@ function PostContent({
             </ul>
           </section>
         )}
+        <aside className="mt-10 border-t border-zinc-200 pt-6 dark:border-zinc-800" aria-label="Informazioni sull'autore">
+          <h2 className="text-lg font-bold">Chi scrive</h2>
+          <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            Alessandro Guelpa è uno sviluppatore web specializzato in ecommerce Shopify e integrazioni API.
+            Il blog raccoglie approfondimenti tecnici e interessi personali, con esempi e riferimenti quando pertinenti.
+          </p>
+          <Link className="text-link mt-3 inline-flex" to="/about">Esperienza, progetti e curriculum dell’autore →</Link>
+        </aside>
         <div className="mt-10 border-t border-zinc-200 pt-6 dark:border-zinc-800">
           <Link className="text-link" to="/blog">
             ← Altri articoli dal blog

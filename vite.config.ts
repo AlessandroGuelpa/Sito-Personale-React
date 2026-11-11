@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 import { blogPosts } from "./src/data/blogPosts";
+import { BLOG_HUBS, BLOG_PAGE_SIZE, blogHubForPost, blogArchivePath } from "./src/config/blog-hubs";
 import { buildExcerpt, readingTimeMinutes } from "./src/utils/seo";
 import { selectRelatedPosts } from "./src/utils/related-posts";
 
@@ -14,6 +15,7 @@ function blogMetadata(): Plugin {
       id: post.id,
       title: post.title,
       date: post.date,
+      updatedAt: post.updatedAt,
       category: post.category,
       excerpt: buildExcerpt(post, 180),
       tags: post.tags ?? [],
@@ -62,6 +64,15 @@ function blogMetadata(): Plugin {
     },
     generateBundle() {
       if (ssr) return;
+      const hubRoutes = BLOG_HUBS.flatMap((hub) => {
+        const count = index.filter((post) => blogHubForPost(post) === hub.slug).length;
+        const pages = Math.max(1, Math.ceil(count / BLOG_PAGE_SIZE));
+        return Array.from({ length: pages }, (_, i) => blogArchivePath(i + 1, hub.slug));
+      });
+      const blogPages = Array.from(
+        { length: Math.max(0, Math.ceil(index.length / BLOG_PAGE_SIZE) - 1) },
+        (_, i) => blogArchivePath(i + 2),
+      );
       this.emitFile({
         type: "asset",
         fileName: "prerender-routes.json",
@@ -73,6 +84,8 @@ function blogMetadata(): Plugin {
           "/blog",
           "/sports",
           "/vehrt",
+          ...hubRoutes,
+          ...blogPages,
           ...index.map((post) => `/blog/${post.id}`),
         ]),
       });
@@ -89,9 +102,12 @@ function blogMetadata(): Plugin {
       );
 
       urls.push(
+        ...[...hubRoutes, ...blogPages].map(
+          (path) => `  <url><loc>https://alessandroguelpa.it${path}</loc></url>`,
+        ),
         ...index.map(
           (post) =>
-            `  <url><loc>https://alessandroguelpa.it/blog/${post.id}</loc><lastmod>${post.date}</lastmod></url>`,
+            `  <url><loc>https://alessandroguelpa.it/blog/${post.id}</loc><lastmod>${post.updatedAt ?? post.date}</lastmod></url>`,
         ),
       );
       this.emitFile({
