@@ -1059,7 +1059,7 @@ Non sono istruzioni per dimensionare un lander: sono domande sui requisiti da di
     content: `
 Un ciclo che funziona con cento prodotti può diventare un problema quando il catalogo cresce. Il punto non è soltanto quanto tempo impiega: se istanzia tutti i record insieme, può consumare molta memoria prima ancora di completare il primo lavoro utile.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Rails: validates uniqueness non ferma due richieste contemporanee](/blog/rails-unicita-database-concorrenza) e [Rails MVC: Model, View e Controller](/blog/rails-mvc-in-tre-minuti). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Elaborare a lotti limita le istanze in memoria, ma non rende automaticamente sicura una scrittura ripetuta: la [concorrenza e i vincoli di unicità](/blog/rails-unicita-database-concorrenza) richiedono controlli separati. Per leggere il lavoro SQL effettivo serve capire le [query di Active Record](/blog/rails-activerecord-le-basi).
 
 Active Record mette a disposizione metodi di elaborazione a lotti proprio per evitare questo caricamento indiscriminato.
 
@@ -1795,7 +1795,7 @@ La scoperta apre una possibilità. Il progetto deve poi mostrare come mantenerla
     content: `
 Due processi cercano lo stesso codice esterno. Nessuno dei due lo trova, quindi entrambi provano a creare il record. Se la protezione è soltanto una ricerca prima del salvataggio, tutti e due possono aver ragione nello stesso momento.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Rails: elaborare un catalogo senza caricarlo tutto in memoria](/blog/rails-find-each-batch-memoria) e [Rails Active Record: modelli, query e SQL](/blog/rails-activerecord-le-basi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La validazione applicativa migliora il messaggio d'errore, ma il [vincolo di unicità del database](/blog/rails-validazioni-dati-puliti) protegge anche dalle richieste simultanee. Nelle [elaborazioni Rails a lotti](/blog/rails-find-each-batch-memoria) la differenza conta quando più worker incontrano lo stesso identificativo.
 
 È il limite della validazione di unicità a livello applicativo: il controllo e la scrittura non diventano automaticamente un'unica operazione indivisibile.
 
@@ -2286,7 +2286,7 @@ Oggi è così. L'unico "drop" che vorrei fare è prendere queste persone e butta
     content: `
 Un progetto funziona sul computer di sviluppo e fallisce quando passa su un'altra macchina. Spesso la differenza è nell'ambiente: versione del runtime, dipendenze, variabili di configurazione o librerie di sistema. Docker permette di distribuire un'applicazione insieme a una parte definita di questo ambiente.
 
-L'analisi si completa confrontando questa parte con [Variabili d'ambiente: evitare errori in produzione](/blog/quando-luniverso-ti-cambia-le-variabili-in-produzione) e [Ruby gem: packaging, dipendenze e versioni](/blog/ruby-creare-una-gem). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+L'immagine definisce l'ambiente di esecuzione, ma non garantisce che i segreti e le impostazioni siano corretti: le [variabili tra sviluppo e produzione](/blog/quando-luniverso-ti-cambia-le-variabili-in-produzione) restano da validare. Le [gem Ruby](/blog/ruby-creare-una-gem) sono un esempio di dipendenze da dichiarare e versionare.
 
 ## Container e macchine virtuali non sono la stessa cosa
 
@@ -2558,7 +2558,7 @@ Un file CSS con nome versionato è un ottimo candidato alla cache distribuita: c
     content: `
 Un assistente AI può accelerare la scrittura di bozze, test o spiegazioni, ma non conosce automaticamente i vincoli reali del progetto. Un suggerimento plausibile può contenere API inesistenti, errori di compatibilità o assunzioni sbagliate sui dati.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Git merge conflict: come risolverlo senza perdere codice](/blog/principio-di-esclusione-di-pauli-e-i-conflitti-git) e [Stime software: scadenze, rischi e compromessi](/blog/non-puoi-negoziare-con-la-gravita-space-force-e-le-scadenze-assurde). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una proposta di codice generata dall'AI va verificata come qualsiasi altra modifica: il [controllo del diff e dei merge Git](/blog/principio-di-esclusione-di-pauli-e-i-conflitti-git) protegge dalle regressioni, mentre i [request spec Rails](/blog/rails-request-specs-testare-api) possono mostrare se il comportamento promesso esiste davvero.
 
 ## Trattare l'output come una proposta
 
@@ -2651,7 +2651,7 @@ Una line item property associata al prodotto può raccogliere un testo di person
     content: `
 Un conflitto di merge non significa che due sviluppatori hanno modificato lo stesso file nello stesso momento. Si verifica quando Git non riesce a combinare automaticamente modifiche concorrenti, per esempio sulle stesse righe o dopo una modifica strutturale.
 
-L'analisi si completa confrontando questa parte con [AI coding assistant: verificare codice e suggerimenti](/blog/gatto-di-schrodinger-e-allucinazioni-ia) e [Rails: chiamare API esterne senza perdere affidabilità](/blog/rails-consumare-api-esterne). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Risolvere un conflitto significa integrare due intenzioni, non scegliere meccanicamente una versione. Il metodo di [debugging basato su ipotesi e test](/blog/effetto-osservatore-fisica-quantistica-e-l-arte-del-debugging) è utile dopo il merge, soprattutto quando cambiano [integrazioni API esterne](/blog/rails-consumare-api-esterne).
 
 ## Che cosa mostra Git
 
@@ -2731,7 +2731,7 @@ Considera un componente che registra un listener resize sul window quando viene 
     content: `
 Le date sono una fonte frequente di bug: un evento alle 09:00 può apparire a un'ora diversa quando passa fra browser, API e database. Serve distinguere un istante preciso da un orario civile locale.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Rails Active Record: modelli, query e SQL](/blog/rails-activerecord-le-basi) e [Rails: validates uniqueness non ferma due richieste contemporanee](/blog/rails-unicita-database-concorrenza). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Le zone orarie hanno conseguenze concrete su schedulazioni e query: quando interroghi dati temporali tramite [Active Record](/blog/rails-activerecord-le-basi), distingui l'istante memorizzato dalla data locale. Le [migrazioni Rails](/blog/rails-migrazioni-versionare-il-database) diventano delicate se cambi la semantica dei campi esistenti.
 
 ## Istanti e appuntamenti ricorrenti
 
@@ -2807,7 +2807,7 @@ Quando un pulsante cambia improvvisamente aspetto dopo una modifica al layout, a
     content: `
 Quando una modifica richiede interventi su molti moduli non correlati, il costo della manutenzione cresce. La metafora della gravità descrive la sensazione di essere trascinati nel sistema, ma il problema ingegneristico è l'accoppiamento.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Debito tecnico: come migliorare la manutenibilità](/blog/entropia-del-codice) e [Rails MVC: Model, View e Controller](/blog/rails-mvc-in-tre-minuti). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Ridurre l'accoppiamento richiede identificare i confini delle responsabilità, non creare classi a caso. L'articolo sul [debito tecnico](/blog/entropia-del-codice) propone come valutare il rischio, mentre i [service object Rails](/blog/rails-service-objects) illustrano un possibile confine da testare.
 
 ## Individuare le dipendenze
 
@@ -2845,7 +2845,7 @@ Immagina una funzione che salva un ordine e invia immediatamente un messaggio a 
     content: `
 Una scadenza può essere negoziabile, ma il lavoro necessario a garantire un risultato affidabile dipende da vincoli reali: integrazioni, test, revisioni e distribuzione. Promettere una data senza valutarli non rende il lavoro più breve.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Debito tecnico: come migliorare la manutenibilità](/blog/entropia-del-codice) e [Debugging: metodo per trovare bug riproducibili](/blog/effetto-osservatore-fisica-quantistica-e-l-arte-del-debugging). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Le stime diventano più affidabili quando includono le attività di verifica e il rischio dei sistemi esistenti. La gestione del [debito tecnico](/blog/entropia-del-codice) rende visibile parte del lavoro nascosto; un [debugging riproducibile](/blog/effetto-osservatore-fisica-quantistica-e-l-arte-del-debugging) evita di trasformare ogni problema in una correzione dell'ultimo minuto.
 
 ## Una stima ha assunzioni
 
@@ -2883,7 +2883,7 @@ Quando il tempo è fissato, il lavoro non si riduce automaticamente: bisogna rid
     content: `
 Il software non si deteriora fisicamente come un componente meccanico. Aumentano però le dipendenze, cambiano le librerie e diventano più difficili da ricostruire le decisioni precedenti. «Entropia del codice» è una metafora, non una legge tecnica.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Stime software: scadenze, rischi e compromessi](/blog/non-puoi-negoziare-con-la-gravita-space-force-e-le-scadenze-assurde) e [Legacy code e accoppiamento tra moduli](/blog/legge-di-gravitazione-universale-e-i-legacy-code). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Prima di decidere un refactoring misura i punti dove il software cambia più spesso. Le [dipendenze nel legacy code](/blog/legge-di-gravitazione-universale-e-i-legacy-code) spiegano il costo dell'accoppiamento, mentre le [stime software](/blog/non-puoi-negoziare-con-la-gravita-space-force-e-le-scadenze-assurde) devono includere il tempo necessario a ridurlo.
 
 ## Come cresce il debito tecnico
 
@@ -2959,7 +2959,7 @@ Un bundle può essere piccolo dopo la compressione ma comunque costoso da analiz
     content: `
 Durante il debugging un log può cambiare il timing, e un breakpoint può nascondere una race condition. Non serve invocare la fisica quantistica: stai modificando il sistema mentre lo osservi.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Debito tecnico: come migliorare la manutenibilità](/blog/entropia-del-codice) e [Stime software: scadenze, rischi e compromessi](/blog/non-puoi-negoziare-con-la-gravita-space-force-e-le-scadenze-assurde). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un bug intermittente può dipendere da concorrenza o ordine delle richieste. Il [controllo di unicità in Rails](/blog/rails-unicita-database-concorrenza) offre un caso da riprodurre sotto carico, mentre il [debito tecnico](/blog/entropia-del-codice) mostra perché gli errori si accumulano quando mancano test di regressione.
 
 ## Riprodurre il problema
 
@@ -3146,7 +3146,7 @@ Quando descrivi una funzione alla paperella, non limitarti a raccontare il codic
     content: `
 Un'applicazione può funzionare in locale e fallire dopo il deploy senza cambiamenti al codice. Possibili cause includono configurazioni diverse, versioni dei servizi, permessi e dati non rappresentativi.
 
-L'analisi si completa confrontando questa parte con [Docker: container, immagini e dipendenze isolate](/blog/principio-di-archimede-e-i-container-docker) e [Ruby begin/rescue/ensure: gestione degli errori](/blog/ruby-gestione-errori). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Se il deploy funziona ma l'applicazione fallisce, confronta le configurazioni prima di modificare la logica. Un'[immagine Docker riproducibile](/blog/principio-di-archimede-e-i-container-docker) riduce le differenze di dipendenze; la [gestione degli errori Ruby](/blog/ruby-gestione-errori) aiuta a non nascondere il vero guasto.
 
 ## Separare configurazione e codice
 
@@ -3274,7 +3274,7 @@ Imposta un BPM costante e crea una sequenza di due note separate da sleep. Prima
     content: `
 La prima cosa che spiazza chi arriva a Ruby da JavaScript è che *tutto* è un oggetto. Non "quasi tutto": proprio tutto, numeri e \`nil\` compresi.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Ruby blocchi, Proc e lambda: differenze](/blog/ruby-blocchi-proc-lambda) e [Ruby Enumerable: map, select e reduce](/blog/ruby-enumerable-map-select-reduce). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Capire identità e metodi degli oggetti prepara al passaggio di comportamento tramite [blocchi, Proc e lambda](/blog/ruby-blocchi-proc-lambda). Quando lavori con collezioni, [Enumerable](/blog/ruby-enumerable-map-select-reduce) mostra come applicare gli stessi messaggi a elementi differenti.
 
 \`\`\`ruby
 42.class          # => Integer
@@ -3316,7 +3316,7 @@ Un numero intero risponde a metodi come next, mentre una stringa supporta trasfo
     content: `
 Rails è costruito attorno al pattern **MVC**. Tre responsabilità separate, ognuna con un compito solo.
 
-L'analisi si completa confrontando questa parte con [Rails service objects: responsabilità e test](/blog/rails-service-objects) e [Rails API-only: controller e JSON](/blog/rails-api-only-mode). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+MVC delimita il ruolo del controller, ma un'operazione che coinvolge più servizi può richiedere un [service object testabile](/blog/rails-service-objects). Per un'applicazione che restituisce JSON, il [modello API-only](/blog/rails-api-only-mode) cambia parte della rappresentazione, non le responsabilità di dominio.
 
 - **Model**: parla col database e contiene le regole di business (\`app/models\`).
 - **View**: mostra i dati all'utente (\`app/views\`).
@@ -3493,7 +3493,7 @@ Per un live semplice separa kick e hi-hat in due live_loop con nomi differenti. 
     content: `
 I **blocchi** sono ovunque in Ruby: quel \`do...end\` (o le graffe) che passi a un metodo.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby symbol vs string: quando usarli](/blog/ruby-symbol-vs-string) e [Ruby &:method: sintassi e limiti](/blog/ruby-ampersand-symbol-shorthand). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La scelta tra blocco inline e lambda conta quando riutilizzi una trasformazione con [Enumerable](/blog/ruby-enumerable-map-select-reduce). La scorciatoia [simbolo-e-commerciale](/blog/ruby-ampersand-symbol-shorthand) è appropriata solo per invocazioni semplici, non per ogni callback.
 
 \`\`\`ruby
 [1, 2, 3].each { |n| puts n }
@@ -3536,7 +3536,7 @@ Immagina un'operazione che filtra numeri e riutilizza la regola in due punti. Un
     content: `
 ActiveRecord è l'ORM di Rails: mappa una classe Ruby su una tabella del database e ti fa lavorare con oggetti invece che con stringhe SQL.
 
-L'analisi si completa confrontando questa parte con [Rails associations: belongs_to e has_many](/blog/rails-associazioni-has-many-belongs-to) e [Rails migrations: cambiare lo schema in sicurezza](/blog/rails-migrazioni-versionare-il-database). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una query Active Record è un'interfaccia verso SQL: le [associazioni belongs_to e has_many](/blog/rails-associazioni-has-many-belongs-to) determinano come percorri le relazioni. Prima di aggiungere una colonna per ottimizzare, valuta il ciclo di vita delle [migrazioni Rails](/blog/rails-migrazioni-versionare-il-database).
 
 \`\`\`ruby
 class Launch < ApplicationRecord
@@ -3708,7 +3708,7 @@ Scegli un campione di cassa dalla libreria e riproducilo prima senza effetti, po
     content: `
 In Ruby raramente scrivi un ciclo \`for\`. Il modulo \`Enumerable\` ti dà metodi espressivi che dicono *cosa* vuoi, non *come* ottenerlo.
 
-L'analisi si completa confrontando questa parte con [Ruby blocchi, Proc e lambda: differenze](/blog/ruby-blocchi-proc-lambda) e [Ruby symbol vs string: quando usarli](/blog/ruby-symbol-vs-string). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Per capire map, select e reduce serve distinguere la funzione passata al metodo dal risultato della trasformazione: [blocchi e lambda](/blog/ruby-blocchi-proc-lambda) esplicitano quella differenza. Se lavori su hash di riepilogo, i [metodi di Hash](/blog/ruby-hash-metodi-utili) completano il percorso.
 
 \`\`\`ruby
 numeri = [1, 2, 3, 4, 5, 6]
@@ -3750,7 +3750,7 @@ Prendi un elenco di importi. Con map puoi convertire ciascun importo in centesim
     content: `
 Una **migrazione** è un file Ruby che descrive una modifica allo schema del database. È versionata, reversibile e condivisa col team: il "git" della struttura dati.
 
-L'analisi si completa confrontando questa parte con [Rails Active Record: modelli, query e SQL](/blog/rails-activerecord-le-basi) e [Rails associations: belongs_to e has_many](/blog/rails-associazioni-has-many-belongs-to). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una migrazione modifica lo schema che [Active Record interroga](/blog/rails-activerecord-le-basi), ma non garantisce la compatibilità con tutte le versioni dell'app. Se introduci chiavi esterne o vincoli, verifica anche le [associazioni Rails](/blog/rails-associazioni-has-many-belongs-to).
 
 \`\`\`ruby
 class CreateLaunches < ActiveRecord::Migration[7.1]
@@ -3928,7 +3928,7 @@ Confronta due sintetizzatori suonando la stessa nota e usando la stessa durata. 
     content: `
 In Ruby vedi ovunque cose come \`:name\` e ti chiedi perché non una stringa \`"name"\`. La differenza è concreta.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby blocchi, Proc e lambda: differenze](/blog/ruby-blocchi-proc-lambda) e [Ruby &:method: sintassi e limiti](/blog/ruby-ampersand-symbol-shorthand). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una chiave String e una chiave Symbol non sono intercambiabili: nel lavoro con [Hash](/blog/ruby-hash-metodi-utili) questa differenza causa spesso dati mancanti. La [scorciatoia &:method](/blog/ruby-ampersand-symbol-shorthand) usa i simboli per un altro scopo, cioè creare una callback.
 
 \`\`\`ruby
 "ciao".object_id   # => cambia ogni volta (nuovo oggetto)
@@ -3968,7 +3968,7 @@ Un Hash di configurazione può usare simboli come :timeout o :host perché rappr
     content: `
 Le **associazioni** dicono a Rails come i modelli sono collegati, e in cambio ti danno metodi per muoverti tra i dati senza scrivere join a mano.
 
-L'analisi si completa confrontando questa parte con [Rails Active Record: modelli, query e SQL](/blog/rails-activerecord-le-basi) e [Rails migrations: cambiare lo schema in sicurezza](/blog/rails-migrazioni-versionare-il-database). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una belongs_to rende più semplice navigare il modello, ma il numero di query dipende da come carichi i record: il [problema N+1](/blog/rails-problema-n-piu-1) si manifesta spesso proprio qui. Quando aggiungi vincoli alla relazione, usa [migrazioni compatibili](/blog/rails-migrazioni-versionare-il-database).
 
 \`\`\`ruby
 class Provider < ApplicationRecord
@@ -4148,7 +4148,7 @@ Inserire un delay prima del riverbero può produrre una coda diversa dall'ordine
     content: `
 L'hash è la struttura dati che userai di più in Ruby. Oltre a \`[]\`, ha metodi che risolvono problemi ricorrenti.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Ruby symbol vs string: quando usarli](/blog/ruby-symbol-vs-string) e [Ruby metaprogrammazione: quando evitarla](/blog/ruby-metaprogrammazione-basi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Quando una chiave manca, nil, fetch e il default di un Hash hanno comportamenti differenti: la scelta dipende anche da [simboli e stringhe](/blog/ruby-symbol-vs-string). Il [pattern matching Ruby](/blog/ruby-pattern-matching) è utile se la struttura dei dati deve seguire un contratto esplicito.
 
 \`\`\`ruby
 config = { host: "localhost", port: 3000 }
@@ -4193,7 +4193,7 @@ Se scrivi Hash.new([]), più chiavi mancanti possono restituire lo stesso array 
     content: `
 Le **validazioni** vivono nel Model e bloccano il salvataggio se i dati non rispettano le regole. Sono la garanzia che nel database non finisca spazzatura.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Rails associations: belongs_to e has_many](/blog/rails-associazioni-has-many-belongs-to) e [Rails Active Record: modelli, query e SQL](/blog/rails-activerecord-le-basi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una validazione applicativa descrive un requisito, ma [due richieste concorrenti](/blog/rails-unicita-database-concorrenza) possono superarla contemporaneamente. Le [migrazioni Rails](/blog/rails-migrazioni-versionare-il-database) permettono di aggiungere vincoli coerenti sul database.
 
 \`\`\`ruby
 class Launch < ApplicationRecord
@@ -4384,7 +4384,7 @@ Parti da una scala semplice e scegli un registro di note che rimanga udibile sen
     content: `
 La **metaprogrammazione** è la capacità di Ruby di definire metodi a runtime. È la magia dietro tante comodità di Rails.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Ruby Hash: chiavi, default e trasformazioni](/blog/ruby-hash-metodi-utili) e [Ruby pattern matching: case/in](/blog/ruby-pattern-matching). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+I metodi dinamici complicano il debugging se non conosci il contratto degli oggetti. Il [duck typing](/blog/ruby-duck-typing) aiuta a distinguere comportamento richiesto da tipo concreto; i [moduli Ruby](/blog/ruby-moduli-mixin) offrono spesso un'alternativa più esplicita alla generazione di metodi.
 
 \`\`\`ruby
 class Configurazione
@@ -4430,7 +4430,7 @@ Creare metodi con define_method può essere utile quando molte proprietà condiv
     content: `
 Quando il frontend è separato (React, un'app mobile), non ti serve tutto lo strato delle view. Rails offre la modalità **API-only**.
 
-L'analisi si completa confrontando questa parte con [Rails: chiamare API esterne senza perdere affidabilità](/blog/rails-consumare-api-esterne) e [Rails request specs: contratti HTTP e casi limite](/blog/rails-request-specs-testare-api). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un'API Rails deve documentare input e risultati, non soltanto restituire JSON. Le [request spec](/blog/rails-request-specs-testare-api) verificano il contratto HTTP, mentre la [gestione delle API esterne](/blog/rails-consumare-api-esterne) introduce timeout e altri errori da rappresentare.
 
 \`\`\`bash
 rails new launch-tracker-api --api
@@ -4624,7 +4624,7 @@ Definisci una battuta suddivisa in sedicesimi e inserisci i colpi di cassa sugli
     content: `
 Ruby 3 ha portato il **pattern matching**: con \`case/in\` fai match sulla *struttura* dei dati, non solo sul valore.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby Ractor: isolamento e concorrenza](/blog/ruby-ractor-concorrenza) e [Ruby metaprogrammazione: quando evitarla](/blog/ruby-metaprogrammazione-basi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Il pattern matching rende espressivi i controlli sulla forma di un [Hash](/blog/ruby-hash-metodi-utili). Con [blocchi e lambda](/blog/ruby-blocchi-proc-lambda) puoi poi separare il riconoscimento della struttura dalla trasformazione dei valori.
 
 \`\`\`ruby
 response = { status: "ok", data: { name: "Falcon 9", provider: "SpaceX" } }
@@ -4670,7 +4670,7 @@ Un payload API potrebbe contenere un hash con status e data. Un pattern può ver
     content: `
 Un pattern classico: il tuo backend interroga un'API pubblica, salva e arricchisce i dati, e li ri-espone in un formato migliore. È il cuore di un progetto come Launch Tracker.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Rails API-only: controller e JSON](/blog/rails-api-only-mode) e [Rails request specs: contratti HTTP e casi limite](/blog/rails-request-specs-testare-api). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una chiamata remota può fallire indipendentemente dalla validità del controller: usa [request spec Rails](/blog/rails-request-specs-testare-api) per proteggere gli errori restituiti al client e [Active Job](/blog/rails-background-job-active-job) quando l'elaborazione va differita.
 
 \`\`\`ruby
 require "faraday"
@@ -4864,7 +4864,7 @@ Se una scelta casuale produce un pattern interessante, annota il seed usato per 
     content: `
 In Ruby non chiedi "di che tipo sei?", chiedi "sai fare questo?". È il **duck typing**: se un oggetto risponde ai metodi che ti servono, va bene, indipendentemente dalla sua classe.
 
-L'analisi si completa confrontando questa parte con [Ruby module e mixin: include, prepend, extend](/blog/ruby-moduli-mixin) e [Ruby Comparable: implementare <=>](/blog/ruby-comparable-enumerable-custom). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Il duck typing richiede un protocollo comportamentale riconoscibile. I [mixin Ruby](/blog/ruby-moduli-mixin) possono condividere un'implementazione, mentre [RSpec](/blog/ruby-rspec-testare) permette di verificare lo stesso contratto su oggetti diversi.
 
 \`\`\`ruby
 def stampa_tutto(collezione)
@@ -4907,7 +4907,7 @@ Due oggetti possono esporre entrambi un metodo calculate e comportarsi diversame
     content: `
 Se durante una request fai qualcosa di lento (mandare una mail, chiamare un'API esterna, elaborare dati), l'utente aspetta. La soluzione è spostare quel lavoro in un **job in background**.
 
-L'analisi si completa confrontando questa parte con [Rails Active Record: modelli, query e SQL](/blog/rails-activerecord-le-basi) e [Active Storage: upload e sicurezza dei file](/blog/rails-active-storage-allegati). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un job che riparte deve riconoscere il lavoro già eseguito: il [pattern transactional outbox](/blog/transactional-outbox-invio-erp) rende persistente l'intenzione di invio, mentre [retry e backoff](/blog/retry-backoff-jitter-integrazioni) descrivono come gestire i guasti temporanei.
 
 \`\`\`ruby
 class SyncLaunchesJob < ApplicationJob
@@ -5099,7 +5099,7 @@ Immagina due live_loop, uno dedicato alla cassa e uno al basso. Se entrambi part
     content: `
 Ruby ha ereditarietà singola: una classe ha un solo genitore. I **moduli** aggirano il limite condividendo comportamenti tra classi diverse tramite \`include\`.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Ruby duck typing e protocolli impliciti](/blog/ruby-duck-typing) e [Ruby Comparable: implementare <=>](/blog/ruby-comparable-enumerable-custom). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un mixin introduce comportamento lungo la catena dei metodi: confrontalo con [duck typing](/blog/ruby-duck-typing), che dipende dal contratto osservabile e non dall'ereditarietà. [RSpec](/blog/ruby-rspec-testare) aiuta a bloccare regressioni quando cambia l'ordine dei moduli.
 
 \`\`\`ruby
 module Tracciabile
@@ -5150,7 +5150,7 @@ Una classe può includere due moduli che definiscono metodi con lo stesso nome. 
     content: `
 **Hotwire** è la scommessa di Rails: interfacce reattive inviando HTML invece di JSON, con pochissimo JavaScript. Il pezzo centrale è **Turbo**.
 
-L'analisi si completa confrontando questa parte con [Stimulus Rails: comportamento associato all'HTML](/blog/rails-stimulus-js-leggero) e [Active Job: job asincroni e retry](/blog/rails-background-job-active-job). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Turbo interviene sul ciclo di navigazione; [Stimulus](/blog/rails-stimulus-js-leggero) fornisce un punto prevedibile per inizializzare e ripulire le interazioni. Un [job in background](/blog/rails-background-job-active-job) è invece indicato quando il lavoro non deve occupare la richiesta HTTP.
 
 \`\`\`erb
 <%# la lista si aggiorna da sola quando cambia %>
@@ -5342,7 +5342,7 @@ Una linea acid efficace può utilizzare poche note in ottave vicine, ripetute co
     content: `
 In Ruby gli errori sono oggetti (\`Exception\`) che si sollevano con \`raise\` e si catturano con \`rescue\`.
 
-L'analisi si completa confrontando questa parte con [Ruby module e mixin: include, prepend, extend](/blog/ruby-moduli-mixin) e [Ruby gem: packaging, dipendenze e versioni](/blog/ruby-creare-una-gem). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Rescue non dovrebbe confondere un errore di rete con dati assenti. Il tema ricompare nel [consumo di API da Rails](/blog/rails-consumare-api-esterne); con [RSpec](/blog/ruby-rspec-testare) puoi verificare che le eccezioni recuperabili restino distinguibili dalle altre.
 
 \`\`\`ruby
 def leggi_config(path)
@@ -5388,7 +5388,7 @@ Una chiamata HTTP può fallire per timeout, autorizzazione o dati non validi. Me
     content: `
 Per le piccole interazioni (un menu, un contatore, un toggle) non serve React. **Stimulus**, parte di Hotwire, collega comportamenti JavaScript all'HTML tramite \`data-attribute\`.
 
-L'analisi si completa confrontando questa parte con [Hotwire e Turbo: navigazione HTML reattiva](/blog/rails-hotwire-turbo) e [Rails caching: invalidazione e dati coerenti](/blog/rails-caching-basi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un controller Stimulus deve liberare listener e timer quando Turbo cambia la pagina: [Hotwire e Turbo](/blog/rails-hotwire-turbo) spiega il contesto di navigazione. Se un componente legge dati remoti, la [cache Rails](/blog/rails-caching-basi) riguarda la coerenza dei contenuti, non la gestione del DOM.
 
 \`\`\`html
 <div data-controller="clipboard">
@@ -5578,7 +5578,7 @@ Tagliare un campione al 25 o al 50 per cento della durata non garantisce che il 
     content: `
 Una **gem** è un pacchetto Ruby riutilizzabile. Crearne una è sorprendentemente semplice: Bundler impalca tutto per te.
 
-L'analisi si completa confrontando questa parte con [Ruby begin/rescue/ensure: gestione degli errori](/blog/ruby-gestione-errori) e [RSpec in Ruby: test affidabili e leggibili](/blog/ruby-rspec-testare). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una gem è un contratto distribuito a progetti diversi: [RSpec](/blog/ruby-rspec-testare) aiuta a proteggerne l'API pubblica, e la [gestione degli errori](/blog/ruby-gestione-errori) chiarisce quali fallimenti i chiamanti devono aspettarsi.
 
 \`\`\`bash
 bundle gem saluti
@@ -5633,7 +5633,7 @@ Quando una gem espone una classe pubblica, altre applicazioni iniziano a dipende
     content: `
 Il modo più semplice per rendere un'app Rails veloce è **non rifare** il lavoro costoso. \`Rails.cache.fetch\` calcola una volta e ricorda.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Rails N+1: includes, preload ed eager_load](/blog/rails-problema-n-piu-1) e [Stimulus Rails: comportamento associato all'HTML](/blog/rails-stimulus-js-leggero). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una cache può evitare query ripetute ma non sostituisce la correzione di un [problema N+1](/blog/rails-problema-n-piu-1). Il [budget delle query GraphQL](/blog/shopify-graphql-budget-query) offre un esempio diverso di risorsa limitata che richiede misura e invalidazione coerente.
 
 \`\`\`ruby
 def statistiche_lanci
@@ -5831,7 +5831,7 @@ Un ring può contenere quattro note e un altro ring quattro durate. Se i due pat
     content: `
 **RSpec** è il framework di test più amato in Ruby. La sua forza è la leggibilità: un test si legge quasi come una frase in inglese.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby gem: packaging, dipendenze e versioni](/blog/ruby-creare-una-gem) e [Ruby Ractor: isolamento e concorrenza](/blog/ruby-ractor-concorrenza). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un test di comportamento deve sopravvivere a un refactoring innocuo: l'articolo su [creare una gem](/blog/ruby-creare-una-gem) mostra il contratto da tutelare. Se il codice gestisce [eccezioni Ruby](/blog/ruby-gestione-errori), verifica anche i percorsi negativi.
 
 \`\`\`ruby
 RSpec.describe Launch do
@@ -5879,7 +5879,7 @@ Un test che si aspetta una chiamata a un metodo privato può fallire dopo un ref
     content: `
 Con la crescita dell'app, certe operazioni non appartengono a nessun model in particolare: coinvolgono più oggetti, chiamate esterne, passaggi. Metterle nel controller lo gonfia; metterle in un model lo snatura. La risposta è un **service object**.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Rails MVC: Model, View e Controller](/blog/rails-mvc-in-tre-minuti) e [Rails caching: invalidazione e dati coerenti](/blog/rails-caching-basi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un service object è utile solo se rende leggibili confini e fallimenti rispetto al [controller MVC](/blog/rails-mvc-in-tre-minuti). Se orchestra chiamate esterne, il [transactional outbox](/blog/transactional-outbox-invio-erp) mostra perché una semplice transazione SQL non copre il servizio remoto.
 
 \`\`\`ruby
 class SyncLaunches
@@ -6086,7 +6086,7 @@ Un controller MIDI può inviare valori da trasformare in intervalli appropriati 
     content: `
 Storicamente il GIL di Ruby impediva l'esecuzione parallela di thread. Ruby 3 ha introdotto i **Ractor**, che eseguono codice davvero in parallelo isolando lo stato.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby pattern matching: case/in](/blog/ruby-pattern-matching) e [RSpec in Ruby: test affidabili e leggibili](/blog/ruby-rspec-testare). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Parallelizzare non significa rendere automaticamente più breve un'operazione. Prima misura la versione sequenziale con [Benchmark Ruby](/blog/ruby-benchmark-misurare), poi verifica che i protocolli fra oggetti rispettino i vincoli di [duck typing](/blog/ruby-duck-typing).
 
 \`\`\`ruby
 lavoratori = 4.times.map do |i|
@@ -6132,7 +6132,7 @@ Un calcolo CPU-bound può trarre beneficio dal parallelismo, ma la suddivisione 
     content: `
 Il bug di performance più comune in Rails è il **problema N+1**: una query per prendere la lista, più una query per ogni elemento. Con 100 lanci, 101 query.
 
-L'analisi si completa confrontando questa parte con [Rails caching: invalidazione e dati coerenti](/blog/rails-caching-basi) e [Validazioni Rails e vincoli del database](/blog/rails-validazioni-dati-puliti). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un caricamento anticipato può ridurre le query, ma se il risultato cambia spesso, la [cache Rails](/blog/rails-caching-basi) introduce un problema aggiuntivo di invalidazione. Per capire la causa dell'N+1 riparti dalle [associazioni Active Record](/blog/rails-associazioni-has-many-belongs-to).
 
 \`\`\`ruby
 # MALE: 1 query per i lanci + N query per i provider
@@ -6321,7 +6321,7 @@ Un valore sleep espresso in beat cambia durata reale quando modifichi BPM. Per e
     content: `
 Prima o poi in Ruby incontri \`map(&:upcase)\` e ti chiedi cosa diavolo sia quel \`&:\`. È una delle sintassi più eleganti del linguaggio.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby symbol vs string: quando usarli](/blog/ruby-symbol-vs-string) e [Ruby blocchi, Proc e lambda: differenze](/blog/ruby-blocchi-proc-lambda). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La scorciatoia &:method è leggibile quando la callback invoca un solo metodo: [map e select](/blog/ruby-enumerable-map-select-reduce) mostrano quando usarla. I [Symbol in Ruby](/blog/ruby-symbol-vs-string) servono però anche come chiavi, con una semantica diversa.
 
 \`\`\`ruby
 %w[ciao mondo].map(&:upcase)   # => ["CIAO", "MONDO"]
@@ -6363,7 +6363,7 @@ Nella trasformazione users.map(&:name), la scorciatoia evita di scrivere un bloc
     content: `
 Quando salvi i dati di un form, non ti puoi fidare di ciò che arriva. Gli **strong parameters** impongono una whitelist: solo i campi che permetti esplicitamente passano.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Rails N+1: includes, preload ed eager_load](/blog/rails-problema-n-piu-1) e [Routing RESTful in Rails con resources](/blog/rails-routing-restful). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Strong Parameters limita gli attributi assegnabili, non decide chi possa modificare una risorsa: il [routing RESTful](/blog/rails-routing-restful) riguarda ancora un altro livello. Le [validazioni e i vincoli database](/blog/rails-validazioni-dati-puliti) proteggono infine la consistenza dei valori.
 
 \`\`\`ruby
 class LaunchesController < ApplicationController
@@ -6559,7 +6559,7 @@ Prima di registrare un brano lungo, cattura trenta secondi e riascoltali su cuff
     content: `
 Vuoi che i tuoi oggetti si ordinino e si confrontino come i numeri? Basta definire l'operatore "astronave" \`<=>\` e includere il modulo **Comparable**.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby module e mixin: include, prepend, extend](/blog/ruby-moduli-mixin) e [Ruby duck typing e protocolli impliciti](/blog/ruby-duck-typing). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un ordinamento affidabile richiede confronti coerenti: prima di aggiungere Comparable a una classe, verifica il suo [contratto di duck typing](/blog/ruby-duck-typing). Le [trasformazioni Enumerable](/blog/ruby-enumerable-map-select-reduce) possono usare quell'ordinamento senza conoscere la rappresentazione interna.
 
 \`\`\`ruby
 class Launch
@@ -6612,7 +6612,7 @@ Se confronti prodotti per prezzo, devi decidere cosa accade quando uno dei due p
     content: `
 Il routing di Rails abbraccia le convenzioni REST: una risorsa, sette azioni standard. E una riga le genera tutte.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Rails Strong Parameters: input e mass assignment](/blog/rails-strong-parameters) e [Rails N+1: includes, preload ed eager_load](/blog/rails-problema-n-piu-1). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La dichiarazione resources espone i percorsi, ma [Strong Parameters](/blog/rails-strong-parameters) definisce quali campi possono essere assegnati. Per provare permessi e codici HTTP servono [request spec Rails](/blog/rails-request-specs-testare-api).
 
 \`\`\`ruby
 # config/routes.rb
@@ -6797,7 +6797,7 @@ Un pad ambient usa spesso attacchi lenti, note sostenute e riverbero. Quando il 
     content: `
 Ruby ha un rapporto splendido con le stringhe e le espressioni regolari: sono integrate nel linguaggio, non una libreria a parte.
 
-L'analisi si completa confrontando questa parte con [Ruby symbol vs string: quando usarli](/blog/ruby-symbol-vs-string) e [Ruby Comparable: implementare <=>](/blog/ruby-comparable-enumerable-custom). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una regex su input reale deve distinguere testo letterale e pattern: il [pattern matching Ruby](/blog/ruby-pattern-matching) affronta invece la struttura dei dati. Se confronti prestazioni delle sostituzioni, usa [Benchmark](/blog/ruby-benchmark-misurare) su casi rappresentativi.
 
 \`\`\`ruby
 testo = "Contattami: ale@mail.it oppure info@site.com"
@@ -6846,7 +6846,7 @@ Una sostituzione gsub può sembrare corretta su una stringa semplice e fallire c
     content: `
 Gestire upload di file (avatar, allegati, immagini) a mano è tedioso. **Active Storage** lo fa per te con una riga nel model.
 
-Per valutare l'effetto di questa scelta sul backend, considera anche [Active Job: job asincroni e retry](/blog/rails-background-job-active-job) e [Rails migrations: cambiare lo schema in sicurezza](/blog/rails-migrazioni-versionare-il-database). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un upload non finisce con il salvataggio: può richiedere elaborazioni che conviene affidare a [Active Job](/blog/rails-background-job-active-job). Le [migrazioni Rails](/blog/rails-migrazioni-versionare-il-database) chiariscono come evolvere lo schema senza compromettere gli allegati già esistenti.
 
 \`\`\`ruby
 class Provider < ApplicationRecord
@@ -7056,7 +7056,7 @@ Un loop di quattro battute è un punto di partenza, non un brano finito. Scrivi 
     content: `
 La regola d'oro dell'ottimizzazione: **misura, non indovinare**. Ruby ha il modulo \`Benchmark\` integrato per confrontare approcci diversi con dati reali.
 
-L'analisi si completa confrontando questa parte con [Ruby String gsub e regex: casi limite](/blog/ruby-stringhe-gsub-regex) e [Ruby then, curry e composizione di funzioni](/blog/ruby-programmazione-funzionale). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un micro-benchmark non dimostra da solo un miglioramento applicativo: confronta il costo di [Enumerable](/blog/ruby-enumerable-map-select-reduce) su input reali e la gestione dei thread in [Ractor](/blog/ruby-ractor-concorrenza) prima di interpretare le differenze.
 
 \`\`\`ruby
 require "benchmark"
@@ -7105,7 +7105,7 @@ Per confrontare due implementazioni devi usare lo stesso input e ridurre il rumo
     content: `
 Per una ricerca testuale seria non serve subito Elasticsearch: **PostgreSQL** ha il full-text search integrato, con ranking e gestione delle lingue. Rails lo espone con eleganza.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Rails request specs: contratti HTTP e casi limite](/blog/rails-request-specs-testare-api) e [Routing RESTful in Rails con resources](/blog/rails-routing-restful). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La ricerca full-text va valutata con query e dati realistici: gli [indici e le query di Active Record](/blog/rails-activerecord-le-basi) influenzano il costo, mentre [request spec Rails](/blog/rails-request-specs-testare-api) permettono di proteggere il contratto dell'endpoint di ricerca.
 
 \`\`\`ruby
 class Launch < ApplicationRecord
@@ -7301,7 +7301,7 @@ Per imparare i cicli con Sonic Pi, prepara un pattern di quattro note e chiedi d
     content: `
 Ruby è a oggetti fino al midollo, ma ha strumenti funzionali eleganti per comporre trasformazioni in modo leggibile.
 
-L'analisi si completa confrontando questa parte con [Ruby Benchmark: evitare confronti falsati](/blog/ruby-benchmark-misurare) e [Ruby String gsub e regex: casi limite](/blog/ruby-stringhe-gsub-regex). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La composizione di funzioni è utile quando rende chiaro il percorso dei dati. Gli [Enumerable di Ruby](/blog/ruby-enumerable-map-select-reduce) offrono trasformazioni dichiarative, mentre il [Benchmark](/blog/ruby-benchmark-misurare) aiuta a capire quando una lunga catena ha un costo significativo.
 
 \`\`\`ruby
 # then (o yield_self): incanala un valore in una pipeline
@@ -7349,7 +7349,7 @@ Una catena con then è facile da seguire quando ogni passaggio restituisce un va
     content: `
 Per un backend API, i test più utili sono i **request spec**: fanno una vera richiesta HTTP a un endpoint e verificano la risposta, dallo status code al corpo JSON.
 
-Un caso correlato, utile per definire i confini della soluzione, è [Rails: chiamare API esterne senza perdere affidabilità](/blog/rails-consumare-api-esterne) e [Rails API-only: controller e JSON](/blog/rails-api-only-mode). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un request spec protegge status, body ed effetti persistenti, ma richiede un contratto di endpoint ben definito come quello di una [API Rails](/blog/rails-api-only-mode). Le [chiamate a servizi esterni](/blog/rails-consumare-api-esterne) richiedono anche simulazioni di timeout e errori remoti.
 
 \`\`\`ruby
 RSpec.describe "Launches API", type: :request do
