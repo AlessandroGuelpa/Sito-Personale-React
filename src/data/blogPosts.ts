@@ -3326,6 +3326,11 @@ Crei nodi e li connetti in un grafo: un oscillatore produce un'onda, la colleghi
 
 AudioContext gestisce il grafo audio del browser. Un OscillatorNode produce un segnale periodico, ma deve essere collegato a una destinazione e avviato esplicitamente. Le politiche di autoplay possono richiedere un gesto dell'utente prima che il contesto passi allo stato running. Chiudi o riutilizza correttamente il contesto, anziché crearne uno a ogni click.
 
+
+## Primo test: avvio, arresto e volume
+
+Per verificare un oscillatore nel browser, collega la sorgente a un GainNode e poi alla destination del contesto. Imposta inizialmente un gain molto basso, perché l'uscita digitale può risultare intensa. La riproduzione deve partire da un'azione dell'utente: su molti browser occorre riprendere un AudioContext sospeso dentro il gestore del click. Ogni OscillatorNode può essere avviato una sola volta; per suonare una nuova nota crea un nuovo nodo, senza ricreare tutto il contesto. Programma stop dopo una durata breve e controlla che la sorgente venga disconnessa quando non serve più. Se non senti nulla, osserva AudioContext.state prima di cambiare frequenza o parametri casualmente. Questa verifica separa problemi di permessi del browser da errori del grafo audio.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext)`,
@@ -3531,6 +3536,11 @@ Vuoi un basso acido? Parti da \`sawtooth\` e togli le alte con un filtro passa-b
 ## Cosa verificare
 
 Un oscillatore genera onde periodiche. Le forme sine, square, sawtooth e triangle hanno contenuti armonici differenti, ma la percezione dipende anche da volume, frequenza, filtri e dispositivo di ascolto. OscillatorNode emette un segnale finché non viene arrestato: per una nota musicale serve anche un inviluppo di ampiezza, di solito tramite GainNode.
+
+
+## Ascoltare un confronto corretto
+
+Prepara quattro pulsanti che usano la stessa nota e lo stesso inviluppo, cambiando soltanto type dell'OscillatorNode fra sine, triangle, square e sawtooth. Tieni basso il livello e confronta a volume percepito simile: una forma ricca di armoniche può sembrare più forte anche se il gain numerico non cambia. Collega poi un filtro lowpass e ascolta come cambiano le armoniche superiori. Una forma d'onda non è una melodia e un oscillatore continuo non definisce da solo un'articolazione musicale. Per ottenere note distinte, usa un GainNode che applichi un breve attacco e rilascio. Verifica che ogni sorgente venga terminata dopo il suono, così più click non accumulano oscillatori attivi.
 
 **Documentazione**
 
@@ -3738,6 +3748,11 @@ Invece di accendere e spegnere di colpo, fai salire e scendere il volume con del
 
 GainNode moltiplica il segnale in ingresso e può essere automatizzato tramite AudioParam. Per evitare click, non interrompere bruscamente l'onda: programma rampe con setTargetAtTime o linearRampToValueAtTime, rispettando i tempi degli eventi. Un inviluppo musicale completo può includere attack, decay, sustain e release, ma i valori dipendono dal suono desiderato.
 
+
+## Evitare click tra una nota e l'altra
+
+Se interrompi bruscamente un segnale mentre la forma d'onda ha ampiezza diversa da zero, puoi introdurre una discontinuità udibile. Per evitarla applica un inviluppo con una breve rampa di attacco e una di rilascio tramite i metodi di AudioParam. Non tutti gli strumenti hanno bisogno dello stesso ADSR: una cassa usa tempi molto diversi da un pad. Prepara una nota di test e cambia soltanto release, osservando quando la coda si sovrappone alla nota successiva. Ricorda che GainNode controlla l'ampiezza, non i decibel in maniera lineare. Anche con singole voci moderate, la somma di più oscillatori può saturare il mix: controlla il livello del bus finale.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/GainNode)`,
@@ -3943,6 +3958,11 @@ Questo modello dichiarativo è potente: costruisci una catena una volta, poi ti 
 ## Cosa verificare
 
 Nel Web Audio API i nodi formano un grafo: una sorgente passa attraverso filtri, gain ed effetti prima di raggiungere la destinazione. connect crea collegamenti che possono sdoppiare o sommare segnali; una connessione non prevista può far percepire il suono due volte. Controlla il percorso dry e wet degli effetti e usa disconnect quando cambi struttura in modo dinamico.
+
+
+## Controllare i percorsi dry e wet
+
+Un effetto collegato in parallelo alla sorgente può creare due percorsi, uno diretto e uno processato. È una struttura utile per riverbero e delay, ma se entrambi arrivano alla destination senza controllo del livello possono aumentare il volume. Disegna prima il percorso del segnale, indicando sorgenti, gain, effetti e uscita. Poi attiva e disattiva i rami uno alla volta, assicurandoti che disconnect non rimuova connessioni necessarie ad altri strumenti. Quando cambi preset, verifica che non vengano aggiunti nuovi collegamenti senza eliminare quelli precedenti. Un buon test consiste nel ripetere il cambio effetto molte volte e confrontare il livello iniziale e finale. Se cresce progressivamente, il grafo può contenere duplicazioni.
 
 **Documentazione**
 
@@ -4166,6 +4186,11 @@ Automatizzare \`frequency\` nel tempo è ciò che dà vita ai suoni: un filtro c
 ## Cosa verificare
 
 BiquadFilterNode offre filtri comuni e parametri di frequenza, Q e guadagno. Non tutti i tipi utilizzano gli stessi parametri allo stesso modo; per esempio il gain riguarda filtri come lowshelf o highshelf. Modifiche brusche alla frequenza possono creare artefatti. Prima di aggiungere più filtri valuta la risposta complessiva e il livello finale del segnale.
+
+
+## Automatizzare cutoff con prudenza
+
+Per confrontare lowpass e highpass, usa una sorgente ricca di armoniche e mantieni costanti frequenza fondamentale e volume. Muovi cutoff gradualmente: spostamenti bruschi possono creare artefatti che non dipendono dal timbro della sorgente. Il parametro Q influisce sulla risposta intorno alla frequenza di taglio; un valore elevato può produrre picchi, perciò abbassa il livello durante le prove. Non tutti i tipi di BiquadFilterNode interpretano Q e gain nello stesso modo. Se colleghi più filtri in serie, la risposta complessiva dipende da tutta la catena. Verifica con un AnalyserNode come cambiano le frequenze, ma non considerare quella rappresentazione una misura calibrata del suono.
 
 **Documentazione**
 
@@ -4391,6 +4416,11 @@ Il trucco è la **impulse response**: un breve file audio che cattura come un am
 ## Cosa verificare
 
 ConvolverNode elabora il segnale usando una risposta all'impulso caricata in AudioBuffer. La qualità del riverbero dipende dal file e dal mix dry/wet; non è sufficiente collegare un nodo senza dati validi. File più lunghi richiedono più memoria ed elaborazione. Per applicazioni interattive prevedi gestione del caricamento, fallback e volume dell'effetto.
+
+
+## Una risposta all'impulso non è un preset magico
+
+ConvolverNode elabora il segnale usando un AudioBuffer che rappresenta una risposta all'impulso. Per una prova controllata carica un campione valido, decodificalo e separa il percorso asciutto dal percorso processato. Regola il bilanciamento dei due rami, perché una risposta molto lunga può far sembrare sfocate anche le note brevi. Se il caricamento fallisce, mostra un errore e lascia utilizzabile il percorso dry. Gli impulsi lunghi occupano memoria e richiedono calcolo: prova sul dispositivo target e non soltanto sul computer di sviluppo. Prima di distribuire un'applicazione assicurati di poter usare legalmente il campione e indica quando l'asset viene scaricato.
 
 **Documentazione**
 
@@ -4630,6 +4660,11 @@ L'idea: un \`setTimeout\` impreciso fa da "sveglia" ogni 25 ms, ma i suoni vengo
 
 Un metronomo affidabile non dovrebbe affidare ogni colpo al solo setInterval, perché il main thread può ritardare le callback. Usa l'orologio audioContext.currentTime per programmare gli eventi con un piccolo anticipo. Il timer JavaScript può limitarsi a riempire una finestra di scheduling. Verifica il comportamento durante rallentamenti della pagina e quando il tab passa in background.
 
+
+## Separare timer dell'interfaccia e orologio audio
+
+Un timer JavaScript non è una sorgente temporale perfetta: il main thread può essere occupato e i tab inattivi possono subire limitazioni. Invece di generare un click esattamente quando scatta setInterval, usa il timer per programmare una piccola finestra di eventi futuri basata su audioContext.currentTime. Mantieni un indice dei beat già pianificati e aggiorna la finestra a intervalli regolari. Se il tempo cambia durante la riproduzione, definisci da quale battuta applicare il nuovo BPM per evitare trigger duplicati. Prova a rallentare deliberatamente l'interfaccia con DevTools: l'animazione grafica può saltare un frame, ma i colpi già schedulati devono rimanere corretti. Verifica anche lo stop e la ripartenza.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/currentTime)`,
@@ -4851,6 +4886,11 @@ Sintetizzare la batteria dà controllo totale sul timbro, e pesa zero byte in do
 ## Cosa verificare
 
 Una drum machine può usare AudioBufferSourceNode distinti per ogni colpo, programmati sul tempo audio. Ogni AudioBufferSourceNode è pensato per un singolo avvio: dopo start non va riutilizzato per riprodurre un nuovo evento. Conserva il buffer decodificato e crea una nuova sorgente quando serve. Distingui il pattern musicale dal motore di scheduling per non accumulare drift.
+
+
+## Riutilizzare buffer, non sorgenti
+
+Per la cassa di una drum machine puoi caricare e decodificare il sample una volta, quindi conservarne l'AudioBuffer. A ogni colpo devi creare una nuova istanza AudioBufferSourceNode: un nodo già avviato non può essere riavviato. Programma gli eventi su una griglia di tempo audio, non facendo affidamento esclusivamente sulla precisione del rendering React. Quando l'utente modifica uno step, stabilisci se il cambiamento interessa i colpi già schedulati o solo i successivi. Prepara uno stop che non lasci campioni suonare all'infinito e gestisci lo stato del caricamento dei file. Il livello sommato di kick, snare e hi-hat può superare quello di ogni singolo sample: verifica il bus finale.
 
 **Documentazione**
 
@@ -5083,6 +5123,11 @@ Da qui a una drum machine completa il passo è breve: più array (uno per strume
 
 Uno step sequencer rappresenta una griglia temporale di eventi. Per convertirla in secondi occorre considerare BPM, suddivisioni e swing eventuale. La UI può aggiornarsi con requestAnimationFrame, mentre l'audio dovrebbe essere programmato sull'orologio del contesto. Se modifichi il pattern in esecuzione, scegli quando applicare il cambiamento per non creare note duplicate.
 
+
+## Definire lo step in battute
+
+Un sequencer a sedici step può rappresentare una battuta suddivisa in sedicesimi oppure un'altra lunghezza: non esiste una corrispondenza obbligatoria fra step e secondi. Conserva tempo, griglia e pattern come dati separati, così un cambio di BPM modifica la durata degli eventi senza alterare la struttura musicale. Usa l'orologio audio per programmare il suono e un'animazione leggera per mostrare la posizione corrente. Se un utente modifica uno step mentre il sequencer suona, definisci una regola chiara per applicare la modifica. Verifica che il trasporto riparta dallo step atteso e che i loop non producano trigger doppi. Confronta il comportamento con una rete o CPU rallentata, senza confondere fluidità grafica e precisione audio.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Advanced_techniques)`,
@@ -5308,6 +5353,11 @@ In poche righe hai un synth suonabile con hardware vero, dentro una pagina web. 
 ## Cosa verificare
 
 Web MIDI API permette di ricevere e inviare messaggi MIDI su browser compatibili. Accesso e permessi dipendono dal contesto e dal browser; non devi presumere disponibilità universale. Gestisci il collegamento o scollegamento delle periferiche e distingui noteOn con velocity zero da un evento noteOff quando necessario. MIDI trasporta eventi di controllo, non audio digitale.
+
+
+## Porte MIDI e differenze fra browser
+
+L'accesso ai dispositivi MIDI dipende dal supporto del browser, dal contesto sicuro e dai permessi. Prima di mostrare un elenco di controlli, verifica che requestMIDIAccess sia disponibile e gestisci esplicitamente il rifiuto. Un dispositivo può essere scollegato mentre l'applicazione è in uso, perciò aggiorna l'elenco delle porte e non presumere che rimanga valido l'ID salvato in precedenza. I messaggi di controllo contengono valori numerici da mappare sui range dei parametri audio: evita movimenti improvvisi del filtro quando un controller invia dati rumorosi. MIDI non trasporta il segnale audio; per produrre suono devi collegare l'evento a un sintetizzatore o ad una sorgente Web Audio.
 
 **Documentazione**
 
@@ -5547,6 +5597,11 @@ Bassi a sinistra, alti a destra: ecco lo spettro che pulsa a ritmo. È il classi
 ## Cosa verificare
 
 AnalyserNode espone dati nel dominio del tempo e della frequenza senza modificare necessariamente il segnale. getByteFrequencyData restituisce valori scalati, non un'analisi scientifica della pressione sonora. Scegli fftSize e smoothingTimeConstant in funzione della visualizzazione e limita la frequenza di redraw per non occupare inutilmente la CPU.
+
+
+## Uno spettro non è un fonometro
+
+AnalyserNode permette di leggere valori di frequenza o campioni nel dominio temporale, ma i numeri restituiti non equivalgono automaticamente a decibel acustici calibrati. Imposta fftSize secondo il compromesso fra dettaglio spettrale e aggiornamento visivo; una FFT molto grande può essere inutile per una semplice animazione. Limita il redraw con requestAnimationFrame e sospendi il lavoro quando la visualizzazione non è visibile. Confronta una sinusoide a frequenza nota con un segnale ricco di armoniche e osserva come cambia la rappresentazione. Se aggiungi smoothing, ricorda che una transizione più fluida può nascondere variazioni rapide. La visualizzazione serve a comprendere il segnale, non a dimostrare che il mix è sicuro per l'ascolto.
 
 **Documentazione**
 
@@ -5793,6 +5848,11 @@ Il metodo \`process\` riceve i buffer di input e output e li riempie campione pe
 
 AudioWorklet permette elaborazione audio personalizzata nel thread di rendering audio, con AudioWorkletProcessor caricato tramite addModule. Il codice deve rispettare vincoli di tempo real-time: operazioni bloccanti o allocazioni eccessive possono causare glitch. La comunicazione con l'interfaccia avviene tramite MessagePort. Usa AudioWorklet quando i nodi standard non bastano e verifica supporto e contesto sicuro.
 
+
+## Vincoli della produzione audio in tempo reale
+
+Un AudioWorkletProcessor esegue elaborazione custom in un contesto separato dal main thread, ma ha comunque una finestra di tempo limitata per restituire il blocco audio. Operazioni bloccanti, allocazioni continue e gestione inefficiente dei messaggi possono causare glitch. Definisci prima che cosa deve calcolare il processore e quali parametri cambiano in tempo reale. Mantieni il codice di interfaccia nel thread principale e comunica attraverso MessagePort quando necessario. Per iniziare prova un semplice controllo di gain o un effetto minimo, confrontando il risultato con un nodo Web Audio standard. Se i nodi integrati soddisfano il requisito, introdurre un worklet potrebbe aggiungere complessità senza un beneficio reale.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet)`,
@@ -6018,6 +6078,11 @@ Se la Web Audio API è l'assembly del suono nel browser, Tone.js è il linguaggi
 
 Tone.js fornisce strumenti musicali ad alto livello sopra Web Audio, come sintetizzatori, sequencer e transport. Il transport mantiene un tempo musicale condiviso, ma la riproduzione dipende comunque dalle restrizioni del browser sull'avvio dell'audio. Gestisci smaltimento degli strumenti e arresto dei pattern quando il componente viene rimosso; evita istanze duplicate a ogni render.
 
+
+## Il transport è condiviso, le risorse no
+
+Tone.js fornisce una struttura musicale utile per sincronizzare pattern, synth e automazioni, ma non elimina le restrizioni del browser sull'avvio dell'audio. La prima interazione dell'utente deve gestire l'attivazione del contesto. Se un componente React crea uno strumento a ogni render senza liberare il precedente, possono accumularsi risorse e callback. Prepara un test che monti e smonti la sezione musicale più volte, verificando che gli strumenti vengano dismessi quando non servono. Mantieni il transport coordinato quando più componenti partecipano allo stesso brano: avviarne diversi senza una gerarchia chiara può generare ritmi fuori fase. Per una semplice riproduzione di un file, considera se l'API browser base sarebbe sufficiente.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://tonejs.github.io/)`,
@@ -6240,6 +6305,11 @@ Nota una peculiarità: un \`AudioBufferSourceNode\` è **usa e getta**: dopo \`s
 ## Cosa verificare
 
 I file audio vengono scaricati e decodificati in AudioBuffer prima di poter essere usati efficacemente nel grafo. Una nuova riproduzione richiede una nuova istanza AudioBufferSourceNode, non un secondo start sullo stesso nodo. playbackRate e detune modificano l'altezza o velocità; il cambio può alterare la durata. Considera memoria, caching e fallback se un sample non è disponibile.
+
+
+## Caricamento, decoding e memoria
+
+Un AudioBuffer è un insieme di dati audio già decodificati, quindi occupa memoria anche se il file originale era compresso. Per molti campioni lunghi, caricare tutto in anticipo può diventare oneroso. Distingui asset critici per il primo suono da quelli necessari soltanto in una sezione secondaria. Una riproduzione richiede una nuova istanza AudioBufferSourceNode con il buffer già disponibile. Cambiare playbackRate modifica anche l'altezza delle note in modo diverso da un algoritmo dedicato di time stretching. Testa l'assenza del sample, il rifiuto del download e la navigazione via prima del completamento del decoding. Un fallback chiaro evita che l'interfaccia sembri guasta quando il problema è un asset.
 
 **Documentazione**
 
@@ -6467,6 +6537,11 @@ La lezione per noi sviluppatori: quando costruisci uno strumento musicale sul we
 ## Cosa verificare
 
 Gli esperimenti di Chrome Music Lab mostrano relazioni tra ritmo, frequenza, intervalli e rappresentazioni visive del suono. Sono utili come riferimento didattico, non come API di programmazione. Se vuoi costruire strumenti equivalenti, separa il modello musicale dal rendering e usa Web Audio per la sintesi e lo scheduling. Verifica accessibilità e riduzione del movimento nelle interfacce interattive.
+
+
+## Dall'esperimento a un'interfaccia propria
+
+Un esperimento musicale visivo è utile quando collega un gesto a una conseguenza udibile in modo immediato. Se vuoi riprodurre questo approccio nel browser, separa le regole musicali dalla rappresentazione grafica: le note e le durate sono dati, mentre animazione e colore aiutano a comprenderli. Definisci un controllo di avvio e arresto accessibile anche da tastiera e comunica il risultato senza affidarti solo al colore. Un piccolo esempio può avere una griglia di quattro colpi e un cursore che evidenzia la posizione, ma la temporizzazione del suono deve restare indipendente dagli aggiornamenti del DOM. Verifica il comportamento su mobile, dove gesture e policy di autoplay differiscono spesso dall'ambiente desktop.
 
 **Documentazione**
 
@@ -6706,6 +6781,11 @@ Aggiungi un secondo strato più lento per i bassi, un riverbero, e hai un genera
 ## Cosa verificare
 
 Un sistema generativo produce variazioni secondo regole: scale, intervalli, probabilità, densità e ripetizioni. Senza limiti, la casualità può generare sovrapposizioni troppo forti o sequenze poco ascoltabili. Introduci un seed riproducibile quando vuoi confrontare versioni e definisci un limite di voci contemporanee. L'audio deve essere avviabile e arrestabile esplicitamente dall'utente.
+
+
+## La casualità ha bisogno di limiti
+
+Un generatore che sceglie note completamente a caso può produrre intervalli poco coerenti, troppi eventi simultanei e picchi di volume. Definisci una scala, una densità massima, un registro e una politica per la durata delle voci. Un seed riproducibile permette di confrontare modifiche all'algoritmo senza cambiare ogni volta il materiale musicale. Se il generatore può funzionare a lungo, inserisci un limite alle sorgenti attive e una procedura di stop. Per valutare il risultato registra alcune iterazioni e verifica se le variazioni rispettano il carattere desiderato. Un sistema generativo è utile quando crea differenze controllate, non quando nasconde la struttura dietro valori casuali non verificati.
 
 **Documentazione**
 
@@ -6957,6 +7037,11 @@ Collega tutto alla Web MIDI API e hai un synth polifonico suonabile con una tast
 
 Ogni nota può usare una o più sorgenti con il proprio inviluppo. Un sintetizzatore polifonico deve allocare e rilasciare le voci, evitare nodi lasciati attivi e decidere cosa succede quando si supera il limite di note simultanee. Una politica di voice stealing può interrompere la nota più vecchia o più debole. Verifica noteOn e noteOff ripetuti e l'uso del pedale sustain se previsto.
 
+
+## Gestire la voce che non può più suonare
+
+In un sintetizzatore polifonico ogni nota può avere la propria sorgente e il proprio inviluppo. Se l'utente tiene premuti molti tasti, raggiungerai un numero massimo di voci contemporanee. Decidi in anticipo come gestirlo: puoi interrompere la nota più vecchia, quella con il livello minore o rifiutare l'evento nuovo, ma la scelta ha conseguenze musicali. Associa ogni noteOn al suo noteOff e prevedi una protezione quando un dispositivo si disconnette senza inviare la fine della nota. Testa note ripetute, sustain e cambio rapido di preset. Controlla inoltre il guadagno complessivo: molte voci individualmente moderate possono produrre un mix eccessivo.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)`,
@@ -7192,6 +7277,11 @@ Cambia \`delayTime\` a ritmo di beat e l'eco diventa parte del groove: è l'effe
 ## Cosa verificare
 
 DelayNode ritarda il segnale; aggiungendo un collegamento di feedback puoi produrre echi successivi. Il gain del percorso di feedback deve restare sotto condizioni che evitino crescita incontrollata del livello: filtri, altri nodi e segnali influenzano il comportamento reale. Inserisci un controllo di volume a valle e verifica che il percorso wet non venga sommato involontariamente due volte.
+
+
+## Echi e stabilità del circuito
+
+Collegare l'uscita di un delay al suo ingresso tramite un gain produce ripetizioni successive. Se il livello di feedback è troppo alto, il segnale può persistere o crescere in modo indesiderato; filtri e altri effetti cambiano ulteriormente il comportamento. Per una prima prova imposta un valore prudente e verifica il livello dopo diversi secondi. Il controllo del tempo del delay va automatizzato con attenzione, perché cambiamenti improvvisi possono produrre variazioni di altezza o artefatti. Prevedi un percorso dry separato e un controllo sul bus finale per impedire saturazioni. Testa l'arresto del playback e il cambio preset: vecchie connessioni non devono rimanere attive all'insaputa dell'utente.
 
 **Documentazione**
 
