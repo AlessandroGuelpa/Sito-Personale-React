@@ -2904,99 +2904,116 @@ Inserisci un test di regressione, controlla scenari vicini e conserva le informa
 - [OpenTelemetry — traces](https://opentelemetry.io/docs/concepts/signals/traces/)
 `
   },
-  { 
-    id: "la-sindrome-del-funzionava-sulla-mia-macchina", 
-    title: "La Sindrome del \"Funzionava sulla mia macchina!\"", 
+  {
+    id: "la-sindrome-del-funzionava-sulla-mia-macchina",
+    title: "Funziona in locale ma non in produzione: come diagnosticare il deploy",
     icon: "🤖",
     date: "2026-04-04",
+    updatedAt: "2026-11-11",
     category: "sviluppo-software",
-    content: ` 
-Vi è mai capitato di fare una simulazione d'esame seduti comodamente sul divano di casa, in pigiama, e sentirvi dei geni assoluti, per poi fare scena muta il giorno del test vero e proprio? 
+    hub: "rails-backend",
+    excerpt: "Una checklist tecnica per distinguere errori di configurazione, build, routing e API tra sviluppo e produzione.",
+    tags: ["Deploy","Configurazione","Debugging","Ambienti"],
+    content: `
+Quando un'applicazione funziona in locale ma non in produzione, il primo errore è attribuire il problema al codice che abbiamo appena scritto. La differenza può dipendere da configurazioni, versione del runtime, permessi, asset o accesso ai servizi esterni. Conviene raccogliere prove prima di cambiare componenti.
 
-A me è successo. Ed è in quel momento che ho capito che l'università e lo sviluppo software condividono una delle maledizioni più antiche del mondo informatico: la sindrome del *"Sul mio computer funzionava!"*.
+## Localhost e produzione non condividono tutti i vincoli
 
-## Localhost vs Produzione
-Quando sviluppi un'applicazione web sul tuo computer, sei in un ambiente protetto che chiamiamo \`localhost\`. È il tuo divano. Hai tutte le librerie installate, il database ha esattamente i dati che ti aspetti, la connessione è istantanea e nessuno sta cercando di cliccare su dieci bottoni contemporaneamente.
+In sviluppo un server Vite può gestire le richieste di navigazione in modo diverso da un hosting statico. Un percorso valido dopo aver cliccato un link interno può restituire 404 quando lo si apre direttamente. Verifica prima la risposta HTTP della route e la configurazione del rewrite. Controlla anche URL di base, case sensitivity dei nomi dei file e presenza effettiva degli asset generati dalla build.
 
-Ma prima o poi, il tuo codice deve andare in "Produzione", ovvero sul server reale accessibile a tutti. La Produzione è l'aula d'esame. È un ambiente spietato, pieno di variabili impreviste, reti instabili e utenti imprevedibili.
+Le variabili d'ambiente sono un altro punto critico. Alcune vengono lette durante la build e incorporate nel bundle, altre durante l'esecuzione del servizio. Non presumere che una variabile disponibile in locale lo sia nel deploy.
 
-## Il Fango delle Variabili d'Ambiente
-Qualche tempo fa stavo lavorando al mio sito personale in React + Vite. In locale era una scheggia. Le animazioni erano fluide, il fetch dei dati perfetto. Mi sentivo invincibile. Faccio il push del codice e avvio il deploy su Vercel. 
+## Una procedura di verifica ripetibile
 
-Apro il link pubblico e... pagina bianca. Il network tab del browser era un cimitero di errori 404 (Not Found). 
+Riproduci la build con la stessa versione Node e le stesse dipendenze dichiarate nel lockfile. Controlla typecheck, log di build e asset generati. Poi verifica la Network tab su una navigazione diretta, separando richieste fallite per 404, errori 401/403 e problemi CORS.
 
-Panico totale. *"Ma come? Sul mio computer funziona perfettamente!"*. Ho perso un'ora a rileggere componenti che non avevano alcun problema. Il vero colpevole? Mi ero dimenticato di impostare le variabili d'ambiente (le API keys) sul pannello di Vercel. Il mio codice in locale le leggeva da un file protetto che, giustamente, non viene inviato al server. In produzione, l'applicazione stava cercando di connettersi al nulla.
+Se un'applicazione dipende da un'API esterna, testa il comportamento con una risposta valida, una risposta di errore e una rete lenta. Non inserire chiavi private nel frontend: tutto ciò che arriva al browser deve essere considerato pubblico. Registra errori utili, ma non segreti.
 
-## Il Takeaway
-Che tu stia preparando Analisi Matematica o configurando un server, non fidarti mai del tuo ambiente protetto. 
+## Confermare la correzione
 
-Fare gli esercizi con il libro aperto o il codice sorgente già configurato ti dà un falso senso di sicurezza. Devi sforzarti di testare le tue conoscenze (e il tuo software) nelle condizioni più vicine possibili alla realtà. Fai deploy frequenti fin dal primo giorno e prova a fare le simulazioni d'esame senza appunti. Il mondo reale non perdona, ma insegna tantissimo.
-` 
+Dopo la modifica esegui lo stesso test sul dominio di preview e poi sul dominio di produzione. Una preview corretta non dimostra automaticamente che l'ambiente production abbia gli stessi permessi e le stesse variabili.
+
+Puoi approfondire [la gestione delle variabili d'ambiente](/blog/quando-luniverso-ti-cambia-le-variabili-in-produzione) e [le immagini Docker riproducibili](/blog/principio-di-archimede-e-i-container-docker).
+
+**Fonti**
+
+- [Vite — Env Variables and Modes](https://vite.dev/guide/env-and-mode)
+- [Vercel — Build and Deployment](https://vercel.com/docs/deployments)
+`,
   },
-  { 
-    id: "chi-ha-scritto-questa-roba", 
-    title: "\"Chi ha scritto questa roba?\": Appunti e Debito Tecnico", 
+  {
+    id: "chi-ha-scritto-questa-roba",
+    title: "Debito tecnico: documentare il codice per facilitarne la manutenzione",
     icon: "📝",
     date: "2026-03-30",
+    updatedAt: "2026-11-11",
     category: "sviluppo-software",
-    content: ` 
-L'altro giorno ho ripreso in mano i miei appunti di Fisica per un ripasso veloce prima di un test. Ho fissato la pagina per buoni dieci minuti, cercando di decifrare una formula circondata da frecce caotiche e note a margine mezza cancellate. 
+    hub: "rails-backend",
+    excerpt: "Quando documentare le decisioni e come separare comportamento, vincoli e implementazione senza accumulare commenti inutili.",
+    tags: ["Debito tecnico","Documentazione","Refactoring","Manutenibilità"],
+    content: `
+Il debito tecnico si manifesta quando una scelta rapida rende le modifiche future più costose. Non basta contare i commenti assenti o i nomi di variabili poco espressivi: è importante capire quali decisioni non sono più ricostruibili e quali dipendenze impediscono di evolvere il sistema in sicurezza.
 
-Ho pensato: *"Ma chi diavolo ha scritto questa roba? Sembra arabo."* Poi ho realizzato con orrore che la grafia era la mia.
+## Commenti e documentazione hanno scopi diversi
 
-Questo fenomeno di totale alienazione verso il lavoro del "Te Stesso" del passato è il fulcro di uno dei concetti più importanti dell'Ingegneria Informatica: il Debito Tecnico.
+Un commento utile spiega una decisione non evidente: perché un retry è limitato, perché una chiamata avviene dopo un commit o perché una determinata validazione è duplicata nel database. Ripetere in italiano ciò che fa un'istruzione leggibile può diventare rumore.
 
-## Scrivere per l'Oggi vs Scrivere per il Domani
-Quando siamo di fretta—magari a ridosso di una scadenza lavorativa o mentre il professore spiega troppo velocemente—il nostro unico obiettivo è portare a casa il risultato. Prendiamo appunti disordinati o scriviamo codice appena sufficiente a far funzionare le cose.
+Documenta invece i contratti pubblici, le assunzioni sugli input e gli effetti collaterali. Per una sincronizzazione ordini servono almeno identificativi, stati previsti, criteri di idempotenza e gestione del fallimento. Un nome chiaro è importante, ma non sostituisce un contratto che coinvolge più sistemi.
 
-In programmazione, questo compromesso si chiama Debito Tecnico. Ottieni un vantaggio immediato (finisci il task oggi), ma contrai un "debito" con il futuro. Prima o poi, gli interessi andranno pagati, e si pagheranno in ore di frustrazione cercando di capire cosa stavi pensando in quel momento.
+## Un esempio di manutenzione
 
-## Il Fango del Codice Illeggibile
-Mesi fa, per un progetto freelance, dovevo integrare alcune API di Shopify in un backend Ruby on Rails. Il cliente aveva fretta. Ho creato un controller enorme, scritto tutto di getto, usando nomi di variabili orribili come \`data1\`, \`temp_val\` e \`x\`. Niente commenti. Ha funzionato al primo colpo. Mi sono dato una pacca sulla spalla e ho chiuso il file.
+Immagina un controller che importa un ordine da un'API e poi aggiorna il magazzino. Se normalizzazione, persistenza e invio remoto sono mescolati nello stesso metodo, è difficile verificare quali passaggi possano essere ripetuti. Prima di riscrivere il controller, elenca i comportamenti da proteggere e aggiungi test di caratterizzazione. Poi isola soltanto il confine che crea problemi.
 
-Settimana scorsa, mi chiedono una piccola modifica a quella logica. Apro il file e mi trovo davanti un muro di codice incomprensibile. Ho dovuto letteralmente fare *reverse engineering* del mio stesso software per capire cosa facesse la variabile \`x\`. Una modifica da venti minuti mi ha rubato mezza giornata. Gli interessi del debito tecnico avevano bussato alla porta.
+Quando introduci un servizio dedicato, documenta input, output, errori recuperabili e quando l'operazione produce effetti esterni. Evita di trasformare ogni singola riga in un'astrazione.
 
-## Il Takeaway
-Il codice che scrivi oggi, o gli appunti che prendi a lezione, raramente servono per l'immediato. Servono per la manutenzione futura.
+## Tenere il debito sotto controllo
 
-Usa nomi di variabili che abbiano senso (meglio \`user_cart_total\` che \`uct\`). Lascia un commento se una logica è complessa. Riscrivi quegli appunti in bella copia finché hai il concetto fresco in testa. Smettila di programmare o studiare solo per finire la giornata: inizia a fare un favore al Te Stesso di tra sei mesi. Ti ringrazierà.
-` 
+Collega la manutenzione al lavoro ordinario: ogni modifica dovrebbe lasciare i moduli toccati un po' più comprensibili, senza nascondere un cambiamento funzionale dentro un refactoring enorme. Usa piccoli pull request e verifica il comportamento con test e log.
+
+Per approfondire leggi [il refactoring del codice legacy](/blog/principio-di-inerzia-e-la-sindrome-del-non-toccare) e [i service object Rails](/blog/rails-service-objects).
+
+**Fonti**
+
+- [Martin Fowler — Technical Debt Quadrant](https://martinfowler.com/bliki/TechnicalDebtQuadrant.html)
+- [Google Engineering Practices — Code Review](https://google.github.io/eng-practices/review/)
+`,
   },
-  { 
-    id: "i-messaggi-di-errore-non-ti-stanno-giudicando", 
-    title: "I Messaggi di Errore Non Ti Stanno Giudicando", 
+  {
+    id: "i-messaggi-di-errore-non-ti-stanno-giudicando",
+    title: "Leggere errori JavaScript: stack trace, causa e riproduzione",
     icon: "⚠️",
     date: "2026-03-15",
+    updatedAt: "2026-11-11",
     category: "sviluppo-software",
-    content: ` 
-Esiste un riflesso incondizionato che colpisce quasi tutti gli studenti e i programmatori junior: la reazione di panico davanti al rosso.
+    hub: "react-frontend",
+    excerpt: "Come leggere uno stack trace, riprodurre un TypeError e verificare la correzione senza riscrivere componenti alla cieca.",
+    tags: ["JavaScript","Debugging","Stack trace","React"],
+    content: `
+Una schermata bianca in React può dipendere da un'eccezione JavaScript, da una richiesta fallita o da un problema di rendering. Il primo passo non è aggiungere console.log ovunque: è identificare che cosa dice davvero l'errore e quando si verifica.
 
-Può essere un esame universitario restituito dal professore pieno di correzioni a penna rossa, oppure il terminale che improvvisamente si riempie di uno *stack trace* chilometrico color cremisi scuro. L'istinto umano è sempre lo stesso: un tuffo al cuore, le mani che si staccano dalla tastiera e il pensiero martellante *"Ho rotto tutto, non sono capace, non passerò mai questo corso."*
+## Partire dal messaggio concreto
 
-Ci ho messo un bel po' a capirlo, ma la verità è molto più rassicurante: i messaggi di errore non ti stanno giudicando.
+Considera \`TypeError: Cannot read properties of undefined (reading 'map')\`. Il programma ha tentato di accedere a map su un valore undefined. Questo non prova che il problema sia Array.map: indica soltanto il punto in cui un'assunzione sui dati si è rivelata falsa.
 
-## Il Navigatore Satellitare, non una Sentenza
-Quando ho iniziato a studiare seriamente la programmazione, vedevo gli errori in console come una bocciatura personale. Se il codice non compilava al primo colpo, mi sentivo un impostore.
+Verifica quindi da dove proviene il valore. Una prop non è stata passata? L'API restituisce una struttura diversa? Il componente renderizza prima della conclusione della richiesta? Una possibile soluzione è rappresentare esplicitamente loading, error e success, ma la scelta dipende dal contratto della funzione e dei dati.
 
-Poi ho cambiato prospettiva. Il terminale è solo una macchina molto pedante che non capisce i sottintesi. Quando ti vomita addosso una schermata rossa, non ti sta dicendo "Sei stupido". Ti sta dicendo: *"Ehi, mi hai chiesto di andare a Roma, ma qui c'è un cantiere che mi blocca. Nello specifico, il cantiere è al chilometro 42 (riga 42 del file index.js), e riguarda un ponte crollato (ReferenceError: user is not defined)."*
+## Leggere lo stack trace
 
-Il messaggio di errore è la mappa del tesoro.
+Individua la prima riga utile del codice applicativo, separandola dai frame della libreria. Se il bundle di produzione è minificato, source map adeguate possono collegare l'errore ai file originali. Non pubblicare source map contenenti informazioni riservate senza valutare l'esposizione.
 
-## Il Fango della Disattenzione
-Ero immerso in un progetto frontend in React. Stavo passando delle *props* a un componente figlio e, all'improvviso, lo schermo diventa bianco. Apro la console: errore critico. 
+Per diagnosticare, riproduci il problema con un input noto. Poi usa breakpoint, watch expressions e Network tab per osservare il valore prima dell'operazione che fallisce. Modifica una variabile alla volta.
 
-Preso dalla fretta e dalla frustrazione, ignoro il testo dell'errore (che mi sembrava lunghissimo e complicato) e inizio a riscrivere la logica del componente alla cieca. Aggiungo \`console.log\` ovunque. Niente. Ci perdo un'ora e mezza, sudando freddo.
+## Trasformare il bug in un test
 
-A un certo punto, mi fermo, faccio un bel respiro e leggo la primissima riga di quell'orribile muro di testo rosso: 
-\`TypeError: Cannot read properties of undefined (reading 'map')\`.
+Se il componente richiede un array, definisci cosa deve fare quando riceve un valore assente: mostrare uno stato vuoto, un errore o rifiutare l'input. Un fallback silenzioso con ?? [] è appropriato soltanto se l'assenza è prevista; altrimenti può nascondere una regressione nell'API.
 
-Avevo semplicemente dimenticato di passare l'array al componente figlio, che stava cercando di mappare il nulla. Se avessi letto il navigatore invece di guidare bendato per la stanza, avrei risolto in tre secondi netti.
+Aggiungi un test per il caso che falliva e verifica anche l'interfaccia dopo una navigazione diretta. Per ampliare il ragionamento consulta [il debugging riproducibile](/blog/effetto-osservatore-fisica-quantistica-e-l-arte-del-debugging) e [la gestione dello stato React](/blog/entanglement-quantistico-e-i-disastri-del-global-state).
 
-## Il Takeaway
-Che si tratti della correzione di un professore a Ingegneria L-8 o di un errore del compilatore, smettila di prenderla sul personale. 
+**Fonti**
 
-Respira profondo. Leggi la prima riga dell'errore. Cerca le parole chiave. Il sistema non ti sta rimproverando, ti sta letteralmente dando la soluzione per andare avanti. Imparare ad amare i messaggi di errore è il vero superpotere di chi non smette mai di crescere.
-` 
+- [MDN — JavaScript error reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors)
+- [Chrome DevTools — Debug JavaScript](https://developer.chrome.com/docs/devtools/javascript/)
+`,
   },
   {
     id: "la-paperella-di-gomma-e-larte-di-sentirsi-stupidi",
@@ -3064,68 +3081,49 @@ Esegui test, controlli delle route e verifiche di configurazione. Dopo il deploy
 - [OWASP — Secrets Management](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
 `,
   },
-  { 
-id: "il-caffe-luniversita-e-la-magia-del-codice-asincrono", 
-title: "Il Caffè, l'Università e la Magia del Codice Asincrono", 
-icon: "☕️",
-date: "2026-04-01",
-category: "sviluppo-software",
-content: ` 
-Essere uno studente di Ingegneria Informatica e lavorare come sviluppatore web significa una cosa sola: il tempo è la risorsa più scarsa dell'Universo. 
+  {
+    id: "il-caffe-luniversita-e-la-magia-del-codice-asincrono",
+    title: "JavaScript asincrono: quando fetch e await non bloccano la pagina",
+    icon: "☕️",
+    date: "2026-04-01",
+    updatedAt: "2026-11-11",
+    category: "sviluppo-software",
+    hub: "react-frontend",
+    excerpt: "Cosa succede quando una fetch restituisce una Promise, quando usare await e come gestire risultati e stati del rendering.",
+    tags: ["JavaScript","Fetch API","Promise","Async await"],
+    content: `
+Quando una funzione JavaScript chiama fetch, non riceve immediatamente il corpo della risposta. Riceve una Promise che rappresenta il risultato futuro della richiesta. Comprendere questa differenza evita errori nel rendering e nella gestione dello stato.
 
-Ogni mattina cerco di incastrare lo studio con le task del lavoro. E ogni mattina, la mia giornata inizia con una lezione pratica di programmazione e termodinamica: preparare il caffè.
+## La Promise rappresenta un risultato futuro
 
-Sembra un'azione banale, ma nasconde uno dei concetti più importanti dello sviluppo software moderno.
+Una chiamata HTTP può impiegare tempo per motivi di rete o di elaborazione sul server. JavaScript può avviare la richiesta e continuare a eseguire altre istruzioni. Questo non significa che ogni operazione del browser sia parallela: un calcolo sincrono lungo può comunque bloccare il main thread.
 
-## Sincrono vs Asincrono: Questione di Attese
-Immaginate la scena. Vado in cucina, riempio la moka, accendo il fuoco e... resto immobile a fissarla. Non parlo, non preparo la colazione, non accendo il PC. Fisso la moka per 5 minuti finché il caffè non è pronto. 
+La parola chiave await sospende la prosecuzione della funzione async fino al completamento della Promise, ma non blocca da sola l'intero thread. Quando due richieste sono indipendenti, Promise.all consente di attenderle insieme; quando la seconda richiede il risultato della prima, usa una sequenza esplicita.
 
-Questo è il **codice sincrono**. Il programma esegue un'istruzione alla volta e, se un'operazione richiede tempo, tutto il resto si blocca. Se i nostri siti web funzionassero così, ogni volta che caricate una foto, l'intera pagina rimarrebbe freezata finché il download non è completato.
-
-Fortunatamente, nella vita reale siamo esseri **asincroni**. Metto la moka sul fuoco (avvio il processo) e, mentre l'acqua si scalda, io accendo il PC, apro gli appunti dell'università e preparo l'editor di codice.
-
-## Il Mio Primo "Fango" con le API
-Ricordo il mio primo vero scontro con l'asincronia in JavaScript. Stavo imparando React e volevo creare un widget che chiamasse l'API pubblica della NASA per mostrare l'Astronomy Picture of the Day (APOD). 
-
-Scrivo la mia funzione, faccio la \`fetch\`, salvo il risultato in una variabile e, alla riga esattamente successiva, cerco di passare l'URL dell'immagine al tag \`<img />\`. 
-
-Risultato? Schermata bianca e un inesorabile \`Cannot read properties of undefined\` in console. L'interfaccia aveva provato a renderizzare il DOM prima ancora che i server della NASA avessero il tempo di far viaggiare la risposta fino al mio router. 
-
-In pratica, stavo cercando di bere il caffè un millisecondo dopo aver acceso il fuoco sotto la moka. Tazza vuota e codice rotto.
-
-## La Soluzione: Promesse e Attese
-In JavaScript (e in molti altri linguaggi), risolviamo questo problema "promettendo" al sistema che il dato arriverà, ma permettendogli di fare altro nel frattempo. 
-
-L'errore comune agli inizi è usare \`await\` bloccando subito il processo. Se vogliamo ottimizzare il tempo, avviamo la richiesta e la aspettiamo solo quando ci serve davvero:
+## Un esempio con fetch
 
 \`\`\`javascript
-async function iniziaGiornata() {
-  console.log("1. Accendo il fuoco sotto la moka (Chiamata API alla NASA)...");
-  
-  // Lancio la richiesta, ma NON metto 'await' qui! Ottengo una Promise.
-  const promessaFoto = fetch('https://api.nasa.gov/planetary/apod'); 
-  
-  console.log("2. Intanto apro gli appunti di Analisi 1...");
-  // Il thread non è bloccato! Posso eseguire il rendering del resto della UI.
-  
-  // Ora che ho caricato il layout, mi fermo e aspetto i dati
-  const response = await promessaFoto; 
-  const datiSpaziali = await response.json();
-  
-  console.log("3. Dati arrivati! Mostro l'immagine di:", datiSpaziali.title);
+async function loadArticle(id) {
+  const response = await fetch(\`/api/articles/\${encodeURIComponent(id)}\`);
+  if (!response.ok) throw new Error(\`HTTP \${response.status}\`);
+  return response.json();
 }
-
-await iniziaGiornata();
 \`\`\`
 
-Se eseguite mentalmente questo codice, l'ordine delle azioni nella console sarà 1, poi 2 (mentre i dati viaggiano in background), e infine 3. 
+Lo snippet assume che l'endpoint restituisca JSON valido in caso di successo. Se può restituire una risposta senza corpo, il parsing va gestito in modo differente. Una Promise rifiutata deve essere intercettata dove il programma può reagire all'errore.
 
-## Il Takeaway
-Che voi stiate studiando per un esame difficile o progettando un'applicazione web, la regola d'oro è non bloccare mai il "thread principale". 
+## Gestire gli stati nel frontend
 
-Avviare i compiti lunghi, non restare bloccati a fissare lo schermo aspettando che un processo termini da solo (come la latenza di rete) e continuare a fare progressi sulle altre piccole task. È il primo passo per mantenere fluida un'applicazione, e decisamente anche la nostra vita da studenti.
-` 
-},
+Un componente dovrebbe distinguere caricamento, errore e risultato disponibile. Se la persona cambia pagina o query mentre la richiesta è in corso, annulla o ignora la risposta precedente quando non è più pertinente. Evita che una risposta lenta sovrascriva dati più recenti.
+
+Per approfondire leggi [Promise e async/await](/blog/javascript-promise-async-await) e [le richieste obsolete con AbortController](/blog/fetch-abortcontroller-risposte-obsolete).
+
+**Fonti**
+
+- [MDN — Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+- [MDN — Async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
+`,
+  },
   {
     id: "sonic-pi-primo-suono-play-sleep",
     title: "Sonic Pi: play e sleep per iniziare",
