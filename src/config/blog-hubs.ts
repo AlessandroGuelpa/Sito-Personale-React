@@ -32,12 +32,10 @@ export function getBlogHub(slug: string | undefined) {
   return BLOG_HUBS.find((hub) => hub.slug === slug);
 }
 
-export function blogHubForPost(post: { category: string; title: string; tags?: string[] }): BlogHubSlug {
-  if (post.category !== "sviluppo-software") return "scienza-passioni";
-  const searchable = [post.title, ...(post.tags ?? [])].join(" ").toLocaleLowerCase("it");
-  if (/shopify|e.?commerce|commerce|inventario|gestional|erp|ordini|webhook|catalogo|admin api|checkout|liquid/.test(searchable)) return "shopify-integrazioni";
-  if (/rails|ruby|backend|back.end|database|postgres|mysql|sql|active.?record|redis|server|docker|microserviz|queue|job|cron|oauth|outbox|architettur|deployment|deploy|kubernetes|testing/.test(searchable)) return "rails-backend";
-  return "react-frontend";
+export function blogHubForPost(post: { hub?: BlogHubSlug; category: string }): BlogHubSlug {
+  // Explicit editorial assignment is authoritative. Legacy fixtures use fallback.
+  if (post.hub) return post.hub;
+  return post.category === "sviluppo-software" ? "react-frontend" : "scienza-passioni";
 }
 
 export function blogHubPath(slug: BlogHubSlug) {
