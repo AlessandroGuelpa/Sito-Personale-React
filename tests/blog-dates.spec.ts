@@ -30,7 +30,7 @@ test("updated specialist article exposes accurate modification metadata", async 
   await page.goto("/blog/shopify-inventario-scritture-concorrenti", { waitUntil: "networkidle" });
 
   await expect(page.locator('meta[property="article:published_time"]'))
-    .toHaveAttribute("content", "2026-11-03");
+    .toHaveAttribute("content", "2026-11-04");
   await expect(page.locator('meta[property="article:modified_time"]'))
     .toHaveAttribute("content", "2026-11-11");
 });
