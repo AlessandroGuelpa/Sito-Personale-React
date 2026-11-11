@@ -1,4 +1,5 @@
 import type { BlogPost } from "@/data/blogPosts";
+import { effectiveArticleDates } from "./blog-dates";
 
 export const SITE_URL = "https://alessandroguelpa.it";
 export const SITE_NAME = "Alessandro Guelpa";
@@ -61,6 +62,7 @@ export function blogPostJsonLd(post: BlogPost) {
   const url = blogPostUrl(post.id);
   const description = buildExcerpt(post, 200);
   const image = post.coverImage ?? DEFAULT_OG_IMAGE;
+  const { publishedAt, modifiedAt } = effectiveArticleDates(post);
 
   return {
     "@context": "https://schema.org",
@@ -69,8 +71,8 @@ export function blogPostJsonLd(post: BlogPost) {
     headline: post.title,
     description,
     image,
-    datePublished: post.firstPublishedAt ?? post.date,
-    dateModified: post.updatedAt ?? post.date,
+    datePublished: publishedAt,
+    dateModified: modifiedAt,
     inLanguage: "it-IT",
     author: {
       "@type": "Person",

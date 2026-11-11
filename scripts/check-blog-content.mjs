@@ -3,6 +3,19 @@ import { readFile } from "node:fs/promises";
 
 const source = await readFile("src/data/blogPosts.ts", "utf8");
 const matches = [...source.matchAll(/^  \{\s*\n\s*id: "([^"]+)"/gm)];
+const NO_LONGER_ALLOWED_BOILERPLATE = "I casi sono diversi, ma evidenziano precondizioni";
+const DEEP_DIVES = new Set([
+  "shopify-inventario-scritture-concorrenti",
+  "webhook-riconciliazione-sincronizzazione",
+  "shopify-graphql-budget-query",
+  "transactional-outbox-invio-erp",
+  "webhook-idempotenza-ordini",
+  "rails-find-each-batch-memoria",
+  "rails-unicita-database-concorrenza",
+  "rails-problema-n-piu-1",
+  "react-prerender-html-metadati",
+  "fetch-abortcontroller-risposte-obsolete",
+]);
 const ALLOWED_HUBS = new Set([
   "shopify-integrazioni",
   "react-frontend",
@@ -44,6 +57,9 @@ const entries = matches.map((match, i) => {
     id,
     block,
     hub: block.match(/\n\s*hub: "([^"]+)"/)?.[1],
+    date: block.match(/\n\s*date: "([^"]+)"/)?.[1],
+    firstPublishedAt: block.match(/\n\s*firstPublishedAt: "([^"]+)"/)?.[1],
+    updatedAt: block.match(/\n\s*updatedAt: "([^"]+)"/)?.[1],
     content: contentOf(block, id),
   };
 }).filter((post) => post.id !== "overshoot-day-trogloditi"); // Commented-out draft.
@@ -56,11 +72,18 @@ const wordCounts = [];
 let internalLinks = 0;
 
 for (const post of entries) {
+  const expectedPublishedAt = post.firstPublishedAt ?? post.date;
+  const expectedModifiedAt = [post.date, post.firstPublishedAt, post.updatedAt].filter(Boolean).sort().at(-1);
+  assert(expectedModifiedAt >= expectedPublishedAt, `Invalid publication chronology: ${post.id}`);
   assert(ALLOWED_HUBS.has(post.hub), `Invalid or missing editorial hub: ${post.id}`);
   const count = editorialWordCount(post.content);
   minWords = Math.min(minWords, count);
   wordCounts.push(count);
   assert(count >= 251, `Article ${post.id} has ${count} editorial words: minimum 251`);
+  assert(!post.content.includes(NO_LONGER_ALLOWED_BOILERPLATE), `Generic linking filler remains in ${post.id}`);
+  if (DEEP_DIVES.has(post.id)) {
+    assert(count >= 500, `Specialist article ${post.id} must have at least 500 substantive words, got ${count}`);
+  }
   const links = [...post.content.matchAll(/\]\(\/blog\/([a-z0-9-]+)\)/g)].map((match) => match[1]);
   assert(links.length > 0, `Article ${post.id} needs at least one contextual internal link`);
   for (const slug of links) {
