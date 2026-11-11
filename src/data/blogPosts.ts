@@ -30,7 +30,7 @@ export const blogPosts: BlogPost[] = [
     content: `
 Una staffa metallica sostiene la leva di una macchina. A ogni azionamento si flette appena e torna nella posizione di partenza. Alla prima prova sembra tutto a posto. Dopo mesi di lavoro, vicino a un foro di fissaggio può comparire una cricca.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Fra sei mesi ricorderai perché hai scelto quella soluzione?](/blog/adr-decisioni-architetturali) e [Log, metriche e tracce: tre domande sullo stesso guasto](/blog/osservabilita-log-metriche-tracce). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una cricca da fatica dipende anche dalle condizioni di progetto: il calcolo delle [tolleranze e della catena dimensionale](/blog/tolleranze-catena-dimensionale) aiuta a capire perché una dimensione nominale non descrive da sola il comportamento di un componente. La [verifica dei requisiti](/blog/verifica-validazione-requisiti) chiarisce quali prove eseguire.
 
 ## Dove può partire una cricca
 
@@ -77,7 +77,7 @@ Per confrontare due geometrie, per esempio due raggi di raccordo in un cambio di
     content: `
 Durante un acquazzone, la grondaia convoglia nel pluviale la pioggia che cade sul tetto. Se il pluviale sbocca su un cortile asfaltato, l’acqua continua a scorrere in superficie. Quando molti tetti e piazzali scaricano in fretta nella stessa rete, la portata può salire rapidamente. Un giardino della pioggia interviene lungo questo percorso.
 
-Questo ragionamento si collega anche ai contenuti su [Il cassetto dei vecchi dispositivi è una filiera interrotta](/blog/raee-elettronica-fine-vita) e [La biodiversità non si riassume contando soltanto le api](/blog/biodiversita-impollinatori-reti). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Il giardino della pioggia interviene sul deflusso, mentre [gli alberi urbani](/blog/alberi-citta-calore-progetto) agiscono anche su ombra e microclima: combinare le due funzioni richiede valutare spazio, suolo e manutenzione. Per leggere correttamente i consumi d'acqua, serve il [contesto dell'impronta idrica](/blog/impronta-idrica-contesto).
 
 ## Un’aiuola che riceve acqua
 
@@ -115,7 +115,7 @@ Partirei da una mappa del cortile. Segnerei dove scarica il pluviale, in che dir
     content: `
 Una ventola raffredda un computer facendo passare aria sui dissipatori. Portare lo stesso schema all'esterno di una navicella non funziona: nel vuoto manca l'aria che trasporta via il calore. Anche lontano dalla Terra, però, elettronica e altri sistemi continuano a produrlo.
 
-Questo ragionamento si collega anche ai contenuti su [Orion: il viaggio non finisce quando rivedi la Terra](/blog/orion-rientro-scudo-termico) e [Perché un lancio verso la Luna non può partire quando vuole](/blog/finestre-lancio-luna-orbite). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Il calore da smaltire durante il viaggio non è lo stesso problema del picco termico al rientro: [lo scudo di Orion](/blog/orion-rientro-scudo-termico) affronta condizioni e tempi differenti. Anche [le finestre di lancio lunari](/blog/finestre-lancio-luna-orbite) impongono vincoli operativi alla missione.
 
 Orion, la capsula del programma Artemis, permette di vedere come si affronta questo vincolo senza confondere raffreddamento interno e scambio con l'ambiente esterno.
 
@@ -195,7 +195,7 @@ In un negozio di test fermerei il job subito dopo la lettura, cambierei la dispo
     content: `
 Un ordine impiega troppo tempo ad arrivare al gestionale. La dashboard mostra un aumento della latenza, ma non spiega quale passaggio stia rallentando. Cercando nei log troviamo tanti messaggi corretti, senza un legame evidente fra loro.
 
-Questo ragionamento si collega anche ai contenuti su [La media dice che va bene. Quel cinque per cento aspetta ancora](/blog/latenza-percentili-media-p99) e [Due server non bastano se dipendono dallo stesso interruttore](/blog/ridondanza-guasti-correlati). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una traccia spiega dove si consuma il tempo, ma per capire quanti utenti sono coinvolti servono [distribuzioni e percentili della latenza](/blog/latenza-percentili-media-p99). Il caso dei [guasti correlati](/blog/ridondanza-guasti-correlati) mostra perché una sola metrica di disponibilità può essere fuorviante.
 
 Raccogliere più dati non risolve automaticamente questa difficoltà. Serve sapere quale domanda può affrontare ciascun segnale.
 
@@ -240,7 +240,7 @@ Per l'ordine lento vorrei quindi partire dal cambiamento aggregato, raggiungere 
     content: `
 Un vecchio telefono nel cassetto non è più in uso, ma non è nemmeno entrato in una filiera di recupero. Resta lì insieme a caricabatterie e dispositivi di cui magari non ricordiamo più il difetto.
 
-Questo ragionamento si collega anche ai contenuti su [Acqua virtuale: il numero di litri non racconta tutta la storia](/blog/impronta-idrica-contesto) e [Spreco alimentare: prima del consiglio, guarda cosa finisce nel cestino](/blog/spreco-alimentare-misurare-prima). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Prima di conferire un dispositivo come rifiuto valuta se è [riparabile e progettato per durare](/blog/riparabilita-progetto-prodotti). Se la riparazione non è praticabile, la [qualità dei materiali raccolti](/blog/riciclo-raccolta-qualita-materiale) determina quali recuperi sono realmente possibili.
 
 L'elettronica mette nello stesso oggetto materiali di valore, componenti complessi e informazioni personali. Decidere il suo percorso richiede di distinguere questi aspetti.
 
@@ -285,7 +285,7 @@ La scelta utile è rendere esplicito lo stato: ancora usabile, riparabile oppure
     content: `
 Un oggetto che sulla Terra è pesante diventa molto più facile da sostenere sulla Luna. È tentante concludere che sia anche facile da spostare, accelerare o fermare in qualunque situazione. Ma stiamo mettendo insieme due effetti differenti.
 
-Questo ragionamento si collega anche ai contenuti su [Radiazioni sulla Luna: la protezione entra nel bilancio di massa](/blog/radiazioni-luna-protezione-massa) e [Perché sulla Luna il paracadute non ti aiuta](/blog/allunaggio-paracadute-propulsione). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La distinzione tra peso e massa diventa concreta durante [l'allunaggio e la frenata propulsiva](/blog/allunaggio-paracadute-propulsione): un veicolo richiede ancora forza per cambiare velocità. Nella [navigazione spaziale](/blog/navigazione-spaziale-posizione-orientamento) la massa rientra nel modello dinamico, non nel peso percepito.
 
 La massa resta la stessa. Il peso cambia con il campo gravitazionale locale.
 
@@ -373,7 +373,7 @@ La verifica pratica è interrompere il percorso rapido, lasciare una modifica no
     content: `
 Due istanze dell'applicazione sembrano più affidabili di una. Poi si scopre che usano lo stesso database, la stessa zona e la stessa configurazione sbagliata. Abbiamo duplicato il processo, ma non tutte le condizioni che gli permettono di funzionare.
 
-Questo ragionamento si collega anche ai contenuti su [Fra sei mesi ricorderai perché hai scelto quella soluzione?](/blog/adr-decisioni-architetturali) e [Log, metriche e tracce: tre domande sullo stesso guasto](/blog/osservabilita-log-metriche-tracce). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Aggiungere istanze senza verificare le dipendenze comuni non rende automaticamente un servizio resiliente. Un [ADR sulle decisioni architetturali](/blog/adr-decisioni-architetturali) aiuta a registrare l'ipotesi di indipendenza, mentre [log, metriche e tracce](/blog/osservabilita-log-metriche-tracce) permettono di metterla alla prova.
 
 La ridondanza ha senso rispetto ai guasti che vogliamo tollerare. Senza definire quel perimetro, «abbiamo due copie» è un'informazione incompleta.
 
@@ -418,7 +418,7 @@ Non sceglierei la massima ridondanza per qualunque sito. Definirei prima cosa pu
     content: `
 Quando si parla di impollinazione, il simbolo è quasi sempre un'ape. È comprensibile, ma può far sparire dal ragionamento gli altri impollinatori e le condizioni che permettono loro di vivere.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Il cassetto dei vecchi dispositivi è una filiera interrotta](/blog/raee-elettronica-fine-vita) e [La rete elettrica deve funzionare anche quando il sole cambia](/blog/rete-elettrica-flessibilita-domanda). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La presenza di un singolo impollinatore non dimostra che la rete ecologica sia robusta. Nel [progetto degli alberi in città](/blog/alberi-citta-calore-progetto) emergono altri vincoli di habitat e manutenzione che possono rafforzare o indebolire le condizioni locali.
 
 Proteggere una funzione ecologica richiede di guardare anche la rete di relazioni che la rende possibile.
 
@@ -463,7 +463,7 @@ Per parlare seriamente di biodiversità servono quindi più domande e meno simbo
     content: `
 Immagina di conoscere perfettamente il punto in cui ti trovi, ma di non sapere in quale direzione sia orientata la tua camera. Oppure il contrario: sai dove punti, ma non quanto sei lontano dalla destinazione.
 
-Un approfondimento dello stesso percorso si trova in [Lagrange L2: un buon posto dove stare non è un parcheggio immobile](/blog/punti-lagrange-equilibrio-instabile) e [Sulla Luna pesi meno. La tua massa non è diventata più piccola](/blog/luna-massa-peso-inerzia). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Posizione e assetto rispondono a domande diverse; anche [l'equilibrio vicino ai punti di Lagrange](/blog/punti-lagrange-equilibrio-instabile) dipende dal sistema di riferimento adottato. Per un veicolo vicino alla Luna, [massa e inerzia](/blog/luna-massa-peso-inerzia) completano il problema del controllo.
 
 Nella navigazione spaziale posizione e orientamento sono informazioni collegate, ma non intercambiabili.
 
@@ -555,7 +555,7 @@ La prova utile è fuori dal percorso più comodo dello sviluppatore: aprire una 
     content: `
 Apri un progetto e trovi una scelta che sembra complicata: una coda, un formato intermedio o una dipendenza insolita. La prima reazione è eliminarla. Poi scopri che serviva a gestire un vincolo che il codice, da solo, non racconta più.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Due server non bastano se dipendono dallo stesso interruttore](/blog/ridondanza-guasti-correlati) e [Se il JavaScript arriva tardi, la pagina sa ancora cosa fare?](/blog/progressive-enhancement-funzione-base). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un ADR non è un inventario di scelte: deve spiegare il compromesso verificabile. Il confronto fra [ridondanza e guasti correlati](/blog/ridondanza-guasti-correlati) offre un esempio di assunzione da documentare; [verifica e validazione](/blog/verifica-validazione-requisiti) aiutano a definirne le prove.
 
 La documentazione utile non descrive soltanto cosa esiste. Conserva anche il motivo delle decisioni che sarebbe costoso dover ricostruire.
 
@@ -600,7 +600,7 @@ Io scriverei un ADR quando il prossimo manutentore potrebbe altrimenti scambiare
     content: `
 Produrre abbastanza energia nell'arco di un anno non dimostra che un sistema elettrico possa soddisfare la domanda in ogni momento e in ogni luogo. La disponibilità nel tempo e la capacità di trasporto fanno parte del problema.
 
-Per esplorare un caso vicino e capire le differenze, consulta [kW e kWh: la differenza che cambia i conti](/blog/kw-kwh-potenza-energia) e [Un kWh è sempre un kWh. Le emissioni associate cambiano](/blog/elettricita-intensita-carbonica). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Prima di parlare di flessibilità conviene distinguere [kW e kWh, potenza ed energia](/blog/kw-kwh-potenza-energia): la domanda istantanea non equivale al consumo complessivo. L'[intensità carbonica dell'elettricità](/blog/elettricita-intensita-carbonica) aggiunge la dimensione temporale delle emissioni.
 
 È per questo che, parlando di transizione energetica, mi interessa anche la flessibilità del sistema.
 
@@ -645,7 +645,7 @@ Quando vedo una proposta energetica cerco quindi il profilo, non soltanto il tot
     content: `
 Nelle immagini di una missione vediamo il veicolo, i pannelli e gli strumenti. Una parte essenziale del sistema resta però sulla Terra: antenne, pianificazione dei collegamenti e persone che gestiscono il flusso dei dati.
 
-Questo ragionamento si collega anche ai contenuti su [Parlare con la Luna: quel secondo che il software non può togliere](/blog/luna-latenza-comunicazioni) e [Orion: il viaggio non finisce quando rivedi la Terra](/blog/orion-rientro-scudo-termico). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La capacità di ricevere dati dipende anche dal tempo impiegato dal segnale a percorrere la distanza: la [latenza delle comunicazioni lunari](/blog/luna-latenza-comunicazioni) illustra perché non si può progettare il controllo come una chiamata HTTP locale. Le [finestre di lancio](/blog/finestre-lancio-luna-orbite) introducono ulteriori vincoli di missione.
 
 Il Deep Space Network della NASA è un esempio di infrastruttura che rende possibile lavorare con mezzi molto lontani.
 
@@ -735,7 +735,7 @@ Una sincronizzazione ben progettata usa il budget per portare avanti lavoro util
     content: `
 Una pagina può caricare la struttura e restare comunque inutilizzabile: il pulsante aspetta il bundle, il menu non si apre, il collegamento esiste soltanto dentro un gestore di click. Il problema non è sempre un errore permanente. A volte basta una connessione lenta o uno script esterno che non arriva.
 
-Un approfondimento dello stesso percorso si trova in [La media dice che va bene. Quel cinque per cento aspetta ancora](/blog/latenza-percentili-media-p99) e [Fra sei mesi ricorderai perché hai scelto quella soluzione?](/blog/adr-decisioni-architetturali). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Partire da HTML comprensibile riduce il rischio che un'interazione mancata nasconda il contenuto. Il [prerendering di React](/blog/react-prerender-html-metadati) affronta lo stesso problema dal lato della consegna, mentre [l'accessibilità dei form](/blog/forza-di-attrito-e-la-ux-dei-form) lo affronta dal lato dell'utente.
 
 Il progressive enhancement propone di costruire una funzione di base e aggiungere miglioramenti quando le capacità necessarie sono disponibili.
 
@@ -779,7 +779,7 @@ Progettare questa base rende più chiaro anche il sistema completo. Prima di agg
     content: `
 Due prodotti vengono confrontati usando un solo numero ambientale. Uno sembra migliore, ma il primo dato comprende produzione, trasporto e fine vita; il secondo soltanto l'uso. Il confronto ha una forma numerica e una base incoerente.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Spreco alimentare: prima del consiglio, guarda cosa finisce nel cestino](/blog/spreco-alimentare-misurare-prima) e [Un kWh è sempre un kWh. Le emissioni associate cambiano](/blog/elettricita-intensita-carbonica). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un confronto LCA cambia se l'unità funzionale e il confine sono diversi. La [misurazione dello spreco alimentare](/blog/spreco-alimentare-misurare-prima) offre un caso in cui definire il perimetro prima dei numeri; l'[intensità carbonica dell'energia](/blog/elettricita-intensita-carbonica) evidenzia l'importanza del mix utilizzato.
 
 Una valutazione del ciclo di vita comincia prima del calcolo: dalla definizione di ciò che stiamo confrontando.
 
@@ -824,7 +824,7 @@ Quando leggo «più sostenibile», cerco quindi funzione, confine e condizioni. 
     content: `
 Il razzo è pronto sulla rampa. Perché aspettare un'ora precisa, invece di lanciare appena tutto è in ordine? Perché la destinazione si muove, la Terra ruota e la traiettoria deve rispettare più condizioni contemporaneamente.
 
-Un approfondimento dello stesso percorso si trova in [Perché sulla Luna il paracadute non ti aiuta](/blog/allunaggio-paracadute-propulsione) e [Lagrange L2: un buon posto dove stare non è un parcheggio immobile](/blog/punti-lagrange-equilibrio-instabile). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una traiettoria deve incontrare la destinazione nel momento corretto, non raggiungere semplicemente la sua posizione presente. Il confronto con [l'allunaggio propulsivo](/blog/allunaggio-paracadute-propulsione) distingue fase di trasferimento e discesa; [i punti di Lagrange](/blog/punti-lagrange-equilibrio-instabile) illustrano un diverso vincolo dinamico.
 
 Il conto alla rovescia organizza le operazioni. La finestra di lancio descrive quando una certa missione può soddisfare i suoi vincoli.
 
@@ -925,7 +925,7 @@ La domanda che mi faccio quando aggiungo state è quindi: sto memorizzando una s
     content: `
 Un servizio ha un tempo medio di risposta accettabile, ma alcune persone segnalano attese molto lunghe. Le due cose possono essere vere contemporaneamente. Una media riassume la distribuzione senza mostrarne la coda.
 
-Questo ragionamento si collega anche ai contenuti su [La coda cresce? Conta anche il tempo che il lavoro passa dentro](/blog/legge-little-code-tempi-attesa) e [Log, metriche e tracce: tre domande sullo stesso guasto](/blog/osservabilita-log-metriche-tracce). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un p99 elevato può colpire pochi utenti in modo grave anche con una media accettabile. Il [monitoraggio con log, metriche e tracce](/blog/osservabilita-log-metriche-tracce) serve a trovare il punto del flusso che genera la coda; la [legge di Little](/blog/legge-little-code-tempi-attesa) collega invece volume, throughput e attesa.
 
 Per capire l'esperienza reale guarderei anche percentili, numero di richieste ed errori.
 
@@ -970,7 +970,7 @@ Non sceglierei un percentile soltanto perché suona professionale. Lo colleghere
     content: `
 In estate bastano pochi metri per passare da un marciapiede esposto a uno spazio molto più vivibile sotto una chioma. Non è soltanto una sensazione estetica: l'albero modifica le condizioni di esposizione e il bilancio energetico dell'ambiente vicino.
 
-Un approfondimento dello stesso percorso si trova in [La rete elettrica deve funzionare anche quando il sole cambia](/blog/rete-elettrica-flessibilita-domanda) e [«Più sostenibile» rispetto a cosa? Il confine cambia il confronto](/blog/lca-confini-unita-funzionale). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+L'ombra riduce parte dell'esposizione al calore, ma un progetto urbano deve considerare anche l'acqua disponibile. I [giardini della pioggia](/blog/giardini-pioggia-deflusso-tetti) affrontano il deflusso, mentre l'[impronta idrica](/blog/impronta-idrica-contesto) ricorda che il consumo va letto nel suo contesto.
 
 Per questo considero il verde urbano una parte del progetto della città, non il riempitivo da aggiungere dove avanza spazio.
 
@@ -1014,7 +1014,7 @@ La domanda progettuale è quindi più concreta di «quanti alberi?»: quale ombr
     content: `
 Un paracadute funziona interagendo con un fluido. Aumenta la superficie che offre resistenza al moto nell'aria, trasformando una caduta rapida in una discesa più lenta nelle condizioni previste dal progetto.
 
-Un approfondimento dello stesso percorso si trova in [Radiazioni sulla Luna: la protezione entra nel bilancio di massa](/blog/radiazioni-luna-protezione-massa) e [Sulla Luna pesi meno. La tua massa non è diventata più piccola](/blog/luna-massa-peso-inerzia). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una discesa lunare non può sfruttare un paracadute come sulla Terra: [massa, peso e inerzia](/blog/luna-massa-peso-inerzia) aiutano a separare gravità e difficoltà di frenata. Le [finestre orbitali](/blog/finestre-lancio-luna-orbite) mostrano che la discesa arriva dopo vincoli già imposti alla traiettoria.
 
 Sulla Luna manca un'atmosfera abbastanza densa da svolgere questo lavoro. È uno di quei dettagli ambientali che cambiano completamente l'architettura di una missione.
 
@@ -1109,7 +1109,7 @@ find_each risolve un problema preciso: non istanziare tutto il risultato in una 
     content: `
 Tre distanziali devono occupare insieme uno spazio di 30 millimetri. Ciascuno è indicato come 10 ± 0,2 mm. Il fornitore consegna pezzi conformi al disegno, eppure il montaggio può non comportarsi come suggeriscono i valori nominali.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Se il progetto usa già il 100%, il margine è finito](/blog/margine-progetto-budget-capacita) e [Quattro decimali non rendono una misura più affidabile](/blog/misure-incertezza-cifre-decimali). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una catena di tolleranze va confrontata con i limiti di funzionamento: [margine e budget di progetto](/blog/margine-progetto-budget-capacita) aiutano a esplicitare quanto spazio resta. L'[incertezza di misura](/blog/misure-incertezza-cifre-decimali) chiarisce perché una lettura con molte cifre non prova precisione reale.
 
 Il motivo è che il sistema vede la combinazione delle dimensioni, non tre controlli di conformità separati.
 
@@ -1153,7 +1153,7 @@ Il controllo utile si fa quindi anche sull'assieme. Il fatto che ogni parte risp
     content: `
 Un imballaggio finisce nella raccolta differenziata e sparisce dalla nostra vista. È facile pensare che il suo percorso sia concluso. In realtà è appena entrato in una catena che deve selezionarlo, trattarlo e trovare un impiego per il materiale recuperato.
 
-Questo ragionamento si collega anche ai contenuti su [Un albero in città è anche un’infrastruttura termica](/blog/alberi-citta-calore-progetto) e [Acqua virtuale: il numero di litri non racconta tutta la storia](/blog/impronta-idrica-contesto). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La qualità del materiale recuperato dipende da ciò che entra nel processo: il [fine vita dei RAEE](/blog/raee-elettronica-fine-vita) mostra un flusso con componenti molto diversi. La [riparabilità dei prodotti](/blog/riparabilita-progetto-prodotti) può ridurre la necessità stessa di trattamento.
 
 Separare questi passaggi aiuta a capire perché «raccolto» e «riciclato» non siano la stessa cosa.
 
@@ -1198,7 +1198,7 @@ Il contenitore giusto è una nostra responsabilità concreta. Per giudicare il r
     content: `
 Quando si sente parlare di un telescopio «a L2», viene naturale immaginare un oggetto fermo in un punto speciale. L'immagine è comoda, ma nasconde sia il movimento del sistema sia il lavoro necessario a mantenere la missione nella regione prevista.
 
-Un approfondimento dello stesso percorso si trova in [Perché un lancio verso la Luna non può partire quando vuole](/blog/finestre-lancio-luna-orbite) e [Sapere dove sei e sapere dove punti sono due problemi diversi](/blog/navigazione-spaziale-posizione-orientamento). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un punto di equilibrio nel modello non coincide sempre con una posizione che il veicolo mantiene senza controllo. La [navigazione fra posizione e orientamento](/blog/navigazione-spaziale-posizione-orientamento) serve anche a distinguere la stima dello stato dalle manovre, mentre le [finestre lunari](/blog/finestre-lancio-luna-orbite) riguardano trasferimenti diversi.
 
 Prima domanda: L2 di quale coppia di corpi?
 
@@ -1294,7 +1294,7 @@ Il vantaggio di ETag è preciso: evitare di ritrasmettere un corpo invariato qua
     content: `
 Nei video una ruota può sembrare ferma o girare al contrario. Non è cambiata la meccanica: stiamo osservando il movimento attraverso una sequenza di immagini discrete. Fra un fotogramma e il successivo perdiamo informazioni.
 
-Un approfondimento dello stesso percorso si trova in [Tre pezzi corretti possono non entrare nello spazio previsto](/blog/tolleranze-catena-dimensionale) e [La coda cresce? Conta anche il tempo che il lavoro passa dentro](/blog/legge-little-code-tempi-attesa). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Campionare un segnale significa scegliere quali informazioni sono osservabili. L'[incertezza nelle misure](/blog/misure-incertezza-cifre-decimali) aiuta a evitare una falsa precisione, mentre la [visualizzazione dello spettro con Web Audio](/blog/web-audio-analyser-visualizzare) mostra un'applicazione pratica del dominio delle frequenze.
 
 È un modo intuitivo per avvicinarsi all'aliasing, un problema che riguarda audio, immagini e acquisizione di segnali.
 
@@ -1337,7 +1337,7 @@ Prima di fidarmi di un grafico cerco quindi frequenza di acquisizione, aggregazi
     content: `
 Un prodotto può richiedere acqua molto prima di arrivare nelle nostre mani: coltivazione delle materie prime, trasformazione e altri passaggi della filiera. Il concetto di acqua virtuale aiuta a rendere visibile questa parte del consumo.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Spreco alimentare: prima del consiglio, guarda cosa finisce nel cestino](/blog/spreco-alimentare-misurare-prima) e [Il cassetto dei vecchi dispositivi è una filiera interrotta](/blog/raee-elettronica-fine-vita). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un numero totale di litri è poco informativo senza sapere dove e quando l'acqua viene consumata. La [misura dello spreco alimentare](/blog/spreco-alimentare-misurare-prima) mostra un altro caso di denominatore e confini; i [giardini della pioggia](/blog/giardini-pioggia-deflusso-tetti) introducono l'uso locale delle precipitazioni.
 
 Ma appena compare una classifica in litri mi viene da chiedere: quale acqua, dove e in quale periodo?
 
@@ -1382,7 +1382,7 @@ L'impronta idrica è interessante quando ci porta a guardare oltre il rubinetto.
     content: `
 Sulla Terra l'atmosfera e il campo magnetico contribuiscono alla protezione dall'ambiente spaziale. Quando ragioniamo su missioni oltre l'orbita bassa, non possiamo assumere che quelle condizioni ci seguano.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Sulla Luna pesi meno. La tua massa non è diventata più piccola](/blog/luna-massa-peso-inerzia) e [Perché sulla Luna il paracadute non ti aiuta](/blog/allunaggio-paracadute-propulsione). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Progettare una schermatura significa bilanciare protezione e massa trasportata. Il [ghiaccio lunare come possibile risorsa](/blog/ghiaccio-lunare-risorsa-utilizzabile) aggiunge il problema della disponibilità locale; il [controllo termico di Orion](/blog/orion-controllo-termico-radiatori-vuoto) riguarda invece un'altra forma di energia da gestire.
 
 Il tema delle radiazioni mostra bene quanto una scelta locale possa cambiare il progetto di un'intera missione.
 
@@ -1482,7 +1482,7 @@ Mi piace l'outbox perché rende persistente un passaggio che altrimenti vive fra
     content: `
 Una coda contiene molti job e la tentazione è aumentare subito i worker. Prima mi farei una domanda più semplice: quanto lavoro entra, quanto ne esce e quanto tempo rimane nel sistema?
 
-Per esplorare un caso vicino e capire le differenze, consulta [La media dice che va bene. Quel cinque per cento aspetta ancora](/blog/latenza-percentili-media-p99) e [Passa tutti i test. Ma risolve il problema giusto?](/blog/verifica-validazione-requisiti). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La legge di Little aiuta a collegare capacità, numero di richieste presenti e tempo di permanenza. I [percentili di latenza](/blog/latenza-percentili-media-p99) spiegano ciò che la sola media nasconde; il [budget di capacità](/blog/margine-progetto-budget-capacita) serve a valutare l'avvicinarsi alla saturazione.
 
 La legge di Little collega proprio queste grandezze. In un sistema stabile, con confini e medie coerenti, il numero medio di elementi presenti è uguale al tasso medio di attraversamento moltiplicato per il tempo medio trascorso dentro: **L = λW**.
 
@@ -1524,7 +1524,7 @@ La relazione non sceglie la soluzione al posto nostro. Aiuta a controllare se nu
     content: `
 «Bisogna sprecare meno cibo» è un obiettivo facile da condividere. Il problema operativo comincia dopo: stiamo comprando troppo, cucinando porzioni grandi o dimenticando prodotti che avevamo già?
 
-Questo ragionamento si collega anche ai contenuti su [Acqua virtuale: il numero di litri non racconta tutta la storia](/blog/impronta-idrica-contesto) e [Un kWh è sempre un kWh. Le emissioni associate cambiano](/blog/elettricita-intensita-carbonica). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Misurare scarti e porzioni è una condizione per capire quale intervento funziona. L'[impronta idrica](/blog/impronta-idrica-contesto) aggiunge l'acqua incorporata nella produzione, mentre il [metodo LCA](/blog/lca-confini-unita-funzionale) chiarisce come delimitare un confronto ambientale.
 
 Sono cause diverse. Dare a tutte lo stesso consiglio significa rischiare di non correggerne nessuna.
 
@@ -1569,7 +1569,7 @@ Mi interessa questo passaggio perché sostituisce un generico senso di colpa con
     content: `
 Una superficie grigia coperta di polvere può sembrare un ambiente semplice. Nessuna pioggia, nessun fango, nessuna vegetazione. Poi provi a immaginare una guarnizione, un giunto o un tessuto che devono funzionare dopo ogni uscita.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Radiazioni sulla Luna: la protezione entra nel bilancio di massa](/blog/radiazioni-luna-protezione-massa) e [Ghiaccio sulla Luna: trovare una risorsa non significa poterla usare](/blog/ghiaccio-lunare-risorsa-utilizzabile). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La polvere lunare può alterare superfici e meccanismi: non basta valutarne il peso. Il problema si aggiunge alla [protezione dalle radiazioni](/blog/radiazioni-luna-protezione-massa) e alla possibile [estrazione di ghiaccio lunare](/blog/ghiaccio-lunare-risorsa-utilizzabile), che richiede attrezzature esposte all'ambiente.
 
 La regolite lunare rende molto meno banale l'idea di lavorare sulla Luna per periodi prolungati.
 
@@ -1664,7 +1664,7 @@ Quando esaurisco il budget, salvo uno stato recuperabile e rendo visibile il pro
     content: `
 La stanza sembra fredda, quindi alzi molto il riscaldamento. Dopo poco non percepisci ancora il cambiamento e lo alzi di nuovo. Quando il calore arriva, la temperatura supera quella desiderata. Allora spegni tutto e ricominci il ciclo.
 
-Questo ragionamento si collega anche ai contenuti su [La coda cresce? Conta anche il tempo che il lavoro passa dentro](/blog/legge-little-code-tempi-attesa) e [Se il progetto usa già il 100%, il margine è finito](/blog/margine-progetto-budget-capacita). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un regolatore che agisce su misure ritardate può sovracorreggere e generare oscillazioni. La [legge di Little](/blog/legge-little-code-tempi-attesa) descrive un altro effetto di capacità e attesa, mentre il [margine di progetto](/blog/margine-progetto-budget-capacita) rende esplicita la distanza dalle condizioni limite.
 
 È un esempio intuitivo del perché un controllo basato sul feedback deve considerare anche i tempi del sistema.
 
@@ -1708,7 +1708,7 @@ Correggere rapidamente è utile quando la rapidità è compatibile con ciò che 
     content: `
 Due elaborazioni consumano la stessa energia elettrica. Possiamo concludere che abbiano anche le stesse emissioni associate? Non senza sapere con quali dati stiamo facendo il conto.
 
-Un approfondimento dello stesso percorso si trova in [Spreco alimentare: prima del consiglio, guarda cosa finisce nel cestino](/blog/spreco-alimentare-misurare-prima) e [kW e kWh: la differenza che cambia i conti](/blog/kw-kwh-potenza-energia). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Le emissioni associate a un kWh possono cambiare in funzione del momento e del mix di produzione. Per interpretare correttamente il calcolo bisogna prima distinguere [potenza ed energia](/blog/kw-kwh-potenza-energia) e considerare la [flessibilità della domanda](/blog/rete-elettrica-flessibilita-domanda).
 
 Il consumo in kWh descrive una quantità di energia. L'intensità delle emissioni associa a ogni unità di elettricità una quantità di gas serra, espressa per esempio in grammi di CO₂ equivalente per kWh.
 
@@ -1750,7 +1750,7 @@ Non serve trasformare ogni attività quotidiana in un modello complesso. Serve e
     content: `
 «Sulla Luna c'è acqua» è una notizia affascinante. Il passaggio successivo, però, non è automaticamente «allora possiamo rifornirci lì». Fra riconoscere una risorsa e trasformarla in un servizio affidabile c'è un intero problema ingegneristico.
 
-Un approfondimento dello stesso percorso si trova in [Radiazioni sulla Luna: la protezione entra nel bilancio di massa](/blog/radiazioni-luna-protezione-massa) e [Perché sulla Luna il paracadute non ti aiuta](/blog/allunaggio-paracadute-propulsione). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Individuare un deposito non significa aver già ottenuto acqua utilizzabile. La [polvere lunare e i vincoli di progettazione](/blog/polvere-lunare-progettazione) possono complicare l'estrazione; la [schermatura dalle radiazioni](/blog/radiazioni-luna-protezione-massa) introduce un possibile utilizzo alternativo delle risorse.
 
 È la parte che trovo più interessante quando si parla di esplorazione e permanenza lunare.
 
@@ -1848,7 +1848,7 @@ L'obiettivo è che l'invariante resti vero: una sola identità commerciale, anch
     content: `
 Un sistema ha un limite di memoria di 1 GB. Durante una prova ne usa 990 MB e qualcuno conclude: «Ci stiamo dentro». Formalmente è vero in quella prova. Progettualmente, però, restano dieci megabyte per tutto ciò che non abbiamo ancora osservato.
 
-Un approfondimento dello stesso percorso si trova in [Tre pezzi corretti possono non entrare nello spazio previsto](/blog/tolleranze-catena-dimensionale) e [Il termostato e il deploy: correggere troppo può far oscillare il sistema](/blog/feedback-controllo-ritardi-oscillazioni). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Il margine di una risorsa va confrontato con la variabilità delle richieste e degli errori di misura. Le [catene di tolleranza](/blog/tolleranze-catena-dimensionale) mostrano un caso fisico, mentre [feedback e ritardi](/blog/feedback-controllo-ritardi-oscillazioni) mostrano perché il limite operativo può essere dinamico.
 
 Per questo mi interessa il margine: la distanza dichiarata fra una risorsa disponibile e quella prevista o misurata nelle condizioni considerate.
 
@@ -1890,7 +1890,7 @@ La domanda utile non è «abbiamo ancora spazio?», ma «quanto spazio resta nel
     content: `
 «Questo apparecchio consuma 800 watt all'ora». È una frase che si sente spesso, ma mescola grandezze diverse. Per capire un consumo non basta leggere una potenza: serve sapere anche per quanto tempo viene assorbita.
 
-Questo ragionamento si collega anche ai contenuti su [La rete elettrica deve funzionare anche quando il sole cambia](/blog/rete-elettrica-flessibilita-domanda) e [Un kWh è sempre un kWh. Le emissioni associate cambiano](/blog/elettricita-intensita-carbonica). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un carico da molti kW non consuma necessariamente molti kWh se dura poco. Il problema diventa concreto quando si considera la [flessibilità della rete elettrica](/blog/rete-elettrica-flessibilita-domanda) e il modo in cui cambia l'[intensità carbonica dell'elettricità](/blog/elettricita-intensita-carbonica).
 
 Separare kW e kWh permette di ragionare meglio su elettrodomestici, computer e batterie.
 
@@ -1934,7 +1934,7 @@ Prima di fare qualunque confronto controllo quindi tre cose: unità, durata e la
     content: `
 Quando una videochiamata risponde in ritardo pensiamo subito alla connessione. Ma fra Terra e Luna una parte dell'attesa esiste anche immaginando apparati perfetti. Il segnale deve attraversare lo spazio, e non può farlo istantaneamente.
 
-Un approfondimento dello stesso percorso si trova in [Le antenne a Terra fanno parte della missione spaziale](/blog/deep-space-network-collegamento) e [Ghiaccio sulla Luna: trovare una risorsa non significa poterla usare](/blog/ghiaccio-lunare-risorsa-utilizzabile). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Anche una piccola richiesta di controllo richiede un tempo di propagazione non eliminabile con software più veloce. La [Deep Space Network](/blog/deep-space-network-collegamento) mostra come l'infrastruttura gestisca il collegamento; la [navigazione di un veicolo](/blog/navigazione-spaziale-posizione-orientamento) deve prevedere autonomia locale.
 
 La latenza è un buon punto d'incontro fra fisica e progettazione del software.
 
@@ -2045,7 +2045,7 @@ La regola è piccola ma decisiva: la UI deve rappresentare l'intenzione corrente
     content: `
 Una dashboard mostra 23,1472 millisecondi. Il numero sembra serio: quattro decimali danno immediatamente l'impressione di una misura precisa. Ma come è stato ottenuto? Quante volte è stata ripetuta la prova? E quanto cambia il risultato se la macchina sta facendo altro?
 
-Un approfondimento dello stesso percorso si trova in [Tre pezzi corretti possono non entrare nello spazio previsto](/blog/tolleranze-catena-dimensionale) e [Se il progetto usa già il 100%, il margine è finito](/blog/margine-progetto-budget-capacita). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Mostrare sei cifre decimali non equivale a misurare sei cifre affidabili. Nelle [catene di tolleranze](/blog/tolleranze-catena-dimensionale) il limite diventa un vincolo di progetto, mentre la [verifica dei requisiti](/blog/verifica-validazione-requisiti) definisce quanto precisa debba essere la misura.
 
 Prima di confrontare numeri, preferisco capire cosa permettono davvero di affermare.
 
@@ -2090,7 +2090,7 @@ Arrotondare non è nascondere dettagli: quando è coerente con la misura, evita 
     content: `
 Un dispositivo può funzionare bene per anni e diventare improvvisamente inutilizzabile per un componente economico. La domanda interessante non è soltanto quanto duri la batteria o il connettore. È cosa succede quando quel pezzo smette di funzionare.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Spreco alimentare: prima del consiglio, guarda cosa finisce nel cestino](/blog/spreco-alimentare-misurare-prima) e [kW e kWh: la differenza che cambia i conti](/blog/kw-kwh-potenza-energia). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La facilità di sostituire un componente influenza il tempo di vita utile del prodotto. Il [fine vita dei dispositivi elettronici](/blog/raee-elettronica-fine-vita) chiarisce cosa accade quando non è più riparabile; la [qualità della raccolta](/blog/riciclo-raccolta-qualita-materiale) condiziona il recupero successivo.
 
 La riparabilità è una caratteristica del progetto, non un favore da chiedere a prodotto rotto.
 
@@ -2132,7 +2132,7 @@ La domanda che mi interessa è semplice: se si rompe il pezzo più prevedibile, 
     content: `
 Guardando una missione lunare è facile concentrarsi sul lancio. Il razzo sale, le telecamere seguono la scia e sembra che la parte difficile sia tutta lì. A me interessa anche il problema opposto: riportare una capsula verso terra senza trasformare la sua energia di movimento in un disastro.
 
-Questo ragionamento si collega anche ai contenuti su [Orion: nel vuoto il calore non se ne va con una ventola](/blog/orion-controllo-termico-radiatori-vuoto) e [Radiazioni sulla Luna: la protezione entra nel bilancio di massa](/blog/radiazioni-luna-protezione-massa). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Lo scudo termico fronteggia il rientro nell'atmosfera, mentre i [radiatori di Orion nel vuoto](/blog/orion-controllo-termico-radiatori-vuoto) gestiscono il calore durante altre fasi della missione. I due sistemi rispondono a vincoli fisici diversi, pur appartenendo alla stessa architettura.
 
 Orion è un buon esempio per ragionare sul rientro, senza confondere i principi fisici con il calendario delle missioni Artemis.
 
@@ -2218,7 +2218,7 @@ Il risultato atteso resta un solo ordine commerciale, con una traccia comprensib
     content: `
 Un esportatore genera il CSV senza errori. Le colonne sono quelle richieste, il file si apre e tutti i test passano. Poi chi deve usarlo scopre che gli identificativi non coincidono con quelli del gestionale. Il software è conforme alla specifica, ma il lavoro resta manuale.
 
-Un approfondimento dello stesso percorso si trova in [La coda cresce? Conta anche il tempo che il lavoro passa dentro](/blog/legge-little-code-tempi-attesa) e [Quattro decimali non rendono una misura più affidabile](/blog/misure-incertezza-cifre-decimali). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una verifica può dimostrare che un componente rispetta le specifiche, senza dimostrare che quelle specifiche risolvono il bisogno reale. L'[incertezza delle misure](/blog/misure-incertezza-cifre-decimali) influisce sulla prima domanda, mentre la [documentazione di decisioni architetturali](/blog/adr-decisioni-architetturali) aiuta a rendere esplicita la seconda.
 
 Questo esempio ipotetico spiega una distinzione dell'ingegneria dei sistemi che trovo utile anche nello sviluppo web: **verifica** e **validazione**.
 
@@ -3232,7 +3232,7 @@ Una Promise di fetch può risolversi anche quando il server restituisce un error
     content: `
 Sonic Pi trasforma il computer in uno strumento che si suona scrivendo codice. Tutto parte da due comandi: \`play\`, che emette una nota, e \`sleep\`, che scandisce il tempo.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Sonic Pi live_loop: scrivere musica in tempo reale](/blog/sonic-pi-live-loop-cuore-del-live-coding) e [Sonic Pi sync e cue: sincronizzare i loop](/blog/sonic-pi-sync-cue). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Prima di costruire un live set conviene capire il rapporto tra play e avanzamento del tempo: i [live_loop di Sonic Pi](/blog/sonic-pi-live-loop-cuore-del-live-coding) riutilizzano la stessa sequenza, mentre [cue e sync](/blog/sonic-pi-sync-cue) servono a coordinare le parti.
 
 \`\`\`ruby
 play 60      # Do centrale (numero MIDI)
@@ -3406,7 +3406,7 @@ Una funzione che incrementa un contatore può mantenere privata la variabile cou
     content: `
 Il browser ha un sintetizzatore integrato: la **Web Audio API**. Il punto di partenza è l'\`AudioContext\`, il motore che genera e connette i suoni.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda) e [Chrome Music Lab: idee per audio interattivo](/blog/web-audio-chrome-music-lab-lezioni). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Dopo il primo oscillatore, il confronto fra [forme d'onda](/blog/web-audio-oscillatore-forme-onda) chiarisce il timbro; un [GainNode con inviluppo](/blog/web-audio-gainnode-volume-envelope) permette invece di trasformare il tono continuo in una nota controllata.
 
 \`\`\`javascript
 const ctx = new AudioContext();
@@ -3449,7 +3449,7 @@ Per verificare un oscillatore nel browser, collega la sorgente a un GainNode e p
     content: `
 Se \`play\` e \`sleep\` sono le note, il \`live_loop\` è ciò che rende Sonic Pi uno strumento *dal vivo*. È un ciclo infinito che puoi riscrivere mentre la musica suona: premi Run e il loop si aggiorna al giro successivo, senza fermarsi.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Sonic Pi sync e cue: sincronizzare i loop](/blog/sonic-pi-sync-cue) e [Sonic Pi: play e sleep per iniziare](/blog/sonic-pi-primo-suono-play-sleep). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Quando due live_loop hanno durate o partenze diverse, [cue e sync](/blog/sonic-pi-sync-cue) possono imporre riferimenti condivisi. Se stai iniziando, riparti dal rapporto elementare fra [play e sleep](/blog/sonic-pi-primo-suono-play-sleep).
 
 \`\`\`ruby
 live_loop :beat do
@@ -3626,7 +3626,7 @@ Supponi di richiedere in parallelo informazioni su un prodotto e un elenco di ca
     content: `
 Un \`OscillatorNode\` produce quattro forme d'onda predefinite, e ognuna ha un carattere sonoro diverso.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Web Audio API: AudioContext e primo oscillatore](/blog/web-audio-primo-oscillatore-audiocontext) e [Web Audio drum machine: sample e timing](/blog/web-audio-drum-machine-browser). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La scelta della forma d'onda determina le armoniche di partenza, ma non la durata della nota: per questo occorre controllare [gain e inviluppo](/blog/web-audio-gainnode-volume-envelope). La [prima configurazione di AudioContext](/blog/web-audio-primo-oscillatore-audiocontext) descrive il percorso minimo del segnale.
 
 \`\`\`javascript
 osc.type = "sine";     // pulito, dolce (flauto)
@@ -3666,7 +3666,7 @@ Prepara quattro pulsanti che usano la stessa nota e lo stesso inviluppo, cambian
     content: `
 Oltre a sintetizzare note, Sonic Pi include una libreria di **campioni** pronti: batterie, texture, effetti. Li richiami con \`sample\` seguito da un simbolo.
 
-Questo ragionamento si collega anche ai contenuti su [Sonic Pi sample slicing: start, finish e stretch](/blog/sonic-pi-slicing-campioni) e [Sonic Pi drum machine: kick, snare e hi-hat](/blog/sonic-pi-drum-machine). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Prima di assemblare una [drum machine](/blog/sonic-pi-drum-machine) è utile conoscere i campioni e la loro durata. Lo [slicing dei sample](/blog/sonic-pi-slicing-campioni) mostra come usare frammenti dello stesso suono per creare variazioni.
 
 \`\`\`ruby
 sample :bd_haus                  # cassa
@@ -3838,7 +3838,7 @@ Un setTimeout a zero millisecondi non interrompe il codice sincrono che sta già
     content: `
 Se colleghi un oscillatore direttamente alle casse, senti un "click" fastidioso all'accensione e allo spegnimento. Serve un **GainNode** per controllare il volume nel tempo: l'inviluppo.
 
-Questo ragionamento si collega anche ai contenuti su [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda) e [BiquadFilterNode: lowpass, highpass e cutoff](/blog/web-audio-biquadfilter). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+L'inviluppo rende musicalmente utilizzabili le [forme d'onda dell'oscillatore](/blog/web-audio-oscillatore-forme-onda), e un [filtro biquad](/blog/web-audio-biquadfilter) permette di modificarne le armoniche senza confondere timbro e volume.
 
 \`\`\`javascript
 const gain = ctx.createGain();
@@ -3883,7 +3883,7 @@ Se interrompi bruscamente un segnale mentre la forma d'onda ha ampiezza diversa 
     content: `
 La stessa nota cambia completamente a seconda del sintetizzatore che la produce. In Sonic Pi lo scegli con \`use_synth\`.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Sonic Pi TB-303: bassline acid e cutoff](/blog/sonic-pi-bassline-tb303) e [Sonic Pi sample: scegliere e trasformare i suoni](/blog/sonic-pi-sample-libreria-integrata). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Scegliere un synth modifica la risposta del suono: una [bassline TB-303](/blog/sonic-pi-bassline-tb303) chiarisce l'effetto della risonanza, mentre i [sample](/blog/sonic-pi-sample-libreria-integrata) mostrano un'alternativa alla sintesi.
 
 \`\`\`ruby
 use_synth :prophet
@@ -4060,7 +4060,7 @@ Per trovare il primo elemento che soddisfa una condizione usa find, non filter s
     content: `
 La Web Audio API ragiona come una pedaliera per chitarra: hai delle **sorgenti**, dei nodi di **elaborazione** e una **destinazione**, e li colleghi con \`connect\`.
 
-Questo ragionamento si collega anche ai contenuti su [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda) e [Web Audio API: AudioContext e primo oscillatore](/blog/web-audio-primo-oscillatore-audiocontext). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una connessione diretta genera un percorso, ma un [GainNode](/blog/web-audio-gainnode-volume-envelope) o un [BiquadFilterNode](/blog/web-audio-biquadfilter) introdotto nel mezzo ne cambia comportamento e controllabilità.
 
 \`\`\`javascript
 // sorgente -> filtro -> volume -> casse
@@ -4100,7 +4100,7 @@ Un effetto collegato in parallelo alla sorgente può creare due percorsi, uno di
     content: `
 Gli effetti in Sonic Pi si applicano con \`with_fx\`, che avvolge un blocco di codice: tutto ciò che suoni al suo interno passa attraverso l'effetto.
 
-Un approfondimento dello stesso percorso si trova in [Sonic Pi use_synth: timbri e parametri](/blog/sonic-pi-use-synth-scegliere-sintetizzatori) e [Sonic Pi scale e chord: costruire melodie](/blog/sonic-pi-scale-accordi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un effetto modifica anche il carattere del [sintetizzatore scelto](/blog/sonic-pi-use-synth-scegliere-sintetizzatori); con [scale e accordi](/blog/sonic-pi-scale-accordi) puoi capire se la coda riverberata sostiene l'armonia o copre le note successive.
 
 \`\`\`ruby
 with_fx :reverb, mix: 0.6 do
@@ -4288,7 +4288,7 @@ Considera la risposta di un endpoint che dovrebbe restituire un oggetto con sett
     content: `
 Il **BiquadFilterNode** è il filtro della Web Audio API: decide quali frequenze passano e quali no. È lo stesso \`cutoff\` che in Sonic Pi rende acido un basso.
 
-Per esplorare un caso vicino e capire le differenze, consulta [GainNode e ADSR: controllare l'ampiezza](/blog/web-audio-gainnode-volume-envelope) e [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Il filtro lavora sullo spettro della [forma d'onda in ingresso](/blog/web-audio-oscillatore-forme-onda), mentre [gain e inviluppo](/blog/web-audio-gainnode-volume-envelope) determinano se l'energia rimane controllata durante le automazioni.
 
 \`\`\`javascript
 const filter = ctx.createBiquadFilter();
@@ -4334,7 +4334,7 @@ Per confrontare lowpass e highpass, usa una sorgente ricca di armoniche e mantie
     content: `
 Non serve conoscere la teoria musicale a memoria: Sonic Pi ha \`scale\` e \`chord\` che restituiscono le note giuste come una lista.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Sonic Pi with_fx: riverbero e delay](/blog/sonic-pi-with-fx-effetti) e [Sonic Pi drum machine: kick, snare e hi-hat](/blog/sonic-pi-drum-machine). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La [scelta del sintetizzatore](/blog/sonic-pi-use-synth-scegliere-sintetizzatori) modifica il timbro di una progressione, ma è la [griglia della drum machine](/blog/sonic-pi-drum-machine) a darle un riferimento ritmico stabile.
 
 \`\`\`ruby
 scale(:e3, :minor_pentatonic)
@@ -4525,7 +4525,7 @@ Importare un modulo può eseguire il codice presente al suo livello superiore. S
     content: `
 Il riverbero più realistico nel browser si ottiene con il **ConvolverNode**, che applica al suono l'impronta acustica di un luogo reale: una chiesa, una stanza, un garage.
 
-Un approfondimento dello stesso percorso si trova in [Web Audio delay e feedback: controllo della stabilità](/blog/web-audio-delay-feedback) e [BiquadFilterNode: lowpass, highpass e cutoff](/blog/web-audio-biquadfilter). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La convoluzione usa una risposta all'impulso, mentre un [delay con feedback](/blog/web-audio-delay-feedback) crea ripetizioni: confrontare i due permette di capire la differenza fra spazio percepito ed eco.
 
 \`\`\`javascript
 const convolver = ctx.createConvolver();
@@ -4570,7 +4570,7 @@ ConvolverNode elabora il segnale usando un AudioBuffer che rappresenta una rispo
     content: `
 Il groove nasce da pochi elementi ben incastrati. Con tre \`live_loop\` costruisci una drum machine completa.
 
-Questo ragionamento si collega anche ai contenuti su [Sonic Pi sample: scegliere e trasformare i suoni](/blog/sonic-pi-sample-libreria-integrata) e [Sonic Pi scale e chord: costruire melodie](/blog/sonic-pi-scale-accordi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una drum machine nasce dalla scelta di [sample coerenti](/blog/sonic-pi-sample-libreria-integrata) e dal loro posizionamento nel tempo. Le [scale e gli accordi](/blog/sonic-pi-scale-accordi) entrano dopo, quando il groove deve sostenere una parte melodica.
 
 \`\`\`ruby
 use_bpm 120
@@ -4767,7 +4767,7 @@ Un endpoint può restituire uno status di successo ma nessun JSON, ad esempio un
     content: `
 Fare un metronomo con \`setInterval\` è la strada per la frustrazione: l'event loop non è puntuale e il click sbanda. La soluzione è schedulare i suoni **in anticipo** usando l'orologio dell'\`AudioContext\`, che è preciso al campione.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Web Audio drum machine: sample e timing](/blog/web-audio-drum-machine-browser) e [Web Audio graph: connect e catena del segnale](/blog/web-audio-grafo-nodi-connect). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Lo scheduling del metronomo è il riferimento temporale anche per una [drum machine Web Audio](/blog/web-audio-drum-machine-browser). In uno [step sequencer](/blog/web-audio-sequencer-step) la griglia va tradotta in eventi sullo stesso orologio audio.
 
 \`\`\`javascript
 let nextNote = ctx.currentTime;
@@ -4819,7 +4819,7 @@ Un timer JavaScript non è una sorgente temporale perfetta: il main thread può 
     content: `
 La casualità rende la musica viva, ma in Sonic Pi è **deterministica**: con lo stesso seme, la stessa sequenza "casuale". Un paradosso utilissimo.
 
-Un approfondimento dello stesso percorso si trova in [Sonic Pi ring e tick: sequenze generative](/blog/sonic-pi-generative-ring-tick) e [Sonic Pi drum machine: kick, snare e hi-hat](/blog/sonic-pi-drum-machine). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una variazione non deve cambiare arbitrariamente tutti gli eventi: i [ring con tick](/blog/sonic-pi-generative-ring-tick) offrono sequenze deterministiche, mentre una [drum machine stabile](/blog/sonic-pi-drum-machine) dà un riferimento alla casualità.
 
 \`\`\`ruby
 use_random_seed 42
@@ -5003,7 +5003,7 @@ Un oggetto può esporre un metodo increment che usa this.value. Se passi diretta
     content: `
 Non servono file audio per fare una batteria: la sintetizzi con oscillatori e rumore. Una **cassa** è un'onda che scende di frequenza e volume in fretta.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda) e [Step sequencer JavaScript: tempo e note](/blog/web-audio-sequencer-step). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Ogni trigger di campione deve essere programmato come evento musicale: lo [step sequencer](/blog/web-audio-sequencer-step) definisce quali colpi suonano e il [metronomo Web Audio](/blog/web-audio-metronomo-preciso) come mantenerli allineati.
 
 \`\`\`javascript
 function kick(time) {
@@ -5052,7 +5052,7 @@ Per la cassa di una drum machine puoi caricare e decodificare il sample una volt
     content: `
 Più \`live_loop\` con durate diverse tendono a sfasarsi nel tempo. Per tenerli agganciati usi la coppia \`cue\` (manda un segnale) e \`sync\` (lo aspetta).
 
-Questo ragionamento si collega anche ai contenuti su [Sonic Pi live_loop: scrivere musica in tempo reale](/blog/sonic-pi-live-loop-cuore-del-live-coding) e [Sonic Pi MIDI: input e controllo dal vivo](/blog/sonic-pi-midi-controllo). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Per capire che cosa sincronizzare, parti da [live_loop indipendenti](/blog/sonic-pi-live-loop-cuore-del-live-coding); il [controllo MIDI](/blog/sonic-pi-midi-controllo) aggiunge input esterni, ma non deve sostituire una pulsazione condivisa.
 
 \`\`\`ruby
 live_loop :metronomo do
@@ -5244,7 +5244,7 @@ Se un oggetto eredita una proprietà dal prototipo e poi definisce una propriet�
     content: `
 Un sequencer a step è, in fondo, un array di booleani letto in loop: a ogni passo, se è acceso, suoni.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Web Audio drum machine: sample e timing](/blog/web-audio-drum-machine-browser) e [Web MIDI API: note e accesso ai dispositivi](/blog/web-audio-web-midi-api). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Il sequencer descrive le posizioni musicali, mentre la [drum machine nel browser](/blog/web-audio-drum-machine-browser) produce il suono. Per allineare davvero gli step serve un [sistema di scheduling preciso](/blog/web-audio-metronomo-preciso).
 
 \`\`\`javascript
 const pattern = [1, 0, 0, 1, 0, 0, 1, 0]; // 8 step
@@ -5294,7 +5294,7 @@ Un sequencer a sedici step può rappresentare una battuta suddivisa in sedicesim
     content: `
 Il suono "acid" nasce da un sintetizzatore leggendario, il Roland TB-303, e dal suo filtro che si apre e chiude di continuo. In Sonic Pi lo ricrei con \`:tb303\` e un \`cutoff\` che si muove.
 
-Un approfondimento dello stesso percorso si trova in [Sonic Pi use_synth: timbri e parametri](/blog/sonic-pi-use-synth-scegliere-sintetizzatori) e [Sonic Pi sync e cue: sincronizzare i loop](/blog/sonic-pi-sync-cue). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La bassline acid dipende dal [synth selezionato](/blog/sonic-pi-use-synth-scegliere-sintetizzatori) ma deve convivere con una pulsazione: i [cue di sincronizzazione](/blog/sonic-pi-sync-cue) diventano utili nei set con più loop.
 
 \`\`\`ruby
 use_bpm 128
@@ -5485,7 +5485,7 @@ Immagina che l'utente digiti prima "rea" e poi "react". Il debounce può ridurre
     content: `
 La **Web MIDI API** collega un controller hardware (una tastiera MIDI, dei pad) direttamente al browser. Ogni tasto premuto arriva come un evento JavaScript.
 
-Un approfondimento dello stesso percorso si trova in [Step sequencer JavaScript: tempo e note](/blog/web-audio-sequencer-step) e [AnalyserNode: spettro e waveform nel browser](/blog/web-audio-analyser-visualizzare). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+MIDI fornisce eventi di controllo, non audio: uno [step sequencer](/blog/web-audio-sequencer-step) può tradurre quei messaggi in note, mentre l'[AnalyserNode](/blog/web-audio-analyser-visualizzare) permette di visualizzare il risultato sonoro.
 
 \`\`\`javascript
 const access = await navigator.requestMIDIAccess();
@@ -5531,7 +5531,7 @@ L'accesso ai dispositivi MIDI dipende dal supporto del browser, dal contesto sic
     content: `
 Un singolo campione può diventare infinito materiale se lo **affetti**. Con \`start\` e \`finish\` suoni solo una porzione, con \`beat_stretch\` lo sincronizzi al tempo.
 
-Questo ragionamento si collega anche ai contenuti su [Sonic Pi sample: scegliere e trasformare i suoni](/blog/sonic-pi-sample-libreria-integrata) e [Sonic Pi TB-303: bassline acid e cutoff](/blog/sonic-pi-bassline-tb303). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Prima di tagliare un file, verifica il ruolo del [sample originale](/blog/sonic-pi-sample-libreria-integrata); la nuova sequenza di frammenti può poi entrare in una [drum machine programmata](/blog/sonic-pi-drum-machine).
 
 \`\`\`ruby
 use_bpm 120
@@ -5732,7 +5732,7 @@ Un generator può attraversare una sequenza di grandi dimensioni restituendo un 
     content: `
 L'**AnalyserNode** ti dà i dati grezzi del suono in tempo reale: la forma d'onda e lo spettro delle frequenze. È il ponte tra audio e grafica.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Web MIDI API: note e accesso ai dispositivi](/blog/web-audio-web-midi-api) e [AudioWorklet: DSP fuori dal main thread](/blog/web-audio-audioworklet). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+L'[AudioWorklet](/blog/web-audio-audioworklet) permette elaborazioni personalizzate, ma per visualizzare una [forma d'onda](/blog/web-audio-oscillatore-forme-onda) spesso basta l'AnalyserNode già disponibile.
 
 \`\`\`javascript
 const analyser = ctx.createAnalyser();
@@ -5781,7 +5781,7 @@ AnalyserNode permette di leggere valori di frequenza o campioni nel dominio temp
     content: `
 La musica generativa è codice che compone al posto tuo. In Sonic Pi il mattone è il \`ring\`: una lista circolare che scorri con \`.tick\`.
 
-Questo ragionamento si collega anche ai contenuti su [Sonic Pi use_random_seed: pattern riproducibili](/blog/sonic-pi-randomizzazione-controllata) e [Sonic Pi sample slicing: start, finish e stretch](/blog/sonic-pi-slicing-campioni). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+I [ring di Sonic Pi](/blog/sonic-pi-randomizzazione-controllata) rendono ripetibili alcune variazioni; quando vuoi usarli su [frammenti di campioni](/blog/sonic-pi-slicing-campioni), separa il contatore dalla scelta del suono.
 
 \`\`\`ruby
 notes = (ring :c4, :e4, :g4, :b4, :a4)
@@ -5981,7 +5981,7 @@ Un Proxy può registrare gli accessi a un oggetto o applicare una logica di vali
     content: `
 I nodi predefiniti coprono molto, ma se vuoi un tuo effetto o sintetizzatore campione-per-campione ti serve l'**AudioWorklet**: codice che gira nel thread audio, ad alta priorità.
 
-Questo ragionamento si collega anche ai contenuti su [AnalyserNode: spettro e waveform nel browser](/blog/web-audio-analyser-visualizzare) e [Tone.js: transport e scheduling musicale](/blog/web-audio-tone-js). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Prima di scrivere un processore custom chiediti se un [AnalyserNode](/blog/web-audio-analyser-visualizzare) o un [filtro biquad](/blog/web-audio-biquadfilter) già risolve il requisito: il worklet ha costi di manutenzione e vincoli real-time.
 
 \`\`\`javascript
 // noise-processor.js (gira nel thread audio)
@@ -6037,7 +6037,7 @@ Un AudioWorkletProcessor esegue elaborazione custom in un contesto separato dal 
     content: `
 Sonic Pi riceve MIDI da qualsiasi controller collegato. Puoi suonare le note con una tastiera o mappare le manopole ai parametri del codice, dal vivo.
 
-Questo ragionamento si collega anche ai contenuti su [Sonic Pi sync e cue: sincronizzare i loop](/blog/sonic-pi-sync-cue) e [Sonic Pi live_loop: scrivere musica in tempo reale](/blog/sonic-pi-live-loop-cuore-del-live-coding). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un controllo MIDI può modificare parametri di più loop: usa [cue e sync](/blog/sonic-pi-sync-cue) per conservarne l'allineamento e un [BPM esplicito](/blog/sonic-pi-use-bpm-tempo) per rendere prevedibili le variazioni.
 
 \`\`\`ruby
 # suona quando premi un tasto della tastiera MIDI
@@ -6225,7 +6225,7 @@ Un importo archiviato come 1234.50 non dovrebbe essere inviato al database nella
     content: `
 La Web Audio API è potente ma verbosa. **Tone.js** ci costruisce sopra un livello musicale: sintetizzatori, effetti e un "trasporto" con un tempo, pronti all'uso.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Chrome Music Lab: idee per audio interattivo](/blog/web-audio-chrome-music-lab-lezioni) e [Web Audio generativo: vincoli e casualità](/blog/web-audio-generative-browser). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Tone.js astrae parte dello scheduling; per capirne il valore confronta uno [step sequencer scritto con Web Audio](/blog/web-audio-sequencer-step) e una [sintesi generativa nel browser](/blog/web-audio-generative-browser).
 
 \`\`\`javascript
 import * as Tone from "tone";
@@ -6273,7 +6273,7 @@ Tone.js fornisce una struttura musicale utile per sincronizzare pattern, synth e
     content: `
 Di default in Sonic Pi \`sleep 1\` dura un secondo. Ma con \`use_bpm\` cambi l'unità di misura: \`sleep 1\` diventa "un beat", e la velocità del brano la decidi in battiti al minuto.
 
-Un approfondimento dello stesso percorso si trova in [Sonic Pi MIDI: input e controllo dal vivo](/blog/sonic-pi-midi-controllo) e [Sonic Pi recording: registrare e controllare il livello](/blog/sonic-pi-registrare-esportare). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Cambiare BPM modifica la durata dei beat ma non trasforma automaticamente i sample: le [tecniche di registrazione](/blog/sonic-pi-registrare-esportare) permettono di verificare il risultato, mentre i [cue](/blog/sonic-pi-sync-cue) mantengono in fase i loop.
 
 \`\`\`ruby
 use_bpm 128   # da qui, sleep conta in beat, non in secondi
@@ -6459,7 +6459,7 @@ Spostare un calcolo in un worker libera il main thread dall'elaborazione pesante
     content: `
 Per suonare un file audio nel browser lo carichi, lo decodifichi in un buffer e lo riproduci con un **AudioBufferSourceNode**.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Tone.js: transport e scheduling musicale](/blog/web-audio-tone-js) e [Chrome Music Lab: idee per audio interattivo](/blog/web-audio-chrome-music-lab-lezioni). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una sorgente di campioni è il mattone di una [drum machine nel browser](/blog/web-audio-drum-machine-browser); lo [step sequencer](/blog/web-audio-sequencer-step) definisce quando istanziare i singoli trigger.
 
 \`\`\`javascript
 const res = await fetch("/samples/break.wav");
@@ -6507,7 +6507,7 @@ Un AudioBuffer è un insieme di dati audio già decodificati, quindi occupa memo
     content: `
 Improvvisare è bello, ma prima o poi vuoi **salvare** un brano. Sonic Pi ha un registratore integrato (il tasto Rec): premi Rec, fai partire i loop, premi di nuovo e ottieni un file WAV.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Sonic Pi techno: struttura di un brano](/blog/sonic-pi-brano-techno-passo-passo) e [Sonic Pi use_bpm: battute e suddivisioni](/blog/sonic-pi-use-bpm-tempo). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La registrazione fa emergere problemi di struttura che un loop breve può nascondere. Segui la [composizione di una traccia techno](/blog/sonic-pi-brano-techno-passo-passo) e confronta versioni con [BPM controllati](/blog/sonic-pi-use-bpm-tempo).
 
 Il segreto è strutturare il codice perché parta pulito e cresca in modo controllato:
 
@@ -6708,7 +6708,7 @@ In un form, il valore 0 può essere una quantità valida e false può rappresent
     content: `
 **Chrome Music Lab** è una raccolta di esperimenti musicali nel browser, pensati per la didattica. Sono tutti costruiti con la Web Audio API, e per chi programma audio sono una miniera di lezioni.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Web Audio generativo: vincoli e casualità](/blog/web-audio-generative-browser) e [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Gli esperimenti di Chrome Music Lab suggeriscono interfacce sonore accessibili: i [generatori musicali nel browser](/blog/web-audio-generative-browser) mostrano come introdurre regole, mentre le [forme d'onda](/blog/web-audio-oscillatore-forme-onda) spiegano la parte acustica.
 
 La più importante: **rendere visibile l'invisibile**. In "Spectrogram" vedi le frequenze dipingersi, in "Oscillators" trascini il mouse e senti l'onda cambiare, in "Sound Waves" le particelle mostrano la pressione dell'aria. Concetti astratti (frequenza, armoniche, timbro) diventano tangibili.
 
@@ -6745,7 +6745,7 @@ Un esperimento musicale visivo è utile quando collega un gesto a una conseguenz
     content: `
 Non tutta la musica è ritmo. L'ambient vive di **texture** e spazio: note lunghe, attacchi morbidi, riverberi profondi. Sonic Pi lo fa benissimo.
 
-Questo ragionamento si collega anche ai contenuti su [Sonic Pi recording: registrare e controllare il livello](/blog/sonic-pi-registrare-esportare) e [Sonic Pi techno: struttura di un brano](/blog/sonic-pi-brano-techno-passo-passo). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La coda di un pad deve lasciare spazio alla struttura: nella [composizione techno](/blog/sonic-pi-brano-techno-passo-passo) gli elementi possono entrare progressivamente, e la [registrazione del set](/blog/sonic-pi-registrare-esportare) aiuta a verificare densità e sovrapposizioni.
 
 \`\`\`ruby
 use_bpm 60
@@ -6940,7 +6940,7 @@ Due oggetti JavaScript distinti con lo stesso campo id non vengono trattati da S
     content: `
 La stessa idea generativa di Sonic Pi vive anche nella Web Audio API: poche regole più casualità uguale musica infinita.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Chrome Music Lab: idee per audio interattivo](/blog/web-audio-chrome-music-lab-lezioni) e [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La casualità può controllare note, durate o timbri, ma la [forma d'onda scelta](/blog/web-audio-oscillatore-forme-onda) limita il materiale di partenza. Il confronto con [Tone.js](/blog/web-audio-tone-js) mostra quali strutture musicali una libreria può già gestire.
 
 \`\`\`javascript
 const scala = [220, 261.6, 293.7, 329.6, 392]; // La minore pentatonica
@@ -6995,7 +6995,7 @@ Un generatore che sceglie note completamente a caso può produrre intervalli poc
     content: `
 Mettiamo insieme tutto in una traccia techno completa. Il segreto è stratificare: ogni \`live_loop\` è un elemento, e tutti restano agganciati con \`sync\`.
 
-Un approfondimento dello stesso percorso si trova in [Sonic Pi recording: registrare e controllare il livello](/blog/sonic-pi-registrare-esportare) e [Sonic Pi ambient pad: inviluppo e spazio](/blog/sonic-pi-ambient-pad-riverbero). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una traccia ha bisogno di sezioni, non soltanto di un groove: usa la [registrazione](/blog/sonic-pi-registrare-esportare) per ascoltare le transizioni e valuta quando un [pad ambient](/blog/sonic-pi-ambient-pad-riverbero) aggiunge spazio senza coprire il ritmo.
 
 \`\`\`ruby
 use_bpm 130
@@ -7199,7 +7199,7 @@ Una copia profonda può proteggere una struttura da mutazioni accidentali, ma no
     content: `
 Un synth monofonico suona una nota per volta. Per suonare **accordi** serve la polifonia: ogni nota è una "voce" indipendente, con il suo oscillatore e il suo inviluppo.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Web Audio drum machine: sample e timing](/blog/web-audio-drum-machine-browser) e [BiquadFilterNode: lowpass, highpass e cutoff](/blog/web-audio-biquadfilter). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La gestione delle voci dipende dagli inviluppi: [GainNode e ADSR](/blog/web-audio-gainnode-volume-envelope) aiutano a liberare le note, mentre i [filtri Web Audio](/blog/web-audio-biquadfilter) ne modellano il timbro.
 
 \`\`\`javascript
 const voci = new Map();
@@ -7256,7 +7256,7 @@ In un sintetizzatore polifonico ogni nota può avere la propria sorgente e il pr
     content: `
 Sonic Pi è nato all'Università di Cambridge come strumento **didattico**, e non è un caso: fa toccare concetti di programmazione in un modo che pochi ambienti eguagliano.
 
-Per esplorare un caso vicino e capire le differenze, consulta [Sonic Pi techno: struttura di un brano](/blog/sonic-pi-brano-techno-passo-passo) e [Sonic Pi vs Web Audio: somiglianze e differenze](/blog/sonic-pi-e-web-audio-stessa-idea). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Per spiegare i cicli in modo udibile, torna ai comandi [play e sleep](/blog/sonic-pi-primo-suono-play-sleep). Il [confronto tra Sonic Pi e Web Audio](/blog/sonic-pi-e-web-audio-stessa-idea) aiuta a distinguere uno strumento didattico da un'API del browser.
 
 Il primo motivo è il **feedback immediato e musicale**. Un bug non è un messaggio d'errore astratto: è una nota stonata, un ritmo che zoppica. Sbagli un \`sleep\` e lo *senti*. Questo ciclo cortissimo tra codice e risultato è esattamente ciò che tiene motivati i principianti.
 
@@ -7453,7 +7453,7 @@ Un valore scritto in localStorage mesi prima può avere una struttura diversa da
     content: `
 Un'eco nasce da un'idea semplice: ritardare il suono e rimandarne una parte all'ingresso. In Web Audio è un **DelayNode** con un anello di **feedback**.
 
-Un approfondimento dello stesso percorso si trova in [ConvolverNode: riverbero a convoluzione](/blog/web-audio-convolver-riverbero) e [Web Audio generativo: vincoli e casualità](/blog/web-audio-generative-browser). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un delay costruisce ripetizioni temporali, a differenza della risposta ambientale di un [riverbero a convoluzione](/blog/web-audio-convolver-riverbero). Nei [sistemi generativi](/blog/web-audio-generative-browser) il feedback va limitato per non sommare code in modo incontrollato.
 
 \`\`\`javascript
 const delay = ctx.createDelay();
@@ -7503,7 +7503,7 @@ Collegare l'uscita di un delay al suo ingresso tramite un gain produce ripetizio
     content: `
 Dopo tre mesi tra Sonic Pi, Ruby, Rails, JavaScript e Web Audio, chiudo il cerchio con l'idea che li lega tutti: **il codice può diventare suono**.
 
-Questo ragionamento si collega anche ai contenuti su [Sonic Pi: play e sleep per iniziare](/blog/sonic-pi-primo-suono-play-sleep) e [Imparare a programmare con Sonic Pi](/blog/sonic-pi-didattica-codice-e-musica). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La prima differenza emerge già dal [primo suono scritto in Sonic Pi](/blog/sonic-pi-primo-suono-play-sleep) rispetto alla [creazione di un AudioContext](/blog/web-audio-primo-oscillatore-audiocontext): il concetto musicale è simile, ma l'ambiente di esecuzione cambia.
 
 Sonic Pi lo fa in Ruby, con \`play\`, \`sample\`, \`live_loop\`. La Web Audio API lo fa in JavaScript, con oscillatori, gain e grafi di nodi. Linguaggi e ambienti diversi, ma lo stesso pensiero: descrivi la musica come istruzioni, e la macchina la esegue.
 
