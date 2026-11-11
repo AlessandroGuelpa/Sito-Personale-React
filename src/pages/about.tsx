@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import DefaultLayout from "@/layouts/default";
 import { PageSeo } from "@/components/page-seo";
 import { trackEvent } from "@/utils/analytics";
+import { SITE_URL } from "@/utils/seo";
+import { siteConfig } from "@/config/site";
 
 export default function AboutPage() {
   const [showCv, setShowCv] = useState(false);
@@ -14,6 +16,20 @@ export default function AboutPage() {
         description="Alessandro Guelpa: 5 anni nello sviluppo web, esperienza professionale Shopify e integrazioni API, progetti personali React e Rails. Percorso e curriculum."
         path="/about"
         title="Chi sono · Esperienza e competenze"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          mainEntity: {
+            "@type": "Person",
+            "@id": `${SITE_URL}/#author`,
+            name: "Alessandro Guelpa",
+            url: `${SITE_URL}/about`,
+            image: `${SITE_URL}/io.jpeg`,
+            jobTitle: "Sviluppatore web",
+            knowsAbout: ["Shopify", "React", "Ruby on Rails", "TypeScript", "Integrazioni API"],
+            sameAs: [siteConfig.links.github, siteConfig.links.linkedin],
+          },
+        }}
       />
       <header className="max-w-3xl">
         <p className="eyebrow">Chi sono</p>

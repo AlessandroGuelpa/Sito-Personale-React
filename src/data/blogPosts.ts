@@ -5,6 +5,7 @@ export interface BlogPost {
   id: string;
   title: string;
   date: string;
+  updatedAt?: string;
   category: BlogCategoryId;
   content: string;
   icon?: ReactNode | string;
