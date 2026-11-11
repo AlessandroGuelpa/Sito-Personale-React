@@ -7,7 +7,7 @@ import NotFoundPage from "@/pages/not-found";
 import { PageSeo } from "@/components/page-seo";
 import { BlogCard } from "@/components/blog-card";
 import { BLOG_CATEGORIES, blogCategoryLabel, isBlogCategory } from "@/config/blog";
-import { BLOG_HUBS, BLOG_PAGE_SIZE, blogArchivePath, blogHubForPost, blogHubPath, getBlogHub } from "@/config/blog-hubs";
+import { BLOG_HUBS, BLOG_HUB_GUIDES, BLOG_PAGE_SIZE, blogArchivePath, blogHubForPost, blogHubPath, getBlogHub } from "@/config/blog-hubs";
 import { SITE_URL, breadcrumbJsonLd } from "@/utils/seo";
 
 export default function BlogPage() {
@@ -15,6 +15,7 @@ export default function BlogPage() {
   const [params, setParams] = useSearchParams();
   const resultsHeading = useRef<HTMLHeadingElement>(null);
   const hub = getBlogHub(hubSlug);
+  const guide = hub ? BLOG_HUB_GUIDES[hub.slug] : undefined;
   const query = params.get("q") || "";
   const tag = params.get("tag") || "";
   const requestedCategory = params.get("category");
@@ -68,7 +69,7 @@ export default function BlogPage() {
     <DefaultLayout>
       <PageSeo
         description={hub?.description ?? "Articoli e approfondimenti su sviluppo web, ingegneria, tecnologia e scienza di Alessandro Guelpa."}
-        path={hasFilters ? canonicalPath : canonicalPath}
+        path={canonicalPath}
         schema={hub ? {
           "@context": "https://schema.org",
           "@graph": [
@@ -95,6 +96,7 @@ export default function BlogPage() {
         <p className="eyebrow">{allHubPosts.length} articoli {hub ? "in questo percorso" : "nell’archivio"}</p>
         <h1 className="page-title">{hub?.title ?? "Appunti e idee dal codice."}</h1>
         <p className="page-intro">{hub?.intro ?? "Sviluppo web, esperimenti e approfondimenti tra tecnologia e scienza. Esplora i percorsi tematici o cerca nell’archivio."}</p>
+        {guide && page === 1 && <a className="text-link mt-4 inline-flex" href="#guida-tematica">Leggi la guida tematica ↓</a>}
       </header>
       {!hub && (
       <section aria-label="Percorsi tematici" className="mt-9">
@@ -189,6 +191,39 @@ export default function BlogPage() {
           </nav>
         )}
       </section>
+      {guide && page === 1 && hub && (
+        <section
+          id="guida-tematica"
+          aria-labelledby="guida-tematica-title"
+          className="mt-14 border-t border-zinc-200 pt-10 dark:border-zinc-800"
+        >
+          <p className="eyebrow">Approfondimento</p>
+          <h2 id="guida-tematica-title" className="text-2xl font-bold tracking-tight">Guida a {hub.title}</h2>
+          <p className="mt-4 max-w-3xl leading-relaxed text-zinc-700 dark:text-zinc-300">{guide.introduction}</p>
+          <div className="mt-8 grid gap-9">
+            {guide.sections.map((section) => (
+              <section key={section.id} aria-labelledby={section.id} className="max-w-3xl">
+                <h3 className="text-xl font-bold" id={section.id}>{section.title}</h3>
+                {section.paragraphs.map((paragraph) => (
+                  <p key={paragraph} className="mt-4 leading-relaxed text-zinc-700 dark:text-zinc-300">{paragraph}</p>
+                ))}
+                <p className="mt-4 text-sm font-semibold">Approfondimenti collegati</p>
+                <ul className="mt-2 list-disc space-y-2 pl-5">
+                  {section.links.map((item) => (
+                    <li key={item.id}><Link className="text-link" to={`/blog/${item.id}`}>{item.label}</Link></li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+          <p className="mt-9 text-sm font-semibold">Documentazione primaria</p>
+          <ul className="mt-2 list-disc space-y-2 pl-5 text-sm">
+            {guide.sources.map((source) => (
+              <li key={source.url}><a className="text-link" href={source.url} rel="noopener noreferrer" target="_blank">{source.label}</a></li>
+            ))}
+          </ul>
+        </section>
+      )}
       {hub && <p className="mt-10 text-sm text-zinc-600 dark:text-zinc-400">Articoli di Alessandro Guelpa. <Link className="text-link" to="/about">Esperienza professionale e profilo dell'autore</Link>.</p>}
     </DefaultLayout>
   );
