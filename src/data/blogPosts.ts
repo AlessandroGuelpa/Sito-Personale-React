@@ -2982,7 +2982,7 @@ Una closure conserva accesso all'ambiente lessicale in cui la funzione è stata 
   },
   {
     id: "web-audio-primo-oscillatore-audiocontext",
-    title: "Web Audio: il primo suono nel browser",
+    title: "Web Audio API: AudioContext e primo oscillatore",
     date: "2026-04-26",
     category: "musica-audio",
     icon: "🔊",
@@ -3004,7 +3004,15 @@ osc.stop(ctx.currentTime + 1); // spegni dopo 1 secondo
 Crei nodi e li connetti in un grafo: un oscillatore produce un'onda, la colleghi a \`destination\` (le casse) e parte. Per sicurezza l'\`AudioContext\` va avviato dopo un gesto dell'utente (un click), altrimenti il browser lo tiene sospeso.
 
 È lo stesso concetto di Sonic Pi, ma dentro una pagina web.
-`,
+
+
+## Cosa verificare
+
+AudioContext gestisce il grafo audio del browser. Un OscillatorNode produce un segnale periodico, ma deve essere collegato a una destinazione e avviato esplicitamente. Le politiche di autoplay possono richiedere un gesto dell'utente prima che il contesto passi allo stato running. Chiudi o riutilizza correttamente il contesto, anziché crearne uno a ogni click.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext)`,
   },
   {
     id: "sonic-pi-live-loop-cuore-del-live-coding",
@@ -3140,7 +3148,7 @@ async/await rende più leggibile il codice basato su Promise, ma non trasforma a
   },
   {
     id: "web-audio-oscillatore-forme-onda",
-    title: "Web Audio: le quattro forme d'onda base",
+    title: "Web Audio OscillatorNode: sine, square e sawtooth",
     date: "2026-05-01",
     category: "musica-audio",
     icon: "〰️",
@@ -3159,7 +3167,15 @@ osc.type = "triangle"; // morbido ma corposo
 Il motivo è nella fisica: la sinusoide è una frequenza pura, mentre \`square\` e \`sawtooth\` contengono molte armoniche sovrapposte. Più armoniche significa timbro più ricco da scolpire poi con i filtri.
 
 Vuoi un basso acido? Parti da \`sawtooth\` e togli le alte con un filtro passa-basso. Vuoi un suono da Game Boy? \`square\` e sei a casa. La sintesi sottrattiva è tutta qui: parti da un'onda ricca e togli ciò che non serve.
-`,
+
+
+## Cosa verificare
+
+Un oscillatore genera onde periodiche. Le forme sine, square, sawtooth e triangle hanno contenuti armonici differenti, ma la percezione dipende anche da volume, frequenza, filtri e dispositivo di ascolto. OscillatorNode emette un segnale finché non viene arrestato: per una nota musicale serve anche un inviluppo di ampiezza, di solito tramite GainNode.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode)`,
   },
   {
     id: "sonic-pi-sample-libreria-integrata",
@@ -3290,7 +3306,7 @@ L'event loop non impedisce che il main thread venga bloccato: una funzione sincr
   },
   {
     id: "web-audio-gainnode-volume-envelope",
-    title: "Web Audio: GainNode e l'arte dell'inviluppo",
+    title: "GainNode e ADSR: controllare l'ampiezza",
     date: "2026-05-06",
     category: "musica-audio",
     icon: "🎚️",
@@ -3314,7 +3330,15 @@ osc.start(now);
 Invece di accendere e spegnere di colpo, fai salire e scendere il volume con delle rampe: è l'inviluppo di ampiezza (il classico ADSR: Attack, Decay, Sustain, Release).
 
 È la differenza tra un beep da sveglia e una nota di pianoforte. Il timbro non sta solo nell'onda: sta anche in *come* il suono nasce e muore.
-`,
+
+
+## Cosa verificare
+
+GainNode moltiplica il segnale in ingresso e può essere automatizzato tramite AudioParam. Per evitare click, non interrompere bruscamente l'onda: programma rampe con setTargetAtTime o linearRampToValueAtTime, rispettando i tempi degli eventi. Un inviluppo musicale completo può includere attack, decay, sustain e release, ma i valori dipendono dal suono desiderato.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/GainNode)`,
   },
   {
     id: "sonic-pi-use-synth-scegliere-sintetizzatori",
@@ -3450,7 +3474,7 @@ map crea un nuovo array, filter seleziona elementi e find restituisce il primo c
   },
   {
     id: "web-audio-grafo-nodi-connect",
-    title: "Web Audio: pensare a nodi, come una pedaliera",
+    title: "Web Audio graph: connect e catena del segnale",
     date: "2026-05-11",
     category: "musica-audio",
     icon: "🕸️",
@@ -3469,7 +3493,15 @@ gain.connect(ctx.destination);
 Il segnale scorre da sinistra a destra lungo le connessioni. Un nodo può alimentarne più di uno (splitti il segnale) e più nodi possono confluire nello stesso (li mixi).
 
 Questo modello dichiarativo è potente: costruisci una catena una volta, poi ti limiti a cambiare i parametri (frequenza del filtro, volume) nel tempo. Capito il grafo, tutto il resto della Web Audio API sono solo nodi diversi da incastrare.
-`,
+
+
+## Cosa verificare
+
+Nel Web Audio API i nodi formano un grafo: una sorgente passa attraverso filtri, gain ed effetti prima di raggiungere la destinazione. connect crea collegamenti che possono sdoppiare o sommare segnali; una connessione non prevista può far percepire il suono due volte. Controlla il percorso dry e wet degli effetti e usa disconnect quando cambi struttura in modo dinamico.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode/connect)`,
   },
   {
     id: "sonic-pi-with-fx-effetti",
@@ -3616,7 +3648,7 @@ Il destructuring estrae valori da oggetti e array con una sintassi compatta. Un 
   },
   {
     id: "web-audio-biquadfilter",
-    title: "Web Audio: scolpire il suono con i filtri",
+    title: "BiquadFilterNode: lowpass, highpass e cutoff",
     date: "2026-05-16",
     category: "musica-audio",
     icon: "🎛️",
@@ -3641,7 +3673,15 @@ filter.frequency.linearRampToValueAtTime(3000, ctx.currentTime + 1);
 I tipi principali: \`lowpass\`, \`highpass\`, \`bandpass\`. \`frequency\` è il punto di taglio, \`Q\` la risonanza (troppo alta e "fischia").
 
 Automatizzare \`frequency\` nel tempo è ciò che dà vita ai suoni: un filtro che si apre e si chiude trasforma un'onda statica in qualcosa che respira.
-`,
+
+
+## Cosa verificare
+
+BiquadFilterNode offre filtri comuni e parametri di frequenza, Q e guadagno. Non tutti i tipi utilizzano gli stessi parametri allo stesso modo; per esempio il gain riguarda filtri come lowshelf o highshelf. Modifiche brusche alla frequenza possono creare artefatti. Prima di aggiungere più filtri valuta la risposta complessiva e il livello finale del segnale.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode)`,
   },
   {
     id: "sonic-pi-scale-accordi",
@@ -3791,7 +3831,7 @@ Gli ES modules definiscono dipendenze esplicite, ma non ogni import è gratuito:
   },
   {
     id: "web-audio-convolver-riverbero",
-    title: "Web Audio: riverbero realistico con ConvolverNode",
+    title: "ConvolverNode: riverbero a convoluzione",
     date: "2026-05-21",
     category: "musica-audio",
     icon: "🏛️",
@@ -3815,7 +3855,15 @@ convolver.connect(ctx.destination);
 Il trucco è la **impulse response**: un breve file audio che cattura come un ambiente risponde a un impulso secco. Il convolver "moltiplica" il tuo suono per quella firma, e improvvisamente sembra registrato in quella cattedrale.
 
 È più pesante di un riverbero algoritmico, ma il realismo non ha paragoni. Trovi impulse response gratuite online per ambienti di ogni tipo.
-`,
+
+
+## Cosa verificare
+
+ConvolverNode elabora il segnale usando una risposta all'impulso caricata in AudioBuffer. La qualità del riverbero dipende dal file e dal mix dry/wet; non è sufficiente collegare un nodo senza dati validi. File più lunghi richiedono più memoria ed elaborazione. Per applicazioni interattive prevedi gestione del caricamento, fallback e volume dell'effetto.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode)`,
   },
   {
     id: "sonic-pi-drum-machine",
@@ -3971,7 +4019,7 @@ Una Promise restituita da fetch normalmente non viene rifiutata per una risposta
   },
   {
     id: "web-audio-metronomo-preciso",
-    title: "Web Audio: un metronomo che non va fuori tempo",
+    title: "Web Audio metronomo: scheduling preciso",
     date: "2026-05-26",
     category: "musica-audio",
     icon: "⏱️",
@@ -4002,7 +4050,15 @@ scheduler();
 L'idea: un \`setTimeout\` impreciso fa da "sveglia" ogni 25 ms, ma i suoni vengono prenotati con \`osc.start(tempoPreciso)\` sull'orologio audio. Il timing lo decide la scheda audio, non JavaScript.
 
 È il pattern "lookahead scheduler", la base di ogni sequencer serio nel browser.
-`,
+
+
+## Cosa verificare
+
+Un metronomo affidabile non dovrebbe affidare ogni colpo al solo setInterval, perché il main thread può ritardare le callback. Usa l'orologio audioContext.currentTime per programmare gli eventi con un piccolo anticipo. Il timer JavaScript può limitarsi a riempire una finestra di scheduling. Verifica il comportamento durante rallentamenti della pagina e quando il tab passa in background.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/currentTime)`,
   },
   {
     id: "sonic-pi-randomizzazione-controllata",
@@ -4145,7 +4201,7 @@ Il valore di this dipende da come una funzione viene invocata; nelle arrow funct
   },
   {
     id: "web-audio-drum-machine-browser",
-    title: "Web Audio: una drum machine nel browser",
+    title: "Web Audio drum machine: sample e timing",
     date: "2026-05-31",
     category: "musica-audio",
     icon: "🥁",
@@ -4173,7 +4229,15 @@ function kick(time) {
 Il segreto della cassa è la **pitch envelope**: la frequenza crolla da 150 a 50 Hz in un lampo, e l'orecchio la legge come un "tonf". Un charleston, invece, è rumore bianco filtrato passa-alto con un inviluppo cortissimo.
 
 Sintetizzare la batteria dà controllo totale sul timbro, e pesa zero byte in download.
-`,
+
+
+## Cosa verificare
+
+Una drum machine può usare AudioBufferSourceNode distinti per ogni colpo, programmati sul tempo audio. Ogni AudioBufferSourceNode è pensato per un singolo avvio: dopo start non va riutilizzato per riprodurre un nuovo evento. Conserva il buffer decodificato e crea una nuova sorgente quando serve. Distingui il pattern musicale dal motore di scheduling per non accumulare drift.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode)`,
   },
   {
     id: "sonic-pi-sync-cue",
@@ -4324,7 +4388,7 @@ Le classi JavaScript sono una sintassi costruita sopra il sistema dei prototipi.
   },
   {
     id: "web-audio-sequencer-step",
-    title: "Web Audio: un sequencer a step in JavaScript",
+    title: "Step sequencer JavaScript: tempo e note",
     date: "2026-06-05",
     category: "musica-audio",
     icon: "🎚️",
@@ -4353,7 +4417,15 @@ scheduler();
 Unisci due idee viste prima: il **lookahead scheduler** per il timing preciso e la funzione \`kick\` che sintetizza il suono. Il \`pattern\` è lo spartito.
 
 Da qui a una drum machine completa il passo è breve: più array (uno per strumento), una UI di caselle cliccabili che accendono e spengono gli step, e hai ricostruito una Roland TR nel browser.
-`,
+
+
+## Cosa verificare
+
+Uno step sequencer rappresenta una griglia temporale di eventi. Per convertirla in secondi occorre considerare BPM, suddivisioni e swing eventuale. La UI può aggiornarsi con requestAnimationFrame, mentre l'audio dovrebbe essere programmato sull'orologio del contesto. Se modifichi il pattern in esecuzione, scegli quando applicare il cambiamento per non creare note duplicate.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Advanced_techniques)`,
   },
   {
     id: "sonic-pi-bassline-tb303",
@@ -4503,7 +4575,7 @@ Il debounce rimanda l'esecuzione fino a una pausa degli eventi; il throttle limi
   },
   {
     id: "web-audio-web-midi-api",
-    title: "Web MIDI: suonare il browser con una tastiera vera",
+    title: "Web MIDI API: note e accesso ai dispositivi",
     date: "2026-06-10",
     category: "musica-audio",
     icon: "🎹",
@@ -4528,7 +4600,15 @@ for (const input of access.inputs.values()) {
 Il messaggio MIDI sono tre byte: il tipo di evento (144 = note on, 128 = note off), il numero di nota e la velocity (quanto forte). Da lì converti la nota MIDI in frequenza e la passi a un \`OscillatorNode\`.
 
 In poche righe hai un synth suonabile con hardware vero, dentro una pagina web. È lo stesso protocollo MIDI che collega Sonic Pi a una tastiera: linguaggio universale della musica digitale.
-`,
+
+
+## Cosa verificare
+
+Web MIDI API permette di ricevere e inviare messaggi MIDI su browser compatibili. Accesso e permessi dipendono dal contesto e dal browser; non devi presumere disponibilità universale. Gestisci il collegamento o scollegamento delle periferiche e distingui noteOn con velocity zero da un evento noteOff quando necessario. MIDI trasporta eventi di controllo, non audio digitale.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API)`,
   },
   {
     id: "sonic-pi-slicing-campioni",
@@ -4688,7 +4768,7 @@ Una funzione generator produce valori gradualmente attraverso yield, mantenendo 
   },
   {
     id: "web-audio-analyser-visualizzare",
-    title: "Web Audio: visualizzare il suono con l'AnalyserNode",
+    title: "AnalyserNode: spettro e waveform nel browser",
     date: "2026-06-15",
     category: "musica-audio",
     icon: "📊",
@@ -4716,7 +4796,15 @@ disegna();
 \`getByteFrequencyData\` riempie un array con l'intensità di ogni banda di frequenza; \`getByteTimeDomainData\` ti dà invece la forma d'onda. Leggi questi valori dentro un loop di \`requestAnimationFrame\` e li disegni su un canvas.
 
 Bassi a sinistra, alti a destra: ecco lo spettro che pulsa a ritmo. È il classico visualizer, e sono meno di venti righe. L'audio smette di essere invisibile.
-`,
+
+
+## Cosa verificare
+
+AnalyserNode espone dati nel dominio del tempo e della frequenza senza modificare necessariamente il segnale. getByteFrequencyData restituisce valori scalati, non un'analisi scientifica della pressione sonora. Scegli fftSize e smoothingTimeConstant in funzione della visualizzazione e limita la frequenza di redraw per non occupare inutilmente la CPU.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode)`,
   },
   {
     id: "sonic-pi-generative-ring-tick",
@@ -4875,7 +4963,7 @@ Un Proxy intercetta operazioni come lettura, scrittura o eliminazione delle prop
   },
   {
     id: "web-audio-audioworklet",
-    title: "Web Audio: DSP su misura con AudioWorklet",
+    title: "AudioWorklet: DSP fuori dal main thread",
     date: "2026-06-20",
     category: "musica-audio",
     icon: "⚙️",
@@ -4910,7 +4998,15 @@ noise.connect(ctx.destination);
 Il metodo \`process\` riceve i buffer di input e output e li riempie campione per campione. Girando in un thread dedicato, non soffre dei blocchi dell'event loop: niente glitch audio.
 
 È il livello più basso della Web Audio API, quello dove scrivi vero DSP. Sintetizzatori custom, distorsioni particolari, algoritmi tuoi: qui non hai limiti.
-`,
+
+
+## Cosa verificare
+
+AudioWorklet permette elaborazione audio personalizzata nel thread di rendering audio, con AudioWorkletProcessor caricato tramite addModule. Il codice deve rispettare vincoli di tempo real-time: operazioni bloccanti o allocazioni eccessive possono causare glitch. La comunicazione con l'interfaccia avviene tramite MessagePort. Usa AudioWorklet quando i nodi standard non bastano e verifica supporto e contesto sicuro.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet)`,
   },
   {
     id: "sonic-pi-midi-controllo",
@@ -5057,7 +5153,7 @@ Intl formatta dati secondo locale e opzioni esplicite. La stessa cifra può usar
   },
   {
     id: "web-audio-tone-js",
-    title: "Tone.js: la Web Audio API con le batterie incluse",
+    title: "Tone.js: transport e scheduling musicale",
     date: "2026-06-25",
     category: "musica-audio",
     icon: "🎵",
@@ -5084,7 +5180,15 @@ seq.start(0);
 \`Tone.Transport\` è un orologio musicale globale al quale agganci tutto; le durate le scrivi in notazione musicale (\`"8n"\` = un ottavo). Il timing preciso al campione, che con la Web Audio nuda dovresti gestire a mano, qui è automatico.
 
 Se la Web Audio API è l'assembly del suono nel browser, Tone.js è il linguaggio ad alto livello. Perfetto quando vuoi comporre, non reimplementare uno scheduler.
-`,
+
+
+## Cosa verificare
+
+Tone.js fornisce strumenti musicali ad alto livello sopra Web Audio, come sintetizzatori, sequencer e transport. Il transport mantiene un tempo musicale condiviso, ma la riproduzione dipende comunque dalle restrizioni del browser sull'avvio dell'audio. Gestisci smaltimento degli strumenti e arresto dei pattern quando il componente viene rimosso; evita istanze duplicate a ogni render.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://tonejs.github.io/)`,
   },
   {
     id: "sonic-pi-use-bpm-tempo",
@@ -5229,7 +5333,7 @@ I Web Worker eseguono JavaScript su un thread separato dal main thread, ma non h
   },
   {
     id: "web-audio-audiobuffersource-campioni",
-    title: "Web Audio: riprodurre e manipolare campioni",
+    title: "AudioBufferSourceNode: riprodurre campioni",
     date: "2026-06-30",
     category: "musica-audio",
     icon: "🎙️",
@@ -5256,7 +5360,15 @@ function suona(rate = 1) {
 Nota una peculiarità: un \`AudioBufferSourceNode\` è **usa e getta**: dopo \`start()\` non si può riavviare, ne crei uno nuovo ogni volta. In cambio è leggerissimo.
 
 \`playbackRate\` cambia velocità e intonazione insieme (come in Sonic Pi con \`rate\`), \`loop\` fa ripetere il campione, \`start(time)\` lo schedula preciso. Da qui costruisci sampler, loop station e drum machine basate su file veri.
-`,
+
+
+## Cosa verificare
+
+I file audio vengono scaricati e decodificati in AudioBuffer prima di poter essere usati efficacemente nel grafo. Una nuova riproduzione richiede una nuova istanza AudioBufferSourceNode, non un secondo start sullo stesso nodo. playbackRate e detune modificano l'altezza o velocità; il cambio può alterare la durata. Considera memoria, caching e fallback se un sample non è disponibile.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode)`,
   },
   {
     id: "sonic-pi-registrare-esportare",
@@ -5416,7 +5528,7 @@ L'operatore ?. interrompe l'accesso quando il valore a sinistra è null o undefi
   },
   {
     id: "web-audio-chrome-music-lab-lezioni",
-    title: "Chrome Music Lab: cosa insegna a chi programma audio",
+    title: "Chrome Music Lab: idee per audio interattivo",
     date: "2026-07-05",
     category: "musica-audio",
     icon: "🌈",
@@ -5432,7 +5544,15 @@ La seconda: **feedback immediato**. Ogni interazione produce suono all'istante. 
 La terza: **poche regole, tanto spazio di gioco**. "Song Maker" è una griglia di caselle, eppure ci componi melodie vere.
 
 La lezione per noi sviluppatori: quando costruisci uno strumento musicale sul web, non pensare all'API. Pensa a quanto è breve la distanza tra un gesto dell'utente e il suono. Lì sta la magia.
-`,
+
+
+## Cosa verificare
+
+Gli esperimenti di Chrome Music Lab mostrano relazioni tra ritmo, frequenza, intervalli e rappresentazioni visive del suono. Sono utili come riferimento didattico, non come API di programmazione. Se vuoi costruire strumenti equivalenti, separa il modello musicale dal rendering e usa Web Audio per la sintesi e lo scheduling. Verifica accessibilità e riduzione del movimento nelle interfacce interattive.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://musiclab.chromeexperiments.com/)`,
   },
   {
     id: "sonic-pi-ambient-pad-riverbero",
@@ -5586,7 +5706,7 @@ Set mantiene valori unici secondo una semantica di confronto che non esegue una 
   },
   {
     id: "web-audio-generative-browser",
-    title: "Web Audio: musica generativa che non finisce mai",
+    title: "Web Audio generativo: vincoli e casualità",
     date: "2026-07-10",
     category: "musica-audio",
     icon: "🌀",
@@ -5620,7 +5740,15 @@ setInterval(() => {
 L'ingrediente segreto è vincolare il caso: pescando solo da una **scala** pentatonica, ogni nota casuale suona comunque "giusta". Il silenzio occasionale (\`Math.random() > 0.3\`) dà respiro e rende il flusso meno meccanico.
 
 Aggiungi un secondo strato più lento per i bassi, un riverbero, e hai un generatore ambient che non si ripete mai. Zero file, musica perpetua.
-`,
+
+
+## Cosa verificare
+
+Un sistema generativo produce variazioni secondo regole: scale, intervalli, probabilità, densità e ripetizioni. Senza limiti, la casualità può generare sovrapposizioni troppo forti o sequenze poco ascoltabili. Introduci un seed riproducibile quando vuoi confrontare versioni e definisci un limite di voci contemporanee. L'audio deve essere avviabile e arrestabile esplicitamente dall'utente.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)`,
   },
   {
     id: "sonic-pi-brano-techno-passo-passo",
@@ -5783,7 +5911,7 @@ structuredClone copia molte strutture complesse, ma non ogni valore JavaScript p
   },
   {
     id: "web-audio-synth-polifonico",
-    title: "Web Audio: un synth polifonico, più note insieme",
+    title: "Sintetizzatore polifonico: gestione delle voci",
     date: "2026-07-15",
     category: "musica-audio",
     icon: "🎹",
@@ -5819,7 +5947,15 @@ function noteOff(midi) {
 Il cuore è la **gestione delle voci**: una \`Map\` che associa ogni nota premuta alla sua coppia oscillatore/gain, così a \`noteOff\` sai quale spegnere. La formula \`440 * 2^((midi-69)/12)\` converte il numero di nota MIDI in frequenza.
 
 Collega tutto alla Web MIDI API e hai un synth polifonico suonabile con una tastiera vera. Da qui aggiungi filtri, detune, più oscillatori per voce: la strada verso un vero strumento software.
-`,
+
+
+## Cosa verificare
+
+Ogni nota può usare una o più sorgenti con il proprio inviluppo. Un sintetizzatore polifonico deve allocare e rilasciare le voci, evitare nodi lasciati attivi e decidere cosa succede quando si supera il limite di note simultanee. Una politica di voice stealing può interrompere la nota più vecchia o più debole. Verifica noteOn e noteOff ripetuti e l'uso del pedale sustain se previsto.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)`,
   },
   {
     id: "sonic-pi-didattica-codice-e-musica",
@@ -5975,7 +6111,7 @@ localStorage conserva stringhe per origine e offre un'API sincrona. Non usarlo p
   },
   {
     id: "web-audio-delay-feedback",
-    title: "Web Audio: eco e delay con il feedback",
+    title: "Web Audio delay e feedback: controllo della stabilità",
     date: "2026-07-20",
     category: "musica-audio",
     icon: "🔊",
@@ -6004,7 +6140,15 @@ Il cuore è l'anello: l'uscita del delay torna al suo ingresso attraverso un gai
 Attenzione al valore del feedback: sotto 1 gli echi decadono, ma a **1 o più** l'anello si auto-alimenta all'infinito e il volume esplode. Tienilo tra 0.3 e 0.6 per un'eco musicale.
 
 Cambia \`delayTime\` a ritmo di beat e l'eco diventa parte del groove: è l'effetto che dà spazio e movimento a un synth altrimenti secco.
-`,
+
+
+## Cosa verificare
+
+DelayNode ritarda il segnale; aggiungendo un collegamento di feedback puoi produrre echi successivi. Il gain del percorso di feedback deve restare sotto condizioni che evitino crescita incontrollata del livello: filtri, altri nodi e segnali influenzano il comportamento reale. Inserisci un controllo di volume a valle e verifica che il percorso wet non venga sommato involontariamente due volte.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/DelayNode)`,
   },
   {
     id: "sonic-pi-e-web-audio-stessa-idea",
