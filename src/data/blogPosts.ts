@@ -15,6 +15,50 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "fatica-metalli-carichi-ciclici",
+    title: "Perché una staffa può cedere dopo migliaia di cicli",
+    date: "2026-11-11",
+    category: "ingegneria",
+    icon: "🔩",
+    excerpt: "La stessa staffa può affrontare 15.000 o 150.000 cicli all’anno. Come passare dal conto degli azionamenti a una prova di fatica.",
+    tags: ["Fatica dei materiali", "Carichi ciclici", "Progettazione meccanica"],
+    content: `
+Una staffa metallica sostiene la leva di una macchina. A ogni azionamento si flette appena e torna nella posizione di partenza. Alla prima prova sembra tutto a posto. Dopo mesi di lavoro, vicino a un foro di fissaggio può comparire una cricca.
+
+## Dove può partire una cricca
+
+Si parla di **fatica** quando il danno si accumula sotto sollecitazioni ripetute. Può succedere anche se la tensione nominale resta sotto il limite di snervamento, oltre il quale il metallo comincia a deformarsi in modo permanente. La tensione nominale è calcolata senza includere i picchi locali. Al bordo di un foro o in un cambio brusco di sezione, la tensione effettiva può essere più alta.
+
+Una cricca può partire in uno di quei punti e crescere con i cicli successivi. Quando raggiunge una dimensione critica, che dipende dal carico, dal materiale e dalla geometria, può propagarsi rapidamente fino alla rottura.
+
+## Una staffa, due ritmi di lavoro
+
+Immaginiamo un ciclo completo di carico e scarico per azionamento, per 250 giorni di lavoro all’anno. A 60 azionamenti al giorno la staffa affronta **15.000 cicli all’anno**. A 600 ne affronta **150.000**, a parità di carico per ciclo.
+
+Una prova da 75.000 cicli rappresenterebbe cinque anni nel primo scenario e circa sei mesi nel secondo, assumendo che la macchina mantenga lo stesso ritmo di lavoro.
+
+## Che cosa dice una curva S–N
+
+Le **curve S–N** mettono in relazione l’ampiezza della tensione ciclica con il numero di cicli a rottura misurato sui provini in condizioni definite. L’ampiezza è metà della differenza fra la tensione massima e quella minima.
+
+Un ciclo da 0 a 60 MPa e uno da 30 a 90 MPa hanno entrambi un’ampiezza di 30 MPa. Le tensioni medie sono rispettivamente 30 e 60 MPa. Per stimare la vita a fatica servono dati che tengano conto anche di quella differenza.
+
+Conta anche come è stato realizzato il pezzo. In una serie di prove su lamiera di alluminio 2024-T3, un rapporto tecnico NASA ha documentato durate a fatica diverse per provini con fori lavorati in modi diversi.
+
+## Come imposterei la prova
+
+Sul banco monterei la staffa con i fissaggi previsti e riprodurrei il carico minimo e massimo per il numero di cicli richiesto. Stabilirei prima quando ispezionare il bordo dei fori e come registrare le cricche rilevabili.
+
+Per confrontare due geometrie, per esempio due raggi di raccordo in un cambio di sezione, terrei uguali materiale, lavorazione, montaggio e ciclo di carico. A ogni ispezione annoterei il numero di cicli e il punto in cui è comparsa un’eventuale cricca.
+
+**Fonti**
+
+- [MIT OpenCourseWare — fatica dei materiali e curve S–N](https://ocw.mit.edu/courses/3-11-mechanics-of-materials-fall-1999/f678e01017186c53d45845ad93c07938_MIT3_11F99_fatigue.pdf)
+- [NASA Engineering and Safety Center — fatica dei metalli](https://nescacademy.nasa.gov/video/eb24e80551684a74838ab675cf9fd6be1d)
+- [NASA Technical Reports Server — effetto della lavorazione dei fori sulla fatica](https://ntrs.nasa.gov/citations/20040110776)
+`,
+  },
+  {
     id: "giardini-pioggia-deflusso-tetti",
     title: "Dove va la pioggia del tetto? Un giardino può rallentarla",
     date: "2026-11-09",
