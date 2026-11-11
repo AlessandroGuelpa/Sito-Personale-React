@@ -148,12 +148,13 @@ Per valutare un sistema spaziale chiederei quindi dove nasce il calore, quale pe
   },
   {
     id: "shopify-inventario-scritture-concorrenti",
-    title: "Shopify, scorte e ordini: come evitare di sovrascrivere una vendita",
+    title: "Inventario Shopify–ERP: compare-and-swap e riconciliazione delle scorte",
     date: "2026-11-04",
+    updatedAt: "2026-11-11",
     category: "sviluppo-software",
     hub: "shopify-integrazioni",
     icon: "📦",
-    excerpt: "Una vendita arriva mentre il gestionale aggiorna le scorte. Il confronto sulla quantità attesa evita di sovrascrivere la disponibilità con un dato vecchio.",
+    excerpt: "Gestire le quantità Shopify senza sovrascrivere vendite: fonte autorevole, compare-and-swap, idempotenza e test di concorrenza.",
     tags: ["Shopify", "Inventario", "Concorrenza"],
     content: `
 Un job legge 10 pezzi disponibili su Shopify. Il gestionale ha appena registrato una rettifica e vuole portare il totale a 12. Tra la lettura e la scrittura arriva però un ordine, che fa scendere la disponibilità a 9. Se il job scrive comunque 12, quella vendita sparisce dal conteggio delle disponibilità.
@@ -175,6 +176,30 @@ Shopify riserva l'impostazione assoluta ai sistemi che fanno da fonte autorevole
 ## Una prova prima del rilascio
 
 In un negozio di test fermerei il job subito dopo la lettura, cambierei la disponibilità e lascerei ripartire la scrittura. Verificherei che il primo tentativo venga rifiutato, che la quantità intermedia resti intatta e che il job ricalcoli il totale solo dopo aver riconciliato i movimenti.
+
+
+## Quale sistema può cambiare la quantità?
+
+Prima di scrivere codice, definisci quale sistema è autorevole per ciascun inventory item e location. Una rettifica assoluta proveniente dall'ERP è diversa da un movimento incrementale: se un ordine Shopify ha già ridotto la disponibilità, la rettifica potrebbe essere obsoleta. inventorySetQuantities è concepita per chi imposta una quantità autorevole; inventoryAdjustQuantities applica invece una variazione. La scelta dipende dal dominio, non dalla comodità di inviare un singolo numero.
+
+Nelle versioni Admin API da 2026-04, inventorySetQuantities richiede changeFromQuantity per ogni elemento: il valore corrente viene confrontato con quello atteso prima della scrittura. Disattivare esplicitamente il controllo con null può causare sovrascritture; non è una scorciatoia sicura per gestire conflitti. È inoltre richiesta una chiave idempotente tramite la direttiva @idempotent. Un retry della stessa richiesta deve riusare la stessa chiave, mentre una correzione ricalcolata dopo un conflitto rappresenta un'altra intenzione.
+
+## Esempio: una vendita fra lettura e aggiornamento
+
+La disponibilità su Shopify è 10. Un job vuole impostarla a 12 sulla base della lettura iniziale. Prima dell'invio arriva un ordine e il valore diventa 9: la scrittura con quantità attesa 10 deve essere rifiutata. Il job non dovrebbe limitarsi a ripetere il valore 12 con un controllo disattivato.
+
+La procedura corretta richiede di ricostruire che cosa include la quantità dell'ERP: se il valore è già successivo alla vendita, servirà una nuova lettura e una correzione coerente; se la vendita non è inclusa, occorre riconciliare i movimenti. Aggiungere semplicemente la differenza 2 non è sempre corretto, perché la semantica dipende dal proprietario di ciascuna modifica.
+
+## Test e diagnosi
+
+Per provare questa logica, interrompi il job dopo la lettura, modifica la scorta con un ordine di test e riprendi la scrittura. Controlla che il primo tentativo fallisca senza cancellare la vendita e che il recupero usi uno stato recente. Registra item, location, versione API, quantità letta e stato del conflitto, senza esporre credenziali.
+
+Un [job di riconciliazione](/blog/webhook-riconciliazione-sincronizzazione) è necessario quando una modifica non arriva al sistema opposto: il controllo di concorrenza su una mutation e la rilevazione delle divergenze sono due livelli differenti.
+
+**Documentazione aggiuntiva**
+
+- [Shopify — inventorySetQuantities](https://shopify.dev/docs/api/admin-graphql/latest/mutations/inventorySetQuantities)
+- [Shopify — inventoryAdjustQuantities](https://shopify.dev/docs/api/admin-graphql/latest/mutations/inventoryAdjustQuantities)
 
 **Fonti**
 
@@ -318,13 +343,14 @@ Separare massa, peso e condizioni di contatto evita una scorciatoia intuitiva ch
   },
   {
     id: "webhook-riconciliazione-sincronizzazione",
-    title: "Webhook e job periodici: l’integrazione ha bisogno anche di un controllo",
+    title: "Webhook Shopify e riconciliazione: recuperare modifiche perse",
     date: "2026-10-26",
+    updatedAt: "2026-11-11",
     firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
     hub: "shopify-integrazioni",
     icon: "🔗",
-    excerpt: "Un webhook avvisa che qualcosa è cambiato. È veloce e permette di evitare molte interrogazioni inutili. Ma cosa succede se il destinatario è indisponibile, un handler…",
+    excerpt: "Architettura Shopify–ERP basata su webhook, checkpoint e job di riconciliazione: eventi duplicati, mancati o fuori ordine.",
     tags: ["Coding", "Shopify", "Integrazioni"],
     content: `
 Un webhook avvisa che qualcosa è cambiato. È veloce e permette di evitare molte interrogazioni inutili. Ma cosa succede se il destinatario è indisponibile, un handler fallisce o un evento viene gestito male?
@@ -352,6 +378,32 @@ Se negozio ed ERP possono modificare lo stesso campo, «sincronizzare» non bast
 Gestirei anche eventi fuori ordine, evitando di applicare ciecamente una versione vecchia sopra una nuova. L'identificativo della consegna protegge dai duplicati, ma non definisce da solo l'ordine commerciale degli stati.
 
 La verifica pratica è interrompere il percorso rapido, lasciare una modifica non allineata e controllare che la riconciliazione la ritrovi. Il risultato atteso è uno stato coerente e spiegabile, non soltanto una lista di chiamate terminate con successo.
+
+
+## Webhook, coda e recupero hanno ruoli differenti
+
+Un webhook notifica un evento, non dimostra che il sistema destinatario sia allineato all'ultimo stato. Shopify documenta la possibilità di consegne fuori ordine e di eventi che non arrivano. Per questo il ricevitore dovrebbe verificare l'origine, rendere persistente l'intenzione di elaborazione e rispondere velocemente, lasciando il lavoro potenzialmente lento a un processo successivo.
+
+Separerei tre responsabilità: ricezione della consegna, elaborazione idempotente e riconciliazione periodica. Il primo livello riconosce e registra la notifica; il secondo aggiorna i dati senza effetti duplicati; il terzo confronta gli stati reali quando un messaggio è stato perso, elaborato male o superato da una versione più recente.
+
+## Un checkpoint robusto
+
+In un import incrementale il timestamp dell'ultimo record letto non è necessariamente un checkpoint sicuro. Più record possono avere lo stesso updated_at; inoltre un processo può interrompersi fra una pagina e la successiva. Se riparti da un filtro strettamente maggiore, rischi di saltare record ancora pendenti. Quando l'API lo consente, usa un ordinamento stabile, checkpoint aggiornati solo dopo persistenza riuscita e una finestra temporale sovrapposta con upsert idempotenti.
+
+Una finestra sovrapposta è una difesa pratica, non una garanzia assoluta. Definisci anche come gestire cancellazioni, cambi di identificativo e modifiche prodotte da due sistemi differenti. Un semplice confronto fra timestamp non risolve un conflitto in cui Shopify ed ERP possono entrambi scrivere lo stesso campo.
+
+## Prove di affidabilità
+
+Simula la mancata consegna di un evento, poi riavvia il job di recupero e verifica che la divergenza venga individuata. Ripeti con due eventi fuori ordine e con una risposta API limitata temporaneamente: il sistema deve riprendere dal punto corretto senza sovrascrivere dati nuovi.
+
+Misura quanti record risultano incoerenti, quanto a lungo restano tali e quanti tentativi sono ancora in coda. Un HTTP 200 del ricevitore non dimostra che l'ERP abbia applicato la modifica.
+
+La [deduplicazione dei webhook](/blog/webhook-idempotenza-ordini) protegge dall'applicazione ripetuta; il [budget GraphQL](/blog/shopify-graphql-budget-query) limita il ritmo sostenibile con cui ripercorri l'archivio.
+
+**Documentazione aggiuntiva**
+
+- [Shopify — Webhooks](https://shopify.dev/docs/apps/build/webhooks)
+- [Shopify — Verify deliveries](https://shopify.dev/docs/apps/build/webhooks/verify-deliveries)
 
 ## Fonti
 
@@ -679,13 +731,14 @@ Quando valuto un'architettura, cerco anche le risorse lontane dall'oggetto princ
   },
   {
     id: "shopify-graphql-budget-query",
-    title: "Shopify GraphQL: il limite è un budget, non un invito a insistere",
+    title: "Shopify GraphQL Admin API: query cost, throttle e paginazione",
     date: "2026-10-07",
+    updatedAt: "2026-11-11",
     firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
     hub: "shopify-integrazioni",
     icon: "🛍️",
-    excerpt: "Un'integrazione può usare poche richieste e consumare comunque molto budget, se ogni query chiede una grande quantità di dati collegati. Contare soltanto le chiamate non…",
+    excerpt: "Gestire i limiti GraphQL Shopify con costi richiesti e reali, throttleStatus, budget condiviso per negozio e checkpoint paginati.",
     tags: ["Coding", "Shopify", "API"],
     content: `
 Un'integrazione può usare poche richieste e consumare comunque molto budget, se ogni query chiede una grande quantità di dati collegati. Contare soltanto le chiamate non basta per comprendere i limiti della GraphQL Admin API di Shopify.
@@ -713,6 +766,30 @@ Un esempio ipotetico: due processi vedono una capacità residua sufficiente e pa
 Gestirei inoltre gli errori GraphQL nel corpo della risposta, senza considerare il solo status HTTP come prova di successo.
 
 Una sincronizzazione ben progettata usa il budget per portare avanti lavoro utile e lascia uno stato recuperabile quando deve attendere. Aggiungere altri retry, da solo, non aumenta la capacità concessa dall'API.
+
+
+## Leggere il budget dalla risposta
+
+Shopify applica un limite basato sul costo calcolato delle query GraphQL Admin, non soltanto sul numero di richieste. Quando disponibile, extensions.cost include requestedQueryCost, actualQueryCost e throttleStatus. Il primo indica il costo richiesto dalla selezione, il secondo il costo effettivo dell'operazione e il terzo aiuta a capire capacità residua e ripristino. I valori dipendono dal piano e dall'operazione, quindi non conviene codificare un solo limite valido per ogni negozio.
+
+Immagina un throttleStatus con 40 punti disponibili e un tasso di ripristino di 50 punti al secondo. Una query che richiede 90 punti avrebbe bisogno, idealmente, di circa (90 - 40) / 50 = 1 secondo per tornare ammissibile. È una stima: altre richieste concorrenti possono consumare budget prima che tu parta.
+
+## Coordinare worker e pagine
+
+Se più worker sincronizzano lo stesso negozio, devono condividere una politica di consumo. Due processi che osservano separatamente 40 punti disponibili possono entrambi decidere di inviare una query, saturando la capacità. Un dispatcher per negozio o un coordinamento distribuito riduce questa competizione.
+
+Per import estesi usa paginazione cursor-based e salva il progresso soltanto dopo aver persistito la pagina. La ripartenza potrebbe rileggere record già processati: usa identificativi stabili e operazioni idempotenti. Un checkpoint salvato prima della scrittura può lasciare dati assenti, mentre uno salvato dopo permette di recuperare un crash senza inventare lo stato precedente.
+
+## Errori GraphQL diversi da HTTP
+
+Un HTTP 200 non garantisce che tutti i campi siano stati risolti senza errori. Esamina la presenza di errors nella risposta e valida i dati richiesti. Distingui throttling, autenticazione mancante, versione API non compatibile e errore di dominio: riprovare ciecamente lo stesso payload non è sempre una soluzione.
+
+Nelle integrazioni con il magazzino, un budget disponibile non dimostra che una [scrittura assoluta di inventario](/blog/shopify-inventario-scritture-concorrenti) sia corretta: quest'ultima richiede anche una strategia per gli aggiornamenti concorrenti.
+
+**Documentazione aggiuntiva**
+
+- [Shopify — API limits](https://shopify.dev/docs/api/usage/limits)
+- [Shopify — GraphQL Admin reference](https://shopify.dev/docs/api/admin-graphql/latest)
 
 ## Fonti
 
@@ -1416,13 +1493,14 @@ Quando leggo una proposta di permanenza lunare, cerco quindi il collegamento fra
   },
   {
     id: "transactional-outbox-invio-erp",
-    title: "Salvato nel database, perso nell’invio: a cosa serve l’outbox",
+    title: "Transactional outbox Rails–ERP: invii affidabili e idempotenza",
     date: "2026-08-31",
+    updatedAt: "2026-11-11",
     firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
     hub: "shopify-integrazioni",
     icon: "📤",
-    excerpt: "Salvo un ordine nel database e poi mando un messaggio al gestionale. Se il processo si arresta fra le due operazioni, l'ordine esiste ma il destinatario non lo sa. Invertire…",
+    excerpt: "Pattern transactional outbox per integrazioni Rails–ERP: commit atomico, pubblicazione asincrona, deduplicazione e osservabilità.",
     tags: ["Coding", "Database", "Integrazioni"],
     content: `
 Salvo un ordine nel database e poi mando un messaggio al gestionale. Se il processo si arresta fra le due operazioni, l'ordine esiste ma il destinatario non lo sa. Invertire la sequenza sposta il problema: il messaggio potrebbe partire anche se il salvataggio fallisce.
@@ -1461,6 +1539,43 @@ Anche concorrenza fra worker, ordine degli eventi e pulizia della tabella richie
 Misurerei numero ed età degli eventi pendenti, oltre ai tentativi falliti. Un database pieno di intenzioni mai consegnate non è una sincronizzazione riuscita.
 
 Mi piace l'outbox perché rende persistente un passaggio che altrimenti vive fra due righe di codice. Non cancella i guasti: crea le condizioni per recuperarli senza dover indovinare cosa il processo stesse facendo prima di fermarsi.
+
+
+## Una transazione locale non include l'ERP
+
+Se una transazione SQL modifica un ordine, non può garantire automaticamente che anche una chiamata HTTP remota vada a buon fine. L'outbox registra, nella stessa transazione locale, sia la modifica commerciale sia l'intenzione di inviare un evento. Un worker legge successivamente gli eventi pendenti. Questo evita la finestra in cui il database è aggiornato ma il programma si interrompe prima di registrare l'invio da effettuare.
+
+Un modello minimo può includere event_id, aggregate_id, kind, payload, created_at, tentativi, next_attempt_at e stato. L'ID immutabile dell'evento permette al destinatario di riconoscere i tentativi ripetuti.
+
+~~~ruby
+# Esempio illustrativo: richiede modelli, tabelle e vincoli reali.
+Order.transaction do
+  order.save!
+  OutboxEvent.create!(
+    event_id: SecureRandom.uuid,
+    aggregate_id: order.id,
+    kind: "order.changed",
+    payload: { order_id: order.id }
+  )
+end
+~~~
+
+Questo frammento mostra il confine atomico, non implementa da solo consegna, serializzazione, locking o retry.
+
+## Quando la risposta si perde
+
+Il worker invia l'evento, l'ERP lo applica, ma il processo si arresta prima di salvare l'esito locale. Alla ripartenza lo stesso evento può essere consegnato una seconda volta. Il modello è quindi almeno-una-volta, non esattamente-una-volta. La protezione decisiva è il riconoscimento dell'identificativo da parte del destinatario o un'altra regola di idempotenza sul dominio commerciale.
+
+Un lock locale impedisce a due worker di processare contemporaneamente la stessa riga, ma non elimina la finestra tra l'effetto remoto e la registrazione del risultato. È utile misurare eventi pendenti, età del più vecchio, numero di tentativi e errori definitivi, distinguendo timeout da payload invalidi.
+
+## Collegare outbox e riconciliazione
+
+Un evento segnato come inviato non dimostra necessariamente che lo stato dell'ERP sia quello atteso. Quando il sistema remoto espone un identificativo o uno stato interrogabile, una [riconciliazione periodica](/blog/webhook-riconciliazione-sincronizzazione) può individuare divergenze residue.
+
+**Documentazione aggiuntiva**
+
+- [AWS — Transactional outbox](https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html)
+- [Rails — Transactions](https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html)
 
 ## Fonti
 
@@ -2164,13 +2279,14 @@ Per capire il rientro tengo insieme tre elementi: l'energia iniziale, la forma d
   },
   {
     id: "webhook-idempotenza-ordini",
-    title: "Lo stesso webhook due volte: come evitare due ordini",
+    title: "Webhook Shopify duplicati: idempotenza e vincoli unici",
     date: "2026-07-24",
+    updatedAt: "2026-11-11",
     firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
     hub: "shopify-integrazioni",
     icon: "🔁",
-    excerpt: "Un ordine arriva dal negozio, l'integrazione lo salva e inoltra la conferma. La risposta si perde. Il mittente riprova: il server riceve di nuovo una richiesta che sembra…",
+    excerpt: "Come gestire webhook Shopify ripetuti verificando HMAC, delivery ID e unicità degli ordini senza introdurre effetti doppi.",
     tags: ["Coding", "Integrazioni", "Shopify"],
     content: `
 Un ordine arriva dal negozio, l'integrazione lo salva e inoltra la conferma. La risposta si perde. Il mittente riprova: il server riceve di nuovo una richiesta che sembra perfettamente valida. Se ogni consegna crea un ordine nuovo, il problema è già nel database.
@@ -2196,6 +2312,36 @@ In quel caso occorre un protocollo aggiuntivo: per esempio una chiave idempotent
 Invia la stessa consegna due volte, poi inviala contemporaneamente da due processi. Interrompi anche il flusso dopo il salvataggio e prima della risposta.
 
 Il risultato atteso resta un solo ordine commerciale, con una traccia comprensibile dei tentativi. L'affidabilità si vede proprio quando la rete smette di collaborare.
+
+
+## Delivery ID ed evento commerciale
+
+Shopify espone X-Shopify-Webhook-Id per distinguere le consegne e X-Shopify-Event-Id per correlare notifiche derivate dalla stessa azione del merchant. Non sono equivalenti: sottoscrizioni diverse possono generare consegne diverse dello stesso evento. Oltre a deduplicare le consegne, serve una chiave commerciale stabile, per esempio la coppia negozio e ordine esterno, quando il dominio la prevede.
+
+La deduplicazione per header non deve mascherare lavoro interrotto. Se registri una consegna come completata prima di aver reso persistente la successiva elaborazione, un crash potrebbe impedire la ripartenza. Distingui stati come ricevuto, in elaborazione e completato, oppure conserva l'intenzione in coda transazionale.
+
+## Verifica HMAC e vincolo database
+
+Per le consegne HTTPS verifica l'HMAC sulla sequenza originale di byte del body, prima che un parser la trasformi. La firma conferma l'origine del messaggio; non risolve né duplicazioni né ordine degli aggiornamenti.
+
+Per proteggere il dato commerciale sotto concorrenza, usa un indice univoco sulla chiave scelta. Un controllo applicativo che cerca prima il record non basta con due worker: entrambi possono vedere l'ordine assente e tentare di inserirlo.
+
+~~~sql
+-- Adattare nomi e semantica al proprio database.
+CREATE UNIQUE INDEX idx_external_orders_identity
+  ON external_orders (shop_id, shopify_order_id);
+~~~
+
+Gestisci poi esplicitamente il conflitto: recupera il record esistente se la richiesta corrisponde allo stesso evento, oppure segnala il caso se il payload è incompatibile. Un vincolo unico non sostituisce la logica di business.
+
+## Tre test che fanno emergere i bug
+
+Invia lo stesso webhook due volte, avvia due richieste contemporanee con la stessa chiave e interrompi il processo dopo il salvataggio ma prima dell'invio a ERP. Il risultato atteso è un solo ordine commerciale, con gli effetti remoti ancora tracciabili. Per l'ultimo scenario è utile il [pattern outbox](/blog/transactional-outbox-invio-erp).
+
+**Documentazione aggiuntiva**
+
+- [Shopify — Verify webhook deliveries](https://shopify.dev/docs/apps/build/webhooks/verify-deliveries)
+- [Shopify — Delivery structure](https://shopify.dev/docs/apps/build/webhooks/delivery-structure)
 
 ## Fonti
 
