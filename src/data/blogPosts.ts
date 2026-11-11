@@ -3285,6 +3285,11 @@ Se ti sei mai chiesto perché \`useState\` funziona, la risposta breve è: closu
 
 Una closure conserva accesso all'ambiente lessicale in cui la funzione è stata creata. Non è una copia immutabile dei valori: se la variabile catturata cambia, il comportamento può riflettere il nuovo valore. Usa le closure per incapsulare stato locale o creare callback, ma controlla i riferimenti trattenuti quando una funzione rimane registrata a lungo.
 
+
+## Una closure utile, ma da controllare
+
+Una funzione che incrementa un contatore può mantenere privata la variabile count all'interno di una closure. Due contatori creati da due chiamate alla factory non condividono automaticamente quello stato. Se invece due callback catturano lo stesso oggetto, possono osservare le stesse modifiche. Un test utile crea due istanze indipendenti, incrementa soltanto la prima e confronta i valori restituiti. Considera anche il ciclo di vita: una callback registrata su un oggetto globale può mantenere in memoria dati non più necessari. La closure non perde validità quando esce la funzione esterna, ma i riferimenti che conserva hanno un costo quando restano raggiungibili.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures)`,
@@ -3489,6 +3494,11 @@ Ricorda: \`await\` funziona solo dentro una funzione \`async\`, e avvolgere tutt
 
 async/await rende più leggibile il codice basato su Promise, ma non trasforma automaticamente operazioni sequenziali in operazioni parallele. Due await consecutivi possono introdurre attese non necessarie quando le richieste sono indipendenti. Gestisci gli errori con try/catch dove puoi davvero reagire e usa Promise.all solo quando ha senso fallire insieme alle operazioni concorrenti.
 
+
+## Sequentiale o concorrente?
+
+Supponi di richiedere in parallelo informazioni su un prodotto e un elenco di categorie, perché le due risposte non dipendono l'una dall'altra. Due await consecutivi possono introdurre un'attesa inutile, mentre Promise.all avvia entrambe le operazioni e raccoglie i risultati quando sono pronti. Se una richiesta dipende dall'ID restituito dall'altra, l'esecuzione sequenziale è invece corretta. In caso di errore, decidi se una risposta parziale è utilizzabile: Promise.all fallisce quando uno degli elementi rifiuta, mentre allSettled permette di esaminare gli esiti indipendentemente. Prova artificialmente timeout e fallimenti per verificare cosa vede l'utente.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)`,
@@ -3684,6 +3694,11 @@ Ecco perché un \`setTimeout(fn, 0)\` non è davvero immediato: si mette in coda
 ## Limiti e applicazione pratica
 
 L'event loop non impedisce che il main thread venga bloccato: una funzione sincrona lunga può ritardare input e rendering. Le callback di Promise entrano nella coda delle microtask, mentre i callback di timer sono task che non possono essere eseguiti prima della fine del lavoro corrente. setTimeout con ritardo zero non garantisce un'esecuzione immediata; per calcoli pesanti valuta i Web Worker.
+
+
+## Priorità dei task e fluidità della UI
+
+Un setTimeout a zero millisecondi non interrompe il codice sincrono che sta già eseguendo. Allo stesso modo, un lungo ciclo di microtask può ritardare il rendering se continua ad aggiungere lavoro senza lasciare spazio al browser. Un esempio concreto è una ricerca che elabora migliaia di risultati mentre l'utente prova a digitare: il problema non è soltanto la rete, ma il lavoro sul main thread. Misura i long task con DevTools e valuta chunk di lavoro più piccoli o Web Worker per calcoli pesanti. Lo scheduler non garantisce che una callback venga eseguita a un istante preciso, perciò evita di usarlo come orologio rigoroso.
 
 **Documentazione**
 
@@ -3890,6 +3905,11 @@ Si concatenano leggendosi come una frase: \`utenti.filter(attivo).map(nome)\`. I
 ## Limiti e applicazione pratica
 
 map crea un nuovo array, filter seleziona elementi e find restituisce il primo corrispondente. Non tutte le operazioni sono innocue: sort modifica l'array originale, mentre toSorted produce una copia. Quando lavori con oggetti annidati, copiare l'array non clona automaticamente ogni elemento. Controlla i casi vuoti e valuta la leggibilità prima di concatenare molte trasformazioni.
+
+
+## Scegliere il metodo secondo il risultato
+
+Per trovare il primo elemento che soddisfa una condizione usa find, non filter seguito dall'accesso alla prima posizione, se non ti serve l'intera lista. Per sapere se esiste almeno una corrispondenza, some descrive meglio l'intenzione. Ricorda che map produce un nuovo array ma non clona automaticamente gli oggetti contenuti: se il callback modifica un oggetto esistente, altre parti del programma possono osservare il cambiamento. Un test utile verifica input vuoto, duplicati e oggetti condivisi. Se l'elenco proviene da una chiamata API, controlla anche che il tipo atteso sia effettivamente un array prima di invocare questi metodi.
 
 **Documentazione**
 
@@ -4102,6 +4122,11 @@ Meno \`const x = obj.x\` ripetuti, più codice che dice subito quali dati ti ser
 ## Limiti e applicazione pratica
 
 Il destructuring estrae valori da oggetti e array con una sintassi compatta. Un valore di default si applica quando quello estratto è undefined, non quando è null. Per dati provenienti da API controlla prima la struttura: destrutturare direttamente un valore null può generare un errore. Usa alias quando nomi uguali provengono da oggetti differenti.
+
+
+## Default e contratti API
+
+Considera la risposta di un endpoint che dovrebbe restituire un oggetto con settings. Se il campo esiste ma vale null, il destructuring con un default impostato su {} non sostituisce quel null: il default viene usato soltanto in presenza di undefined. Una funzione che destruttura parametri direttamente nella firma dovrebbe quindi gestire esplicitamente il caso dell'argomento assente o nullo, se previsto. Un piccolo test confronta {}, {theme: undefined}, {theme: null} e {theme: "dark"}. Il destructuring rende il codice breve, ma non è un meccanismo di validazione: quando arrivano dati non attendibili serve un controllo del contratto prima dell'uso.
 
 **Documentazione**
 
@@ -4323,6 +4348,11 @@ Preferire i named export aiuta il **tree-shaking**: il bundler può scartare le 
 ## Limiti e applicazione pratica
 
 Gli ES modules definiscono dipendenze esplicite, ma non ogni import è gratuito: un modulo può eseguire codice durante l'inizializzazione. Gli import dinamici consentono di caricare funzionalità quando servono; valuta come il bundler gestisce code splitting e side effect. Per evitare dipendenze circolari, mantieni una direzione chiara fra livelli e componenti.
+
+
+## Dipendenze e codice che parte all'import
+
+Importare un modulo può eseguire il codice presente al suo livello superiore. Se una libreria inizializza connessioni, listener o configurazioni al momento dell'import, lo stato dell'applicazione può dipendere dall'ordine di inizializzazione. Preferisci funzioni esplicite quando l'avvio ha effetti collaterali importanti. Un import dinamico è utile per caricare un editor o una funzionalità pesante soltanto quando l'utente la richiede, ma l'utente deve ricevere un indicatore di caricamento e un percorso di errore. Dopo aver introdotto code splitting controlla che i bundle risultanti non duplicano inutilmente librerie e che le navigazioni dirette alle pagine secondarie funzionino.
 
 **Documentazione**
 
@@ -4550,6 +4580,11 @@ Ricorda anche che \`res.json()\` è a sua volta asincrono (va awaitato). Due \`a
 
 Una Promise restituita da fetch normalmente non viene rifiutata per una risposta HTTP 404 o 500: controlla Response.ok o status. Può invece fallire per problemi di rete o essere annullata. Anche leggere e interpretare il body può generare errori separati. Prevedi AbortController per cancellare richieste non più utili e gestisci esplicitamente eventuali risposte senza JSON.
 
+
+## Risposte senza body e tipi inattesi
+
+Un endpoint può restituire uno status di successo ma nessun JSON, ad esempio una risposta 204. Chiamare sempre res.json() può quindi produrre un errore di parsing anche quando la richiesta HTTP è andata bene. In altri casi il server può restituire HTML per una pagina di errore, rendendo il parsing ugualmente impossibile. Controlla status e content-type quando il contratto lo richiede, poi differenzia errori di rete, HTTP e parsing. Una richiesta annullata tramite AbortController deve essere trattata in modo distinto da un vero guasto. Prepara test con 200 JSON, 204 vuota, 404 e un timeout. Il codice robusto gestisce tutti questi esiti senza presentare un risultato falso all'utente.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)`,
@@ -4769,6 +4804,11 @@ Le **arrow function** sono l'eccezione salvavita: non hanno un proprio \`this\`,
 ## Limiti e applicazione pratica
 
 Il valore di this dipende da come una funzione viene invocata; nelle arrow function deriva invece dall'ambiente circostante. Estrarre un metodo e passarne il riferimento come callback può perdere il contesto desiderato. bind crea una nuova funzione con un contesto fissato. Usa esempi con oggetti, event listener e funzioni standalone per distinguere comportamento lessicale e dinamico.
+
+
+## Callback e perdita del contesto
+
+Un oggetto può esporre un metodo increment che usa this.value. Se passi direttamente il metodo come callback a un altro componente, il valore di this potrebbe non essere più quello dell'oggetto originario. Puoi preservare il contesto usando bind, una funzione wrapper o un'altra struttura che non dipende da this dinamico. Una arrow function definita all'interno di un metodo eredita il contesto lessicale appropriato, mentre una arrow usata come metodo non crea automaticamente un proprio this. Prova a invocare il metodo normalmente, poi estrailo in una variabile e confronta il comportamento. Questo chiarisce perché bug apparentemente casuali compaiono quando si passano funzioni tra moduli.
 
 **Documentazione**
 
@@ -4995,6 +5035,11 @@ Capire la catena spiega tanti misteri: perché \`class extends\` funziona, perch
 
 Le classi JavaScript sono una sintassi costruita sopra il sistema dei prototipi. La ricerca di una proprietà attraversa la prototype chain quando il valore non è presente nell'oggetto corrente. Evita di modificare prototipi globali di oggetti built-in in applicazioni condivise: può creare collisioni. Preferisci composizione e funzioni esplicite quando l'ereditarietà aggiunge più complessità che valore.
 
+
+## Ombreggiare una proprietà
+
+Se un oggetto eredita una proprietà dal prototipo e poi definisce una proprietà omonima direttamente su sé stesso, l'accesso restituisce il valore proprio dell'oggetto. La catena dei prototipi non viene modificata: cambia il punto in cui la ricerca si ferma. Un test utile usa Object.hasOwn per distinguere una proprietà locale da una ereditata e confronta Object.getPrototypeOf su oggetti creati da una classe. Evita di estendere Object.prototype in un'applicazione: un cambiamento globale può interferire con librerie e cicli che enumerano proprietà. Quando non ti serve davvero ereditarietà, la composizione può ridurre dipendenze nascoste.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)`,
@@ -5219,6 +5264,11 @@ Debounce = "aspetta la pausa". Throttle = "a intervalli regolari". Sceglierne un
 ## Limiti e applicazione pratica
 
 Il debounce rimanda l'esecuzione fino a una pausa degli eventi; il throttle limita la frequenza delle esecuzioni. Per una ricerca live, debounce non basta a impedire che una risposta vecchia arrivi dopo quella nuova: abbinalo a cancellazione o controllo dell'identità della richiesta. Per scroll e resize valuta anche requestAnimationFrame e la possibilità di usare API come IntersectionObserver.
+
+
+## Ricerca live senza risultati obsoleti
+
+Immagina che l'utente digiti prima "rea" e poi "react". Il debounce può ridurre il numero di chiamate, ma non garantisce che il risultato della prima richiesta arrivi prima di quello della seconda. Se entrambe partono, una risposta tardiva può mostrare dati non più pertinenti. Aggiungi un identificativo di ricerca o annulla esplicitamente la richiesta precedente. Per lo scroll, invece, il throttle limita l'aggiornamento nel tempo e può essere preferibile a un ritardo dopo la fine degli eventi. Verifica in DevTools le richieste effettive e prova una rete lenta, non soltanto una connessione locale veloce.
 
 **Documentazione**
 
@@ -5450,6 +5500,11 @@ Sono la base degli iteratori personalizzati e delle librerie di streaming di dat
 ## Limiti e applicazione pratica
 
 Una funzione generator produce valori gradualmente attraverso yield, mantenendo il proprio stato tra un passo e l'altro. Non equivale automaticamente a esecuzione asincrona: un generator sincrono che compie calcoli lunghi blocca il thread durante next. Per flussi asincroni esistono async generator e for await...of. Gestisci l'interruzione dell'iterazione quando il generator controlla risorse esterne.
+
+
+## Quando serve produrre valori a richiesta
+
+Un generator può attraversare una sequenza di grandi dimensioni restituendo un elemento per volta, senza costruire necessariamente un array completo. Ma se chi lo consuma richiama next in un ciclo sincrono molto lungo, il browser continua comunque a lavorare sul main thread. I generator asincroni sono adatti ad altri scenari, per esempio il consumo progressivo di dati da una sorgente asincrona. Verifica che cosa accade quando chi consuma interrompe l'iterazione con break e se occorre chiudere una risorsa sottostante. Scegli un generator quando rende più comprensibile la gestione della sequenza, non perché il termine lazy sembri automaticamente più performante.
 
 **Documentazione**
 
@@ -5684,6 +5739,11 @@ Le "trap" (\`get\`, \`set\`, \`has\`, \`deleteProperty\`) ti fanno agganciare lo
 
 Un Proxy intercetta operazioni come lettura, scrittura o eliminazione delle proprietà. I trap devono rispettare gli invarianti del linguaggio; un comportamento incompatibile può generare TypeError. Reflect permette di delegare l'operazione standard senza reinventarla. Preferisci proxy solo quando la trasparenza del wrapper è un requisito: nel codice applicativo comune possono complicare debug e ottimizzazione.
 
+
+## Trap e invarianti da rispettare
+
+Un Proxy può registrare gli accessi a un oggetto o applicare una logica di validazione alle scritture, ma non deve violare i vincoli delle proprietà non configurabili. Se un trap get restituisce un valore incompatibile con un'invariante del target, JavaScript può sollevare un TypeError. Reflect.get e Reflect.set consentono spesso di delegare il comportamento standard mantenendo il corretto receiver. Crea un oggetto con una proprietà non configurabile e prova un Proxy che intercetta la lettura: verifica la differenza fra un handler trasparente e uno che altera il contratto. Per logica applicativa ordinaria, un metodo esplicito può essere più facile da testare e mantenere.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)`,
@@ -5912,6 +5972,11 @@ C'è anche \`Intl.Collator\` per ordinare le stringhe rispettando gli accenti, e
 
 Intl formatta dati secondo locale e opzioni esplicite. La stessa cifra può usare separatori differenti, ma il valore numerico sottostante non deve essere archiviato come stringa formattata. Per le date, specifica timeZone quando il requisito lo richiede; altrimenti l'ambiente può influenzare il risultato. Per la valuta conserva importo e codice ISO separati dal formato mostrato.
 
+
+## Separare dati numerici e presentazione
+
+Un importo archiviato come 1234.50 non dovrebbe essere inviato al database nella forma "1.234,50 €" soltanto perché la UI usa il locale italiano. La rappresentazione dipende dalla lingua e dalla valuta, mentre il dato deve mantenere una semantica coerente. Intl.NumberFormat è utile per visualizzare un valore, ma un parser di input deve stabilire regole esplicite per separatori e precisione. Per le date, imposta timeZone quando la visualizzazione deve riferirsi a una zona specifica. Prova la stessa cifra e lo stesso istante in it-IT ed en-US e verifica che cambino soltanto le etichette mostrate, non il valore logico.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)`,
@@ -6129,6 +6194,11 @@ Quando usarli: parsing di file enormi, elaborazione di immagini, crittografia, q
 ## Limiti e applicazione pratica
 
 I Web Worker eseguono JavaScript su un thread separato dal main thread, ma non hanno accesso diretto al DOM. La comunicazione avviene tramite messaggi e dati clonabili o trasferibili. Creare troppi worker o spostare oggetti grandi può costare più del calcolo stesso. Misura prima l'effetto sul tempo di risposta dell'interfaccia e gestisci la terminazione dei worker non più necessari.
+
+
+## Trasferire dati costa
+
+Spostare un calcolo in un worker libera il main thread dall'elaborazione pesante, ma i dati devono attraversare il confine fra thread. Un oggetto complesso può essere clonato, mentre alcuni buffer possono essere trasferiti per evitare copie costose. Se il problema è piccolo e l'avvio del worker richiede più tempo del calcolo, l'ottimizzazione può peggiorare le prestazioni. Misura l'esperienza durante una digitazione o animazione mentre il task è in corso. Un worker non manipola direttamente il DOM, quindi il risultato deve essere comunicato al thread principale e applicato lì. Gestisci anche l'uscita anticipata dalla pagina per non lasciare processi inutili.
 
 **Documentazione**
 
@@ -6363,6 +6433,11 @@ Insieme risolvono una montagna di \`if (x && x.y && x.y.z)\`. Codice più corto 
 
 L'operatore ?. interrompe l'accesso quando il valore a sinistra è null o undefined. L'operatore ?? usa un fallback soltanto in questi due casi, a differenza di || che considera anche zero, stringa vuota e false. Non usare optional chaining per nascondere proprietà obbligatorie del contratto API: i dati mancanti possono meritare una validazione esplicita.
 
+
+## Un fallback che non cancella dati validi
+
+In un form, il valore 0 può essere una quantità valida e false può rappresentare una preferenza esplicita. Usare || per scegliere un default in questi casi rischia di sostituire informazioni corrette. L'operatore ?? applica il fallback soltanto a null e undefined. L'optional chaining evita errori quando un oggetto intermedio manca, ma può anche nascondere una risposta API che avrebbe dovuto essere obbligatoria. Prova i valori undefined, null, 0, false e stringa vuota per chiarire le differenze. Se il requisito richiede che una proprietà esista sempre, preferisci una validazione esplicita a una catena di accessi che restituisce silenziosamente undefined.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)`,
@@ -6578,6 +6653,11 @@ Regola pratica: se ti serve un insieme di valori unici, \`Set\`; se ti serve una
 ## Limiti e applicazione pratica
 
 Set mantiene valori unici secondo una semantica di confronto che non esegue una deep equality degli oggetti. Map permette chiavi di qualsiasi tipo, comprese referenze a oggetti. Scegli Set per membership e deduplicazione di valori adatti; per oggetti che rappresentano la stessa entità, può essere necessario deduplicare per ID invece che per riferimento. Map non sostituisce ogni oggetto JSON.
+
+
+## Identità degli oggetti e deduplicazione
+
+Due oggetti JavaScript distinti con lo stesso campo id non vengono trattati da Set come lo stesso valore: il confronto usa il riferimento dell'oggetto. Per deduplicare elementi provenienti da un'API puoi costruire una Map indicizzata per l'ID stabile, decidendo quale record conservare quando ci sono duplicati. Se invece la collezione contiene stringhe o numeri, Set può essere sufficiente. Un test utile confronta due riferimenti allo stesso oggetto e due oggetti separati ma uguali nel contenuto. Ricorda anche che Map consente chiavi che un semplice oggetto JSON non rappresenta nello stesso modo, come i riferimenti a oggetti.
 
 **Documentazione**
 
@@ -6822,6 +6902,11 @@ La regola: se aggiorni uno stato annidato in modo immutabile, ricorda che lo spr
 
 structuredClone copia molte strutture complesse, ma non ogni valore JavaScript può essere clonato: funzioni, alcuni oggetti speciali e risorse non serializzabili generano errori. Non preserva necessariamente comportamenti personalizzati o metodi prototipali. Nei componenti React valuta aggiornamenti immutabili mirati prima di clonare interi alberi di dati, che può essere costoso.
 
+
+## Quando una copia profonda non basta
+
+Una copia profonda può proteggere una struttura da mutazioni accidentali, ma non trasforma automaticamente ogni oggetto in un valore immutabile. Se dopo structuredClone modifichi il clone, il clone resta mutabile. In React, clonare uno stato molto grande a ogni input può introdurre lavoro evitabile: spesso basta ricostruire i rami modificati mantenendo invariati i riferimenti delle parti non toccate. Verifica anche quali tipi possono essere clonati e cosa accade con funzioni o riferimenti speciali. Un test confronta shallow copy e clone profondo su un array di oggetti annidati, modificando una proprietà interna e osservando quali strutture condividono ancora dati.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone)`,
@@ -7059,6 +7144,11 @@ Per il resto è oro: un tema che resta scelto, un form che non perde i dati al r
 ## Limiti e applicazione pratica
 
 localStorage conserva stringhe per origine e offre un'API sincrona. Non usarlo per segreti, credenziali o token sensibili: gli script eseguiti sulla pagina possono accedere ai dati. Gestisci assenza di spazio, modalità privata e formati non validi. Per dati strutturati più grandi e operazioni asincrone valuta IndexedDB; per uno stato temporaneo spesso basta la memoria dell'applicazione.
+
+
+## Gestire versioni e dati corrotti
+
+Un valore scritto in localStorage mesi prima può avere una struttura diversa da quella che l'applicazione si aspetta oggi. Non basta JSON.parse: devi validare il tipo e stabilire un comportamento di fallback quando il formato è obsoleto o malformato. Se una preferenza può essere ripristinata, potresti eliminarla e usare il default; se si tratta di dati importanti serve una strategia di migrazione più prudente. localStorage è sincrono e accessibile agli script della stessa origine, perciò non è adatto a credenziali segrete. Prova l'assenza della chiave, JSON invalido, un valore vecchio e un ambiente dove la scrittura fallisce per quota o restrizioni.
 
 **Documentazione**
 
