@@ -3156,14 +3156,15 @@ Premi Run: hai appena fatto musica con tre righe di codice. Da qui in poi è tut
 
 Il comando play genera una nota usando il synth corrente; sleep controlla il tempo musicale prima dell'istruzione successiva. Non corrisponde a un'attesa bloccante dell'intera applicazione: Sonic Pi organizza gli eventi musicali nel proprio sistema temporale. Per iniziare prova due note a distanze diverse e confronta il risultato cambiando soltanto sleep, poi aggiungi un ciclo quando il pattern è stabile.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Un esercizio ritmico ripetibile
 
 Imposta un BPM costante e crea una sequenza di due note separate da sleep. Prima di introdurre loop, conta le pulsazioni e verifica se la nota successiva inizia esattamente quando previsto. Cambia soltanto sleep: un valore più piccolo riduce la distanza temporale, ma non obbliga il suono precedente a interrompersi. La durata percepita dipende anche dall'inviluppo e dal synth selezionato. Dopo questa prova introduci quattro note con la stessa distanza e registra il risultato. Un errore comune è scrivere molti comandi play senza avanzare il tempo: gli eventi possono sovrapporsi invece di formare una melodia. Scegli una nota fondamentale e una quinta, poi modifica un elemento alla volta per comprendere la relazione tra codice e ritmo.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-tutto-e-un-oggetto",
@@ -3374,14 +3375,15 @@ Due \`live_loop\` girano in parallelo, ognuno col suo tempo. Cambia un valore, p
 
 live_loop ripete una sequenza identificata da un nome e permette di modificarla durante l'esecuzione. Ogni iterazione deve avere un avanzamento temporale adeguato: un loop privo di sleep o di un altro meccanismo di temporizzazione può produrre errori. Dai nomi significativi ai loop, come kick o hats, e mantieni una responsabilità musicale distinta per ciascuno.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Aggiornare un loop mentre il set continua
 
 Per un live semplice separa kick e hi-hat in due live_loop con nomi differenti. All'inizio usa soltanto un campione e una durata esplicita; quando entrambi sono stabili, cambia uno dei pattern e ascolta il risultato alla ripetizione successiva. Un ciclo senza un avanzamento temporale rischia di eseguire troppi eventi e interrompere la sessione. Per mantenere allineate le sezioni, ragiona in battute: se un loop dura quattro beat e un altro tre, gli accenti torneranno insieme soltanto dopo più ripetizioni. Registra una prova di un minuto per verificare l'allineamento, non fidarti esclusivamente della visualizzazione dei comandi. Se vuoi fermare un solo elemento, usa la struttura prevista dal programma anziché cancellare indiscriminatamente gli altri loop.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-blocchi-proc-lambda",
@@ -3588,14 +3590,15 @@ Scrivi \`sample\` e usa l'autocompletamento per esplorare le famiglie: \`:drum_\
 
 sample riproduce un campione dalla libreria disponibile o da un percorso supportato. Amp controlla l'ampiezza, rate modifica velocità e altezza e beat_stretch adatta un campione a una durata musicale. Queste opzioni non hanno sempre lo stesso effetto percettivo: valori estremi possono produrre artefatti. Controlla la durata effettiva del sample rispetto al tuo pattern.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Confrontare un sample prima e dopo le trasformazioni
 
 Scegli un campione di cassa dalla libreria e riproducilo prima senza effetti, poi con un rate diverso e infine con beat_stretch. Il primo confronto modifica velocità e altezza, mentre beat_stretch tenta di adattare la durata: l'esito dipende dal materiale originale e può introdurre artefatti. Controlla quanto dura effettivamente il sample per evitare che la coda invada la battuta successiva. Se imposti un amp molto alto su campioni già compressi, la somma dei colpi può diventare eccessiva. Per un pattern stabile definisci un BPM e una griglia di sleep, poi cambia un parametro per ascoltarne l'effetto. Evita di applicare tutte le trasformazioni insieme, perché diventa difficile capire quale ha prodotto il risultato.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-enumerable-map-select-reduce",
@@ -3807,14 +3810,15 @@ Prova a suonare la stessa sequenza cambiando solo \`use_synth\`: è il modo più
 
 use_synth sceglie il sintetizzatore usato dalle chiamate play successive nello stesso contesto. Due synth possono avere parametri differenti e rispondere diversamente a cutoff, release e inviluppo. Non scegliere un timbro soltanto dal nome: confronta più synth sulla stessa nota e durata, regolando il livello per evitare di confondere volume e carattere sonoro.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Timbro e inviluppo sono due scelte differenti
 
 Confronta due sintetizzatori suonando la stessa nota e usando la stessa durata. Prima lascia i valori di default, poi intervieni su attack, sustain o release quando il synth supporta queste opzioni. Alcuni suoni hanno code lunghe e possono sovrapporsi se ripeti il pattern rapidamente. La differenza fra un timbro percussivo e un pad non dipende soltanto dal nome del sintetizzatore: conta la risposta nel tempo e il contenuto armonico. Se introduci un filtro, regola la risonanza con prudenza e abbassa il volume durante il confronto. Una buona prova registra quattro battute con un synth e quattro con l'altro, senza cambiare note o BPM. Solo così il contrasto timbrico diventa evidente.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-symbol-vs-string",
@@ -4026,14 +4030,15 @@ Il riverbero dà profondità, l'echo crea il ritmo, la distorsione aggiunge grin
 
 with_fx applica un effetto al codice eseguito nel blocco. Puoi annidare più effetti, ma l'ordine cambia il risultato: un delay prima del riverbero non è equivalente a un riverbero seguito da delay. Mantieni un equilibrio tra segnale diretto e processato tramite mix e verifica che le code degli effetti non invadano i colpi successivi.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Ordine degli effetti e percorso del segnale
 
 Inserire un delay prima del riverbero può produrre una coda diversa dall'ordine inverso, perché ogni ripetizione viene elaborata in modo differente. Inizia con una singola nota e un effetto alla volta; regola mix e livello prima di aggiungerne un secondo. Su una parte ritmica, un riverbero eccessivo può coprire gli attacchi dei colpi successivi e ridurre la definizione del groove. Per studiare l'effetto, alterna quattro battute dry e quattro wet mantenendo gli stessi eventi musicali. Quando annidi più with_fx, considera il consumo di risorse e le code che restano udibili dopo l'ultimo trigger. Evita l'idea che ogni brano debba avere più effetti: spesso una semplice gestione dei volumi rende il mix più comprensibile.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-hash-metodi-utili",
@@ -4261,14 +4266,15 @@ Combinali con \`.choose\` per melodie casuali sempre "in chiave", o con \`.tick\
 
 scale genera note appartenenti a una scala, chord note di un accordo. Il fatto che due note siano nella stessa scala non garantisce automaticamente una melodia efficace: contano ritmo, registro e progressione armonica. Usa una scala limitata all'inizio e varia una nota alla volta. Se compaiono ottave troppo alte o basse, definisci esplicitamente il registro desiderato.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Costruire una progressione limitata
 
 Parti da una scala semplice e scegli un registro di note che rimanga udibile senza sovrapporsi completamente alla cassa. Usa chord per costruire un accordo, ma non suonare tutte le note simultaneamente per forza: prova un arpeggio, distribuendole nel tempo. Registra un ciclo di quattro battute e ascolta se la prima nota della ripetizione si collega in modo chiaro all'ultima. Il fatto che tutte le note appartengano alla stessa scala non garantisce automaticamente tensione o risoluzione musicale. Per migliorare la struttura limita inizialmente il numero di note e varia ritmo e durata. Confronta due versioni cambiando un solo grado della progressione, in modo da capire quale scelta ha modificato davvero il risultato.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-metaprogrammazione-basi",
@@ -4500,14 +4506,15 @@ Per irrobustire, aggiungi variazione: \`sample :sn_dolf if one_in(4)\` fa scatta
 
 Una drum machine programmata in Sonic Pi combina eventi di sample con una griglia di sleep. Prima di aggiungere casualità, costruisci un pattern ripetibile su quattro battute e verifica l'allineamento tra kick, snare e hi-hat. Regola amp e la distanza tra colpi per evitare sovrapposizioni che mascherano i transienti. Solo dopo introduci variazioni ritmiche.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Un pattern a sedici step
 
 Definisci una battuta suddivisa in sedicesimi e inserisci i colpi di cassa sugli accenti principali, lasciando volutamente alcune caselle vuote. Aggiungi hi-hat con un livello inferiore alla cassa e poi una snare in una posizione riconoscibile. Conta gli step prima di introdurre un secondo live_loop: due pattern con durate diverse possono creare poliritmi involontari. Una variazione ogni quarta battuta può rendere interessante il groove, ma deve essere verificata prima di aggiungere casualità. Registra qualche ciclo e ascolta il rapporto tra transienti e code, perché alcuni sample possono sovrapporsi. Un pattern musicale non migliora semplicemente aumentando il numero di eventi; pause e differenze di dinamica sono parte essenziale del ritmo.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-pattern-matching",
@@ -4739,14 +4746,15 @@ Cambia il seme e ottieni una variazione completamente diversa, ma altrettanto ri
 
 use_random_seed inizializza una sequenza pseudocasuale riproducibile, utile quando vuoi conservare lo stesso groove durante un live. La riproducibilità dipende anche dall'ordine in cui vengono consumati i valori casuali: aggiungere una chiamata rand può cambiare i risultati successivi. Imposta il seed in punti coerenti del ciclo e annota i valori che producono sequenze interessanti.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Conservare le variazioni migliori
 
 Se una scelta casuale produce un pattern interessante, annota il seed usato per renderlo ripetibile durante le prove successive. Il seed da solo non basta se cambi l'ordine delle chiamate random: aggiungere una nuova estrazione può spostare tutta la sequenza. Per un groove stabile imposta il seed nel punto coerente della struttura e limita le variazioni a un sottoinsieme di note o durate. Puoi lasciare fissi kick e basso e variare soltanto alcuni hi-hat, evitando che la casualità disgreghi il tempo principale. Registra più versioni con seed differenti e confronta densità, ripetizione e dinamica. L'obiettivo è usare la randomizzazione per produrre alternative controllabili, non per sostituire ogni decisione musicale.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-duck-typing",
@@ -4973,14 +4981,15 @@ Il loop \`:metronomo\` fa da direttore d'orchestra: a ogni battuta emette \`cue 
 
 cue emette un evento temporizzato e sync può attendere un evento specifico, rendendo possibile il coordinamento tra thread e live loop. Una dipendenza circolare, in cui due loop attendono entrambi un evento che nessuno invia, può bloccare la progressione musicale. Scegli un loop master per la pulsazione, dai nomi distinti ai segnali e testa l'avvio da zero.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Un segnale master per avviare le sezioni
 
 Immagina due live_loop, uno dedicato alla cassa e uno al basso. Se entrambi partono in momenti diversi, potrebbero mantenere uno sfasamento. Una strategia consiste nel definire un evento master a ogni battuta e fare attendere i loop dipendenti tramite sync. Occorre però evitare dipendenze circolari: se due loop aspettano un evento che nessuno invia, non succederà nulla. Dai nomi distinti ai cue e prova la sessione partendo da uno stato vuoto. Quando un loop viene modificato durante l'esecuzione, verifica che mantenga la stessa durata rispetto all'evento master. Aggiungere un cue a ogni singolo colpo non è sempre necessario; sincronizza le unità musicali significative.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-moduli-mixin",
@@ -5215,14 +5224,15 @@ Aggiungi un \`with_fx :distortion\` attorno e ottieni quel ringhio sporco tipico
 
 Il synth tb303 richiama un carattere acid attraverso risonanza, cutoff, inviluppo e note ripetute. Il risultato dipende anche dal registro e dalla durata delle note, non soltanto dalla velocità del pattern. Evita livelli eccessivi quando aumenti la risonanza e confronta variazioni sullo stesso groove. Prima costruisci una sequenza stabile, poi automatizza il filtro.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Accenti e filtro prima di aggiungere note
 
 Una linea acid efficace può utilizzare poche note in ottave vicine, ripetute con durata e accenti differenti. Inizia senza effetti esterni, poi controlla cutoff e risonanza del synth tb303 per riconoscere il carattere del filtro. Un'elevata risonanza può rendere certe frequenze molto prominenti, quindi lavora con volumi prudenti. Confronta un pattern di otto step con una variante che cambia soltanto il ritmo di una nota: spesso la differenza musicale è maggiore che aggiungere altre armonie. Inserisci poi un filtro che evolve lentamente su più battute e registra l'automazione. Evita cambiamenti casuali a ogni colpo finché non riesci a riprodurre consapevolmente un groove stabile.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-gestione-errori",
@@ -5450,14 +5460,15 @@ Rimescola l'ordine delle fette (con \`choose\` invece di \`tick\`) e lo stesso b
 
 Puoi isolare sezioni di un sample con parametri di inizio e fine e adattare la durata con opzioni di stretch. La frazione selezionata si riferisce al campione originale: cambiare i punti di taglio modifica anche il contenuto ritmico. Usa campioni di durata conosciuta e verifica che i confini non generino click. Quando serve, applica inviluppi brevi ai frammenti.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Scegliere i punti di taglio all'ascolto
 
 Tagliare un campione al 25 o al 50 per cento della durata non garantisce che il taglio coincida con un evento ritmico. Ascolta prima il materiale originale, individua gli attacchi interessanti e prova start e finish su una regione breve. Un frammento che inizia nel mezzo di una forma d'onda può produrre un click: un inviluppo breve può ridurre il problema. Valuta anche se la coda del frammento termina prima della nota successiva. Se usi beat_stretch insieme al slicing, confronta il risultato con il campione originale per individuare artefatti. Una sequenza di quattro frammenti diversi può generare un nuovo ritmo anche senza sintetizzatori aggiuntivi, purché gli eventi rispettino una griglia chiara.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-creare-una-gem",
@@ -5702,14 +5713,15 @@ Poca scrittura, tanta musica: è il fascino del generativo.
 
 ring crea una sequenza ciclica, mentre tick avanza lungo i valori nel contesto di esecuzione. È utile per note, durate e filtri che seguono pattern ripetuti. Quando due parti usano lo stesso contatore senza nomi distinti possono influenzarsi nel modo di avanzare: separa i contatori per responsabilità. Un pattern generativo diventa musicale se limiti scelta delle note, ritmo e densità.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Contatori indipendenti per parti diverse
 
 Un ring può contenere quattro note e un altro ring quattro durate. Se i due pattern avanzano usando lo stesso tick, il risultato dipende dall'ordine in cui i valori vengono letti: aggiungere un'istruzione può cambiare la sequenza. Per ridurre questa dipendenza, separa i contatori per la melodia e per il ritmo quando il codice lo richiede. Prova a costruire una frase di otto step con tre valori di cutoff e ascolta dopo quanti cicli torna la stessa combinazione. La generazione può essere deterministica anche quando il risultato sembra variabile. Scrivi prima una versione senza casualità, registrala, poi introduci cambiamenti controllati. Se tutto cambia a ogni beat, il risultato può perdere un punto di riferimento musicale.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-rspec-testare",
@@ -5956,14 +5968,15 @@ Il risultato: un'esibizione dove la tastiera controlla le note e le manopole pla
 
 Sonic Pi può ricevere eventi MIDI, ma i nomi delle porte e dei dispositivi dipendono dalla configurazione locale. Prima di assegnare un controller a un parametro, controlla gli eventi in ingresso e il formato dei messaggi. Gestisci input mancanti e valori fuori intervallo. Un controller fisico rende comodo il live coding, ma la traccia dovrebbe poter funzionare anche senza periferiche.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Mappare un controllo fisico a un parametro
 
 Un controller MIDI può inviare valori da trasformare in intervalli appropriati per cutoff, ampiezza o altri parametri. Prima di collegarlo al live set verifica nella console il nome del dispositivo, il canale e il tipo dei messaggi ricevuti. Un knob potrebbe inviare salti o dati non continui; smussa le variazioni quando il parametro audio produce artefatti evidenti. Prevedi il caso in cui il dispositivo venga scollegato e non lasciare la traccia dipendere completamente da un evento che non arriverà più. Per una prima prova collega una sola manopola a un filtro, controlla il range e confronta valori minimo e massimo. Solo dopo aggiungi più controller per la performance.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-ractor-concorrenza",
@@ -6190,14 +6203,15 @@ Puoi anche usare \`use_bpm_mul 2\` per raddoppiare localmente il tempo di un loo
 
 use_bpm modifica la relazione tra beat e tempo reale. sleep 1 rappresenta normalmente un beat nel contesto attivo; valori frazionari permettono suddivisioni come ottavi e sedicesimi. Cambiare BPM senza rivedere le durate dei sample può produrre disallineamenti, soprattutto con loop preregistrati. Per pattern complessi documenta la lunghezza in battute, non soltanto in secondi.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Lo stesso pattern a velocità diverse
 
 Un valore sleep espresso in beat cambia durata reale quando modifichi BPM. Per esempio, un quarto di beat occupa meno millisecondi a 160 BPM che a 120 BPM, pur mantenendo la stessa posizione relativa nella battuta. Costruisci una sequenza di quattro beat e registrala prima a un tempo moderato e poi a uno più alto, senza modificare le attese. Se inserisci campioni preregistrati, considera che la loro durata originale non segue automaticamente il metronomo: potrebbe servirti una trasformazione o un punto di trigger differente. Verifica la ripartenza del loop dopo un cambio tempo e assicurati che tutte le sezioni seguano lo stesso riferimento temporale.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-ampersand-symbol-shorthand",
@@ -6427,14 +6441,15 @@ Il WAV che ottieni lo porti in qualsiasi editor per il mastering. Il codice dive
 
 La registrazione del set permette di riascoltare transizioni, livelli e durata effettiva delle sequenze. Prima della cattura definitiva prepara un breve test e controlla che il segnale non saturi. Registra una versione riproducibile dello script e annota BPM e parametri critici. L'editing e il mastering richiedono strumenti separati quando vuoi distribuire un brano rifinito.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Registrare una prova prima del set completo
 
 Prima di registrare un brano lungo, cattura trenta secondi e riascoltali su cuffie e diffusori diversi a volume moderato. Controlla che nessuna parte saturi, che gli effetti non coprano il kick e che il silenzio iniziale non sia eccessivo. Se modifichi live_loop durante il set, salva una versione dello script che descriva il punto di partenza e annota le variazioni principali: la registrazione audio da sola non rende riproducibile la performance. Per un'uscita destinata alla distribuzione, una DAW può essere utile per editing e mastering, ma la qualità della sorgente resta fondamentale. Mantieni copie dei file registrati e assegna nomi che permettano di identificare versione, BPM e data.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-comparable-enumerable-custom",
@@ -6664,14 +6679,15 @@ Niente \`sample :bd_haus\`, niente sedicesimi: qui il tempo si dilata. Aggiungi 
 
 Un pad ambient nasce spesso da note lunghe con attacco graduale, filtri dolci e una coda di riverbero controllata. Se release supera il tempo tra note, più voci restano sovrapposte: può essere desiderato, ma aumenta densità e livello. Prova a ridurre il numero di note prima di alzare il riverbero. Gli spazi fra gli eventi sono parte della composizione.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Lasciare spazio tra le voci
 
 Un pad ambient usa spesso attacchi lenti, note sostenute e riverbero. Quando il release è lungo, più note rimangono attive contemporaneamente e aumentano la densità del mix: non sempre è desiderabile. Prova una progressione di tre note distanti e confronta un riverbero leggero con uno più ampio senza cambiare le note. Controlla che il basso non diventi confuso a causa delle code degli effetti. Se vuoi creare movimento, automatizza lentamente il cutoff o varia il registro, invece di aggiungere continuamente nuove voci. Un esercizio utile consiste nel registrare due minuti con gli stessi suoni e soltanto tre cambiamenti graduali: puoi valutare se ogni intervento è udibile e musicalmente giustificato.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-stringhe-gsub-regex",
@@ -6922,14 +6938,15 @@ Registra partendo dalla sola cassa e aggiungi i loro uno a uno commentando/scomm
 
 Una traccia techno leggibile può essere costruita per livelli: kick, hi-hat, basso e variazioni. Parti da un groove stabile, introduce un elemento alla volta e mantieni allineate le sezioni con durate esplicite. Automazioni troppo rapide dei parametri possono rendere confuso il mix; usa cambiamenti progressivi e verifica le transizioni registrando il set. Un buon loop non basta: serve anche una struttura nel tempo.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Dalla ripetizione alla struttura musicale
 
 Un loop di quattro battute è un punto di partenza, non un brano finito. Scrivi una sezione iniziale con kick e pochi elementi, una seconda in cui entra il basso e una fase di sottrazione prima del ritorno del groove completo. La durata delle sezioni può essere espressa in battute, così il set resta coerente anche quando cambia BPM. Per una traccia veloce, evita che ogni elemento abbia sempre la stessa densità: alterna pause, transienti e automazioni brevi. Registra la progressione completa e riascolta senza guardare il codice. Se non percepisci differenze fra le sezioni, riduci il numero di suoni o cambia davvero un parametro strutturale invece di introdurre decorazioni continue.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-benchmark-misurare",
@@ -7166,14 +7183,15 @@ La lezione va oltre la musica: qualsiasi strumento didattico dovrebbe puntare a 
 
 Sonic Pi rende osservabili cicli, condizioni, variabili e temporizzazione attraverso il suono. L'immediatezza del feedback aiuta nell'apprendimento, ma non garantisce da sola la comprensione dei concetti: conviene chiedere di prevedere cosa accadrà prima di premere Run. Modifica una sola istruzione per volta e confronta risultato atteso e risultato ascoltato.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Prevedere il risultato prima di ascoltarlo
 
 Per imparare i cicli con Sonic Pi, prepara un pattern di quattro note e chiedi di descrivere quante volte verrà riprodotto prima di premere Run. Modifica poi un valore di sleep e verifica se il cambiamento riguarda numero di note o distanza temporale. Questo separa la sintassi dal comportamento osservabile. Le condizioni possono controllare l'inserimento di un colpo ogni quarto giro; le variabili possono conservare note o durate. Non è necessario partire da un brano complesso: esercizi piccoli rendono più semplice capire gli errori. Dopo ogni modifica annota previsione e risultato, così la pratica musicale diventa anche un metodo per verificare un'ipotesi di programmazione.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   },
   {
     id: "ruby-programmazione-funzionale",
@@ -7419,13 +7437,14 @@ Grazie per aver seguito questi tre mesi di articoli quotidiani. Ci si sente in c
 
 Sonic Pi è pensato per la composizione e il live coding musicale con un linguaggio vicino a Ruby. Web Audio è un'API del browser per costruire grafi audio programmabili in JavaScript. Condividono concetti come oscillatori, inviluppi e timing, ma hanno obiettivi e interfacce diverse. Scegli Sonic Pi per sperimentare rapidamente con un set; scegli Web Audio quando il suono deve essere integrato in un'applicazione web.
 
-**Documentazione ufficiale**
-
-- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)
 
 ## Quando scegliere l'uno o l'altro
 
 Se l'obiettivo è costruire un set dal vivo scrivendo codice progressivamente, Sonic Pi fornisce comandi musicali e un ambiente orientato alla performance. Se vuoi inserire un sintetizzatore interattivo dentro un sito React, Web Audio permette di collegare nodi e controllarli dal browser. Il contesto è diverso anche per distribuzione: uno script Sonic Pi richiede il relativo ambiente, mentre un'applicazione Web Audio dipende dal browser e dalle sue policy. Entrambi usano concetti come tempo, frequenza, ampiezza e inviluppi, ma non sono intercambiabili. Prima di scegliere valuta dove deve suonare la musica, chi deve controllarla e quali risorse sono disponibili. Un prototipo in uno strumento può ispirare l'altro senza imporne l'architettura.
-`,
+
+
+**Documentazione ufficiale**
+
+- [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
   }
 ];
