@@ -2944,7 +2944,7 @@ Il controller riceve una richiesta HTTP, coordina le operazioni e seleziona una 
   },
   {
     id: "javascript-closure-spiegate-bene",
-    title: "JavaScript: le closure spiegate senza magia",
+    title: "JavaScript closure: scope e variabili catturate",
     date: "2026-04-25",
     category: "sviluppo-software",
     icon: "🟨",
@@ -2970,7 +2970,15 @@ next(); // 2  <- 'count' sopravvive tra le chiamate
 La funzione interna "chiude" sopra la variabile \`count\`: non è globale, non si azzera, resta privata. È il meccanismo alla base di stato incapsulato, moduli e hook di React.
 
 Se ti sei mai chiesto perché \`useState\` funziona, la risposta breve è: closure.
-`,
+
+
+## Limiti e applicazione pratica
+
+Una closure conserva accesso all'ambiente lessicale in cui la funzione è stata creata. Non è una copia immutabile dei valori: se la variabile catturata cambia, il comportamento può riflettere il nuovo valore. Usa le closure per incapsulare stato locale o creare callback, ma controlla i riferimenti trattenuti quando una funzione rimane registrata a lungo.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures)`,
   },
   {
     id: "web-audio-primo-oscillatore-audiocontext",
@@ -3096,7 +3104,7 @@ Active Record non elimina SQL: costruisce query SQL e le invia al database. Una 
   },
   {
     id: "javascript-promise-async-await",
-    title: "JavaScript: Promise e async/await, finalmente chiari",
+    title: "JavaScript Promise e async/await: errori comuni",
     date: "2026-04-30",
     category: "sviluppo-software",
     icon: "🟨",
@@ -3120,7 +3128,15 @@ async function caricaUtente(id) {
 \`async/await\` è solo zucchero sintattico sulle Promise: \`await\` mette in pausa la funzione finché la Promise non si risolve, senza bloccare il resto della pagina. Il codice si legge dall'alto in basso come se fosse sincrono.
 
 Ricorda: \`await\` funziona solo dentro una funzione \`async\`, e avvolgere tutto in \`try/catch\` è ciò che ti salva quando la rete fa i capricci.
-`,
+
+
+## Limiti e applicazione pratica
+
+async/await rende più leggibile il codice basato su Promise, ma non trasforma automaticamente operazioni sequenziali in operazioni parallele. Due await consecutivi possono introdurre attese non necessarie quando le richieste sono indipendenti. Gestisci gli errori con try/catch dove puoi davvero reagire e usa Promise.all solo quando ha senso fallire insieme alle operazioni concorrenti.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)`,
   },
   {
     id: "web-audio-oscillatore-forme-onda",
@@ -3242,7 +3258,7 @@ Le migrazioni versionano le trasformazioni dello schema, ma non sono una copia d
   },
   {
     id: "javascript-event-loop-come-funziona",
-    title: "JavaScript: l'event loop, perché non si blocca mai",
+    title: "Event loop JavaScript: task e microtask",
     date: "2026-05-05",
     category: "sviluppo-software",
     icon: "🟨",
@@ -3262,7 +3278,15 @@ console.log("4");
 Il codice sincrono gira per primo (1, 4). Poi l'event loop svuota la **microtask queue** (le Promise, quindi 3) e solo dopo la **macrotask queue** (i timer, quindi 2).
 
 Ecco perché un \`setTimeout(fn, 0)\` non è davvero immediato: si mette in coda. E perché un ciclo pesante e sincrono blocca l'intera pagina: finché non finisce, l'event loop non gira. Spezza i lavori lunghi, o passali a un Web Worker.
-`,
+
+
+## Limiti e applicazione pratica
+
+L'event loop non impedisce che il main thread venga bloccato: una funzione sincrona lunga può ritardare input e rendering. Le callback di Promise entrano nella coda delle microtask, mentre i callback di timer sono task che non possono essere eseguiti prima della fine del lavoro corrente. setTimeout con ritardo zero non garantisce un'esecuzione immediata; per calcoli pesanti valuta i Web Worker.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)`,
   },
   {
     id: "web-audio-gainnode-volume-envelope",
@@ -3391,7 +3415,7 @@ Le associazioni descrivono le relazioni tra modelli, ma vanno mantenute coerenti
   },
   {
     id: "javascript-metodi-array-essenziali",
-    title: "JavaScript: i metodi degli array che usi ogni giorno",
+    title: "JavaScript Array: map, filter, reduce e find",
     date: "2026-05-10",
     category: "sviluppo-software",
     icon: "🟨",
@@ -3414,7 +3438,15 @@ nums.every((n) => n > 0);      // true
 Sono tutti **immutabili** (tranne pochi come \`sort\` e \`reverse\`): non modificano l'array originale, ne restituiscono uno nuovo. Questo li rende perfetti in React, dove mutare lo stato è vietato.
 
 Si concatenano leggendosi come una frase: \`utenti.filter(attivo).map(nome)\`. Il codice diventa una pipeline di trasformazioni, non un labirinto di indici.
-`,
+
+
+## Limiti e applicazione pratica
+
+map crea un nuovo array, filter seleziona elementi e find restituisce il primo corrispondente. Non tutte le operazioni sono innocue: sort modifica l'array originale, mentre toSorted produce una copia. Quando lavori con oggetti annidati, copiare l'array non clona automaticamente ogni elemento. Controlla i casi vuoti e valuta la leggibilità prima di concatenare molte trasformazioni.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`,
   },
   {
     id: "web-audio-grafo-nodi-connect",
@@ -3545,7 +3577,7 @@ Le validazioni di Active Record migliorano feedback e coerenza applicativa, ma n
   },
   {
     id: "javascript-destructuring",
-    title: "JavaScript: destructuring, meno righe più chiarezza",
+    title: "JavaScript destructuring: default e valori undefined",
     date: "2026-05-15",
     category: "sviluppo-software",
     icon: "🟨",
@@ -3572,7 +3604,15 @@ function saluta({ name }) {     // direttamente nei parametri
 Funziona con default, rinominazione e rest. È onnipresente in React (\`const { data } = useQuery()\`) e negli import.
 
 Meno \`const x = obj.x\` ripetuti, più codice che dice subito quali dati ti servono. Piccola sintassi, grande pulizia.
-`,
+
+
+## Limiti e applicazione pratica
+
+Il destructuring estrae valori da oggetti e array con una sintassi compatta. Un valore di default si applica quando quello estratto è undefined, non quando è null. Per dati provenienti da API controlla prima la struttura: destrutturare direttamente un valore null può generare un errore. Usa alias quando nomi uguali provengono da oggetti differenti.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring)`,
   },
   {
     id: "web-audio-biquadfilter",
@@ -3717,7 +3757,7 @@ La modalità API-only parte da una configurazione più leggera per servizi che e
   },
   {
     id: "javascript-moduli-es-import-export",
-    title: "JavaScript: moduli ES, import ed export",
+    title: "JavaScript ES modules: import, export e bundle",
     date: "2026-05-20",
     category: "sviluppo-software",
     icon: "🟨",
@@ -3739,7 +3779,15 @@ import saluta, { PI, area } from "./math.js";
 C'è una differenza importante: gli **export nominati** (\`{ PI, area }\`) hanno un nome fisso e si possono importare selettivamente; l'**export default** è uno solo per file e lo rinomini come vuoi in import.
 
 Preferire i named export aiuta il **tree-shaking**: il bundler può scartare le funzioni che non importi, alleggerendo il file finale. Un dettaglio che, moltiplicato per decine di librerie, fa la differenza sul peso della pagina.
-`,
+
+
+## Limiti e applicazione pratica
+
+Gli ES modules definiscono dipendenze esplicite, ma non ogni import è gratuito: un modulo può eseguire codice durante l'inizializzazione. Gli import dinamici consentono di caricare funzionalità quando servono; valuta come il bundler gestisce code splitting e side effect. Per evitare dipendenze circolari, mantieni una direzione chiara fra livelli e componenti.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)`,
   },
   {
     id: "web-audio-convolver-riverbero",
@@ -3885,7 +3933,7 @@ Un esempio che scarica e normalizza JSON è utile per capire il flusso, ma in pr
   },
   {
     id: "javascript-fetch-api",
-    title: "JavaScript: fetch, parlare col mondo",
+    title: "Fetch API: errori HTTP, timeout e abort",
     date: "2026-05-25",
     category: "sviluppo-software",
     icon: "🟨",
@@ -3911,7 +3959,15 @@ await fetch("/api/launches", {
 L'insidia numero uno: \`fetch\` **non** rifiuta la Promise sugli errori HTTP (404, 500). Rifiuta solo se la rete cade. Per questo controlli sempre \`res.ok\` prima di leggere il corpo.
 
 Ricorda anche che \`res.json()\` è a sua volta asincrono (va awaitato). Due \`await\` per una risposta: uno per la risposta, uno per il parsing del corpo.
-`,
+
+
+## Limiti e applicazione pratica
+
+Una Promise restituita da fetch normalmente non viene rifiutata per una risposta HTTP 404 o 500: controlla Response.ok o status. Può invece fallire per problemi di rete o essere annullata. Anche leggere e interpretare il body può generare errori separati. Prevedi AbortController per cancellare richieste non più utili e gestisci esplicitamente eventuali risposte senza JSON.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)`,
   },
   {
     id: "web-audio-metronomo-preciso",
@@ -4050,7 +4106,7 @@ Un job asincrono sposta lavoro fuori dal ciclo della richiesta HTTP, ma non gara
   },
   {
     id: "javascript-this-binding",
-    title: "JavaScript: capire this una volta per tutte",
+    title: "JavaScript this: call, bind e arrow function",
     date: "2026-05-30",
     category: "sviluppo-software",
     icon: "🟨",
@@ -4077,7 +4133,15 @@ legato();                 // "Ciao Ale" -> this legato per sempre
 Chiamata come metodo (\`user.saluta()\`): \`this\` è l'oggetto. Chiamata "sciolta" (\`f()\`): \`this\` si perde. Con \`call\`/\`apply\`/\`bind\` lo imposti tu.
 
 Le **arrow function** sono l'eccezione salvavita: non hanno un proprio \`this\`, ereditano quello del contesto in cui sono definite. Per questo nei callback (\`setTimeout(() => this.x)\`) risolvono metà dei problemi.
-`,
+
+
+## Limiti e applicazione pratica
+
+Il valore di this dipende da come una funzione viene invocata; nelle arrow function deriva invece dall'ambiente circostante. Estrarre un metodo e passarne il riferimento come callback può perdere il contesto desiderato. bind crea una nuova funzione con un contesto fissato. Usa esempi con oggetti, event listener e funzioni standalone per distinguere comportamento lessicale e dinamico.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)`,
   },
   {
     id: "web-audio-drum-machine-browser",
@@ -4223,7 +4287,7 @@ Turbo permette aggiornamenti e navigazione efficienti sfruttando HTML inviato da
   },
   {
     id: "javascript-prototipi-ereditarieta",
-    title: "JavaScript: i prototipi dietro le classi",
+    title: "Prototipi JavaScript: inheritance e class",
     date: "2026-06-04",
     category: "sviluppo-software",
     icon: "🟨",
@@ -4248,7 +4312,15 @@ Object.getPrototypeOf(cane) === animale; // true
 Quando chiami un metodo, JavaScript lo cerca sull'oggetto; se non c'è, risale la **catena dei prototipi** finché lo trova (o arriva a \`null\`). È così che \`[].map\` funziona: \`map\` vive su \`Array.prototype\`.
 
 Capire la catena spiega tanti misteri: perché \`class extends\` funziona, perché aggiungere a \`Array.prototype\` è pericoloso, e perché \`Object.create\` è ereditarietà allo stato puro.
-`,
+
+
+## Limiti e applicazione pratica
+
+Le classi JavaScript sono una sintassi costruita sopra il sistema dei prototipi. La ricerca di una proprietà attraversa la prototype chain quando il valore non è presente nell'oggetto corrente. Evita di modificare prototipi globali di oggetti built-in in applicazioni condivise: può creare collisioni. Preferisci composizione e funzioni esplicite quando l'ereditarietà aggiunge più complessità che valore.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)`,
   },
   {
     id: "web-audio-sequencer-step",
@@ -4394,7 +4466,7 @@ Stimulus collega comportamento JavaScript agli elementi tramite controller e att
   },
   {
     id: "javascript-debounce-throttle",
-    title: "JavaScript: debounce e throttle, domare gli eventi",
+    title: "Debounce vs throttle in JavaScript: differenze",
     date: "2026-06-09",
     category: "sviluppo-software",
     icon: "🟨",
@@ -4419,7 +4491,15 @@ input.addEventListener("input", debounce(cerca, 300));
 Il **debounce** aspetta che l'utente smetta (ideale per la ricerca live: chiami l'API una volta, non a ogni tasto). Il **throttle**, invece, esegue al massimo una volta ogni X ms a prescindere (ideale per lo scroll: aggiorni la UI a ritmo costante).
 
 Debounce = "aspetta la pausa". Throttle = "a intervalli regolari". Sceglierne uno giusto trasforma una UI che arranca in una fluida.
-`,
+
+
+## Limiti e applicazione pratica
+
+Il debounce rimanda l'esecuzione fino a una pausa degli eventi; il throttle limita la frequenza delle esecuzioni. Per una ricerca live, debounce non basta a impedire che una risposta vecchia arrivi dopo quella nuova: abbinalo a cancellazione o controllo dell'identità della richiesta. Per scroll e resize valuta anche requestAnimationFrame e la possibilità di usare API come IntersectionObserver.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)`,
   },
   {
     id: "web-audio-web-midi-api",
@@ -4565,7 +4645,7 @@ Una cache riduce letture o calcoli ripetuti, ma introduce il problema di quando 
   },
   {
     id: "javascript-generatori",
-    title: "JavaScript: i generatori, funzioni che si mettono in pausa",
+    title: "Generator function JavaScript: yield e iterazione",
     date: "2026-06-14",
     category: "sviluppo-software",
     icon: "🟨",
@@ -4596,7 +4676,15 @@ function* primiN(n) {
 Ogni \`next()\` esegue fino al prossimo \`yield\` e si ferma, ricordando lo stato. Questo permette sequenze **infinite** ma **pigre**: calcoli un valore solo quando lo chiedi.
 
 Sono la base degli iteratori personalizzati e delle librerie di streaming di dati. Un concetto di nicchia, ma quando serve (dati infiniti, pipeline lazy) non ha rivali per eleganza.
-`,
+
+
+## Limiti e applicazione pratica
+
+Una funzione generator produce valori gradualmente attraverso yield, mantenendo il proprio stato tra un passo e l'altro. Non equivale automaticamente a esecuzione asincrona: un generator sincrono che compie calcoli lunghi blocca il thread durante next. Per flussi asincroni esistono async generator e for await...of. Gestisci l'interruzione dell'iterazione quando il generator controlla risorse esterne.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*)`,
   },
   {
     id: "web-audio-analyser-visualizzare",
@@ -4744,7 +4832,7 @@ I service object non sono un componente obbligatorio di Rails. Sono semplici cla
   },
   {
     id: "javascript-proxy-reflect",
-    title: "JavaScript: Proxy, intercettare ogni accesso a un oggetto",
+    title: "JavaScript Proxy e Reflect: intercettare operazioni",
     date: "2026-06-19",
     category: "sviluppo-software",
     icon: "🟨",
@@ -4775,7 +4863,15 @@ p.eta = -5;    // Error: età non valida
 Le "trap" (\`get\`, \`set\`, \`has\`, \`deleteProperty\`) ti fanno agganciare logica a ogni operazione: validazione, logging, valori calcolati, proprietà virtuali.
 
 È il meccanismo dietro la reattività di Vue 3 e di molte librerie di stato: quando leggi una proprietà, il Proxy registra la dipendenza; quando la scrivi, notifica chi la osserva. Potente, ma con un piccolo costo in performance: usalo dove serve davvero.
-`,
+
+
+## Limiti e applicazione pratica
+
+Un Proxy intercetta operazioni come lettura, scrittura o eliminazione delle proprietà. I trap devono rispettare gli invarianti del linguaggio; un comportamento incompatibile può generare TypeError. Reflect permette di delegare l'operazione standard senza reinventarla. Preferisci proxy solo quando la trasparenza del wrapper è un requisito: nel codice applicativo comune possono complicare debug e ottimizzazione.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)`,
   },
   {
     id: "web-audio-audioworklet",
@@ -4924,7 +5020,7 @@ includes può evitare le query ripetute caricando preventivamente le associazion
   },
   {
     id: "javascript-intl-formattazione",
-    title: "JavaScript: Intl, date e valute nella lingua giusta",
+    title: "JavaScript Intl: date, numeri e valute locali",
     date: "2026-06-24",
     category: "sviluppo-software",
     icon: "🟨",
@@ -4949,7 +5045,15 @@ new Intl.RelativeTimeFormat("it").format(-2, "day"); // "2 giorni fa"
 Cambi la stringa della lingua (\`"en-US"\`, \`"de-DE"\`) e la formattazione si adatta da sola: separatore delle migliaia, posizione del simbolo di valuta, nome del mese. Nessun \`if lingua === ...\`.
 
 C'è anche \`Intl.Collator\` per ordinare le stringhe rispettando gli accenti, e \`Intl.PluralRules\` per i plurali. È uno degli angoli più sottovalutati della piattaforma: risolve gratis problemi che intere librerie affrontano a fatica.
-`,
+
+
+## Limiti e applicazione pratica
+
+Intl formatta dati secondo locale e opzioni esplicite. La stessa cifra può usare separatori differenti, ma il valore numerico sottostante non deve essere archiviato come stringa formattata. Per le date, specifica timeZone quando il requisito lo richiede; altrimenti l'ambiente può influenzare il risultato. Per la valuta conserva importo e codice ISO separati dal formato mostrato.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)`,
   },
   {
     id: "web-audio-tone-js",
@@ -5088,7 +5192,7 @@ Strong Parameters controlla quali attributi del payload possono essere assegnati
   },
   {
     id: "javascript-web-workers",
-    title: "JavaScript: i Web Worker, calcoli senza bloccare la UI",
+    title: "Web Workers: lavoro in background e limiti",
     date: "2026-06-29",
     category: "sviluppo-software",
     icon: "🟨",
@@ -5113,7 +5217,15 @@ onmessage = (e) => {
 I due mondi non condividono memoria: comunicano solo con messaggi (\`postMessage\`) e li ricevono con \`onmessage\`. Il worker non può toccare il DOM, ma può fare qualsiasi calcolo, chiamare \`fetch\`, elaborare dati.
 
 Quando usarli: parsing di file enormi, elaborazione di immagini, crittografia, qualsiasi cosa impieghi più di qualche decina di millisecondi. Sposti il carico fuori dal thread principale e l'utente continua a scrollare e cliccare senza scatti. La reattività ringrazia.
-`,
+
+
+## Limiti e applicazione pratica
+
+I Web Worker eseguono JavaScript su un thread separato dal main thread, ma non hanno accesso diretto al DOM. La comunicazione avviene tramite messaggi e dati clonabili o trasferibili. Creare troppi worker o spostare oggetti grandi può costare più del calcolo stesso. Misura prima l'effetto sul tempo di risposta dell'interfaccia e gestisci la terminazione dei worker non più necessari.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)`,
   },
   {
     id: "web-audio-audiobuffersource-campioni",
@@ -5267,7 +5379,7 @@ La dichiarazione resources genera una serie convenzionale di route per elenco, c
   },
   {
     id: "javascript-optional-chaining-nullish",
-    title: "JavaScript: optional chaining e nullish, addio a mille if",
+    title: "Optional chaining e nullish coalescing in JS",
     date: "2026-07-04",
     category: "sviluppo-software",
     icon: "🟨",
@@ -5292,7 +5404,15 @@ const nome = user.nome ?? "Anonimo";
 \`??\` (nullish coalescing) somiglia a \`||\`, ma con una differenza cruciale: \`||\` scatta anche su \`0\`, \`""\` e \`false\`, mentre \`??\` scatta **solo** su \`null\`/\`undefined\`. Quindi \`0 ?? 5\` è \`0\`, mentre \`0 || 5\` è \`5\`.
 
 Insieme risolvono una montagna di \`if (x && x.y && x.y.z)\`. Codice più corto e, soprattutto, meno crash a runtime.
-`,
+
+
+## Limiti e applicazione pratica
+
+L'operatore ?. interrompe l'accesso quando il valore a sinistra è null o undefined. L'operatore ?? usa un fallback soltanto in questi due casi, a differenza di || che considera anche zero, stringa vuota e false. Non usare optional chaining per nascondere proprietà obbligatorie del contratto API: i dati mancanti possono meritare una validazione esplicita.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)`,
   },
   {
     id: "web-audio-chrome-music-lab-lezioni",
@@ -5428,7 +5548,7 @@ Active Storage gestisce associazioni e archiviazione dei file, ma l'upload compo
   },
   {
     id: "javascript-set-e-map",
-    title: "JavaScript: Set e Map, oltre l'oggetto e l'array",
+    title: "JavaScript Set e Map: struttura e uguaglianza",
     date: "2026-07-09",
     category: "sviluppo-software",
     icon: "🟨",
@@ -5454,7 +5574,15 @@ cache.has("utente");           // true
 Un **Set** contiene solo valori unici: perfetto per deduplicare o verificare l'appartenenza (\`.has()\` è più veloce di \`array.includes\` su grandi liste). Un **Map** è come un oggetto, ma con due vantaggi: le chiavi possono essere di **qualsiasi** tipo (non solo stringhe) e mantiene l'ordine di inserimento, oltre a offrire \`.size\` e l'iterabilità diretta.
 
 Regola pratica: se ti serve un insieme di valori unici, \`Set\`; se ti serve una mappa chiave-valore con chiavi non-stringa o iterazione ordinata, \`Map\`. La struttura dati giusta rende il codice più chiaro e spesso più veloce.
-`,
+
+
+## Limiti e applicazione pratica
+
+Set mantiene valori unici secondo una semantica di confronto che non esegue una deep equality degli oggetti. Map permette chiavi di qualsiasi tipo, comprese referenze a oggetti. Scegli Set per membership e deduplicazione di valori adatti; per oggetti che rappresentano la stessa entità, può essere necessario deduplicare per ID invece che per riferimento. Map non sostituisce ogni oggetto JSON.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)`,
   },
   {
     id: "web-audio-generative-browser",
@@ -5617,7 +5745,7 @@ La ricerca full-text di PostgreSQL permette tokenizzazione, ranking e indici ded
   },
   {
     id: "javascript-immutabilita-structuredclone",
-    title: "JavaScript: copie e immutabilità senza sorprese",
+    title: "structuredClone JavaScript: copie profonde e limiti",
     date: "2026-07-14",
     category: "sviluppo-software",
     icon: "🟨",
@@ -5643,7 +5771,15 @@ stato.user.nome; // "Ale" <- l'originale è salvo
 Lo **spread** (\`{ ...obj }\`) e \`Object.assign\` copiano solo il primo livello: gli oggetti annidati restano condivisi. Per una copia profonda affidabile c'è \`structuredClone\`, ora nativo, che duplica anche strutture annidate, array, Map e Set.
 
 La regola: se aggiorni uno stato annidato in modo immutabile, ricorda che lo spread è superficiale. Per casi semplici copi livello per livello (\`{ ...stato, user: { ...stato.user, nome } }\`); per casi profondi, \`structuredClone\`. Conoscere la differenza ti risparmia ore di caccia al bug.
-`,
+
+
+## Limiti e applicazione pratica
+
+structuredClone copia molte strutture complesse, ma non ogni valore JavaScript può essere clonato: funzioni, alcuni oggetti speciali e risorse non serializzabili generano errori. Non preserva necessariamente comportamenti personalizzati o metodi prototipali. Nei componenti React valuta aggiornamenti immutabili mirati prima di clonare interi alberi di dati, che può essere costoso.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone)`,
   },
   {
     id: "web-audio-synth-polifonico",
@@ -5801,7 +5937,7 @@ I request spec verificano il comportamento della richiesta attraverso il routing
   },
   {
     id: "javascript-localstorage-persistenza",
-    title: "JavaScript: salvare dati nel browser con localStorage",
+    title: "localStorage: persistenza e sicurezza nel browser",
     date: "2026-07-19",
     category: "sviluppo-software",
     icon: "🟨",
@@ -5827,7 +5963,15 @@ Due insidie da ricordare. Primo: memorizza **solo stringhe**, quindi per oggetti
 E soprattutto: **niente segreti**. Token di sessione, password, dati sensibili non vanno in \`localStorage\`: è leggibile da qualsiasi script sulla pagina, e una vulnerabilità XSS li esporrebbe. Per quelli servono i cookie con flag \`HttpOnly\`.
 
 Per il resto è oro: un tema che resta scelto, un form che non perde i dati al refresh, una preferenza ricordata. Piccola API, grande comodità.
-`,
+
+
+## Limiti e applicazione pratica
+
+localStorage conserva stringhe per origine e offre un'API sincrona. Non usarlo per segreti, credenziali o token sensibili: gli script eseguiti sulla pagina possono accedere ai dati. Gestisci assenza di spazio, modalità privata e formati non validi. Per dati strutturati più grandi e operazioni asincrone valuta IndexedDB; per uno stato temporaneo spesso basta la memoria dell'applicazione.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)`,
   },
   {
     id: "web-audio-delay-feedback",
