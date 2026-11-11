@@ -3238,6 +3238,11 @@ La regola d'oro: **fat model, skinny controller**. La logica vive nel Model, il 
 
 Il controller riceve una richiesta HTTP, coordina le operazioni e seleziona una risposta. Il model rappresenta dati e regole del dominio, mentre la view genera la rappresentazione destinata all'utente. Non tutto deve stare in queste tre classi: logiche di integrazione o processi complessi possono richiedere componenti dedicati. Quando una modifica è difficile da testare, controlla se il controller sta mescolando validazione, accesso ai dati e formattazione.
 
+
+## Separare HTTP, dati e rappresentazione
+
+Immagina una pagina che mostra gli ordini di un utente. Il controller identifica la risorsa richiesta e verifica l'accesso; il model incapsula query e regole legate ai dati; la view produce il markup. Se il controller comincia a orchestrare decine di chiamate a servizi esterni, non è più chiaro chi sia responsabile degli errori. Un punto di partenza è descrivere quali dati entrano e quali effetti osservabili vengono prodotti dalla request. Testa il comportamento HTTP e, separatamente, le regole che devono funzionare anche fuori dal controller. Il pattern MVC è utile proprio quando impedisce che il codice dipenda dal punto in cui viene chiamato.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://guides.rubyonrails.org/getting_started.html)`,
@@ -3439,6 +3444,11 @@ Il rischio? Dimenticarsi che c'è un database sotto e sparare mille query senza 
 
 Active Record non elimina SQL: costruisce query SQL e le invia al database. Una relazione restituita da where può rimanere lazy finché non viene materializzata; find e metodi simili possono invece eseguire immediatamente una query. Controlla il log SQL durante lo sviluppo e usa explain per capire query costose. Le colonne usate spesso nei filtri potrebbero richiedere indici verificati sul carico reale.
 
+
+## Capire quando una relazione interroga il database
+
+Scrivere where non significa necessariamente che una query sia già stata eseguita. Una relazione può essere ulteriormente filtrata e materializzata soltanto quando serve leggerne i record. In un elenco paginato verifica quali condizioni vengono realmente inviate a SQL e quali operazioni vengono fatte in memoria. Una chiamata a all o limit non equivale a una query immediata in ogni contesto; controlla il log per vedere cosa accade. Anche la scelta degli indici dipende dalle condizioni e dall'ordinamento utilizzati. Prima di ottimizzare una chiamata Ruby, usa explain o strumenti equivalenti per individuare il costo della query che il database sta eseguendo.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_querying.html)`,
@@ -3633,6 +3643,11 @@ La regola: mai modificare una migrazione già eseguita in produzione. Ne crei un
 ## Da verificare nella pratica
 
 Le migrazioni versionano le trasformazioni dello schema, ma non sono una copia del database e non ripristinano automaticamente i dati persi. Su tabelle grandi, aggiungere un indice o una colonna con vincoli può avere impatti operativi. Prima del deploy valuta compatibilità con il codice ancora in esecuzione e separa le modifiche incompatibili in passaggi progressivi. Verifica migrazione e rollback su un ambiente rappresentativo.
+
+
+## Migrazioni compatibili con il deploy
+
+Aggiungere una colonna è spesso semplice; rinominarne una usata dal codice già distribuito può essere molto più rischioso. Se durante il deploy circolano contemporaneamente due versioni dell'applicazione, entrambe devono funzionare sullo schema disponibile. Una strategia graduale consiste nell'introdurre il nuovo campo, aggiornare il codice affinché lo legga e lo scriva quando necessario, migrare i dati e rimuovere il vecchio campo solo dopo la transizione. Testa la procedura su dati rappresentativi, specialmente per tabelle grandi. Un rollback dell'applicazione non annulla automaticamente modifiche distruttive già applicate al database: pianifica esplicitamente la reversibilità prima di avviare la migrazione.
 
 **Documentazione**
 
@@ -3831,6 +3846,11 @@ Aggiungi \`dependent: :destroy\` e cancellando un provider elimini anche i suoi 
 ## Da verificare nella pratica
 
 Le associazioni descrivono le relazioni tra modelli, ma vanno mantenute coerenti con i vincoli del database. Una belongs_to non implica automaticamente che ogni record esistente abbia una riga collegata: dipende da validazioni, nullability e dati. Evita di risolvere la presenza con query dentro ogni ciclo; una lista di record che carica le associazioni una per volta produce il problema N+1. Per le operazioni distruttive definisci esplicitamente le dipendenze.
+
+
+## Modellare relazioni e cancellazioni
+
+Considera un ordine con più righe. Una associazione has_many rende comodo esplorare le righe, ma non determina da sola cosa deve succedere quando l'ordine viene eliminato. Devi definire vincoli sulle chiavi esterne, regole di dipendenza e politica di conservazione dei dati. La relazione inversa belongs_to può avere requisiti di presenza differenti a seconda del dominio. Per evitare query ripetute in un elenco usa un caricamento anticipato adeguato, ma controlla anche quante righe vengono materializzate. Un test utile crea un ordine con due righe, tenta la cancellazione e verifica che il risultato corrisponda alla regola applicativa e al vincolo database.
 
 **Documentazione**
 
@@ -4034,6 +4054,11 @@ Attenzione: le validazioni proteggono a livello applicativo. Per garanzie ferree
 ## Da verificare nella pratica
 
 Le validazioni di Active Record migliorano feedback e coerenza applicativa, ma non sono una barriera sufficiente contro modifiche concorrenti. Due richieste possono superare contemporaneamente una validazione di unicità. Per i vincoli importanti usa anche indici unici e vincoli sul database, gestendo l'eventuale errore in applicazione. Testa valori nil, input vuoti e stati intermedi della transazione.
+
+
+## Concorrenza e responsabilità del database
+
+Supponi che due richieste provino a registrare contemporaneamente lo stesso identificativo. Entrambe possono superare validates uniqueness prima che una delle due righe venga salvata. Per questo motivo un vincolo unico nel database è indispensabile quando l'unicità è un requisito del dominio. La validazione applicativa continua a servire per offrire un messaggio comprensibile, ma devi gestire anche l'eccezione che il database restituisce quando la concorrenza produce un conflitto. Prova il percorso con due richieste simultanee, non soltanto con due salvataggi sequenziali. Per i valori opzionali considera la semantica di null del database e verifica che il vincolo rifletta esattamente il requisito.
 
 **Documentazione**
 
@@ -4256,6 +4281,11 @@ Rispetto a un'app classica, la modalità \`--api\` rimuove middleware inutili (c
 
 La modalità API-only parte da una configurazione più leggera per servizi che espongono API, ma non impone automaticamente un buon contratto HTTP. Definisci formato degli errori, autorizzazioni, paginazione, timeout e versioni delle risposte. La serializzazione deve esporre soltanto i campi necessari. Testa separatamente successo, validazione fallita, risorsa assente e accesso non autorizzato.
 
+
+## Definire un contratto HTTP verificabile
+
+Un'API che restituisce JSON deve offrire più della serializzazione di un model. Specifica quali campi sono pubblici, quali sono obbligatori in input e quali status HTTP corrispondono a creazione, validazione fallita o risorsa mancante. Evita di esporre indiscriminatamente colonne del database: aggiungerne una in futuro potrebbe modificare la risposta senza intenzione. Per endpoint paginati definisci cursor o pagina, ordinamento stabile e limiti ragionevoli. Prepara request spec per una richiesta autorizzata, una senza permessi e una con un parametro inatteso. Se il client dipende da una struttura particolare, mantieni il contratto documentato e valuta l'impatto delle modifiche prima di rilasciare.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://guides.rubyonrails.org/api_app.html)`,
@@ -4473,6 +4503,11 @@ In produzione: fai girare questa chiamata in un **job in background** e salva i 
 
 Un esempio che scarica e normalizza JSON è utile per capire il flusso, ma in produzione non basta verificare che il body sia presente. Controlla status HTTP, timeout, schema dei dati e limiti di richiesta. Differenzia errori temporanei da quelli permanenti; un retry senza limiti può saturare l'API. Se devi persistere i risultati, registra l'ultimo aggiornamento riuscito e proteggi gli utenti da dati parziali.
 
+
+## Gestire i fallimenti di un servizio remoto
+
+Interrogare un provider esterno può funzionare durante una demo e produrre dati incompleti in presenza di timeout o risposte parziali. Prima del parsing controlla lo status HTTP e il formato dichiarato, applica limiti di tempo ragionevoli e distingui errori permanenti da quelli temporanei. Un retry senza backoff può peggiorare un servizio già sovraccarico. Quando salvi record ricavati da quell'API, usa identificativi stabili e stabilisci che cosa succede ai campi assenti o nulli. Un controllo utile simula una risposta valida, una vuota e una 429. La logica deve impedire che un singolo fallimento venga scambiato per un catalogo definitivamente privo di dati.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://guides.rubyonrails.org/active_job_basics.html)`,
@@ -4686,6 +4721,11 @@ Così la sincronizzazione dei lanci da un'API lenta non blocca nessuno: la reque
 ## Da verificare nella pratica
 
 Un job asincrono sposta lavoro fuori dal ciclo della richiesta HTTP, ma non garantisce esecuzione immediata né esattamente una volta. L'adapter scelto, le policy di retry e la disponibilità dei worker influiscono sul risultato. Progetta i job in modo idempotente quando possibile, conserva identificativi utili al monitoraggio e gestisci l'errore che si ripete senza creare elaborazioni duplicate.
+
+
+## Progettare job ripetibili
+
+Un job che invia un evento a un gestionale potrebbe essere interrotto dopo la chiamata remota ma prima del salvataggio locale dell'esito. Al riavvio, un retry può inviare nuovamente lo stesso evento. Progetta quindi una chiave idempotente o un meccanismo di deduplicazione, invece di assumere che il worker esegua ogni task una sola volta. Registra tentativi, errori e identificativo della risorsa; gestisci separatamente i guasti temporanei e quelli che richiedono una correzione dei dati. In un test prova l'esecuzione duplicata e l'interruzione a metà del processo. La coda è una forma di esecuzione differita, non una garanzia automatica di integrità.
 
 **Documentazione**
 
@@ -4909,6 +4949,11 @@ Il vantaggio: ottieni gran parte della reattività di una SPA restando in Rails,
 
 Turbo permette aggiornamenti e navigazione efficienti sfruttando HTML inviato dal server. Non equivale a eliminare JavaScript: lo utilizza internamente e può essere affiancato a Stimulus. Verifica link, form, stato di caricamento e interazioni con script terzi durante i cambi di pagina. Scegli Turbo quando un'applicazione server-rendered trae beneficio da navigazione reattiva senza una SPA completa.
 
+
+## Navigazione e lifecycle degli elementi
+
+Quando Turbo sostituisce il contenuto della pagina, gli script che erano legati a un nodo precedente possono non funzionare più come previsto. Per un menu espandibile o un campo con validazione dinamica, verifica inizializzazione e cleanup a ogni navigazione. Stimulus consente di descrivere quel ciclo di vita tramite controller collegati al markup, senza costruire necessariamente una SPA. Controlla i link che richiedono una navigazione completa e i form con risposte di validazione. Prima di adottare Turbo per un'interfaccia complessa, prova i componenti di terze parti che modificano direttamente il DOM, perché potrebbero richiedere un'integrazione specifica.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://turbo.hotwired.dev/handbook/introduction)`,
@@ -5129,6 +5174,11 @@ Filosofia opposta a React: l'HTML resta il protagonista, il JavaScript è un con
 
 Stimulus collega comportamento JavaScript agli elementi tramite controller e attributi data. È adatto a interazioni locali, come un menu o la gestione di un campo, senza replicare uno store applicativo completo. Controlla il ciclo di vita connect e disconnect, soprattutto quando Turbo sostituisce parti della pagina. Evita di distribuire la logica di dominio tra controller JavaScript e backend.
 
+
+## Controller piccoli e ciclo di vita prevedibile
+
+Un controller Stimulus può gestire l'apertura di un pannello o il conteggio dei caratteri di un campo. Se però contiene regole che dovrebbero essere validate dal server, l'interfaccia rischia di funzionare in modo diverso rispetto all'API. Lascia sul client i comportamenti di presentazione e verifica sul backend i vincoli di business. Quando un elemento viene rimosso da Turbo, disconnect è il punto appropriato per pulire timer, eventi globali o connessioni create dal controller. Prepara una prova navigando avanti e indietro più volte: se un click scatena due handler, probabilmente una risorsa non è stata rilasciata o è stata registrata due volte.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://stimulus.hotwired.dev/handbook/introduction)`,
@@ -5348,6 +5398,11 @@ Attento a due cose: scegliere una **chiave** che identifichi bene il dato, e inv
 ## Da verificare nella pratica
 
 Una cache riduce letture o calcoli ripetuti, ma introduce il problema di quando invalidare un valore. La chiave dovrebbe dipendere dai dati che influenzano il risultato e, dove opportuno, da una versione. Non inserire dati personali in cache condivise senza una politica esplicita. Misura hit ratio, dimensione della cache e latenza prima di concludere che il caching sia efficace.
+
+
+## Una cache deve avere una politica di invalidazione
+
+Immagina la scheda di un prodotto con prezzo e disponibilità. Se la cache usa una chiave che cambia solo quando aggiorni il testo descrittivo, il prezzo potrebbe rimanere obsoleto dopo una sincronizzazione. Stabilisci quali dati compongono il risultato e quali eventi devono aggiornare o invalidare la chiave. Per un contenuto differente fra utenti, verifica che la cache non condivida informazioni private. Misura latenza, hit ratio e costo dell'invalidazione: una cache troppo aggressiva può ridurre le query ma peggiorare la correttezza. Nei test controlla sia il caso di cache hit sia quello in cui un aggiornamento richiede una nuova lettura.
 
 **Documentazione**
 
@@ -5576,6 +5631,11 @@ Vantaggi: controller magri, logica testabile in isolamento, nomi che raccontano 
 ## Da verificare nella pratica
 
 I service object non sono un componente obbligatorio di Rails. Sono semplici classi Ruby utili quando un'operazione coordina più modelli o sistemi esterni. Specifica input, output, errori e transazioni; una classe con un metodo call non risolve automaticamente i problemi architetturali. Se il servizio effettua richieste esterne dentro una transazione lunga, valuta il rischio di lock e di fallimenti parziali.
+
+
+## Risultati ed errori espliciti
+
+Un servizio che sincronizza un ordine deve chiarire se restituisce l'ordine aggiornato, un oggetto risultato o un errore. Se inizia una transazione database e poi invoca un'API remota lenta, rischia di tenere aperti lock inutilmente. Se invece chiama prima l'API e poi il database, un fallimento di persistenza può lasciare effetti remoti già eseguiti. La scelta del confine transazionale richiede dunque un modello dei fallimenti, non soltanto un metodo call. Prepara test con dati validi, risposta remota negativa e fallimento di scrittura. Il servizio è utile quando rende più visibile questo flusso, non quando sposta semplicemente molte righe fuori dal controller.
 
 **Documentazione**
 
@@ -5806,6 +5866,11 @@ Regola: ogni volta che in un ciclo accedi a un'associazione, chiediti se serve u
 
 includes può evitare le query ripetute caricando preventivamente le associazioni, ma non garantisce sempre esattamente due query. In base alla query e ai filtri Rails può usare preload o join. Verifica il numero di query nei log e valuta la quantità di dati caricati: anticipare associazioni inutili può peggiorare consumo di memoria. Il criterio è ridurre il lavoro complessivo, non massimizzare l'uso di includes.
 
+
+## Confrontare numero di query e memoria
+
+In una pagina di ordini con il nome del cliente, senza preload il caricamento può produrre una query iniziale più una query per ogni cliente. Con includes la quantità di chiamate può diminuire, ma il piano esatto dipende dalla query e dai filtri. Un join ampio può duplicare righe e far crescere il volume trasferito. Misura un caso con pochi record e uno con molti, confrontando numero di query, tempo e memoria. Se l'associazione viene letta soltanto in una pagina specifica, caricarla indiscriminatamente in ogni endpoint può essere uno spreco. L'obiettivo non è usare includes ovunque, ma eliminare lavoro ripetuto dove serve.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_querying.html)`,
@@ -6018,6 +6083,11 @@ La regola: permetti solo ciò che l'utente deve davvero poter impostare. Il butt
 ## Da verificare nella pratica
 
 Strong Parameters controlla quali attributi del payload possono essere assegnati in massa a un model. Non equivale ad autorizzare un utente a modificare la risorsa: i permessi vanno verificati separatamente. Evita di permettere campi sensibili come ruoli amministrativi soltanto perché presenti nel form. Testa payload con chiavi inattese e strutture annidate per identificare differenze tra il contratto previsto e quello accettato.
+
+
+## Mass assignment e permessi sono problemi diversi
+
+Supponi che un form permetta di cambiare indirizzo e telefono di un utente. Strong Parameters limita i campi accettati dal controller, ma non dimostra che la persona autenticata sia autorizzata a modificare quel particolare record. Le due verifiche devono essere separate: prima individua la risorsa accessibile, poi filtra i campi scrivibili per l'operazione. Non permettere parametri come role, admin o owner_id solo perché presenti nel payload. Un test deve provare anche a cambiare l'identificativo della risorsa e a inviare campi non previsti. La sicurezza dipende dal contratto dell'endpoint completo, non da un singolo metodo params.permit.
 
 **Documentazione**
 
@@ -6247,6 +6317,11 @@ Il valore è la **prevedibilità**: chiunque conosca Rails sa già come sono fat
 
 La dichiarazione resources genera una serie convenzionale di route per elenco, creazione, lettura, aggiornamento ed eliminazione. Non è sempre necessario esporle tutte: limita le azioni a quelle richieste. Controlla l'ordine delle route speciali, il matching dei parametri e le risposte per risorse mancanti. La chiarezza degli URL facilita documentazione e test, ma non sostituisce l'autorizzazione.
 
+
+## Metodi HTTP e risorse, non solo URL
+
+Una route per aggiornare una risorsa usa convenzioni diverse da quella destinata a leggerla. Prima di aggiungere una route custom, verifica se un'azione standard di resources descrive già il comportamento. Esporre create, update e destroy quando non servono aumenta la superficie da proteggere; usa only oppure except dove opportuno. Le nested routes possono chiarire la relazione fra risorse, ma livelli eccessivi rendono gli URL difficili da gestire. Prepara test che distinguano metodo HTTP errato, id assente e permessi insufficienti. Il file di routing definisce come raggiungere un controller; non è una policy di autorizzazione e non valida automaticamente l'input.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://guides.rubyonrails.org/routing.html)`,
@@ -6456,6 +6531,11 @@ Niente più codice di upload custom, niente gestione manuale dei percorsi. Ti co
 ## Da verificare nella pratica
 
 Active Storage gestisce associazioni e archiviazione dei file, ma l'upload comporta rischi operativi. Limita dimensioni e formati quando necessario, verifica i permessi per visualizzare e rimuovere allegati e considera la scansione antivirus per file non attendibili. Non usare il nome originale del file come unico identificativo affidabile. Definisci retention e gestione dei file orfani.
+
+
+## File caricati e confini di fiducia
+
+Un file allegato può avere un'estensione plausibile e contenere dati diversi da quelli dichiarati. Prima di renderlo disponibile ad altre persone verifica vincoli sul tipo, dimensione e autorizzazioni, in base al contesto. Per documenti pubblici e privati le politiche di accesso potrebbero essere diverse. Se generi anteprime o varianti di immagini, considera i processi di elaborazione e i limiti di risorse per i file molto grandi. Un test dovrebbe tentare un upload valido, uno troppo grande e l'accesso all'allegato da un utente non autorizzato. Pianifica anche la cancellazione degli allegati abbandonati quando vengono rimossi i record applicativi.
 
 **Documentazione**
 
@@ -6695,6 +6775,11 @@ Elasticsearch è potente, ma spesso è un cannone per uccidere una mosca. Parti 
 
 La ricerca full-text di PostgreSQL permette tokenizzazione, ranking e indici dedicati, ma la qualità dei risultati dipende dalla lingua e dalla configurazione. Una ricerca che funziona su poche righe può diventare lenta senza un indice coerente. Confronta tsquery, normalizzazione dei termini e risultati attesi prima di aggiungere fuzzy matching. Se i dati contengono lingue diverse, verifica le strategie di stemming.
 
+
+## Ranking e lingua nella ricerca
+
+Una ricerca full-text non confronta soltanto le stringhe carattere per carattere: tokenizzazione e dizionari possono cambiare la corrispondenza dei termini. Se i documenti sono in italiano, una configurazione di lingua non appropriata può alterare stemming e risultati. Prepara un piccolo insieme di articoli con titoli simili ma contenuti diversi e confronta le query di test più frequenti. Valuta la presenza di un indice GIN se il volume lo giustifica, ma verifica anche il piano di esecuzione. La qualità della ricerca dipende da ranking, filtri e gestione delle parole non riconosciute: ottimizzare soltanto l'indice non garantisce risultati migliori.
+
 **Documentazione**
 
 - [Riferimento ufficiale](https://www.postgresql.org/docs/current/textsearch-intro.html)`,
@@ -6927,6 +7012,11 @@ Sono la rete di sicurezza ideale per un'API: se rompi un endpoint durante un ref
 ## Da verificare nella pratica
 
 I request spec verificano il comportamento della richiesta attraverso il routing e il controller. Oltre al caso di successo, includi autenticazione, autorizzazione, input invalido e risorsa inesistente. Non controllare soltanto il codice HTTP: verifica la forma del JSON, le modifiche persistite e gli effetti collaterali. Stub delle API esterne possono rendere i test ripetibili, ma serve anche un controllo di integrazione del contratto.
+
+
+## Verificare il contratto e gli effetti
+
+Un endpoint POST può restituire 201 senza avere scritto correttamente tutti i dati necessari. Un buon request spec controlla sia risposta HTTP sia effetti persistenti e, quando richiesto, eventi generati. Per una risorsa con permessi, confronta richiesta autorizzata, anonima e autenticata ma non autorizzata. Quando invii un payload errato, verifica la struttura degli errori e l'assenza di effetti parziali. Evita che ogni test dipenda da un servizio esterno reale, ma non affidarti soltanto ai mock per la compatibilità con quell'API. Prepara una verifica separata dell'integrazione del contratto quando è una parte critica del sistema.
 
 **Documentazione**
 
