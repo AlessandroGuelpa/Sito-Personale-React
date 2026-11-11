@@ -96,6 +96,7 @@ export default function BlogPage() {
         <h1 className="page-title">{hub?.title ?? "Appunti e idee dal codice."}</h1>
         <p className="page-intro">{hub?.intro ?? "Sviluppo web, esperimenti e approfondimenti tra tecnologia e scienza. Esplora i percorsi tematici o cerca nell’archivio."}</p>
       </header>
+      {!hub && (
       <section aria-label="Percorsi tematici" className="mt-9">
         <h2 className="text-xl font-bold mb-4">Percorsi tematici</h2>
         <div className="grid gap-3 sm:grid-cols-2">
@@ -104,7 +105,6 @@ export default function BlogPage() {
               key={item.slug}
               to={blogHubPath(item.slug)}
               className="block border border-zinc-200 rounded-xl p-5 hover:border-violet-500 dark:border-zinc-800 dark:hover:border-violet-500"
-              aria-current={hub?.slug === item.slug ? "page" : undefined}
             >
               <h3 className="font-bold">{item.title}</h3>
               <p className="text-sm leading-relaxed mt-2 text-zinc-600 dark:text-zinc-400">{item.description}</p>
@@ -112,6 +112,7 @@ export default function BlogPage() {
           ))}
         </div>
       </section>
+      )}
       <div className="mt-9 grid gap-5 border-y border-zinc-200 py-6 dark:border-zinc-800 sm:grid-cols-[2fr_1fr]">
         <div>
           <label className="field-label" htmlFor="blog-search">Cerca nell’archivio</label>
