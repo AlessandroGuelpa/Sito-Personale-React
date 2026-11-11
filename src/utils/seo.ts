@@ -69,7 +69,7 @@ export function blogPostJsonLd(post: BlogPost) {
     headline: post.title,
     description,
     image,
-    datePublished: post.date,
+    datePublished: post.firstPublishedAt ?? post.date,
     dateModified: post.updatedAt ?? post.date,
     inLanguage: "it-IT",
     author: {

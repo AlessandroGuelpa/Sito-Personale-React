@@ -1,12 +1,15 @@
 import type { ReactNode } from "react";
 import type { BlogCategoryId } from "../config/blog";
+import type { BlogHubSlug } from "../config/blog-hubs";
 
 export interface BlogPost {
   id: string;
   title: string;
   date: string;
   updatedAt?: string;
+  firstPublishedAt?: string;
   category: BlogCategoryId;
+  hub: BlogHubSlug;
   content: string;
   icon?: ReactNode | string;
   excerpt?: string;
@@ -20,11 +23,14 @@ export const blogPosts: BlogPost[] = [
     title: "Perché una staffa può cedere dopo migliaia di cicli",
     date: "2026-11-11",
     category: "ingegneria",
+    hub: "scienza-passioni",
     icon: "🔩",
     excerpt: "La stessa staffa può affrontare 15.000 o 150.000 cicli all’anno. Come passare dal conto degli azionamenti a una prova di fatica.",
     tags: ["Fatica dei materiali", "Carichi ciclici", "Progettazione meccanica"],
     content: `
 Una staffa metallica sostiene la leva di una macchina. A ogni azionamento si flette appena e torna nella posizione di partenza. Alla prima prova sembra tutto a posto. Dopo mesi di lavoro, vicino a un foro di fissaggio può comparire una cricca.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Fra sei mesi ricorderai perché hai scelto quella soluzione?](/blog/adr-decisioni-architetturali) e [Log, metriche e tracce: tre domande sullo stesso guasto](/blog/osservabilita-log-metriche-tracce). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Dove può partire una cricca
 
@@ -64,11 +70,14 @@ Per confrontare due geometrie, per esempio due raggi di raccordo in un cambio di
     title: "Dove va la pioggia del tetto? Un giardino può rallentarla",
     date: "2026-11-09",
     category: "ambiente",
+    hub: "scienza-passioni",
     icon: "🌧️",
     excerpt: "Quindici millimetri di pioggia su un tetto da 80 metri quadrati fanno 1.200 litri. Un giardino della pioggia può trattenerne una parte e darle tempo di infiltrarsi.",
     tags: ["Acque meteoriche", "Drenaggio urbano", "Suolo"],
     content: `
 Durante un acquazzone, la grondaia convoglia nel pluviale la pioggia che cade sul tetto. Se il pluviale sbocca su un cortile asfaltato, l’acqua continua a scorrere in superficie. Quando molti tetti e piazzali scaricano in fretta nella stessa rete, la portata può salire rapidamente. Un giardino della pioggia interviene lungo questo percorso.
+
+Questo ragionamento si collega anche ai contenuti su [Il cassetto dei vecchi dispositivi è una filiera interrotta](/blog/raee-elettronica-fine-vita) e [La biodiversità non si riassume contando soltanto le api](/blog/biodiversita-impollinatori-reti). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Un’aiuola che riceve acqua
 
@@ -99,11 +108,14 @@ Partirei da una mappa del cortile. Segnerei dove scarica il pluviale, in che dir
     title: "Orion: nel vuoto il calore non se ne va con una ventola",
     date: "2026-11-06",
     category: "spazio",
+    hub: "scienza-passioni",
     icon: "🌡️",
     excerpt: "Nel vuoto manca l’aria a cui cedere calore. Il controllo termico di Orion collega apparecchiature, circuiti fluidi e radiatori: un bilancio da chiudere anche quando cambia l’esposizione al Sole.",
     tags: ["Spazio", "Artemis", "Orion", "Controllo termico"],
     content: `
 Una ventola raffredda un computer facendo passare aria sui dissipatori. Portare lo stesso schema all'esterno di una navicella non funziona: nel vuoto manca l'aria che trasporta via il calore. Anche lontano dalla Terra, però, elettronica e altri sistemi continuano a produrlo.
+
+Questo ragionamento si collega anche ai contenuti su [Orion: il viaggio non finisce quando rivedi la Terra](/blog/orion-rientro-scudo-termico) e [Perché un lancio verso la Luna non può partire quando vuole](/blog/finestre-lancio-luna-orbite). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Orion, la capsula del programma Artemis, permette di vedere come si affronta questo vincolo senza confondere raffreddamento interno e scambio con l'ambiente esterno.
 
@@ -139,11 +151,14 @@ Per valutare un sistema spaziale chiederei quindi dove nasce il calore, quale pe
     title: "Shopify, scorte e ordini: come evitare di sovrascrivere una vendita",
     date: "2026-11-04",
     category: "sviluppo-software",
+    hub: "shopify-integrazioni",
     icon: "📦",
     excerpt: "Una vendita arriva mentre il gestionale aggiorna le scorte. Il confronto sulla quantità attesa evita di sovrascrivere la disponibilità con un dato vecchio.",
     tags: ["Shopify", "Inventario", "Concorrenza"],
     content: `
 Un job legge 10 pezzi disponibili su Shopify. Il gestionale ha appena registrato una rettifica e vuole portare il totale a 12. Tra la lettura e la scrittura arriva però un ordine, che fa scendere la disponibilità a 9. Se il job scrive comunque 12, quella vendita sparisce dal conteggio delle disponibilità.
+
+La stessa decisione può incidere sulla sincronizzazione dei dati: leggi [Shopify GraphQL: il limite è un budget, non un invito a insistere](/blog/shopify-graphql-budget-query) e [Shopify line item properties: campi personalizzati](/blog/shopify-custom-fields-app-vs-codice-nativo). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Scrivere solo se il valore di partenza coincide
 
@@ -171,12 +186,16 @@ In un negozio di test fermerei il job subito dopo la lettura, cambierei la dispo
     id: "osservabilita-log-metriche-tracce",
     title: "Log, metriche e tracce: tre domande sullo stesso guasto",
     date: "2026-11-02",
+    firstPublishedAt: "2026-11-03",
     category: "ingegneria",
+    hub: "scienza-passioni",
     icon: "🔭",
-    excerpt: "Una metrica segnala un cambiamento, un log descrive un evento, una traccia collega i passaggi. La correlazione rende utile il dettaglio.",
+    excerpt: "Un ordine impiega troppo tempo ad arrivare al gestionale. La dashboard mostra un aumento della latenza, ma non spiega quale passaggio stia rallentando. Cercando nei log…",
     tags: ["Ingegneria", "Monitoraggio", "Backend"],
     content: `
 Un ordine impiega troppo tempo ad arrivare al gestionale. La dashboard mostra un aumento della latenza, ma non spiega quale passaggio stia rallentando. Cercando nei log troviamo tanti messaggi corretti, senza un legame evidente fra loro.
+
+Questo ragionamento si collega anche ai contenuti su [La media dice che va bene. Quel cinque per cento aspetta ancora](/blog/latenza-percentili-media-p99) e [Due server non bastano se dipendono dallo stesso interruttore](/blog/ridondanza-guasti-correlati). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Raccogliere più dati non risolve automaticamente questa difficoltà. Serve sapere quale domanda può affrontare ciascun segnale.
 
@@ -212,12 +231,16 @@ Per l'ordine lento vorrei quindi partire dal cambiamento aggregato, raggiungere 
     id: "raee-elettronica-fine-vita",
     title: "Il cassetto dei vecchi dispositivi è una filiera interrotta",
     date: "2026-10-30",
+    firstPublishedAt: "2026-11-03",
     category: "ambiente",
+    hub: "scienza-passioni",
     icon: "📱",
-    excerpt: "Riuso e raccolta dei RAEE mantengono percorsi distinti. Il recupero dei materiali comincia da una destinazione appropriata.",
+    excerpt: "Un vecchio telefono nel cassetto non è più in uso, ma non è nemmeno entrato in una filiera di recupero. Resta lì insieme a caricabatterie e dispositivi di cui magari non…",
     tags: ["Ambiente", "Elettronica", "Risorse"],
     content: `
 Un vecchio telefono nel cassetto non è più in uso, ma non è nemmeno entrato in una filiera di recupero. Resta lì insieme a caricabatterie e dispositivi di cui magari non ricordiamo più il difetto.
+
+Questo ragionamento si collega anche ai contenuti su [Acqua virtuale: il numero di litri non racconta tutta la storia](/blog/impronta-idrica-contesto) e [Spreco alimentare: prima del consiglio, guarda cosa finisce nel cestino](/blog/spreco-alimentare-misurare-prima). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 L'elettronica mette nello stesso oggetto materiali di valore, componenti complessi e informazioni personali. Decidere il suo percorso richiede di distinguere questi aspetti.
 
@@ -253,12 +276,16 @@ La scelta utile è rendere esplicito lo stato: ancora usabile, riparabile oppure
     id: "luna-massa-peso-inerzia",
     title: "Sulla Luna pesi meno. La tua massa non è diventata più piccola",
     date: "2026-10-28",
+    firstPublishedAt: "2026-11-03",
     category: "spazio",
+    hub: "scienza-passioni",
     icon: "⚖️",
-    excerpt: "Peso e inerzia dipendono da grandezze diverse. Un carico più leggero resta difficile da accelerare e fermare.",
+    excerpt: "Un oggetto che sulla Terra è pesante diventa molto più facile da sostenere sulla Luna. È tentante concludere che sia anche facile da spostare, accelerare o fermare in…",
     tags: ["Spazio", "Fisica", "Luna"],
     content: `
 Un oggetto che sulla Terra è pesante diventa molto più facile da sostenere sulla Luna. È tentante concludere che sia anche facile da spostare, accelerare o fermare in qualunque situazione. Ma stiamo mettendo insieme due effetti differenti.
+
+Questo ragionamento si collega anche ai contenuti su [Radiazioni sulla Luna: la protezione entra nel bilancio di massa](/blog/radiazioni-luna-protezione-massa) e [Perché sulla Luna il paracadute non ti aiuta](/blog/allunaggio-paracadute-propulsione). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 La massa resta la stessa. Il peso cambia con il campo gravitazionale locale.
 
@@ -293,12 +320,16 @@ Separare massa, peso e condizioni di contatto evita una scorciatoia intuitiva ch
     id: "webhook-riconciliazione-sincronizzazione",
     title: "Webhook e job periodici: l’integrazione ha bisogno anche di un controllo",
     date: "2026-10-26",
+    firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
+    hub: "shopify-integrazioni",
     icon: "🔗",
-    excerpt: "L’evento accelera l’aggiornamento, la riconciliazione cerca le differenze. Insieme rendono recuperabile una sincronizzazione.",
+    excerpt: "Un webhook avvisa che qualcosa è cambiato. È veloce e permette di evitare molte interrogazioni inutili. Ma cosa succede se il destinatario è indisponibile, un handler…",
     tags: ["Coding", "Shopify", "Integrazioni"],
     content: `
 Un webhook avvisa che qualcosa è cambiato. È veloce e permette di evitare molte interrogazioni inutili. Ma cosa succede se il destinatario è indisponibile, un handler fallisce o un evento viene gestito male?
+
+Le condizioni descritte qui sono collegate anche a [Lo stesso webhook due volte: come evitare due ordini](/blog/webhook-idempotenza-ordini) e [Shopify GraphQL: il limite è un budget, non un invito a insistere](/blog/shopify-graphql-budget-query). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Una sincronizzazione affidabile deve poter scoprire una differenza anche quando il percorso dell'evento non l'ha risolta.
 
@@ -333,12 +364,16 @@ La verifica pratica è interrompere il percorso rapido, lasciare una modifica no
     id: "ridondanza-guasti-correlati",
     title: "Due server non bastano se dipendono dallo stesso interruttore",
     date: "2026-10-23",
+    firstPublishedAt: "2026-11-03",
     category: "ingegneria",
+    hub: "scienza-passioni",
     icon: "🛡️",
-    excerpt: "La ridondanza protegge rispetto a un insieme di guasti. Le dipendenze condivise possono far fallire entrambe le copie.",
+    excerpt: "Due istanze dell'applicazione sembrano più affidabili di una. Poi si scopre che usano lo stesso database, la stessa zona e la stessa configurazione sbagliata. Abbiamo…",
     tags: ["Ingegneria", "Affidabilità", "Architettura"],
     content: `
 Due istanze dell'applicazione sembrano più affidabili di una. Poi si scopre che usano lo stesso database, la stessa zona e la stessa configurazione sbagliata. Abbiamo duplicato il processo, ma non tutte le condizioni che gli permettono di funzionare.
+
+Questo ragionamento si collega anche ai contenuti su [Fra sei mesi ricorderai perché hai scelto quella soluzione?](/blog/adr-decisioni-architetturali) e [Log, metriche e tracce: tre domande sullo stesso guasto](/blog/osservabilita-log-metriche-tracce). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 La ridondanza ha senso rispetto ai guasti che vogliamo tollerare. Senza definire quel perimetro, «abbiamo due copie» è un'informazione incompleta.
 
@@ -374,12 +409,16 @@ Non sceglierei la massima ridondanza per qualunque sito. Definirei prima cosa pu
     id: "biodiversita-impollinatori-reti",
     title: "La biodiversità non si riassume contando soltanto le api",
     date: "2026-10-21",
+    firstPublishedAt: "2026-11-03",
     category: "ambiente",
+    hub: "scienza-passioni",
     icon: "🐝",
-    excerpt: "L’impollinazione coinvolge specie e habitat differenti. Proteggere una funzione richiede guardare la rete che la sostiene.",
+    excerpt: "Quando si parla di impollinazione, il simbolo è quasi sempre un'ape. È comprensibile, ma può far sparire dal ragionamento gli altri impollinatori e le condizioni che…",
     tags: ["Ambiente", "Biodiversità", "Ecosistemi"],
     content: `
 Quando si parla di impollinazione, il simbolo è quasi sempre un'ape. È comprensibile, ma può far sparire dal ragionamento gli altri impollinatori e le condizioni che permettono loro di vivere.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Il cassetto dei vecchi dispositivi è una filiera interrotta](/blog/raee-elettronica-fine-vita) e [La rete elettrica deve funzionare anche quando il sole cambia](/blog/rete-elettrica-flessibilita-domanda). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Proteggere una funzione ecologica richiede di guardare anche la rete di relazioni che la rende possibile.
 
@@ -415,12 +454,16 @@ Per parlare seriamente di biodiversità servono quindi più domande e meno simbo
     id: "navigazione-spaziale-posizione-orientamento",
     title: "Sapere dove sei e sapere dove punti sono due problemi diversi",
     date: "2026-10-19",
+    firstPublishedAt: "2026-11-03",
     category: "spazio",
+    hub: "scienza-passioni",
     icon: "🧭",
-    excerpt: "Star tracker, misure radio e immagini contribuiscono a stime differenti. La navigazione combina osservazioni e modelli.",
+    excerpt: "Immagina di conoscere perfettamente il punto in cui ti trovi, ma di non sapere in quale direzione sia orientata la tua camera. Oppure il contrario: sai dove punti, ma non…",
     tags: ["Spazio", "Navigazione", "Sensori"],
     content: `
 Immagina di conoscere perfettamente il punto in cui ti trovi, ma di non sapere in quale direzione sia orientata la tua camera. Oppure il contrario: sai dove punti, ma non quanto sei lontano dalla destinazione.
+
+Un approfondimento dello stesso percorso si trova in [Lagrange L2: un buon posto dove stare non è un parcheggio immobile](/blog/punti-lagrange-equilibrio-instabile) e [Sulla Luna pesi meno. La tua massa non è diventata più piccola](/blog/luna-massa-peso-inerzia). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Nella navigazione spaziale posizione e orientamento sono informazioni collegate, ma non intercambiabili.
 
@@ -458,12 +501,16 @@ Prima di aggiungere sensori o dashboard, bisogna quindi distinguere ciò che mis
     id: "react-prerender-html-metadati",
     title: "React e HTML già pronto: cosa cambia quando apri un link diretto",
     date: "2026-10-16",
+    firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "📄",
-    excerpt: "Il prerender consegna contenuto e metadati prima del JavaScript. Redirect, canonical e vere risposte 404 restano parte del lavoro.",
+    excerpt: "Un sito React può funzionare bene dopo la navigazione dalla home e comportarsi diversamente quando qualcuno apre direttamente il link di un articolo. Se il server…",
     tags: ["Coding", "React", "SEO"],
     content: `
 Un sito React può funzionare bene dopo la navigazione dalla home e comportarsi diversamente quando qualcuno apre direttamente il link di un articolo. Se il server restituisce sempre la stessa pagina vuota, contenuto e metadati dipendono dall'esecuzione del JavaScript.
+
+Nel frontend lo stesso problema si collega a [React: il totale del carrello deve davvero stare nello state?](/blog/react-stato-derivato-carrello) e [React state: evitare dipendenze globali inutili](/blog/entanglement-quantistico-e-i-disastri-del-global-state). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Per pagine editoriali note al momento della build, il prerender è una possibilità concreta: produrre prima l'HTML di ogni rotta.
 
@@ -499,12 +546,16 @@ La prova utile è fuori dal percorso più comodo dello sviluppatore: aprire una 
     id: "adr-decisioni-architetturali",
     title: "Fra sei mesi ricorderai perché hai scelto quella soluzione?",
     date: "2026-10-14",
+    firstPublishedAt: "2026-11-03",
     category: "ingegneria",
+    hub: "scienza-passioni",
     icon: "📝",
-    excerpt: "Un ADR conserva contesto, scelta e conseguenze. Aiuta a rivedere una decisione senza ricominciare da zero.",
+    excerpt: "Apri un progetto e trovi una scelta che sembra complicata: una coda, un formato intermedio o una dipendenza insolita. La prima reazione è eliminarla. Poi scopri che serviva…",
     tags: ["Ingegneria", "Architettura", "Documentazione"],
     content: `
 Apri un progetto e trovi una scelta che sembra complicata: una coda, un formato intermedio o una dipendenza insolita. La prima reazione è eliminarla. Poi scopri che serviva a gestire un vincolo che il codice, da solo, non racconta più.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Due server non bastano se dipendono dallo stesso interruttore](/blog/ridondanza-guasti-correlati) e [Se il JavaScript arriva tardi, la pagina sa ancora cosa fare?](/blog/progressive-enhancement-funzione-base). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 La documentazione utile non descrive soltanto cosa esiste. Conserva anche il motivo delle decisioni che sarebbe costoso dover ricostruire.
 
@@ -540,12 +591,16 @@ Io scriverei un ADR quando il prossimo manutentore potrebbe altrimenti scambiare
     id: "rete-elettrica-flessibilita-domanda",
     title: "La rete elettrica deve funzionare anche quando il sole cambia",
     date: "2026-10-12",
+    firstPublishedAt: "2026-11-03",
     category: "ambiente",
+    hub: "scienza-passioni",
     icon: "🔋",
-    excerpt: "Accumulo, reti e domanda flessibile rispondono a vincoli diversi. La quantità di energia non basta a descrivere un sistema.",
+    excerpt: "Produrre abbastanza energia nell'arco di un anno non dimostra che un sistema elettrico possa soddisfare la domanda in ogni momento e in ogni luogo. La disponibilità nel…",
     tags: ["Ambiente", "Energia", "Infrastrutture"],
     content: `
 Produrre abbastanza energia nell'arco di un anno non dimostra che un sistema elettrico possa soddisfare la domanda in ogni momento e in ogni luogo. La disponibilità nel tempo e la capacità di trasporto fanno parte del problema.
+
+Per esplorare un caso vicino e capire le differenze, consulta [kW e kWh: la differenza che cambia i conti](/blog/kw-kwh-potenza-energia) e [Un kWh è sempre un kWh. Le emissioni associate cambiano](/blog/elettricita-intensita-carbonica). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 È per questo che, parlando di transizione energetica, mi interessa anche la flessibilità del sistema.
 
@@ -581,12 +636,16 @@ Quando vedo una proposta energetica cerco quindi il profilo, non soltanto il tot
     id: "deep-space-network-collegamento",
     title: "Le antenne a Terra fanno parte della missione spaziale",
     date: "2026-10-09",
+    firstPublishedAt: "2026-11-03",
     category: "spazio",
+    hub: "scienza-passioni",
     icon: "📡",
-    excerpt: "Il Deep Space Network trasporta dati e contribuisce alla navigazione. Essere nello spazio non elimina i vincoli del collegamento.",
+    excerpt: "Nelle immagini di una missione vediamo il veicolo, i pannelli e gli strumenti. Una parte essenziale del sistema resta però sulla Terra: antenne, pianificazione dei…",
     tags: ["Spazio", "Comunicazioni", "Infrastrutture"],
     content: `
 Nelle immagini di una missione vediamo il veicolo, i pannelli e gli strumenti. Una parte essenziale del sistema resta però sulla Terra: antenne, pianificazione dei collegamenti e persone che gestiscono il flusso dei dati.
+
+Questo ragionamento si collega anche ai contenuti su [Parlare con la Luna: quel secondo che il software non può togliere](/blog/luna-latenza-comunicazioni) e [Orion: il viaggio non finisce quando rivedi la Terra](/blog/orion-rientro-scudo-termico). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Il Deep Space Network della NASA è un esempio di infrastruttura che rende possibile lavorare con mezzi molto lontani.
 
@@ -622,12 +681,16 @@ Quando valuto un'architettura, cerco anche le risorse lontane dall'oggetto princ
     id: "shopify-graphql-budget-query",
     title: "Shopify GraphQL: il limite è un budget, non un invito a insistere",
     date: "2026-10-07",
+    firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
+    hub: "shopify-integrazioni",
     icon: "🛍️",
-    excerpt: "Costo della query e capacità disponibile guidano il ritmo di un’integrazione. I worker dello stesso negozio condividono il problema.",
+    excerpt: "Un'integrazione può usare poche richieste e consumare comunque molto budget, se ogni query chiede una grande quantità di dati collegati. Contare soltanto le chiamate non…",
     tags: ["Coding", "Shopify", "API"],
     content: `
 Un'integrazione può usare poche richieste e consumare comunque molto budget, se ogni query chiede una grande quantità di dati collegati. Contare soltanto le chiamate non basta per comprendere i limiti della GraphQL Admin API di Shopify.
+
+Per verificare le conseguenze di questa scelta su un'integrazione, puoi confrontare [Shopify, scorte e ordini: come evitare di sovrascrivere una vendita](/blog/shopify-inventario-scritture-concorrenti) e [Shopify line item properties: campi personalizzati](/blog/shopify-custom-fields-app-vs-codice-nativo). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Il modello considera il costo delle query e la combinazione di applicazione e negozio. Anche due worker indipendenti possono quindi competere per la stessa disponibilità.
 
@@ -663,12 +726,16 @@ Una sincronizzazione ben progettata usa il budget per portare avanti lavoro util
     id: "progressive-enhancement-funzione-base",
     title: "Se il JavaScript arriva tardi, la pagina sa ancora cosa fare?",
     date: "2026-10-05",
+    firstPublishedAt: "2026-11-03",
     category: "ingegneria",
+    hub: "scienza-passioni",
     icon: "🧱",
-    excerpt: "Il progressive enhancement parte da una funzione utilizzabile e aggiunge capacità. È una scelta sui requisiti del servizio.",
+    excerpt: "Una pagina può caricare la struttura e restare comunque inutilizzabile: il pulsante aspetta il bundle, il menu non si apre, il collegamento esiste soltanto dentro un gestore…",
     tags: ["Ingegneria", "Web", "Accessibilità"],
     content: `
 Una pagina può caricare la struttura e restare comunque inutilizzabile: il pulsante aspetta il bundle, il menu non si apre, il collegamento esiste soltanto dentro un gestore di click. Il problema non è sempre un errore permanente. A volte basta una connessione lenta o uno script esterno che non arriva.
+
+Un approfondimento dello stesso percorso si trova in [La media dice che va bene. Quel cinque per cento aspetta ancora](/blog/latenza-percentili-media-p99) e [Fra sei mesi ricorderai perché hai scelto quella soluzione?](/blog/adr-decisioni-architetturali). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Il progressive enhancement propone di costruire una funzione di base e aggiungere miglioramenti quando le capacità necessarie sono disponibili.
 
@@ -703,12 +770,16 @@ Progettare questa base rende più chiaro anche il sistema completo. Prima di agg
     id: "lca-confini-unita-funzionale",
     title: "«Più sostenibile» rispetto a cosa? Il confine cambia il confronto",
     date: "2026-10-02",
+    firstPublishedAt: "2026-11-03",
     category: "ambiente",
+    hub: "scienza-passioni",
     icon: "🔄",
-    excerpt: "Una valutazione del ciclo di vita deve dichiarare funzione, fasi incluse e ipotesi. La sola CO₂ non descrive ogni impatto.",
+    excerpt: "Due prodotti vengono confrontati usando un solo numero ambientale. Uno sembra migliore, ma il primo dato comprende produzione, trasporto e fine vita; il secondo soltanto…",
     tags: ["Ambiente", "Ciclo di vita", "Misure"],
     content: `
 Due prodotti vengono confrontati usando un solo numero ambientale. Uno sembra migliore, ma il primo dato comprende produzione, trasporto e fine vita; il secondo soltanto l'uso. Il confronto ha una forma numerica e una base incoerente.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Spreco alimentare: prima del consiglio, guarda cosa finisce nel cestino](/blog/spreco-alimentare-misurare-prima) e [Un kWh è sempre un kWh. Le emissioni associate cambiano](/blog/elettricita-intensita-carbonica). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Una valutazione del ciclo di vita comincia prima del calcolo: dalla definizione di ciò che stiamo confrontando.
 
@@ -744,12 +815,16 @@ Quando leggo «più sostenibile», cerco quindi funzione, confine e condizioni. 
     id: "finestre-lancio-luna-orbite",
     title: "Perché un lancio verso la Luna non può partire quando vuole",
     date: "2026-09-30",
+    firstPublishedAt: "2026-11-03",
     category: "spazio",
+    hub: "scienza-passioni",
     icon: "🕒",
     excerpt: "Terra, Luna e veicolo si muovono. Una finestra di lancio nasce dall’intersezione di vincoli, non dal solo conto alla rovescia.",
     tags: ["Spazio", "Artemis", "Orbite"],
     content: `
 Il razzo è pronto sulla rampa. Perché aspettare un'ora precisa, invece di lanciare appena tutto è in ordine? Perché la destinazione si muove, la Terra ruota e la traiettoria deve rispettare più condizioni contemporaneamente.
+
+Un approfondimento dello stesso percorso si trova in [Perché sulla Luna il paracadute non ti aiuta](/blog/allunaggio-paracadute-propulsione) e [Lagrange L2: un buon posto dove stare non è un parcheggio immobile](/blog/punti-lagrange-equilibrio-instabile). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Il conto alla rovescia organizza le operazioni. La finestra di lancio descrive quando una certa missione può soddisfare i suoi vincoli.
 
@@ -784,12 +859,16 @@ Per capire un annuncio guarderei quindi cosa identifica quella finestra e a qual
     id: "react-stato-derivato-carrello",
     title: "React: il totale del carrello deve davvero stare nello state?",
     date: "2026-09-28",
+    firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "⚛️",
-    excerpt: "Memorizzare dati già ricavabili crea sincronizzazioni inutili. Un valore derivato può essere calcolato durante il render.",
+    excerpt: "Un componente conserva le righe del carrello e anche il totale. Ogni modifica alle righe deve aggiornare entrambi. Poi arriva uno sconto, un cambio quantità o una rimozione…",
     tags: ["Coding", "React", "Frontend"],
     content: `
 Un componente conserva le righe del carrello e anche il totale. Ogni modifica alle righe deve aggiornare entrambi. Poi arriva uno sconto, un cambio quantità o una rimozione e uno dei percorsi dimentica il secondo aggiornamento.
+
+Nel frontend lo stesso problema si collega a [React e HTML già pronto: cosa cambia quando apri un link diretto](/blog/react-prerender-html-metadati) e [Optimistic UI: gestire latenza e rollback](/blog/dilatazione-temporale-interstellar-e-optimistic-ui). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Abbiamo creato due rappresentazioni della stessa informazione e adesso dobbiamo mantenerle d'accordo.
 
@@ -837,12 +916,16 @@ La domanda che mi faccio quando aggiungo state è quindi: sto memorizzando una s
     id: "latenza-percentili-media-p99",
     title: "La media dice che va bene. Quel cinque per cento aspetta ancora",
     date: "2026-09-25",
+    firstPublishedAt: "2026-11-03",
     category: "ingegneria",
+    hub: "scienza-passioni",
     icon: "📊",
-    excerpt: "p50, p95 e p99 mostrano parti diverse della distribuzione. Per leggere la latenza servono anche volume ed errori.",
+    excerpt: "Un servizio ha un tempo medio di risposta accettabile, ma alcune persone segnalano attese molto lunghe. Le due cose possono essere vere contemporaneamente. Una media…",
     tags: ["Ingegneria", "Prestazioni", "Monitoraggio"],
     content: `
 Un servizio ha un tempo medio di risposta accettabile, ma alcune persone segnalano attese molto lunghe. Le due cose possono essere vere contemporaneamente. Una media riassume la distribuzione senza mostrarne la coda.
+
+Questo ragionamento si collega anche ai contenuti su [La coda cresce? Conta anche il tempo che il lavoro passa dentro](/blog/legge-little-code-tempi-attesa) e [Log, metriche e tracce: tre domande sullo stesso guasto](/blog/osservabilita-log-metriche-tracce). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Per capire l'esperienza reale guarderei anche percentili, numero di richieste ed errori.
 
@@ -878,12 +961,16 @@ Non sceglierei un percentile soltanto perché suona professionale. Lo colleghere
     id: "alberi-citta-calore-progetto",
     title: "Un albero in città è anche un’infrastruttura termica",
     date: "2026-09-23",
+    firstPublishedAt: "2026-11-03",
     category: "ambiente",
+    hub: "scienza-passioni",
     icon: "🌳",
     excerpt: "Ombra ed evapotraspirazione influenzano il microclima. Il beneficio dipende anche da spazio, acqua e manutenzione.",
     tags: ["Ambiente", "Città", "Clima"],
     content: `
 In estate bastano pochi metri per passare da un marciapiede esposto a uno spazio molto più vivibile sotto una chioma. Non è soltanto una sensazione estetica: l'albero modifica le condizioni di esposizione e il bilancio energetico dell'ambiente vicino.
+
+Un approfondimento dello stesso percorso si trova in [La rete elettrica deve funzionare anche quando il sole cambia](/blog/rete-elettrica-flessibilita-domanda) e [«Più sostenibile» rispetto a cosa? Il confine cambia il confronto](/blog/lca-confini-unita-funzionale). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Per questo considero il verde urbano una parte del progetto della città, non il riempitivo da aggiungere dove avanza spazio.
 
@@ -918,12 +1005,16 @@ La domanda progettuale è quindi più concreta di «quanti alberi?»: quale ombr
     id: "allunaggio-paracadute-propulsione",
     title: "Perché sulla Luna il paracadute non ti aiuta",
     date: "2026-09-21",
+    firstPublishedAt: "2026-11-03",
     category: "spazio",
+    hub: "scienza-passioni",
     icon: "🪂",
-    excerpt: "L’esosfera lunare non offre una frenata aerodinamica utile. La discesa deve gestire velocità, propellente e terreno.",
+    excerpt: "Un paracadute funziona interagendo con un fluido. Aumenta la superficie che offre resistenza al moto nell'aria, trasformando una caduta rapida in una discesa più lenta nelle…",
     tags: ["Spazio", "Luna", "Propulsione"],
     content: `
 Un paracadute funziona interagendo con un fluido. Aumenta la superficie che offre resistenza al moto nell'aria, trasformando una caduta rapida in una discesa più lenta nelle condizioni previste dal progetto.
+
+Un approfondimento dello stesso percorso si trova in [Radiazioni sulla Luna: la protezione entra nel bilancio di massa](/blog/radiazioni-luna-protezione-massa) e [Sulla Luna pesi meno. La tua massa non è diventata più piccola](/blog/luna-massa-peso-inerzia). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Sulla Luna manca un'atmosfera abbastanza densa da svolgere questo lavoro. È uno di quei dettagli ambientali che cambiano completamente l'architettura di una missione.
 
@@ -959,12 +1050,16 @@ Non sono istruzioni per dimensionare un lander: sono domande sui requisiti da di
     id: "rails-find-each-batch-memoria",
     title: "Rails: elaborare un catalogo senza caricarlo tutto in memoria",
     date: "2026-09-18",
+    firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "📦",
-    excerpt: "find_each limita i record istanziati per volta. Per importazioni robuste vanno progettati anche ripartenza e concorrenza.",
+    excerpt: "Un ciclo che funziona con cento prodotti può diventare un problema quando il catalogo cresce. Il punto non è soltanto quanto tempo impiega: se istanzia tutti i record…",
     tags: ["Coding", "Rails", "Prestazioni"],
     content: `
 Un ciclo che funziona con cento prodotti può diventare un problema quando il catalogo cresce. Il punto non è soltanto quanto tempo impiega: se istanzia tutti i record insieme, può consumare molta memoria prima ancora di completare il primo lavoro utile.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Rails: validates uniqueness non ferma due richieste contemporanee](/blog/rails-unicita-database-concorrenza) e [Rails MVC: Model, View e Controller](/blog/rails-mvc-in-tre-minuti). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Active Record mette a disposizione metodi di elaborazione a lotti proprio per evitare questo caricamento indiscriminato.
 
@@ -1005,12 +1100,16 @@ find_each risolve un problema preciso: non istanziare tutto il risultato in una 
     id: "tolleranze-catena-dimensionale",
     title: "Tre pezzi corretti possono non entrare nello spazio previsto",
     date: "2026-09-16",
+    firstPublishedAt: "2026-11-03",
     category: "ingegneria",
+    hub: "scienza-passioni",
     icon: "🧩",
-    excerpt: "Le tolleranze si combinano. Un esempio di catena dimensionale mostra perché controllare ogni pezzo separatamente non basta.",
+    excerpt: "Tre distanziali devono occupare insieme uno spazio di 30 millimetri. Ciascuno è indicato come 10 ± 0,2 mm. Il fornitore consegna pezzi conformi al disegno, eppure il…",
     tags: ["Ingegneria", "Misure", "Progettazione"],
     content: `
 Tre distanziali devono occupare insieme uno spazio di 30 millimetri. Ciascuno è indicato come 10 ± 0,2 mm. Il fornitore consegna pezzi conformi al disegno, eppure il montaggio può non comportarsi come suggeriscono i valori nominali.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Se il progetto usa già il 100%, il margine è finito](/blog/margine-progetto-budget-capacita) e [Quattro decimali non rendono una misura più affidabile](/blog/misure-incertezza-cifre-decimali). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Il motivo è che il sistema vede la combinazione delle dimensioni, non tre controlli di conformità separati.
 
@@ -1045,12 +1144,16 @@ Il controllo utile si fa quindi anche sull'assieme. Il fatto che ogni parte risp
     id: "riciclo-raccolta-qualita-materiale",
     title: "Metterlo nel contenitore giusto è l’inizio del riciclo",
     date: "2026-09-14",
+    firstPublishedAt: "2026-11-03",
     category: "ambiente",
+    hub: "scienza-passioni",
     icon: "♻️",
-    excerpt: "Raccolta, selezione e impiego del materiale recuperato sono passaggi diversi. La qualità in ingresso cambia il risultato.",
+    excerpt: "Un imballaggio finisce nella raccolta differenziata e sparisce dalla nostra vista. È facile pensare che il suo percorso sia concluso. In realtà è appena entrato in una…",
     tags: ["Ambiente", "Materiali", "Riciclo"],
     content: `
 Un imballaggio finisce nella raccolta differenziata e sparisce dalla nostra vista. È facile pensare che il suo percorso sia concluso. In realtà è appena entrato in una catena che deve selezionarlo, trattarlo e trovare un impiego per il materiale recuperato.
+
+Questo ragionamento si collega anche ai contenuti su [Un albero in città è anche un’infrastruttura termica](/blog/alberi-citta-calore-progetto) e [Acqua virtuale: il numero di litri non racconta tutta la storia](/blog/impronta-idrica-contesto). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Separare questi passaggi aiuta a capire perché «raccolto» e «riciclato» non siano la stessa cosa.
 
@@ -1086,12 +1189,16 @@ Il contenitore giusto è una nostra responsabilità concreta. Per giudicare il r
     id: "punti-lagrange-equilibrio-instabile",
     title: "Lagrange L2: un buon posto dove stare non è un parcheggio immobile",
     date: "2026-09-11",
+    firstPublishedAt: "2026-11-03",
     category: "spazio",
+    hub: "scienza-passioni",
     icon: "🛰️",
     excerpt: "I punti di Lagrange dipendono da una coppia di corpi. Intorno a L1 e L2 servono orbite e correzioni.",
     tags: ["Spazio", "Orbite"],
     content: `
 Quando si sente parlare di un telescopio «a L2», viene naturale immaginare un oggetto fermo in un punto speciale. L'immagine è comoda, ma nasconde sia il movimento del sistema sia il lavoro necessario a mantenere la missione nella regione prevista.
+
+Un approfondimento dello stesso percorso si trova in [Perché un lancio verso la Luna non può partire quando vuole](/blog/finestre-lancio-luna-orbite) e [Sapere dove sei e sapere dove punti sono due problemi diversi](/blog/navigazione-spaziale-posizione-orientamento). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Prima domanda: L2 di quale coppia di corpi?
 
@@ -1127,12 +1234,16 @@ Quando vedo un disegno con un satellite appoggiato su un puntino, lo leggo quind
     id: "http-etag-cache-rivalidazione",
     title: "ETag: chiedere se è cambiato prima di scaricarlo di nuovo",
     date: "2026-09-09",
+    firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🏷️",
-    excerpt: "La rivalidazione HTTP permette di riusare una risposta. no-cache e no-store hanno significati diversi.",
+    excerpt: "Un browser possiede già una risorsa, ma non sa se la copia sia ancora utilizzabile. Deve scaricarla tutta ogni volta? Non necessariamente. Può chiedere al server se la…",
     tags: ["Coding", "HTTP", "Prestazioni"],
     content: `
 Un browser possiede già una risorsa, ma non sa se la copia sia ancora utilizzabile. Deve scaricarla tutta ogni volta? Non necessariamente. Può chiedere al server se la rappresentazione che conosce è cambiata.
+
+Un confronto utile per questa soluzione è quello con [React: il totale del carrello deve davvero stare nello state?](/blog/react-stato-derivato-carrello) e [React e HTML già pronto: cosa cambia quando apri un link diretto](/blog/react-prerender-html-metadati). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ETag è uno dei meccanismi che rendono possibile questo dialogo.
 
@@ -1174,12 +1285,16 @@ Il vantaggio di ETag è preciso: evitare di ritrasmettere un corpo invariato qua
     id: "campionamento-aliasing-segnali",
     title: "Un campione al secondo può farti vedere un segnale che non esiste",
     date: "2026-09-07",
+    firstPublishedAt: "2026-11-03",
     category: "ingegneria",
+    hub: "scienza-passioni",
     icon: "〰️",
-    excerpt: "Il campionamento può confondere frequenze differenti. Frequenza di acquisizione e filtraggio vanno progettati insieme.",
+    excerpt: "Nei video una ruota può sembrare ferma o girare al contrario. Non è cambiata la meccanica: stiamo osservando il movimento attraverso una sequenza di immagini discrete. Fra…",
     tags: ["Ingegneria", "Segnali", "Audio"],
     content: `
 Nei video una ruota può sembrare ferma o girare al contrario. Non è cambiata la meccanica: stiamo osservando il movimento attraverso una sequenza di immagini discrete. Fra un fotogramma e il successivo perdiamo informazioni.
+
+Un approfondimento dello stesso percorso si trova in [Tre pezzi corretti possono non entrare nello spazio previsto](/blog/tolleranze-catena-dimensionale) e [La coda cresce? Conta anche il tempo che il lavoro passa dentro](/blog/legge-little-code-tempi-attesa). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 È un modo intuitivo per avvicinarsi all'aliasing, un problema che riguarda audio, immagini e acquisizione di segnali.
 
@@ -1213,12 +1328,16 @@ Prima di fidarmi di un grafico cerco quindi frequenza di acquisizione, aggregazi
     id: "impronta-idrica-contesto",
     title: "Acqua virtuale: il numero di litri non racconta tutta la storia",
     date: "2026-09-04",
+    firstPublishedAt: "2026-11-03",
     category: "ambiente",
+    hub: "scienza-passioni",
     icon: "💧",
     excerpt: "Origine dell’acqua, luogo e periodo cambiano il significato dell’impronta idrica. Una classifica senza contesto può ingannare.",
     tags: ["Ambiente", "Acqua", "Risorse"],
     content: `
 Un prodotto può richiedere acqua molto prima di arrivare nelle nostre mani: coltivazione delle materie prime, trasformazione e altri passaggi della filiera. Il concetto di acqua virtuale aiuta a rendere visibile questa parte del consumo.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Spreco alimentare: prima del consiglio, guarda cosa finisce nel cestino](/blog/spreco-alimentare-misurare-prima) e [Il cassetto dei vecchi dispositivi è una filiera interrotta](/blog/raee-elettronica-fine-vita). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Ma appena compare una classifica in litri mi viene da chiedere: quale acqua, dove e in quale periodo?
 
@@ -1254,12 +1373,16 @@ L'impronta idrica è interessante quando ci porta a guardare oltre il rubinetto.
     id: "radiazioni-luna-protezione-massa",
     title: "Radiazioni sulla Luna: la protezione entra nel bilancio di massa",
     date: "2026-09-02",
+    firstPublishedAt: "2026-11-03",
     category: "spazio",
+    hub: "scienza-passioni",
     icon: "☀️",
-    excerpt: "Ambiente, durata e schermatura vanno valutati insieme. Trasportare più materiale ha un costo per tutto il sistema.",
+    excerpt: "Sulla Terra l'atmosfera e il campo magnetico contribuiscono alla protezione dall'ambiente spaziale. Quando ragioniamo su missioni oltre l'orbita bassa, non possiamo assumere…",
     tags: ["Spazio", "Luna", "Ingegneria"],
     content: `
 Sulla Terra l'atmosfera e il campo magnetico contribuiscono alla protezione dall'ambiente spaziale. Quando ragioniamo su missioni oltre l'orbita bassa, non possiamo assumere che quelle condizioni ci seguano.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Sulla Luna pesi meno. La tua massa non è diventata più piccola](/blog/luna-massa-peso-inerzia) e [Perché sulla Luna il paracadute non ti aiuta](/blog/allunaggio-paracadute-propulsione). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Il tema delle radiazioni mostra bene quanto una scelta locale possa cambiare il progetto di un'intera missione.
 
@@ -1295,12 +1418,16 @@ Quando leggo una proposta di permanenza lunare, cerco quindi il collegamento fra
     id: "transactional-outbox-invio-erp",
     title: "Salvato nel database, perso nell’invio: a cosa serve l’outbox",
     date: "2026-08-31",
+    firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
+    hub: "shopify-integrazioni",
     icon: "📤",
-    excerpt: "Una transazione locale non include automaticamente il servizio remoto. L’outbox conserva l’intenzione di inviare.",
+    excerpt: "Salvo un ordine nel database e poi mando un messaggio al gestionale. Se il processo si arresta fra le due operazioni, l'ordine esiste ma il destinatario non lo sa. Invertire…",
     tags: ["Coding", "Database", "Integrazioni"],
     content: `
 Salvo un ordine nel database e poi mando un messaggio al gestionale. Se il processo si arresta fra le due operazioni, l'ordine esiste ma il destinatario non lo sa. Invertire la sequenza sposta il problema: il messaggio potrebbe partire anche se il salvataggio fallisce.
+
+Le condizioni descritte qui sono collegate anche a [Retry: riprovare subito può essere il problema](/blog/retry-backoff-jitter-integrazioni) e [Lo stesso webhook due volte: come evitare due ordini](/blog/webhook-idempotenza-ordini). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 È il problema della doppia scrittura su sistemi distinti. Una transazione del database locale non si estende magicamente alla rete.
 
@@ -1346,12 +1473,16 @@ Mi piace l'outbox perché rende persistente un passaggio che altrimenti vive fra
     id: "legge-little-code-tempi-attesa",
     title: "La coda cresce? Conta anche il tempo che il lavoro passa dentro",
     date: "2026-08-28",
+    firstPublishedAt: "2026-11-03",
     category: "ingegneria",
+    hub: "scienza-passioni",
     icon: "🚦",
     excerpt: "La legge di Little collega lavoro in corso, throughput e tempo medio. Aggiungere processi non elimina ogni collo di bottiglia.",
     tags: ["Ingegneria", "Prestazioni"],
     content: `
 Una coda contiene molti job e la tentazione è aumentare subito i worker. Prima mi farei una domanda più semplice: quanto lavoro entra, quanto ne esce e quanto tempo rimane nel sistema?
+
+Per esplorare un caso vicino e capire le differenze, consulta [La media dice che va bene. Quel cinque per cento aspetta ancora](/blog/latenza-percentili-media-p99) e [Passa tutti i test. Ma risolve il problema giusto?](/blog/verifica-validazione-requisiti). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 La legge di Little collega proprio queste grandezze. In un sistema stabile, con confini e medie coerenti, il numero medio di elementi presenti è uguale al tasso medio di attraversamento moltiplicato per il tempo medio trascorso dentro: **L = λW**.
 
@@ -1384,12 +1515,16 @@ La relazione non sceglie la soluzione al posto nostro. Aiuta a controllare se nu
     id: "spreco-alimentare-misurare-prima",
     title: "Spreco alimentare: prima del consiglio, guarda cosa finisce nel cestino",
     date: "2026-08-26",
+    firstPublishedAt: "2026-11-03",
     category: "ambiente",
+    hub: "scienza-passioni",
     icon: "🥕",
-    excerpt: "Una piccola registrazione distingue quantità comprate, avanzi e scarti. Misurare aiuta a scegliere un intervento concreto.",
+    excerpt: "«Bisogna sprecare meno cibo» è un obiettivo facile da condividere. Il problema operativo comincia dopo: stiamo comprando troppo, cucinando porzioni grandi o dimenticando…",
     tags: ["Ambiente", "Risorse", "Misure"],
     content: `
 «Bisogna sprecare meno cibo» è un obiettivo facile da condividere. Il problema operativo comincia dopo: stiamo comprando troppo, cucinando porzioni grandi o dimenticando prodotti che avevamo già?
+
+Questo ragionamento si collega anche ai contenuti su [Acqua virtuale: il numero di litri non racconta tutta la storia](/blog/impronta-idrica-contesto) e [Un kWh è sempre un kWh. Le emissioni associate cambiano](/blog/elettricita-intensita-carbonica). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Sono cause diverse. Dare a tutte lo stesso consiglio significa rischiare di non correggerne nessuna.
 
@@ -1425,12 +1560,16 @@ Mi interessa questo passaggio perché sostituisce un generico senso di colpa con
     id: "polvere-lunare-progettazione",
     title: "La polvere lunare non è un problema da risolvere con una spazzata",
     date: "2026-08-24",
+    firstPublishedAt: "2026-11-03",
     category: "spazio",
+    hub: "scienza-passioni",
     icon: "🌑",
-    excerpt: "Abrasione e adesione della regolite coinvolgono guarnizioni, tessuti e pannelli. La manutenzione parte dal progetto.",
+    excerpt: "Una superficie grigia coperta di polvere può sembrare un ambiente semplice. Nessuna pioggia, nessun fango, nessuna vegetazione. Poi provi a immaginare una guarnizione, un…",
     tags: ["Spazio", "Luna", "Materiali"],
     content: `
 Una superficie grigia coperta di polvere può sembrare un ambiente semplice. Nessuna pioggia, nessun fango, nessuna vegetazione. Poi provi a immaginare una guarnizione, un giunto o un tessuto che devono funzionare dopo ogni uscita.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Radiazioni sulla Luna: la protezione entra nel bilancio di massa](/blog/radiazioni-luna-protezione-massa) e [Ghiaccio sulla Luna: trovare una risorsa non significa poterla usare](/blog/ghiaccio-lunare-risorsa-utilizzabile). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 La regolite lunare rende molto meno banale l'idea di lavorare sulla Luna per periodi prolungati.
 
@@ -1466,12 +1605,16 @@ Il dettaglio apparentemente secondario può decidere la disponibilità dell'inte
     id: "retry-backoff-jitter-integrazioni",
     title: "Retry: riprovare subito può essere il problema",
     date: "2026-08-21",
+    firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
+    hub: "shopify-integrazioni",
     icon: "⏳",
-    excerpt: "Timeout, limite dei tentativi e attesa casuale evitano che un errore temporaneo diventi una raffica di richieste.",
+    excerpt: "Un servizio risponde lentamente. Cento client vanno in timeout e riprovano nello stesso istante. Il servizio, già in difficoltà, riceve un'altra ondata di lavoro. Ogni…",
     tags: ["Coding", "API", "Integrazioni"],
     content: `
 Un servizio risponde lentamente. Cento client vanno in timeout e riprovano nello stesso istante. Il servizio, già in difficoltà, riceve un'altra ondata di lavoro. Ogni singolo client sta cercando di recuperare; tutti insieme peggiorano il guasto.
+
+Le condizioni descritte qui sono collegate anche a [Salvato nel database, perso nell’invio: a cosa serve l’outbox](/blog/transactional-outbox-invio-erp) e [Lo stesso webhook due volte: come evitare due ordini](/blog/webhook-idempotenza-ordini). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Un retry è una nuova richiesta, con un costo reale. Non è una parentesi gratuita attorno all'errore.
 
@@ -1512,12 +1655,16 @@ Quando esaurisco il budget, salvo uno stato recuperabile e rendo visibile il pro
     id: "feedback-controllo-ritardi-oscillazioni",
     title: "Il termostato e il deploy: correggere troppo può far oscillare il sistema",
     date: "2026-08-19",
+    firstPublishedAt: "2026-11-03",
     category: "ingegneria",
+    hub: "scienza-passioni",
     icon: "🌡️",
-    excerpt: "Misurare, agire e aspettare l’effetto: il feedback perde efficacia quando ignori inerzia e ritardo.",
+    excerpt: "La stanza sembra fredda, quindi alzi molto il riscaldamento. Dopo poco non percepisci ancora il cambiamento e lo alzi di nuovo. Quando il calore arriva, la temperatura…",
     tags: ["Ingegneria", "Controllo"],
     content: `
 La stanza sembra fredda, quindi alzi molto il riscaldamento. Dopo poco non percepisci ancora il cambiamento e lo alzi di nuovo. Quando il calore arriva, la temperatura supera quella desiderata. Allora spegni tutto e ricominci il ciclo.
+
+Questo ragionamento si collega anche ai contenuti su [La coda cresce? Conta anche il tempo che il lavoro passa dentro](/blog/legge-little-code-tempi-attesa) e [Se il progetto usa già il 100%, il margine è finito](/blog/margine-progetto-budget-capacita). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 È un esempio intuitivo del perché un controllo basato sul feedback deve considerare anche i tempi del sistema.
 
@@ -1552,12 +1699,16 @@ Correggere rapidamente è utile quando la rapidità è compatibile con ciò che 
     id: "elettricita-intensita-carbonica",
     title: "Un kWh è sempre un kWh. Le emissioni associate cambiano",
     date: "2026-08-17",
+    firstPublishedAt: "2026-11-03",
     category: "ambiente",
+    hub: "scienza-passioni",
     icon: "🌍",
     excerpt: "Consumo e intensità delle emissioni sono indicatori distinti. Per confrontarli servono confini e dati coerenti.",
     tags: ["Ambiente", "Energia", "Misure"],
     content: `
 Due elaborazioni consumano la stessa energia elettrica. Possiamo concludere che abbiano anche le stesse emissioni associate? Non senza sapere con quali dati stiamo facendo il conto.
+
+Un approfondimento dello stesso percorso si trova in [Spreco alimentare: prima del consiglio, guarda cosa finisce nel cestino](/blog/spreco-alimentare-misurare-prima) e [kW e kWh: la differenza che cambia i conti](/blog/kw-kwh-potenza-energia). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Il consumo in kWh descrive una quantità di energia. L'intensità delle emissioni associa a ogni unità di elettricità una quantità di gas serra, espressa per esempio in grammi di CO₂ equivalente per kWh.
 
@@ -1590,12 +1741,16 @@ Non serve trasformare ogni attività quotidiana in un modello complesso. Serve e
     id: "ghiaccio-lunare-risorsa-utilizzabile",
     title: "Ghiaccio sulla Luna: trovare una risorsa non significa poterla usare",
     date: "2026-08-14",
+    firstPublishedAt: "2026-11-03",
     category: "spazio",
+    hub: "scienza-passioni",
     icon: "🧊",
-    excerpt: "Dall’osservazione dell’acqua alla sua estrazione ci sono misure, energia e condizioni operative da dimostrare.",
+    excerpt: "«Sulla Luna c'è acqua» è una notizia affascinante. Il passaggio successivo, però, non è automaticamente «allora possiamo rifornirci lì». Fra riconoscere una risorsa e…",
     tags: ["Spazio", "Luna", "Risorse"],
     content: `
 «Sulla Luna c'è acqua» è una notizia affascinante. Il passaggio successivo, però, non è automaticamente «allora possiamo rifornirci lì». Fra riconoscere una risorsa e trasformarla in un servizio affidabile c'è un intero problema ingegneristico.
+
+Un approfondimento dello stesso percorso si trova in [Radiazioni sulla Luna: la protezione entra nel bilancio di massa](/blog/radiazioni-luna-protezione-massa) e [Perché sulla Luna il paracadute non ti aiuta](/blog/allunaggio-paracadute-propulsione). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 È la parte che trovo più interessante quando si parla di esplorazione e permanenza lunare.
 
@@ -1631,12 +1786,16 @@ La scoperta apre una possibilità. Il progetto deve poi mostrare come mantenerla
     id: "rails-unicita-database-concorrenza",
     title: "Rails: validates uniqueness non ferma due richieste contemporanee",
     date: "2026-08-12",
+    firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🔐",
-    excerpt: "La validazione migliora il messaggio all’utente. Il vincolo univoco nel database protegge il dato sotto concorrenza.",
+    excerpt: "Due processi cercano lo stesso codice esterno. Nessuno dei due lo trova, quindi entrambi provano a creare il record. Se la protezione è soltanto una ricerca prima del…",
     tags: ["Coding", "Rails", "Database"],
     content: `
 Due processi cercano lo stesso codice esterno. Nessuno dei due lo trova, quindi entrambi provano a creare il record. Se la protezione è soltanto una ricerca prima del salvataggio, tutti e due possono aver ragione nello stesso momento.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Rails: elaborare un catalogo senza caricarlo tutto in memoria](/blog/rails-find-each-batch-memoria) e [Rails Active Record: modelli, query e SQL](/blog/rails-activerecord-le-basi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 È il limite della validazione di unicità a livello applicativo: il controllo e la scrittura non diventano automaticamente un'unica operazione indivisibile.
 
@@ -1680,12 +1839,16 @@ L'obiettivo è che l'invariante resti vero: una sola identità commerciale, anch
     id: "margine-progetto-budget-capacita",
     title: "Se il progetto usa già il 100%, il margine è finito",
     date: "2026-08-10",
+    firstPublishedAt: "2026-11-03",
     category: "ingegneria",
+    hub: "scienza-passioni",
     icon: "📐",
-    excerpt: "Memoria, potenza e tempi hanno limiti. Un budget esplicito rende visibili le riserve prima che arrivino gli imprevisti.",
+    excerpt: "Un sistema ha un limite di memoria di 1 GB. Durante una prova ne usa 990 MB e qualcuno conclude: «Ci stiamo dentro». Formalmente è vero in quella prova. Progettualmente…",
     tags: ["Ingegneria", "Progettazione"],
     content: `
 Un sistema ha un limite di memoria di 1 GB. Durante una prova ne usa 990 MB e qualcuno conclude: «Ci stiamo dentro». Formalmente è vero in quella prova. Progettualmente, però, restano dieci megabyte per tutto ciò che non abbiamo ancora osservato.
+
+Un approfondimento dello stesso percorso si trova in [Tre pezzi corretti possono non entrare nello spazio previsto](/blog/tolleranze-catena-dimensionale) e [Il termostato e il deploy: correggere troppo può far oscillare il sistema](/blog/feedback-controllo-ritardi-oscillazioni). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Per questo mi interessa il margine: la distanza dichiarata fra una risorsa disponibile e quella prevista o misurata nelle condizioni considerate.
 
@@ -1718,12 +1881,16 @@ La domanda utile non è «abbiamo ancora spazio?», ma «quanto spazio resta nel
     id: "kw-kwh-potenza-energia",
     title: "kW e kWh: la differenza che cambia i conti",
     date: "2026-08-07",
+    firstPublishedAt: "2026-11-03",
     category: "ambiente",
+    hub: "scienza-passioni",
     icon: "⚡",
-    excerpt: "La potenza descrive il ritmo del consumo, l’energia il totale. Un esempio numerico aiuta a non confonderle.",
+    excerpt: "«Questo apparecchio consuma 800 watt all'ora». È una frase che si sente spesso, ma mescola grandezze diverse. Per capire un consumo non basta leggere una potenza: serve…",
     tags: ["Ambiente", "Energia"],
     content: `
 «Questo apparecchio consuma 800 watt all'ora». È una frase che si sente spesso, ma mescola grandezze diverse. Per capire un consumo non basta leggere una potenza: serve sapere anche per quanto tempo viene assorbita.
+
+Questo ragionamento si collega anche ai contenuti su [La rete elettrica deve funzionare anche quando il sole cambia](/blog/rete-elettrica-flessibilita-domanda) e [Un kWh è sempre un kWh. Le emissioni associate cambiano](/blog/elettricita-intensita-carbonica). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Separare kW e kWh permette di ragionare meglio su elettrodomestici, computer e batterie.
 
@@ -1758,12 +1925,16 @@ Prima di fare qualunque confronto controllo quindi tre cose: unità, durata e la
     id: "luna-latenza-comunicazioni",
     title: "Parlare con la Luna: quel secondo che il software non può togliere",
     date: "2026-08-05",
+    firstPublishedAt: "2026-11-03",
     category: "spazio",
+    hub: "scienza-passioni",
     icon: "📡",
-    excerpt: "La latenza di propagazione impone un limite fisico. Velocità del collegamento e tempo di risposta non sono sinonimi.",
+    excerpt: "Quando una videochiamata risponde in ritardo pensiamo subito alla connessione. Ma fra Terra e Luna una parte dell'attesa esiste anche immaginando apparati perfetti. Il…",
     tags: ["Spazio", "Comunicazioni"],
     content: `
 Quando una videochiamata risponde in ritardo pensiamo subito alla connessione. Ma fra Terra e Luna una parte dell'attesa esiste anche immaginando apparati perfetti. Il segnale deve attraversare lo spazio, e non può farlo istantaneamente.
+
+Un approfondimento dello stesso percorso si trova in [Le antenne a Terra fanno parte della missione spaziale](/blog/deep-space-network-collegamento) e [Ghiaccio sulla Luna: trovare una risorsa non significa poterla usare](/blog/ghiaccio-lunare-risorsa-utilizzabile). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 La latenza è un buon punto d'incontro fra fisica e progettazione del software.
 
@@ -1799,12 +1970,16 @@ Il limite fisico resta. Il buon progetto decide cosa fare durante l'attesa, qual
     id: "fetch-abortcontroller-risposte-obsolete",
     title: "La ricerca mostra il risultato vecchio? Guarda l’ordine delle risposte",
     date: "2026-08-03",
+    firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "⏹️",
-    excerpt: "AbortController aiuta a cancellare fetch superate. Un controllo della richiesta corrente protegge anche la UI.",
+    excerpt: "Scrivi «Roma», poi correggi subito in «Romania». La seconda ricerca termina prima della prima. Per un istante vedi il risultato giusto, poi la risposta più lenta lo…",
     tags: ["Coding", "JavaScript", "Browser"],
     content: `
 Scrivi «Roma», poi correggi subito in «Romania». La seconda ricerca termina prima della prima. Per un istante vedi il risultato giusto, poi la risposta più lenta lo sovrascrive. Il server non ha necessariamente sbagliato: il frontend ha confuso l'ordine di arrivo con l'intenzione più recente.
+
+Per considerare anche gli effetti sull'interfaccia, approfondisci [localStorage: persistenza e sicurezza nel browser](/blog/javascript-localstorage-persistenza) e [Logging JavaScript: cosa registrare e cosa evitare](/blog/radiazione-di-fondo-e-il-cimitero-dei-console-log). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Questo è uno dei casi in cui aggiungere un caricamento animato non risolve niente.
 
@@ -1861,12 +2036,16 @@ La regola è piccola ma decisiva: la UI deve rappresentare l'intenzione corrente
     id: "misure-incertezza-cifre-decimali",
     title: "Quattro decimali non rendono una misura più affidabile",
     date: "2026-07-31",
+    firstPublishedAt: "2026-11-03",
     category: "ingegneria",
+    hub: "scienza-passioni",
     icon: "📏",
-    excerpt: "Risoluzione, ripetibilità e incertezza sono cose diverse. Anche i benchmark hanno bisogno di un contesto.",
+    excerpt: "Una dashboard mostra 23,1472 millisecondi. Il numero sembra serio: quattro decimali danno immediatamente l'impressione di una misura precisa. Ma come è stato ottenuto?…",
     tags: ["Ingegneria", "Misure"],
     content: `
 Una dashboard mostra 23,1472 millisecondi. Il numero sembra serio: quattro decimali danno immediatamente l'impressione di una misura precisa. Ma come è stato ottenuto? Quante volte è stata ripetuta la prova? E quanto cambia il risultato se la macchina sta facendo altro?
+
+Un approfondimento dello stesso percorso si trova in [Tre pezzi corretti possono non entrare nello spazio previsto](/blog/tolleranze-catena-dimensionale) e [Se il progetto usa già il 100%, il margine è finito](/blog/margine-progetto-budget-capacita). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Prima di confrontare numeri, preferisco capire cosa permettono davvero di affermare.
 
@@ -1902,12 +2081,16 @@ Arrotondare non è nascondere dettagli: quando è coerente con la misura, evita 
     id: "riparabilita-progetto-prodotti",
     title: "La riparabilità si decide prima del primo guasto",
     date: "2026-07-29",
+    firstPublishedAt: "2026-11-03",
     category: "ambiente",
+    hub: "scienza-passioni",
     icon: "🪛",
-    excerpt: "Viti, ricambi e documentazione cambiano la vita utile di un prodotto. Progettare la manutenzione evita sostituzioni premature.",
+    excerpt: "Un dispositivo può funzionare bene per anni e diventare improvvisamente inutilizzabile per un componente economico. La domanda interessante non è soltanto quanto duri la…",
     tags: ["Ambiente", "Progettazione", "Riparabilità"],
     content: `
 Un dispositivo può funzionare bene per anni e diventare improvvisamente inutilizzabile per un componente economico. La domanda interessante non è soltanto quanto duri la batteria o il connettore. È cosa succede quando quel pezzo smette di funzionare.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Spreco alimentare: prima del consiglio, guarda cosa finisce nel cestino](/blog/spreco-alimentare-misurare-prima) e [kW e kWh: la differenza che cambia i conti](/blog/kw-kwh-potenza-energia). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 La riparabilità è una caratteristica del progetto, non un favore da chiedere a prodotto rotto.
 
@@ -1940,12 +2123,16 @@ La domanda che mi interessa è semplice: se si rompe il pezzo più prevedibile, 
     id: "orion-rientro-scudo-termico",
     title: "Orion: il viaggio non finisce quando rivedi la Terra",
     date: "2026-07-27",
+    firstPublishedAt: "2026-11-03",
     category: "spazio",
+    hub: "scienza-passioni",
     icon: "🚀",
-    excerpt: "Tornare dalla Luna significa gestire molta energia. Scudo termico e traiettoria fanno parte dello stesso problema.",
+    excerpt: "Guardando una missione lunare è facile concentrarsi sul lancio. Il razzo sale, le telecamere seguono la scia e sembra che la parte difficile sia tutta lì. A me interessa…",
     tags: ["Spazio", "Artemis", "Ingegneria"],
     content: `
 Guardando una missione lunare è facile concentrarsi sul lancio. Il razzo sale, le telecamere seguono la scia e sembra che la parte difficile sia tutta lì. A me interessa anche il problema opposto: riportare una capsula verso terra senza trasformare la sua energia di movimento in un disastro.
+
+Questo ragionamento si collega anche ai contenuti su [Orion: nel vuoto il calore non se ne va con una ventola](/blog/orion-controllo-termico-radiatori-vuoto) e [Radiazioni sulla Luna: la protezione entra nel bilancio di massa](/blog/radiazioni-luna-protezione-massa). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Orion è un buon esempio per ragionare sul rientro, senza confondere i principi fisici con il calendario delle missioni Artemis.
 
@@ -1979,12 +2166,16 @@ Per capire il rientro tengo insieme tre elementi: l'energia iniziale, la forma d
     id: "webhook-idempotenza-ordini",
     title: "Lo stesso webhook due volte: come evitare due ordini",
     date: "2026-07-24",
+    firstPublishedAt: "2026-11-03",
     category: "sviluppo-software",
+    hub: "shopify-integrazioni",
     icon: "🔁",
-    excerpt: "La consegna di un evento può ripetersi. Deduplicazione e idempotenza proteggono il risultato, anche sotto concorrenza.",
+    excerpt: "Un ordine arriva dal negozio, l'integrazione lo salva e inoltra la conferma. La risposta si perde. Il mittente riprova: il server riceve di nuovo una richiesta che sembra…",
     tags: ["Coding", "Integrazioni", "Shopify"],
     content: `
 Un ordine arriva dal negozio, l'integrazione lo salva e inoltra la conferma. La risposta si perde. Il mittente riprova: il server riceve di nuovo una richiesta che sembra perfettamente valida. Se ogni consegna crea un ordine nuovo, il problema è già nel database.
+
+Per verificare le conseguenze di questa scelta su un'integrazione, puoi confrontare [Webhook e job periodici: l’integrazione ha bisogno anche di un controllo](/blog/webhook-riconciliazione-sincronizzazione) e [Retry: riprovare subito può essere il problema](/blog/retry-backoff-jitter-integrazioni). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 I webhook possono essere duplicati. Shopify lo documenta e fornisce identificativi delle consegne. Io parto da qui: **ricevere due volte non deve significare eseguire due volte lo stesso effetto**.
 
@@ -2018,12 +2209,16 @@ Il risultato atteso resta un solo ordine commerciale, con una traccia comprensib
     id: "verifica-validazione-requisiti",
     title: "Passa tutti i test. Ma risolve il problema giusto?",
     date: "2026-07-22",
+    firstPublishedAt: "2026-11-03",
     category: "ingegneria",
+    hub: "scienza-passioni",
     icon: "🔎",
-    excerpt: "Verifica e validazione rispondono a due domande diverse. Un export corretto può essere comunque inutilizzabile.",
+    excerpt: "Un esportatore genera il CSV senza errori. Le colonne sono quelle richieste, il file si apre e tutti i test passano. Poi chi deve usarlo scopre che gli identificativi non…",
     tags: ["Ingegneria", "Requisiti"],
     content: `
 Un esportatore genera il CSV senza errori. Le colonne sono quelle richieste, il file si apre e tutti i test passano. Poi chi deve usarlo scopre che gli identificativi non coincidono con quelli del gestionale. Il software è conforme alla specifica, ma il lavoro resta manuale.
+
+Un approfondimento dello stesso percorso si trova in [La coda cresce? Conta anche il tempo che il lavoro passa dentro](/blog/legge-little-code-tempi-attesa) e [Quattro decimali non rendono una misura più affidabile](/blog/misure-incertezza-cifre-decimali). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Questo esempio ipotetico spiega una distinzione dell'ingegneria dei sistemi che trovo utile anche nello sviluppo web: **verifica** e **validazione**.
 
@@ -2084,11 +2279,14 @@ Oggi è così. L'unico "drop" che vorrei fare è prendere queste persone e butta
     date: "2026-03-31",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🐳",
     excerpt: "Come funzionano i container Docker, cosa isolano davvero e come creare un'immagine riproducibile senza confonderla con una macchina virtuale.",
     tags: ["Docker","Container","DevOps","Node.js"],
     content: `
 Un progetto funziona sul computer di sviluppo e fallisce quando passa su un'altra macchina. Spesso la differenza è nell'ambiente: versione del runtime, dipendenze, variabili di configurazione o librerie di sistema. Docker permette di distribuire un'applicazione insieme a una parte definita di questo ambiente.
+
+L'analisi si completa confrontando questa parte con [Variabili d'ambiente: evitare errori in produzione](/blog/quando-luniverso-ti-cambia-le-variabili-in-produzione) e [Ruby gem: packaging, dipendenze e versioni](/blog/ruby-creare-una-gem). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Container e macchine virtuali non sono la stessa cosa
 
@@ -2116,11 +2314,14 @@ Docker è utile per uniformare sviluppo, test e deploy, ma introduce un livello 
     date: "2026-04-15",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🛹",
     excerpt: "Etichette chiare, campi essenziali, messaggi di errore e accessibilità: come migliorare un form senza affidarsi a trucchi visivi.",
     tags: ["UX","Form","Accessibilità","Conversione"],
     content: `
 Ogni campo aggiuntivo chiede tempo, attenzione e informazioni. In un modulo di contatto o durante il checkout, la complessità può aumentare gli errori e scoraggiare la compilazione. Non basta però ridurre il numero dei campi: occorre chiedere le informazioni corrette, nel momento opportuno.
+
+Un confronto utile per questa soluzione è quello con [Bundle JavaScript: ridurre il peso iniziale](/blog/equazione-del-razzo-e-il-problema-del-bundle-da-830kb) e [Fetch API: errori HTTP, timeout e abort](/blog/javascript-fetch-api). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Prima il compito dell'utente
 
@@ -2148,11 +2349,14 @@ Definisci un evento di avvio, uno di invio e uno di errore. Confronta completame
     date: "2026-04-17",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🍏",
     excerpt: "Strategia per modificare codice legacy con test di caratterizzazione, piccoli cambiamenti e osservabilità, senza riscrivere tutto.",
     tags: ["Legacy code","Refactoring","Testing","Manutenzione software"],
     content: `
 Il codice legacy non è necessariamente vecchio o scritto male: è soprattutto codice che oggi è difficile modificare con sicurezza. Può contenere regole di business che nessuno ha documentato o dipendenze che emergono soltanto quando si cambia un comportamento.
+
+Per considerare anche gli effetti sull'interfaccia, approfondisci [Rubber duck debugging: capire i bug spiegandoli](/blog/la-paperella-di-gomma-e-larte-di-sentirsi-stupidi) e [CSS globale: specificità e regressioni](/blog/teoria-del-caos-effetto-farfalla-e-css-globale). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Prima di modificare, capire
 
@@ -2168,6 +2372,11 @@ Le revisioni del codice dovrebbero distinguere refactoring e cambiamento funzion
 
 Una riscrittura può essere giustificata se costi di manutenzione, rischi o vincoli tecnologici sono documentati. Prima, considera una migrazione graduale: sostituisci un comportamento alla volta e confronta gli output. L'obiettivo non è avere codice «nuovo», ma un sistema che si possa evolvere e verificare.
 
+
+## Scegliere una modifica piccola e verificabile
+
+Se una funzione legacy calcola prezzi e sconti, una riscrittura totale può cambiare condizioni poco documentate. Prima crea un insieme di esempi che descrivano il comportamento attuale, inclusi casi limite con importi zero, sconti multipli e dati mancanti. Poi isola un solo problema, come una dipendenza da un servizio esterno o una duplicazione di calcolo, e verifica che l'output non cambi al termine del refactoring. Se il requisito di business è realmente cambiato, separa il test del nuovo comportamento da quello di caratterizzazione. L'obiettivo non è conservare ogni bug, ma sapere quali differenze sono intenzionali. Una modifica che riesci a spiegare e invertire è più sicura di una riscrittura senza misure.
+
 **Fonti**
 
 - [Martin Fowler — Strangler Fig Application](https://martinfowler.com/bliki/StranglerFigApplication.html)
@@ -2180,11 +2389,14 @@ Una riscrittura può essere giustificata se costi di manutenzione, rischi o vinc
     date: "2026-04-18",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "⏳",
     excerpt: "Interfacce ottimistiche: aggiornare lo stato prima della risposta server, gestire gli errori e riconciliare i dati senza mostrare successi falsi.",
     tags: ["React","Optimistic UI","Latenza","Frontend"],
     content: `
 Un'interfaccia può sembrare lenta anche quando il server impiega soltanto qualche centinaio di millisecondi. Un aggiornamento ottimistico mostra subito il risultato previsto di un'azione mentre la richiesta di rete è ancora in corso.
+
+Per considerare anche gli effetti sull'interfaccia, approfondisci [React: il totale del carrello deve davvero stare nello state?](/blog/react-stato-derivato-carrello) e [CDN e latenza: perché la distanza conta](/blog/velocita-della-luce-ping-e-content-delivery-network). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## La differenza fra intenzione e conferma
 
@@ -2200,6 +2412,11 @@ Immagina due modifiche successive allo stesso elemento. La seconda richiesta pu�
 
 Simula una rete lenta, errori HTTP e richieste contemporanee. Controlla il comportamento con tastiera e screen reader, le indicazioni di caricamento e l'eventuale rollback. La percezione di rapidità è utile soltanto se non compromette la fiducia nell'interfaccia.
 
+
+## Quando non mostrare un successo anticipato
+
+Un pulsante per aggiungere un elemento ai preferiti può aggiornare il conteggio subito, salvo ripristinarlo se la richiesta fallisce. È un'azione generalmente reversibile e relativamente semplice da riconciliare. Un pagamento o l'eliminazione definitiva di dati richiedono invece una conferma del server e messaggi espliciti sullo stato dell'operazione. Anche nelle interfacce ottimistiche devi identificare quale richiesta ha prodotto un aggiornamento: due click rapidi possono generare operazioni che terminano in ordine inverso. Prova un errore HTTP, una rete lenta e l'annullamento della navigazione. Se la correzione dello stato arriva dopo molti secondi, comunica che il risultato mostrato era provvisorio. La velocità percepita non deve trasformarsi in un'informazione falsa.
+
 **Fonti**
 
 - [React — useOptimistic](https://react.dev/reference/react/useOptimistic)
@@ -2212,11 +2429,14 @@ Simula una rete lenta, errori HTTP e richieste contemporanee. Controlla il compo
     date: "2026-04-19",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "📡",
-    excerpt: "Come usare log strutturati, livelli, correlation ID e monitoraggio degli errori senza esporre dati personali o riempire la console.",
+    excerpt: "I log possono chiarire un guasto, ma una quantità indiscriminata di messaggi rende più difficile individuare il problema. La console del browser è utile in sviluppo; in…",
     tags: ["JavaScript","Logging","Debugging","Osservabilità"],
     content: `
 I log possono chiarire un guasto, ma una quantità indiscriminata di messaggi rende più difficile individuare il problema. La console del browser è utile in sviluppo; in produzione servono segnali intenzionali e una politica di raccolta.
+
+Nel frontend lo stesso problema si collega a [Bundle JavaScript: ridurre il peso iniziale](/blog/equazione-del-razzo-e-il-problema-del-bundle-da-830kb) e [JavaScript closure: scope e variabili catturate](/blog/javascript-closure-spiegate-bene). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Un log deve rispondere a una domanda
 
@@ -2232,6 +2452,11 @@ Un identificativo di richiesta permette di seguire un'operazione tra frontend, b
 
 Una metrica aggregata può segnalare un aumento degli errori; i log servono per analizzare casi specifici. Definisci soglie e periodi di conservazione. Quando aggiungi un nuovo evento, verifica anche quanto può costare raccoglierlo e se davvero aiuta durante un incidente.
 
+
+## Log che permettono di seguire una richiesta
+
+Quando un utente segnala che un ordine non è stato sincronizzato, un messaggio generico «errore sync» offre poche informazioni. Inserisci un identificativo correlabile, il tipo di operazione, il sistema chiamato e una categoria di errore, evitando dettagli personali o credenziali. Se il processo avviene in più job, usa lo stesso correlation ID lungo il percorso per ricostruire l'evento. I log non sostituiscono le metriche: un aumento del numero di retry dovrebbe emergere da un contatore e, quando rilevante, da un alert. Prova il percorso con una richiesta riuscita e una fallita, verificando che le informazioni siano sufficienti per una diagnosi senza esporre token. Definisci anche una durata di conservazione adeguata.
+
 **Fonti**
 
 - [OpenTelemetry — log e correlazione](https://opentelemetry.io/docs/concepts/signals/logs/)
@@ -2244,11 +2469,14 @@ Una metrica aggregata può segnalare un aumento degli errori; i log servono per 
     date: "2026-04-20",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🔗",
     excerpt: "Quando usare stato locale, Context e store condivisi in React, distinguendo dati derivati, server state e aggiornamenti concorrenti.",
     tags: ["React","State management","Context","Architettura frontend"],
     content: `
 Quando molti componenti dipendono dallo stesso stato, una modifica può produrre effetti inattesi. Il problema non è la condivisione in sé, ma la proprietà poco chiara dei dati e l'accoppiamento fra componenti che non dovrebbero conoscersi.
+
+Un confronto utile per questa soluzione è quello con [React: il totale del carrello deve davvero stare nello state?](/blog/react-stato-derivato-carrello) e [React memory leak: cleanup di effetti e listener](/blog/conservazione-della-massa-e-memory-leaks-in-react). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Conserva lo stato vicino a chi lo usa
 
@@ -2264,6 +2492,11 @@ Dati provenienti da API possono diventare obsoleti, fallire o arrivare fuori ord
 
 Scrivi chi modifica ciascun dato, chi lo legge e quanto deve vivere. Se più aggiornamenti concorrenti sono possibili, scegli un modello di transizione prevedibile. Le librerie aggiuntive possono aiutare, ma una gerarchia di stato chiara vale più dell'aggiunta precoce di un nuovo strumento.
 
+
+## Quando evitare di duplicare lo stato
+
+Un totale di carrello può essere calcolato a partire dalle righe e dalle quantità: memorizzarlo anche come valore globale introduce una seconda fonte di verità. Ogni aggiornamento deve allora mantenere coerenti due dati, anche quando una richiesta fallisce o arriva in ritardo. Prima di introdurre Context o una libreria di state management, elenca chi legge e chi modifica ciascuna informazione. Mantieni locale lo stato temporaneo di una finestra di dialogo e sposta verso l'alto soltanto quello condiviso realmente. Un test utile aggiorna una quantità, rimuove una riga e verifica il totale senza interventi manuali di sincronizzazione. Per i dati server-side definisci una strategia di aggiornamento e invalidazione distinta da quella dello stato locale.
+
 **Fonti**
 
 - [React — Choosing the State Structure](https://react.dev/learn/choosing-the-state-structure)
@@ -2276,11 +2509,14 @@ Scrivi chi modifica ciascun dato, chi lo legge e quanto deve vivere. Se più agg
     date: "2026-04-21",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "⚡",
-    excerpt: "Come CDN, caching e distribuzione geografica riducono i tempi di trasferimento, senza eliminare il costo delle richieste dinamiche.",
+    excerpt: "Una richiesta HTTP attraversa una rete fatta di tratte, apparati e server. La velocità di propagazione impone un limite fisico, ma la latenza reale comprende anche…",
     tags: ["CDN","Latenza","Caching","Web Performance"],
     content: `
 Una richiesta HTTP attraversa una rete fatta di tratte, apparati e server. La velocità di propagazione impone un limite fisico, ma la latenza reale comprende anche instradamento, code, negoziazione della connessione e tempo di elaborazione.
+
+Nel frontend lo stesso problema si collega a [Optimistic UI: gestire latenza e rollback](/blog/dilatazione-temporale-interstellar-e-optimistic-ui) e [Bundle JavaScript: ridurre il peso iniziale](/blog/equazione-del-razzo-e-il-problema-del-bundle-da-830kb). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Cosa può fare una CDN
 
@@ -2298,6 +2534,11 @@ Prima di aggiungere caching, chiarisci cosa deve succedere quando pubblichi una 
 
 Confronta TTFB, hit ratio e tempi osservati da regioni diverse. Distingui laboratorio e utenti reali. Se il tempo dominante è nel database o nell'elaborazione del backend, avvicinare i file statici non risolve quel collo di bottiglia.
 
+
+## Quando la CDN non accelera la risposta
+
+Un file CSS con nome versionato è un ottimo candidato alla cache distribuita: cambia URL quando cambia il contenuto e può essere conservato a lungo. Un endpoint che restituisce un carrello personalizzato, invece, richiede una politica molto più prudente. Se la cache riutilizza la risposta fra utenti, l'ottimizzazione diventa un errore di correttezza e potenzialmente di privacy. Prima di configurare Cache-Control, identifica quali dati dipendono dall'identità e quale sistema deve invalidarli. Confronta TTFB e tempi di trasferimento da regioni diverse, distinguendo cache hit e miss. Se il collo di bottiglia è una query database lenta, spostare gli asset più vicino all'utente non risolve il costo della risposta dinamica.
+
 **Fonti**
 
 - [MDN — HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)
@@ -2310,11 +2551,14 @@ Confronta TTFB, hit ratio e tempi osservati da regioni diverse. Distingui labora
     date: "2026-04-16",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🐈",
     excerpt: "Come controllare le risposte degli assistenti AI nel coding con test, documentazione, review e verifiche di sicurezza.",
     tags: ["AI coding","Testing","Code review","Sicurezza"],
     content: `
 Un assistente AI può accelerare la scrittura di bozze, test o spiegazioni, ma non conosce automaticamente i vincoli reali del progetto. Un suggerimento plausibile può contenere API inesistenti, errori di compatibilità o assunzioni sbagliate sui dati.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Git merge conflict: come risolverlo senza perdere codice](/blog/principio-di-esclusione-di-pauli-e-i-conflitti-git) e [Stime software: scadenze, rischi e compromessi](/blog/non-puoi-negoziare-con-la-gravita-space-force-e-le-scadenze-assurde). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Trattare l'output come una proposta
 
@@ -2330,6 +2574,11 @@ I test sono necessari ma non sufficienti: una suite incompleta può confermare u
 
 Non inviare credenziali, dati personali o codice riservato a strumenti senza una valutazione delle regole di utilizzo. Mantieni tracciabili le decisioni tecniche e attribuisci agli sviluppatori la verifica finale.
 
+
+## Verificare un esempio prima di integrarlo
+
+Un assistente AI può proporre una funzione di libreria che sembra plausibile ma appartiene a una versione differente o non esiste. Prima di copiarla, controlla la documentazione ufficiale e il lockfile del progetto. Se l'esempio modifica dati, prepara un test con un caso ordinario e almeno un errore; se usa una API esterna, verifica autorizzazioni e gestione dei limiti. Non considerare il superamento del typecheck una prova di correttezza semantica: i tipi possono essere troppo permissivi e i test possono non coprire l'operazione reale. Nelle richieste all'assistente non inserire token, credenziali o dati aziendali riservati. Registra la decisione architetturale e usa la review per discutere il comportamento prodotto, non soltanto la forma del codice.
+
 **Fonti**
 
 - [GitHub Docs — responsible use of Copilot](https://docs.github.com/en/copilot/responsible-use)
@@ -2342,11 +2591,14 @@ Non inviare credenziali, dati personali o codice riservato a strumenti senza una
     date: "2026-04-14",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "shopify-integrazioni",
     icon: "💸",
     excerpt: "Aggiungere campi personalizzati nel form prodotto Shopify con line item properties, distinguendoli dagli attributi del carrello.",
     tags: ["Shopify","Liquid","Line item properties","Product form"],
     content: `
 Un prodotto può richiedere un testo da incidere, una dedica o un'informazione specifica per la singola riga d'ordine. Prima di installare un'app aggiuntiva, verifica se le **line item properties** native di Shopify risolvono il requisito.
+
+La stessa decisione può incidere sulla sincronizzazione dei dati: leggi [Shopify GraphQL: il limite è un budget, non un invito a insistere](/blog/shopify-graphql-budget-query) e [Shopify, scorte e ordini: come evitare di sovrascrivere una vendita](/blog/shopify-inventario-scritture-concorrenti). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Come acquisire una proprietà nel product form
 
@@ -2375,6 +2627,11 @@ Per un campo semplice, la soluzione nativa può evitare una dipendenza esterna. 
 
 Prova più varianti, quantità, carrelli AJAX e passaggi di checkout. Verifica che il dato sia visibile nella riga dell'ordine e disponibile ai processi downstream che devono usarlo. Il limite HTML maxlength migliora la UX, ma i controlli importanti non devono affidarsi soltanto al browser.
 
+
+## Verificare il passaggio dal form all'ordine
+
+Una line item property associata al prodotto può raccogliere un testo di personalizzazione, ma devi verificare dove il valore viene mostrato e a quali sistemi arriva. Prova il form con più varianti, un carrello AJAX e un ordine di test, controllando che la proprietà rimanga associata alla riga corretta. Se un sistema esterno usa quel dato per una lavorazione, definisci un limite di lunghezza e una validazione applicativa, non soltanto maxlength nel browser. Una funzionalità nativa è preferibile a un'app aggiuntiva quando soddisfa l'intero requisito, non semplicemente perché richiede meno dipendenze. Se servono anteprime, calcoli di sovrapprezzo o workflow complessi, valuta un'implementazione differente e documentane i limiti.
+
 **Fonti**
 
 - [Shopify Developer — line item properties](https://shopify.dev/docs/api/liquid/objects/line_item)
@@ -2387,11 +2644,14 @@ Prova più varianti, quantità, carrelli AJAX e passaggi di checkout. Verifica c
     date: "2026-04-12",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🔀",
     excerpt: "Che cosa causa un merge conflict in Git, come risolverlo e come evitare force push pericolosi sui branch condivisi.",
     tags: ["Git","Merge conflict","Branch","Code review"],
     content: `
 Un conflitto di merge non significa che due sviluppatori hanno modificato lo stesso file nello stesso momento. Si verifica quando Git non riesce a combinare automaticamente modifiche concorrenti, per esempio sulle stesse righe o dopo una modifica strutturale.
+
+L'analisi si completa confrontando questa parte con [AI coding assistant: verificare codice e suggerimenti](/blog/gatto-di-schrodinger-e-allucinazioni-ia) e [Rails: chiamare API esterne senza perdere affidabilità](/blog/rails-consumare-api-esterne). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Che cosa mostra Git
 
@@ -2407,6 +2667,11 @@ I feature branch isolano il lavoro fino alla review, ma non eliminano i conflitt
 
 Un force push su un branch condiviso può sovrascrivere riferimenti a commit su cui altre persone stanno lavorando. Usa protezioni, pull request e controlli automatici dove possibile. La strategia migliore non è «mai avere conflitti», ma saperli risolvere in modo verificabile e senza perdere lavoro.
 
+
+## Una risoluzione senza perdere i due cambiamenti
+
+Supponi che un branch modifichi la validazione di un form mentre un altro aggiorna la gestione degli errori nella stessa funzione. Accettare interamente una delle due versioni può eliminare lavoro valido. Leggi entrambi i diff e ricostruisci il comportamento finale desiderato, poi rimuovi i marker di conflitto e riesegui i test. Se una modifica introduce una nuova dipendenza, controlla anche i file vicini: Git può risolvere automaticamente un merge che è comunque semanticamente errato. Evita force push sul branch condiviso senza una procedura concordata. Una pull request piccola e aggiornata spesso è più semplice da verificare di una lunga sequenza di modifiche divergenti.
+
 **Fonti**
 
 - [GitHub Docs — About merge conflicts](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts)
@@ -2419,11 +2684,14 @@ Un force push su un branch condiviso può sovrascrivere riferimenti a commit su 
     date: "2026-04-11",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "💧",
     excerpt: "Come riconoscere risorse non liberate nei componenti React e correggerle con cleanup, AbortController e verifiche nel browser.",
     tags: ["React","Memory leak","useEffect","Performance"],
     content: `
 Un componente React può registrare listener, avviare timer o aprire una connessione. Se queste risorse restano attive quando non servono più, aumentano il lavoro del browser e talvolta il consumo di memoria.
+
+Per considerare anche gli effetti sull'interfaccia, approfondisci [React state: evitare dipendenze globali inutili](/blog/entanglement-quantistico-e-i-disastri-del-global-state) e [React: il totale del carrello deve davvero stare nello state?](/blog/react-stato-derivato-carrello). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Che cosa significa memory leak
 
@@ -2439,6 +2707,11 @@ In sviluppo React Strict Mode può aggiungere un ciclo di setup e cleanup per ev
 
 Usa il pannello Memory, controlla listener duplicati e ripeti la navigazione fra pagine. Osserva se le risorse tornano a stabilizzarsi. Ridurre i componenti non corregge una connessione aperta senza cleanup.
 
+
+## Una prova con eventi duplicati
+
+Considera un componente che registra un listener resize sul window quando viene montato. Se non lo rimuove al cleanup, navigare avanti e indietro può lasciare più callback attive, ciascuna con riferimenti allo stato del componente precedente. Prova a montare e smontare la pagina ripetutamente, osservando il numero di listener e l'attività del browser. In Strict Mode React può eseguire un ciclo extra di setup e cleanup durante lo sviluppo proprio per aiutarti a scoprire risorse non rilasciate. Non risolvere il sintomo disabilitando indiscriminatamente quel controllo. Se un effetto avvia una richiesta, valuta AbortController e gestisci la risposta che arriva quando l'input è già cambiato. La memoria che cresce temporaneamente non è automaticamente una perdita: cerca riferimenti che rimangono raggiungibili inutilmente.
+
 **Fonti**
 
 - [React — useEffect](https://react.dev/reference/react/useEffect)
@@ -2451,11 +2724,14 @@ Usa il pannello Memory, controlla listener duplicati e ripeti la navigazione fra
     date: "2026-04-10",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🕰️",
     excerpt: "Differenza fra istanti UTC, orari locali e zone IANA; come evitare bug con data e ora legale tra database, API e browser.",
     tags: ["Database","Timezone","UTC","JavaScript"],
     content: `
 Le date sono una fonte frequente di bug: un evento alle 09:00 può apparire a un'ora diversa quando passa fra browser, API e database. Serve distinguere un istante preciso da un orario civile locale.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Rails Active Record: modelli, query e SQL](/blog/rails-activerecord-le-basi) e [Rails: validates uniqueness non ferma due richieste contemporanee](/blog/rails-unicita-database-concorrenza). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Istanti e appuntamenti ricorrenti
 
@@ -2469,6 +2745,11 @@ Una stringa senza offset può essere interpretata diversamente da parser e ambie
 
 Verifica le transizioni dell'ora legale, gli utenti in zone differenti e i round-trip tra API e database. Nei log usa istanti non ambigui; nell'interfaccia formatta la data nella zona prevista dal requisito.
 
+
+## Un appuntamento durante il cambio d'ora
+
+Un evento ricorrente alle 09:00 Europe/Rome non può essere rappresentato per sempre da un singolo offset UTC: l'offset cambia quando entra o termina l'ora legale. Per una ricorrenza conserva la zona IANA e la regola in orario civile, calcolando gli istanti effettivi quando generi le occorrenze. Per un log di un evento già accaduto, conserva invece un istante non ambiguo, generalmente in UTC, e formatta soltanto in fase di visualizzazione. Prova le date vicine ai cambi d'ora, compresi gli orari locali che non esistono o si ripetono. Evita di aggiungere sempre 24 ore a un timestamp quando il requisito è «domani alla stessa ora locale»: sono operazioni differenti.
+
 **Fonti**
 
 - [MDN — Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
@@ -2481,11 +2762,14 @@ Verifica le transizioni dell'ora legale, gli utenti in zone differenti e i round
     date: "2026-04-08",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🦋",
-    excerpt: "Come evitare effetti collaterali dei CSS globali usando selettori mirati, cascade layers e test visuali.",
+    excerpt: "Una modifica a un selettore CSS può cambiare componenti lontani dalla pagina su cui stai lavorando. Non è caos matematico, ma il comportamento prevedibile della cascade…",
     tags: ["CSS","Cascade","Specificità","Frontend"],
     content: `
 Una modifica a un selettore CSS può cambiare componenti lontani dalla pagina su cui stai lavorando. Non è caos matematico, ma il comportamento prevedibile della cascade quando le regole sono troppo ampie.
+
+Nel frontend lo stesso problema si collega a [Optimistic UI: gestire latenza e rollback](/blog/dilatazione-temporale-interstellar-e-optimistic-ui) e [React: il totale del carrello deve davvero stare nello state?](/blog/react-stato-derivato-carrello). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Perché una modifica si propaga
 
@@ -2499,6 +2783,11 @@ Preferisci classi con responsabilità riconoscibili e componenti con convenzioni
 
 Prova componenti riutilizzati in pagine differenti, inclusi pulsanti, campi e dialoghi. Screenshot comparison e test visuali aiutano a intercettare variazioni inattese; DevTools permette di capire quale regola ha prevalso.
 
+
+## Diagnosticare la regola vincente
+
+Quando un pulsante cambia improvvisamente aspetto dopo una modifica al layout, apri DevTools e controlla le regole effettivamente applicate. La dichiarazione vincente dipende da origine, layer, specificità e ordine, non soltanto dall'ultimo file modificato. Se un selettore generico raggiunge molte pagine, restringine lo scope invece di aggiungere !important a ogni componente che si rompe. Un test visuale con screenshot del pulsante in più stati, compresi hover, focus e disabled, può rendere visibile una regressione prima del deploy. Per i componenti riutilizzati verifica anche le dimensioni mobili e la modalità scura. Le regole di base possono restare globali, ma gli stili che appartengono a un componente dovrebbero essere riconoscibili e verificabili localmente.
+
 **Fonti**
 
 - [MDN — Cascade](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascade/Cascade)
@@ -2511,11 +2800,14 @@ Prova componenti riutilizzati in pagine differenti, inclusi pulsanti, campi e di
     date: "2026-04-13",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🪐",
     excerpt: "Individuare le dipendenze e introdurre confini testabili per ridurre la complessità del codice legacy.",
     tags: ["Legacy code","Coupling","Refactoring","Architettura"],
     content: `
 Quando una modifica richiede interventi su molti moduli non correlati, il costo della manutenzione cresce. La metafora della gravità descrive la sensazione di essere trascinati nel sistema, ma il problema ingegneristico è l'accoppiamento.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Debito tecnico: come migliorare la manutenibilità](/blog/entropia-del-codice) e [Rails MVC: Model, View e Controller](/blog/rails-mvc-in-tre-minuti). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Individuare le dipendenze
 
@@ -2529,6 +2821,11 @@ Un adapter può isolare una chiamata esterna; un test di integrazione verifica i
 
 Prima di intervenire, proteggi il comportamento con un test. Scegli una modifica piccola e verificabile. Un monolite ben strutturato può essere più semplice di microservizi che introducono contratti e guasti distribuiti.
 
+
+## Un confine concreto per isolare una dipendenza
+
+Immagina una funzione che salva un ordine e invia immediatamente un messaggio a un sistema remoto. Se la chiamata fallisce, potresti non sapere quale parte è stata completata. Separare l'accesso alla rete da quello al database rende più chiari i test, ma il confine deve avere un contratto preciso: quali dati riceve, quali errori restituisce e che cosa può essere ripetuto? Inizia da un test di caratterizzazione che copra il comportamento attuale. Introduci un adapter per il sistema remoto e verifica che il risultato visibile non cambi. Solo dopo valuta refactoring ulteriori. L'obiettivo non è moltiplicare classi o layer, ma ridurre il numero di ragioni per cui una modifica in un modulo richiede di toccarne molti altri.
+
 **Fonti**
 
 - [Martin Fowler — Refactoring](https://martinfowler.com/books/refactoring.html)
@@ -2541,11 +2838,14 @@ Prima di intervenire, proteggi il comportamento con un test. Scegli una modifica
     date: "2026-04-09",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🚀",
     excerpt: "Come stimare un progetto software considerando dipendenze, incertezza, test e ambito senza nascondere il rischio.",
     tags: ["Stime software","Project management","Testing","Rischi"],
     content: `
 Una scadenza può essere negoziabile, ma il lavoro necessario a garantire un risultato affidabile dipende da vincoli reali: integrazioni, test, revisioni e distribuzione. Promettere una data senza valutarli non rende il lavoro più breve.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Debito tecnico: come migliorare la manutenibilità](/blog/entropia-del-codice) e [Debugging: metodo per trovare bug riproducibili](/blog/effetto-osservatore-fisica-quantistica-e-l-arte-del-debugging). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Una stima ha assunzioni
 
@@ -2559,6 +2859,11 @@ Quando il tempo cambia, chiarisci quali funzioni sono indispensabili. Saltare te
 
 Rendi visibili gli impedimenti non appena emergono: ambienti non disponibili, requisiti incompleti, sistemi esterni in errore. Aggiorna le previsioni quando cambiano i fatti, anziché difendere la prima stima.
 
+
+## Separare ambito, data e livello di rischio
+
+Quando il tempo è fissato, il lavoro non si riduce automaticamente: bisogna ridiscutere l'ambito e la qualità richiesta. Per una migrazione ecommerce elenca i flussi indispensabili, come catalogo, ordini, pagamenti e redirect, poi distingue quelli che possono essere rimandati senza rompere il servizio. Una data stimata senza accesso ai sistemi esterni o senza un ambiente di test contiene un'incertezza non risolta. Documenta le dipendenze e assegna a ciascuna una verifica concreta. Se il tempo diminuisce, conserva i controlli che proteggono la correttezza dei dati e riduci funzionalità secondarie. Un rilascio limitato ma verificato è spesso preferibile a un rilascio completo che non permette di riconoscere errori o tornare indietro. Aggiorna le stime quando emergono informazioni nuove.
+
 **Fonti**
 
 - [Atlassian — Agile estimation](https://www.atlassian.com/agile/project-management/estimation)
@@ -2571,11 +2876,14 @@ Rendi visibili gli impedimenti non appena emergono: ambienti non disponibili, re
     date: "2026-04-06",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🔑",
-    excerpt: "Misurare e ridurre la complessità del codice con test, refactoring, responsabilità chiare e piccoli interventi.",
+    excerpt: "Il software non si deteriora fisicamente come un componente meccanico. Aumentano però le dipendenze, cambiano le librerie e diventano più difficili da ricostruire le…",
     tags: ["Technical debt","Refactoring","Manutenibilità","Testing"],
     content: `
 Il software non si deteriora fisicamente come un componente meccanico. Aumentano però le dipendenze, cambiano le librerie e diventano più difficili da ricostruire le decisioni precedenti. «Entropia del codice» è una metafora, non una legge tecnica.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Stime software: scadenze, rischi e compromessi](/blog/non-puoi-negoziare-con-la-gravita-space-force-e-le-scadenze-assurde) e [Legacy code e accoppiamento tra moduli](/blog/legge-di-gravitazione-universale-e-i-legacy-code). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Come cresce il debito tecnico
 
@@ -2589,6 +2897,11 @@ Proteggi con test i componenti che cambiano spesso, documenta le decisioni impor
 
 Tempi di risoluzione dei bug, frequenza delle regressioni e tempi di review possono aiutare a capire dove intervenire. Non trasformare il numero di righe in un obiettivo: meno codice non significa necessariamente meno complessità.
 
+
+## Misurare il rischio del debito tecnico
+
+Un modulo lungo non è necessariamente il più rischioso del progetto. Una piccola funzione invocata da molti servizi può avere un costo di modifica maggiore se il contratto non è documentato. Mappa quindi dipendenze, frequenza delle modifiche, regressioni e tempo necessario a verificare una nuova release. Se un componente genera errori ricorrenti, prepara prima test che descrivano il comportamento desiderato e poi riduci i punti in cui lo stato viene modificato. Un refactoring ampio senza criteri di uscita può introdurre nuovo debito sotto un nome diverso. Definisci un risultato misurabile, per esempio meno duplicazioni nella logica o una regressione riproducibile ora coperta da test. Non trasformare il numero di righe o di classi in un indicatore isolato della manutenibilità.
+
 **Fonti**
 
 - [Martin Fowler — Technical Debt Quadrant](https://martinfowler.com/bliki/TechnicalDebtQuadrant.html)
@@ -2601,11 +2914,14 @@ Tempi di risoluzione dei bug, frequenza delle regressioni e tempi di review poss
     date: "2026-04-05",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🧮",
     excerpt: "Come ottimizzare il bundle JavaScript con code splitting, import dinamici e misurazioni di rete e CPU.",
     tags: ["JavaScript","Bundle size","Code splitting","Web Performance"],
     content: `
 Un bundle grande può aumentare download, parsing ed esecuzione, soprattutto su dispositivi mobili meno potenti. Il peso trasferito non è l'unico costo: uno script compresso richiede comunque lavoro sul dispositivo.
+
+Nel frontend lo stesso problema si collega a [JavaScript ES modules: import, export e bundle](/blog/javascript-moduli-es-import-export) e [JavaScript closure: scope e variabili catturate](/blog/javascript-closure-spiegate-bene). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Misurare prima
 
@@ -2619,6 +2935,11 @@ Route-based code splitting e import dinamici rimandano funzionalità non necessa
 
 Il prerendering rende disponibile il contenuto importante senza aspettare tutta l'esecuzione React. Per valutare l'intervento misura tempi di rendering, LCP e INP, non soltanto i kilobyte generati dalla build.
 
+
+## Separare il peso scaricato dal costo eseguito
+
+Un bundle può essere piccolo dopo la compressione ma comunque costoso da analizzare ed eseguire su un dispositivo lento. Nel pannello Performance confronta attività del main thread, tempi di scripting e momenti in cui l'utente prova a interagire. Se una libreria viene usata soltanto su una pagina secondaria, prova l'import dinamico e verifica l'effetto sulla navigazione iniziale. Il caricamento differito introduce comunque un'attesa quando quella funzione viene richiesta: misura entrambi i percorsi e mostra uno stato di caricamento comprensibile. Nel caso di contenuti SEO importanti, l'HTML prerenderizzato riduce la dipendenza dal lavoro JavaScript del browser, ma non elimina la necessità di ottimizzare gli script. Considera anche il costo di download delle immagini e la latenza del server prima di attribuire tutto il ritardo al bundle.
+
 **Fonti**
 
 - [web.dev — JavaScript performance](https://web.dev/learn/performance/optimize-javascript)
@@ -2631,11 +2952,14 @@ Il prerendering rende disponibile il contenuto importante senza aspettare tutta 
     date: "2026-04-07",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "⚛",
-    excerpt: "Formulare ipotesi, isolare variabili e verificare la correzione attraverso test e strumenti di debug.",
+    excerpt: "Durante il debugging un log può cambiare il timing, e un breakpoint può nascondere una race condition. Non serve invocare la fisica quantistica: stai modificando il sistema…",
     tags: ["Debugging","Testing","Logging","Software engineering"],
     content: `
 Durante il debugging un log può cambiare il timing, e un breakpoint può nascondere una race condition. Non serve invocare la fisica quantistica: stai modificando il sistema mentre lo osservi.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Debito tecnico: come migliorare la manutenibilità](/blog/entropia-del-codice) e [Stime software: scadenze, rischi e compromessi](/blog/non-puoi-negoziare-con-la-gravita-space-force-e-le-scadenze-assurde). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Riprodurre il problema
 
@@ -2649,118 +2973,143 @@ Cambia una variabile per volta. Log, metriche e tracce possono aiutare a individ
 
 Inserisci un test di regressione, controlla scenari vicini e conserva le informazioni diagnostiche utili. Una patch non è completa se non sai dimostrare che il difetto è stato corretto.
 
+
+## Riprodurre una race condition
+
+Una race condition può sparire quando inserisci un breakpoint: fermando il programma modifichi l'ordine temporale delle operazioni. Per indagarla registra identificativi, timestamp e sequenza degli eventi invece di usare soltanto console.log senza struttura. Costruisci un test che avvii due richieste concorrenti e verifichi quale stato deve prevalere, includendo il caso in cui la seconda termini prima della prima. Se modifichi contemporaneamente retry, timeout e logica di salvataggio, non saprai quale intervento ha eliminato il difetto. Cambia una variabile per volta e conserva la versione che riproduce l'errore. La correzione va confermata anche in un ambiente simile alla produzione, dove rete e carico possono produrre tempi molto diversi da localhost.
+
 **Fonti**
 
 - [Chrome DevTools — Debug JavaScript](https://developer.chrome.com/docs/devtools/javascript/)
 - [OpenTelemetry — traces](https://opentelemetry.io/docs/concepts/signals/traces/)
 `
   },
-  { 
-    id: "la-sindrome-del-funzionava-sulla-mia-macchina", 
-    title: "La Sindrome del \"Funzionava sulla mia macchina!\"", 
+  {
+    id: "la-sindrome-del-funzionava-sulla-mia-macchina",
+    title: "Funziona in locale ma non in produzione: come diagnosticare il deploy",
     icon: "🤖",
     date: "2026-04-04",
+    updatedAt: "2026-11-11",
     category: "sviluppo-software",
-    content: ` 
-Vi è mai capitato di fare una simulazione d'esame seduti comodamente sul divano di casa, in pigiama, e sentirvi dei geni assoluti, per poi fare scena muta il giorno del test vero e proprio? 
+    hub: "rails-backend",
+    excerpt: "Una checklist tecnica per distinguere errori di configurazione, build, routing e API tra sviluppo e produzione.",
+    tags: ["Deploy","Configurazione","Debugging","Ambienti"],
+    content: `
+Quando un'applicazione funziona in locale ma non in produzione, il primo errore è attribuire il problema al codice che abbiamo appena scritto. La differenza può dipendere da configurazioni, versione del runtime, permessi, asset o accesso ai servizi esterni. Conviene raccogliere prove prima di cambiare componenti.
 
-A me è successo. Ed è in quel momento che ho capito che l'università e lo sviluppo software condividono una delle maledizioni più antiche del mondo informatico: la sindrome del *"Sul mio computer funzionava!"*.
+## Localhost e produzione non condividono tutti i vincoli
 
-## Localhost vs Produzione
-Quando sviluppi un'applicazione web sul tuo computer, sei in un ambiente protetto che chiamiamo \`localhost\`. È il tuo divano. Hai tutte le librerie installate, il database ha esattamente i dati che ti aspetti, la connessione è istantanea e nessuno sta cercando di cliccare su dieci bottoni contemporaneamente.
+In sviluppo un server Vite può gestire le richieste di navigazione in modo diverso da un hosting statico. Un percorso valido dopo aver cliccato un link interno può restituire 404 quando lo si apre direttamente. Verifica prima la risposta HTTP della route e la configurazione del rewrite. Controlla anche URL di base, case sensitivity dei nomi dei file e presenza effettiva degli asset generati dalla build.
 
-Ma prima o poi, il tuo codice deve andare in "Produzione", ovvero sul server reale accessibile a tutti. La Produzione è l'aula d'esame. È un ambiente spietato, pieno di variabili impreviste, reti instabili e utenti imprevedibili.
+Le variabili d'ambiente sono un altro punto critico. Alcune vengono lette durante la build e incorporate nel bundle, altre durante l'esecuzione del servizio. Non presumere che una variabile disponibile in locale lo sia nel deploy.
 
-## Il Fango delle Variabili d'Ambiente
-Qualche tempo fa stavo lavorando al mio sito personale in React + Vite. In locale era una scheggia. Le animazioni erano fluide, il fetch dei dati perfetto. Mi sentivo invincibile. Faccio il push del codice e avvio il deploy su Vercel. 
+## Una procedura di verifica ripetibile
 
-Apro il link pubblico e... pagina bianca. Il network tab del browser era un cimitero di errori 404 (Not Found). 
+Riproduci la build con la stessa versione Node e le stesse dipendenze dichiarate nel lockfile. Controlla typecheck, log di build e asset generati. Poi verifica la Network tab su una navigazione diretta, separando richieste fallite per 404, errori 401/403 e problemi CORS.
 
-Panico totale. *"Ma come? Sul mio computer funziona perfettamente!"*. Ho perso un'ora a rileggere componenti che non avevano alcun problema. Il vero colpevole? Mi ero dimenticato di impostare le variabili d'ambiente (le API keys) sul pannello di Vercel. Il mio codice in locale le leggeva da un file protetto che, giustamente, non viene inviato al server. In produzione, l'applicazione stava cercando di connettersi al nulla.
+Se un'applicazione dipende da un'API esterna, testa il comportamento con una risposta valida, una risposta di errore e una rete lenta. Non inserire chiavi private nel frontend: tutto ciò che arriva al browser deve essere considerato pubblico. Registra errori utili, ma non segreti.
 
-## Il Takeaway
-Che tu stia preparando Analisi Matematica o configurando un server, non fidarti mai del tuo ambiente protetto. 
+## Confermare la correzione
 
-Fare gli esercizi con il libro aperto o il codice sorgente già configurato ti dà un falso senso di sicurezza. Devi sforzarti di testare le tue conoscenze (e il tuo software) nelle condizioni più vicine possibili alla realtà. Fai deploy frequenti fin dal primo giorno e prova a fare le simulazioni d'esame senza appunti. Il mondo reale non perdona, ma insegna tantissimo.
-` 
+Dopo la modifica esegui lo stesso test sul dominio di preview e poi sul dominio di produzione. Una preview corretta non dimostra automaticamente che l'ambiente production abbia gli stessi permessi e le stesse variabili.
+
+Puoi approfondire [la gestione delle variabili d'ambiente](/blog/quando-luniverso-ti-cambia-le-variabili-in-produzione) e [le immagini Docker riproducibili](/blog/principio-di-archimede-e-i-container-docker).
+
+**Fonti**
+
+- [Vite — Env Variables and Modes](https://vite.dev/guide/env-and-mode)
+- [Vercel — Build and Deployment](https://vercel.com/docs/deployments)
+`,
   },
-  { 
-    id: "chi-ha-scritto-questa-roba", 
-    title: "\"Chi ha scritto questa roba?\": Appunti e Debito Tecnico", 
+  {
+    id: "chi-ha-scritto-questa-roba",
+    title: "Debito tecnico: documentare il codice per facilitarne la manutenzione",
     icon: "📝",
     date: "2026-03-30",
+    updatedAt: "2026-11-11",
     category: "sviluppo-software",
-    content: ` 
-L'altro giorno ho ripreso in mano i miei appunti di Fisica per un ripasso veloce prima di un test. Ho fissato la pagina per buoni dieci minuti, cercando di decifrare una formula circondata da frecce caotiche e note a margine mezza cancellate. 
+    hub: "rails-backend",
+    excerpt: "Quando documentare le decisioni e come separare comportamento, vincoli e implementazione senza accumulare commenti inutili.",
+    tags: ["Debito tecnico","Documentazione","Refactoring","Manutenibilità"],
+    content: `
+Il debito tecnico si manifesta quando una scelta rapida rende le modifiche future più costose. Non basta contare i commenti assenti o i nomi di variabili poco espressivi: è importante capire quali decisioni non sono più ricostruibili e quali dipendenze impediscono di evolvere il sistema in sicurezza.
 
-Ho pensato: *"Ma chi diavolo ha scritto questa roba? Sembra arabo."* Poi ho realizzato con orrore che la grafia era la mia.
+## Commenti e documentazione hanno scopi diversi
 
-Questo fenomeno di totale alienazione verso il lavoro del "Te Stesso" del passato è il fulcro di uno dei concetti più importanti dell'Ingegneria Informatica: il Debito Tecnico.
+Un commento utile spiega una decisione non evidente: perché un retry è limitato, perché una chiamata avviene dopo un commit o perché una determinata validazione è duplicata nel database. Ripetere in italiano ciò che fa un'istruzione leggibile può diventare rumore.
 
-## Scrivere per l'Oggi vs Scrivere per il Domani
-Quando siamo di fretta—magari a ridosso di una scadenza lavorativa o mentre il professore spiega troppo velocemente—il nostro unico obiettivo è portare a casa il risultato. Prendiamo appunti disordinati o scriviamo codice appena sufficiente a far funzionare le cose.
+Documenta invece i contratti pubblici, le assunzioni sugli input e gli effetti collaterali. Per una sincronizzazione ordini servono almeno identificativi, stati previsti, criteri di idempotenza e gestione del fallimento. Un nome chiaro è importante, ma non sostituisce un contratto che coinvolge più sistemi.
 
-In programmazione, questo compromesso si chiama Debito Tecnico. Ottieni un vantaggio immediato (finisci il task oggi), ma contrai un "debito" con il futuro. Prima o poi, gli interessi andranno pagati, e si pagheranno in ore di frustrazione cercando di capire cosa stavi pensando in quel momento.
+## Un esempio di manutenzione
 
-## Il Fango del Codice Illeggibile
-Mesi fa, per un progetto freelance, dovevo integrare alcune API di Shopify in un backend Ruby on Rails. Il cliente aveva fretta. Ho creato un controller enorme, scritto tutto di getto, usando nomi di variabili orribili come \`data1\`, \`temp_val\` e \`x\`. Niente commenti. Ha funzionato al primo colpo. Mi sono dato una pacca sulla spalla e ho chiuso il file.
+Immagina un controller che importa un ordine da un'API e poi aggiorna il magazzino. Se normalizzazione, persistenza e invio remoto sono mescolati nello stesso metodo, è difficile verificare quali passaggi possano essere ripetuti. Prima di riscrivere il controller, elenca i comportamenti da proteggere e aggiungi test di caratterizzazione. Poi isola soltanto il confine che crea problemi.
 
-Settimana scorsa, mi chiedono una piccola modifica a quella logica. Apro il file e mi trovo davanti un muro di codice incomprensibile. Ho dovuto letteralmente fare *reverse engineering* del mio stesso software per capire cosa facesse la variabile \`x\`. Una modifica da venti minuti mi ha rubato mezza giornata. Gli interessi del debito tecnico avevano bussato alla porta.
+Quando introduci un servizio dedicato, documenta input, output, errori recuperabili e quando l'operazione produce effetti esterni. Evita di trasformare ogni singola riga in un'astrazione.
 
-## Il Takeaway
-Il codice che scrivi oggi, o gli appunti che prendi a lezione, raramente servono per l'immediato. Servono per la manutenzione futura.
+## Tenere il debito sotto controllo
 
-Usa nomi di variabili che abbiano senso (meglio \`user_cart_total\` che \`uct\`). Lascia un commento se una logica è complessa. Riscrivi quegli appunti in bella copia finché hai il concetto fresco in testa. Smettila di programmare o studiare solo per finire la giornata: inizia a fare un favore al Te Stesso di tra sei mesi. Ti ringrazierà.
-` 
+Collega la manutenzione al lavoro ordinario: ogni modifica dovrebbe lasciare i moduli toccati un po' più comprensibili, senza nascondere un cambiamento funzionale dentro un refactoring enorme. Usa piccoli pull request e verifica il comportamento con test e log.
+
+Per approfondire leggi [il refactoring del codice legacy](/blog/principio-di-inerzia-e-la-sindrome-del-non-toccare) e [i service object Rails](/blog/rails-service-objects).
+
+**Fonti**
+
+- [Martin Fowler — Technical Debt Quadrant](https://martinfowler.com/bliki/TechnicalDebtQuadrant.html)
+- [Google Engineering Practices — Code Review](https://google.github.io/eng-practices/review/)
+`,
   },
-  { 
-    id: "i-messaggi-di-errore-non-ti-stanno-giudicando", 
-    title: "I Messaggi di Errore Non Ti Stanno Giudicando", 
+  {
+    id: "i-messaggi-di-errore-non-ti-stanno-giudicando",
+    title: "Leggere errori JavaScript: stack trace, causa e riproduzione",
     icon: "⚠️",
     date: "2026-03-15",
+    updatedAt: "2026-11-11",
     category: "sviluppo-software",
-    content: ` 
-Esiste un riflesso incondizionato che colpisce quasi tutti gli studenti e i programmatori junior: la reazione di panico davanti al rosso.
+    hub: "react-frontend",
+    excerpt: "Come leggere uno stack trace, riprodurre un TypeError e verificare la correzione senza riscrivere componenti alla cieca.",
+    tags: ["JavaScript","Debugging","Stack trace","React"],
+    content: `
+Una schermata bianca in React può dipendere da un'eccezione JavaScript, da una richiesta fallita o da un problema di rendering. Il primo passo non è aggiungere console.log ovunque: è identificare che cosa dice davvero l'errore e quando si verifica.
 
-Può essere un esame universitario restituito dal professore pieno di correzioni a penna rossa, oppure il terminale che improvvisamente si riempie di uno *stack trace* chilometrico color cremisi scuro. L'istinto umano è sempre lo stesso: un tuffo al cuore, le mani che si staccano dalla tastiera e il pensiero martellante *"Ho rotto tutto, non sono capace, non passerò mai questo corso."*
+## Partire dal messaggio concreto
 
-Ci ho messo un bel po' a capirlo, ma la verità è molto più rassicurante: i messaggi di errore non ti stanno giudicando.
+Considera \`TypeError: Cannot read properties of undefined (reading 'map')\`. Il programma ha tentato di accedere a map su un valore undefined. Questo non prova che il problema sia Array.map: indica soltanto il punto in cui un'assunzione sui dati si è rivelata falsa.
 
-## Il Navigatore Satellitare, non una Sentenza
-Quando ho iniziato a studiare seriamente la programmazione, vedevo gli errori in console come una bocciatura personale. Se il codice non compilava al primo colpo, mi sentivo un impostore.
+Verifica quindi da dove proviene il valore. Una prop non è stata passata? L'API restituisce una struttura diversa? Il componente renderizza prima della conclusione della richiesta? Una possibile soluzione è rappresentare esplicitamente loading, error e success, ma la scelta dipende dal contratto della funzione e dei dati.
 
-Poi ho cambiato prospettiva. Il terminale è solo una macchina molto pedante che non capisce i sottintesi. Quando ti vomita addosso una schermata rossa, non ti sta dicendo "Sei stupido". Ti sta dicendo: *"Ehi, mi hai chiesto di andare a Roma, ma qui c'è un cantiere che mi blocca. Nello specifico, il cantiere è al chilometro 42 (riga 42 del file index.js), e riguarda un ponte crollato (ReferenceError: user is not defined)."*
+## Leggere lo stack trace
 
-Il messaggio di errore è la mappa del tesoro.
+Individua la prima riga utile del codice applicativo, separandola dai frame della libreria. Se il bundle di produzione è minificato, source map adeguate possono collegare l'errore ai file originali. Non pubblicare source map contenenti informazioni riservate senza valutare l'esposizione.
 
-## Il Fango della Disattenzione
-Ero immerso in un progetto frontend in React. Stavo passando delle *props* a un componente figlio e, all'improvviso, lo schermo diventa bianco. Apro la console: errore critico. 
+Per diagnosticare, riproduci il problema con un input noto. Poi usa breakpoint, watch expressions e Network tab per osservare il valore prima dell'operazione che fallisce. Modifica una variabile alla volta.
 
-Preso dalla fretta e dalla frustrazione, ignoro il testo dell'errore (che mi sembrava lunghissimo e complicato) e inizio a riscrivere la logica del componente alla cieca. Aggiungo \`console.log\` ovunque. Niente. Ci perdo un'ora e mezza, sudando freddo.
+## Trasformare il bug in un test
 
-A un certo punto, mi fermo, faccio un bel respiro e leggo la primissima riga di quell'orribile muro di testo rosso: 
-\`TypeError: Cannot read properties of undefined (reading 'map')\`.
+Se il componente richiede un array, definisci cosa deve fare quando riceve un valore assente: mostrare uno stato vuoto, un errore o rifiutare l'input. Un fallback silenzioso con ?? [] è appropriato soltanto se l'assenza è prevista; altrimenti può nascondere una regressione nell'API.
 
-Avevo semplicemente dimenticato di passare l'array al componente figlio, che stava cercando di mappare il nulla. Se avessi letto il navigatore invece di guidare bendato per la stanza, avrei risolto in tre secondi netti.
+Aggiungi un test per il caso che falliva e verifica anche l'interfaccia dopo una navigazione diretta. Per ampliare il ragionamento consulta [il debugging riproducibile](/blog/effetto-osservatore-fisica-quantistica-e-l-arte-del-debugging) e [la gestione dello stato React](/blog/entanglement-quantistico-e-i-disastri-del-global-state).
 
-## Il Takeaway
-Che si tratti della correzione di un professore a Ingegneria L-8 o di un errore del compilatore, smettila di prenderla sul personale. 
+**Fonti**
 
-Respira profondo. Leggi la prima riga dell'errore. Cerca le parole chiave. Il sistema non ti sta rimproverando, ti sta letteralmente dando la soluzione per andare avanti. Imparare ad amare i messaggi di errore è il vero superpotere di chi non smette mai di crescere.
-` 
+- [MDN — JavaScript error reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors)
+- [Chrome DevTools — Debug JavaScript](https://developer.chrome.com/docs/devtools/javascript/)
+`,
   },
   {
     id: "la-paperella-di-gomma-e-larte-di-sentirsi-stupidi",
     title: "Rubber duck debugging: capire i bug spiegandoli",
     icon: "🦆",
-    excerpt: "Usare la spiegazione ad alta voce per individuare passaggi impliciti e trasformare ipotesi vaghe in test riproducibili.",
+    excerpt: "Quando un bug resiste a molti tentativi, descriverlo ad alta voce può aiutare a individuare assunzioni nascoste. Nel rubber duck debugging la paperella è un ascoltatore…",
     tags: ["Debugging","Problem solving","Rubber duck debugging","Testing"],
     date: "2026-04-03",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     content: 
 `
 Quando un bug resiste a molti tentativi, descriverlo ad alta voce può aiutare a individuare assunzioni nascoste. Nel rubber duck debugging la paperella è un ascoltatore simbolico, non uno strumento tecnico.
+
+Nel frontend lo stesso problema si collega a [Logging JavaScript: cosa registrare e cosa evitare](/blog/radiazione-di-fondo-e-il-cimitero-dei-console-log) e [Legacy code: come intervenire senza regressioni](/blog/principio-di-inerzia-e-la-sindrome-del-non-toccare). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Spiegare il comportamento
 
@@ -2773,6 +3122,11 @@ Una funzione calcola il prezzo finale del carrello. Spiegandone il flusso si not
 ## Dalla spiegazione al test
 
 La tecnica aiuta a formulare ipotesi, non sostituisce log, test o profiler. Dopo aver individuato il passaggio sospetto, prepara un caso minimo che distingua comportamento corretto ed errato.
+
+
+## Una sequenza di domande utile
+
+Quando descrivi una funzione alla paperella, non limitarti a raccontare il codice nell'ordine in cui appare. Comincia dal contratto: quale input è valido e quale risultato deve essere restituito? Poi indica le trasformazioni e gli effetti esterni. Se il bug compare soltanto con una lista vuota, spiega perché quel caso è stato considerato oppure escluso. Questa tecnica aiuta a individuare ipotesi nascoste, ma non offre da sola una prova della correzione. Dopo la spiegazione prepara un test con input minimo che riproduca l'errore e verifica che la modifica non rompa il comportamento normale. Se il guasto dipende da concorrenza o rete, aggiungi osservabilità e simulazioni specifiche: una spiegazione orale non sostituisce il controllo degli eventi reali.
 
 **Approfondimenti**
 
@@ -2788,8 +3142,11 @@ La tecnica aiuta a formulare ipotesi, non sostituisce log, test o profiler. Dopo
     date: "2026-04-02",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     content: `
 Un'applicazione può funzionare in locale e fallire dopo il deploy senza cambiamenti al codice. Possibili cause includono configurazioni diverse, versioni dei servizi, permessi e dati non rappresentativi.
+
+L'analisi si completa confrontando questa parte con [Docker: container, immagini e dipendenze isolate](/blog/principio-di-archimede-e-i-container-docker) e [Ruby begin/rescue/ensure: gestione degli errori](/blog/ruby-gestione-errori). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 ## Separare configurazione e codice
 
@@ -2803,85 +3160,79 @@ Dichiara le versioni delle dipendenze e usa build riproducibili. La presenza di 
 
 Esegui test, controlli delle route e verifiche di configurazione. Dopo il deploy monitora errori e latenze e prevedi un rollback. Una procedura ripetibile è più affidabile di modifiche manuali dell'ultimo minuto.
 
+
+## Una checklist per un deploy fallito
+
+Supponi che l'applicazione compili, ma la prima richiesta a un'API ritorni 401. Prima di cambiare codice, verifica quale ambiente ha eseguito il deploy e se la credenziale usata in quel contesto è valida per l'endpoint. Una variabile disponibile durante la build non è necessariamente disponibile in runtime; allo stesso modo una variabile Vite destinata al browser non deve contenere segreti. Registra il tipo di errore e il contesto della richiesta, evitando di mostrare token e valori sensibili nei log. Se invece la pagina restituisce 404 quando la apri direttamente, controlla il routing del server e la presenza del documento HTML prerenderizzato. Sono due guasti diversi: trattarli insieme porterebbe a tentativi inutili. Una volta risolta la causa, documenta una verifica automatica che fallisca prima del rilascio.
+
 **Fonti**
 
 - [The Twelve-Factor App — Config](https://12factor.net/config)
 - [OWASP — Secrets Management](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
 `,
   },
-  { 
-id: "il-caffe-luniversita-e-la-magia-del-codice-asincrono", 
-title: "Il Caffè, l'Università e la Magia del Codice Asincrono", 
-icon: "☕️",
-date: "2026-04-01",
-category: "sviluppo-software",
-content: ` 
-Essere uno studente di Ingegneria Informatica e lavorare come sviluppatore web significa una cosa sola: il tempo è la risorsa più scarsa dell'Universo. 
+  {
+    id: "il-caffe-luniversita-e-la-magia-del-codice-asincrono",
+    title: "JavaScript asincrono: quando fetch e await non bloccano la pagina",
+    icon: "☕️",
+    date: "2026-04-01",
+    updatedAt: "2026-11-11",
+    category: "sviluppo-software",
+    hub: "react-frontend",
+    excerpt: "Cosa succede quando una fetch restituisce una Promise, quando usare await e come gestire risultati e stati del rendering.",
+    tags: ["JavaScript","Fetch API","Promise","Async await"],
+    content: `
+Quando una funzione JavaScript chiama fetch, non riceve immediatamente il corpo della risposta. Riceve una Promise che rappresenta il risultato futuro della richiesta. Comprendere questa differenza evita errori nel rendering e nella gestione dello stato.
 
-Ogni mattina cerco di incastrare lo studio con le task del lavoro. E ogni mattina, la mia giornata inizia con una lezione pratica di programmazione e termodinamica: preparare il caffè.
+## La Promise rappresenta un risultato futuro
 
-Sembra un'azione banale, ma nasconde uno dei concetti più importanti dello sviluppo software moderno.
+Una chiamata HTTP può impiegare tempo per motivi di rete o di elaborazione sul server. JavaScript può avviare la richiesta e continuare a eseguire altre istruzioni. Questo non significa che ogni operazione del browser sia parallela: un calcolo sincrono lungo può comunque bloccare il main thread.
 
-## Sincrono vs Asincrono: Questione di Attese
-Immaginate la scena. Vado in cucina, riempio la moka, accendo il fuoco e... resto immobile a fissarla. Non parlo, non preparo la colazione, non accendo il PC. Fisso la moka per 5 minuti finché il caffè non è pronto. 
+La parola chiave await sospende la prosecuzione della funzione async fino al completamento della Promise, ma non blocca da sola l'intero thread. Quando due richieste sono indipendenti, Promise.all consente di attenderle insieme; quando la seconda richiede il risultato della prima, usa una sequenza esplicita.
 
-Questo è il **codice sincrono**. Il programma esegue un'istruzione alla volta e, se un'operazione richiede tempo, tutto il resto si blocca. Se i nostri siti web funzionassero così, ogni volta che caricate una foto, l'intera pagina rimarrebbe freezata finché il download non è completato.
-
-Fortunatamente, nella vita reale siamo esseri **asincroni**. Metto la moka sul fuoco (avvio il processo) e, mentre l'acqua si scalda, io accendo il PC, apro gli appunti dell'università e preparo l'editor di codice.
-
-## Il Mio Primo "Fango" con le API
-Ricordo il mio primo vero scontro con l'asincronia in JavaScript. Stavo imparando React e volevo creare un widget che chiamasse l'API pubblica della NASA per mostrare l'Astronomy Picture of the Day (APOD). 
-
-Scrivo la mia funzione, faccio la \`fetch\`, salvo il risultato in una variabile e, alla riga esattamente successiva, cerco di passare l'URL dell'immagine al tag \`<img />\`. 
-
-Risultato? Schermata bianca e un inesorabile \`Cannot read properties of undefined\` in console. L'interfaccia aveva provato a renderizzare il DOM prima ancora che i server della NASA avessero il tempo di far viaggiare la risposta fino al mio router. 
-
-In pratica, stavo cercando di bere il caffè un millisecondo dopo aver acceso il fuoco sotto la moka. Tazza vuota e codice rotto.
-
-## La Soluzione: Promesse e Attese
-In JavaScript (e in molti altri linguaggi), risolviamo questo problema "promettendo" al sistema che il dato arriverà, ma permettendogli di fare altro nel frattempo. 
-
-L'errore comune agli inizi è usare \`await\` bloccando subito il processo. Se vogliamo ottimizzare il tempo, avviamo la richiesta e la aspettiamo solo quando ci serve davvero:
+## Un esempio con fetch
 
 \`\`\`javascript
-async function iniziaGiornata() {
-  console.log("1. Accendo il fuoco sotto la moka (Chiamata API alla NASA)...");
-  
-  // Lancio la richiesta, ma NON metto 'await' qui! Ottengo una Promise.
-  const promessaFoto = fetch('https://api.nasa.gov/planetary/apod'); 
-  
-  console.log("2. Intanto apro gli appunti di Analisi 1...");
-  // Il thread non è bloccato! Posso eseguire il rendering del resto della UI.
-  
-  // Ora che ho caricato il layout, mi fermo e aspetto i dati
-  const response = await promessaFoto; 
-  const datiSpaziali = await response.json();
-  
-  console.log("3. Dati arrivati! Mostro l'immagine di:", datiSpaziali.title);
+async function loadArticle(id) {
+  const response = await fetch(\`/api/articles/\${encodeURIComponent(id)}\`);
+  if (!response.ok) throw new Error(\`HTTP \${response.status}\`);
+  return response.json();
 }
-
-await iniziaGiornata();
 \`\`\`
 
-Se eseguite mentalmente questo codice, l'ordine delle azioni nella console sarà 1, poi 2 (mentre i dati viaggiano in background), e infine 3. 
+Lo snippet assume che l'endpoint restituisca JSON valido in caso di successo. Se può restituire una risposta senza corpo, il parsing va gestito in modo differente. Una Promise rifiutata deve essere intercettata dove il programma può reagire all'errore.
 
-## Il Takeaway
-Che voi stiate studiando per un esame difficile o progettando un'applicazione web, la regola d'oro è non bloccare mai il "thread principale". 
+## Gestire gli stati nel frontend
 
-Avviare i compiti lunghi, non restare bloccati a fissare lo schermo aspettando che un processo termini da solo (come la latenza di rete) e continuare a fare progressi sulle altre piccole task. È il primo passo per mantenere fluida un'applicazione, e decisamente anche la nostra vita da studenti.
-` 
-},
+Un componente dovrebbe distinguere caricamento, errore e risultato disponibile. Se la persona cambia pagina o query mentre la richiesta è in corso, annulla o ignora la risposta precedente quando non è più pertinente. Evita che una risposta lenta sovrascriva dati più recenti.
+
+Per approfondire leggi [Promise e async/await](/blog/javascript-promise-async-await) e [le richieste obsolete con AbortController](/blog/fetch-abortcontroller-risposte-obsolete).
+
+
+## Attenzione agli errori di parsing
+
+Una Promise di fetch può risolversi anche quando il server restituisce un errore HTTP: devi controllare response.ok o lo status prima di utilizzare i dati. Una risposta 204, per esempio, può non avere un corpo JSON da interpretare. Nel frontend considera quindi tre percorsi distinti: risposta valida, HTTP non riuscito e problema di rete o parsing. Un test con dati fittizi evita che l'interfaccia mostri undefined durante il caricamento. Se l'utente cambia rapidamente ricerca, collega la risposta alla richiesta che l'ha generata oppure annulla quella precedente. La parte asincrona non è soltanto scrivere await, ma progettare cosa vede la persona mentre l'operazione è ancora incerta.
+
+**Fonti**
+
+- [MDN — Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+- [MDN — Async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
+`,
+  },
   {
     id: "sonic-pi-primo-suono-play-sleep",
     title: "Sonic Pi: play e sleep per iniziare",
     date: "2026-04-22",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎛️",
     excerpt: "Con play e sleep bastano due righe per far suonare il computer. Ecco da dove inizia il live coding.",
     tags: ["Sonic Pi", "Live Coding", "Musica"],
     content: `
 Sonic Pi trasforma il computer in uno strumento che si suona scrivendo codice. Tutto parte da due comandi: \`play\`, che emette una nota, e \`sleep\`, che scandisce il tempo.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Sonic Pi live_loop: scrivere musica in tempo reale](/blog/sonic-pi-live-loop-cuore-del-live-coding) e [Sonic Pi sync e cue: sincronizzare i loop](/blog/sonic-pi-sync-cue). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 play 60      # Do centrale (numero MIDI)
@@ -2900,6 +3251,12 @@ Premi Run: hai appena fatto musica con tre righe di codice. Da qui in poi è tut
 
 Il comando play genera una nota usando il synth corrente; sleep controlla il tempo musicale prima dell'istruzione successiva. Non corrisponde a un'attesa bloccante dell'intera applicazione: Sonic Pi organizza gli eventi musicali nel proprio sistema temporale. Per iniziare prova due note a distanze diverse e confronta il risultato cambiando soltanto sleep, poi aggiungi un ciclo quando il pattern è stabile.
 
+
+## Un esercizio ritmico ripetibile
+
+Imposta un BPM costante e crea una sequenza di due note separate da sleep. Prima di introdurre loop, conta le pulsazioni e verifica se la nota successiva inizia esattamente quando previsto. Cambia soltanto sleep: un valore più piccolo riduce la distanza temporale, ma non obbliga il suono precedente a interrompersi. La durata percepita dipende anche dall'inviluppo e dal synth selezionato. Dopo questa prova introduci quattro note con la stessa distanza e registra il risultato. Un errore comune è scrivere molti comandi play senza avanzare il tempo: gli eventi possono sovrapporsi invece di formare una melodia. Scegli una nota fondamentale e una quinta, poi modifica un elemento alla volta per comprendere la relazione tra codice e ritmo.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -2910,11 +3267,14 @@ Il comando play genera una nota usando il synth corrente; sleep controlla il tem
     date: "2026-04-23",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
     excerpt: "In Ruby anche i numeri e nil rispondono a metodi. Capirlo cambia il modo in cui scrivi codice.",
     tags: ["Ruby", "Programmazione", "OOP"],
     content: `
 La prima cosa che spiazza chi arriva a Ruby da JavaScript è che *tutto* è un oggetto. Non "quasi tutto": proprio tutto, numeri e \`nil\` compresi.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Ruby blocchi, Proc e lambda: differenze](/blog/ruby-blocchi-proc-lambda) e [Ruby Enumerable: map, select e reduce](/blog/ruby-enumerable-map-select-reduce). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 42.class          # => Integer
@@ -2934,9 +3294,14 @@ Il bello è la coerenza: una volta capito il modello, esplori qualsiasi valore c
 
 In Ruby numeri, stringhe e simboli sono oggetti che rispondono a metodi. Non significa però che ogni operazione abbia lo stesso costo o che il linguaggio nasconda automaticamente tutti i dettagli della memoria. Usa classi per descrivere responsabilità coerenti ed evita gerarchie profonde quando basta una composizione di oggetti.
 
+
+## Oggetti e identità
+
+Un numero intero risponde a metodi come next, mentre una stringa supporta trasformazioni che non sono disponibili sugli stessi tipi. Questo non significa che tutti gli oggetti debbano essere trattati allo stesso modo. Considera due istanze con valori uguali: il loro confronto tramite == non è necessariamente una verifica dell'identità dell'oggetto. Il metodo equal? serve a un obiettivo diverso. Comprendere la distinzione aiuta quando si condividono riferimenti tra funzioni e quando si mutano strutture dati. Un piccolo esercizio consiste nel creare due stringhe con lo stesso testo, modificarne una e confrontare nuovamente contenuto e identità. Evita di fondare la logica applicativa sulla rappresentazione interna di un oggetto.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://www.ruby-lang.org/en/documentation/)`,
+- [Ruby — Documentazione del linguaggio](https://www.ruby-lang.org/en/documentation/)`,
   },
   {
     id: "rails-mvc-in-tre-minuti",
@@ -2944,11 +3309,14 @@ In Ruby numeri, stringhe e simboli sono oggetti che rispondono a metodi. Non sig
     date: "2026-04-24",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "Model, View, Controller: chi fa cosa in Rails e perché tenerli separati ti salva il progetto.",
     tags: ["Ruby on Rails", "Architettura", "MVC"],
     content: `
 Rails è costruito attorno al pattern **MVC**. Tre responsabilità separate, ognuna con un compito solo.
+
+L'analisi si completa confrontando questa parte con [Rails service objects: responsabilità e test](/blog/rails-service-objects) e [Rails API-only: controller e JSON](/blog/rails-api-only-mode). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 - **Model**: parla col database e contiene le regole di business (\`app/models\`).
 - **View**: mostra i dati all'utente (\`app/views\`).
@@ -2969,9 +3337,14 @@ La regola d'oro: **fat model, skinny controller**. La logica vive nel Model, il 
 
 Il controller riceve una richiesta HTTP, coordina le operazioni e seleziona una risposta. Il model rappresenta dati e regole del dominio, mentre la view genera la rappresentazione destinata all'utente. Non tutto deve stare in queste tre classi: logiche di integrazione o processi complessi possono richiedere componenti dedicati. Quando una modifica è difficile da testare, controlla se il controller sta mescolando validazione, accesso ai dati e formattazione.
 
+
+## Separare HTTP, dati e rappresentazione
+
+Immagina una pagina che mostra gli ordini di un utente. Il controller identifica la risorsa richiesta e verifica l'accesso; il model incapsula query e regole legate ai dati; la view produce il markup. Se il controller comincia a orchestrare decine di chiamate a servizi esterni, non è più chiaro chi sia responsabile degli errori. Un punto di partenza è descrivere quali dati entrano e quali effetti osservabili vengono prodotti dalla request. Testa il comportamento HTTP e, separatamente, le regole che devono funzionare anche fuori dal controller. Il pattern MVC è utile proprio quando impedisce che il codice dipenda dal punto in cui viene chiamato.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/getting_started.html)`,
+- [Rails Guides — Getting Started](https://guides.rubyonrails.org/getting_started.html)`,
   },
   {
     id: "javascript-closure-spiegate-bene",
@@ -2979,11 +3352,14 @@ Il controller riceve una richiesta HTTP, coordina le operazioni e seleziona una 
     date: "2026-04-25",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "Una funzione che 'ricorda' le variabili in cui è nata. Ecco cosa sono davvero le closure.",
     tags: ["JavaScript", "Fondamentali"],
     content: `
 Una **closure** è semplicemente una funzione che continua ad avere accesso alle variabili del contesto in cui è stata creata, anche dopo che quel contesto è terminato.
+
+Per considerare anche gli effetti sull'interfaccia, approfondisci [JavaScript this: call, bind e arrow function](/blog/javascript-this-binding) e [Prototipi JavaScript: inheritance e class](/blog/javascript-prototipi-ereditarieta). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 function contatore() {
@@ -3008,9 +3384,14 @@ Se ti sei mai chiesto perché \`useState\` funziona, la risposta breve è: closu
 
 Una closure conserva accesso all'ambiente lessicale in cui la funzione è stata creata. Non è una copia immutabile dei valori: se la variabile catturata cambia, il comportamento può riflettere il nuovo valore. Usa le closure per incapsulare stato locale o creare callback, ma controlla i riferimenti trattenuti quando una funzione rimane registrata a lungo.
 
+
+## Una closure utile, ma da controllare
+
+Una funzione che incrementa un contatore può mantenere privata la variabile count all'interno di una closure. Due contatori creati da due chiamate alla factory non condividono automaticamente quello stato. Se invece due callback catturano lo stesso oggetto, possono osservare le stesse modifiche. Un test utile crea due istanze indipendenti, incrementa soltanto la prima e confronta i valori restituiti. Considera anche il ciclo di vita: una callback registrata su un oggetto globale può mantenere in memoria dati non più necessari. La closure non perde validità quando esce la funzione esterna, ma i riferimenti che conserva hanno un costo quando restano raggiungibili.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures)`,
+- [MDN — Closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures)`,
   },
   {
     id: "web-audio-primo-oscillatore-audiocontext",
@@ -3018,11 +3399,14 @@ Una closure conserva accesso all'ambiente lessicale in cui la funzione è stata 
     date: "2026-04-26",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🔊",
     excerpt: "AudioContext e OscillatorNode: fare musica in JavaScript senza librerie, solo con il browser.",
     tags: ["Web Audio", "JavaScript", "Musica"],
     content: `
 Il browser ha un sintetizzatore integrato: la **Web Audio API**. Il punto di partenza è l'\`AudioContext\`, il motore che genera e connette i suoni.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda) e [Chrome Music Lab: idee per audio interattivo](/blog/web-audio-chrome-music-lab-lezioni). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const ctx = new AudioContext();
@@ -3043,9 +3427,14 @@ Crei nodi e li connetti in un grafo: un oscillatore produce un'onda, la colleghi
 
 AudioContext gestisce il grafo audio del browser. Un OscillatorNode produce un segnale periodico, ma deve essere collegato a una destinazione e avviato esplicitamente. Le politiche di autoplay possono richiedere un gesto dell'utente prima che il contesto passi allo stato running. Chiudi o riutilizza correttamente il contesto, anziché crearne uno a ogni click.
 
+
+## Primo test: avvio, arresto e volume
+
+Per verificare un oscillatore nel browser, collega la sorgente a un GainNode e poi alla destination del contesto. Imposta inizialmente un gain molto basso, perché l'uscita digitale può risultare intensa. La riproduzione deve partire da un'azione dell'utente: su molti browser occorre riprendere un AudioContext sospeso dentro il gestore del click. Ogni OscillatorNode può essere avviato una sola volta; per suonare una nuova nota crea un nuovo nodo, senza ricreare tutto il contesto. Programma stop dopo una durata breve e controlla che la sorgente venga disconnessa quando non serve più. Se non senti nulla, osserva AudioContext.state prima di cambiare frequenza o parametri casualmente. Questa verifica separa problemi di permessi del browser da errori del grafo audio.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext)`,
+- [MDN — AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext)`,
   },
   {
     id: "sonic-pi-live-loop-cuore-del-live-coding",
@@ -3053,11 +3442,14 @@ AudioContext gestisce il grafo audio del browser. Un OscillatorNode produce un s
     date: "2026-04-27",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🔁",
     excerpt: "I live_loop girano in parallelo e li modifichi mentre suonano. È qui che nasce l'improvvisazione.",
     tags: ["Sonic Pi", "Live Coding"],
     content: `
 Se \`play\` e \`sleep\` sono le note, il \`live_loop\` è ciò che rende Sonic Pi uno strumento *dal vivo*. È un ciclo infinito che puoi riscrivere mentre la musica suona: premi Run e il loop si aggiorna al giro successivo, senza fermarsi.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Sonic Pi sync e cue: sincronizzare i loop](/blog/sonic-pi-sync-cue) e [Sonic Pi: play e sleep per iniziare](/blog/sonic-pi-primo-suono-play-sleep). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 live_loop :beat do
@@ -3078,6 +3470,12 @@ Due \`live_loop\` girano in parallelo, ognuno col suo tempo. Cambia un valore, p
 
 live_loop ripete una sequenza identificata da un nome e permette di modificarla durante l'esecuzione. Ogni iterazione deve avere un avanzamento temporale adeguato: un loop privo di sleep o di un altro meccanismo di temporizzazione può produrre errori. Dai nomi significativi ai loop, come kick o hats, e mantieni una responsabilità musicale distinta per ciascuno.
 
+
+## Aggiornare un loop mentre il set continua
+
+Per un live semplice separa kick e hi-hat in due live_loop con nomi differenti. All'inizio usa soltanto un campione e una durata esplicita; quando entrambi sono stabili, cambia uno dei pattern e ascolta il risultato alla ripetizione successiva. Un ciclo senza un avanzamento temporale rischia di eseguire troppi eventi e interrompere la sessione. Per mantenere allineate le sezioni, ragiona in battute: se un loop dura quattro beat e un altro tre, gli accenti torneranno insieme soltanto dopo più ripetizioni. Registra una prova di un minuto per verificare l'allineamento, non fidarti esclusivamente della visualizzazione dei comandi. Se vuoi fermare un solo elemento, usa la struttura prevista dal programma anziché cancellare indiscriminatamente gli altri loop.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -3088,11 +3486,14 @@ live_loop ripete una sequenza identificata da un nome e permette di modificarla 
     date: "2026-04-28",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
     excerpt: "do...end, Proc e lambda sembrano uguali ma non lo sono. Le differenze che contano davvero.",
     tags: ["Ruby", "Fondamentali"],
     content: `
 I **blocchi** sono ovunque in Ruby: quel \`do...end\` (o le graffe) che passi a un metodo.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby symbol vs string: quando usarli](/blog/ruby-symbol-vs-string) e [Ruby &:method: sintassi e limiti](/blog/ruby-ampersand-symbol-shorthand). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 [1, 2, 3].each { |n| puts n }
@@ -3113,9 +3514,14 @@ Regola pratica: usa la \`lambda\` quando vuoi qualcosa che si comporta come una 
 
 Un blocco è una porzione di codice passata a un metodo. Proc permette di conservarlo in un oggetto; lambda introduce regole più simili a un metodo per il numero di argomenti e per il comportamento di return. Prova i casi con yield, blocco opzionale e chiamata da più punti prima di scegliere una forma per un'API pubblica.
 
+
+## Un caso di riutilizzo
+
+Immagina un'operazione che filtra numeri e riutilizza la regola in due punti. Un blocco inline è sufficiente se viene eseguito una sola volta; un Proc può rendere quella regola un valore passabile tra metodi. Una lambda, invece, segue controlli sugli argomenti e sul return differenti rispetto a un Proc creato con Proc.new. Queste differenze si notano soprattutto in metodi che restituiscono valori anticipatamente. Per verificarle, crea due callable con gli stessi argomenti, usa call e osserva il comportamento con un argomento mancante. Scegli la forma più chiara per chi leggerà il codice, non quella con meno caratteri.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Proc.html)`,
+- [Ruby Core — Proc](https://docs.ruby-lang.org/en/master/Proc.html)`,
   },
   {
     id: "rails-activerecord-le-basi",
@@ -3123,11 +3529,14 @@ Un blocco è una porzione di codice passata a un metodo. Proc permette di conser
     date: "2026-04-29",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "Una classe Ruby diventa una tabella. ActiveRecord traduce i tuoi metodi in query SQL.",
     tags: ["Ruby on Rails", "ActiveRecord", "Database"],
     content: `
 ActiveRecord è l'ORM di Rails: mappa una classe Ruby su una tabella del database e ti fa lavorare con oggetti invece che con stringhe SQL.
+
+L'analisi si completa confrontando questa parte con [Rails associations: belongs_to e has_many](/blog/rails-associazioni-has-many-belongs-to) e [Rails migrations: cambiare lo schema in sicurezza](/blog/rails-migrazioni-versionare-il-database). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 class Launch < ApplicationRecord
@@ -3150,9 +3559,14 @@ Il rischio? Dimenticarsi che c'è un database sotto e sparare mille query senza 
 
 Active Record non elimina SQL: costruisce query SQL e le invia al database. Una relazione restituita da where può rimanere lazy finché non viene materializzata; find e metodi simili possono invece eseguire immediatamente una query. Controlla il log SQL durante lo sviluppo e usa explain per capire query costose. Le colonne usate spesso nei filtri potrebbero richiedere indici verificati sul carico reale.
 
+
+## Capire quando una relazione interroga il database
+
+Scrivere where non significa necessariamente che una query sia già stata eseguita. Una relazione può essere ulteriormente filtrata e materializzata soltanto quando serve leggerne i record. In un elenco paginato verifica quali condizioni vengono realmente inviate a SQL e quali operazioni vengono fatte in memoria. Una chiamata a all o limit non equivale a una query immediata in ogni contesto; controlla il log per vedere cosa accade. Anche la scelta degli indici dipende dalle condizioni e dall'ordinamento utilizzati. Prima di ottimizzare una chiamata Ruby, usa explain o strumenti equivalenti per individuare il costo della query che il database sta eseguendo.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_querying.html)`,
+- [Rails Guides — Active Record Querying](https://guides.rubyonrails.org/active_record_querying.html)`,
   },
   {
     id: "javascript-promise-async-await",
@@ -3160,11 +3574,14 @@ Active Record non elimina SQL: costruisce query SQL e le invia al database. Una 
     date: "2026-04-30",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "shopify-integrazioni",
     icon: "🟨",
     excerpt: "Dal callback hell alle Promise, fino ad async/await: gestire l'asincronia con eleganza.",
     tags: ["JavaScript", "Async"],
     content: `
 Una **Promise** rappresenta un valore che arriverà in futuro: una risposta di rete, un file, un timer. Ha tre stati: pending, fulfilled, rejected.
+
+La stessa decisione può incidere sulla sincronizzazione dei dati: leggi [Shopify line item properties: campi personalizzati](/blog/shopify-custom-fields-app-vs-codice-nativo) e [Lo stesso webhook due volte: come evitare due ordini](/blog/webhook-idempotenza-ordini). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 async function caricaUtente(id) {
@@ -3187,9 +3604,14 @@ Ricorda: \`await\` funziona solo dentro una funzione \`async\`, e avvolgere tutt
 
 async/await rende più leggibile il codice basato su Promise, ma non trasforma automaticamente operazioni sequenziali in operazioni parallele. Due await consecutivi possono introdurre attese non necessarie quando le richieste sono indipendenti. Gestisci gli errori con try/catch dove puoi davvero reagire e usa Promise.all solo quando ha senso fallire insieme alle operazioni concorrenti.
 
+
+## Sequentiale o concorrente?
+
+Supponi di richiedere in parallelo informazioni su un prodotto e un elenco di categorie, perché le due risposte non dipendono l'una dall'altra. Due await consecutivi possono introdurre un'attesa inutile, mentre Promise.all avvia entrambe le operazioni e raccoglie i risultati quando sono pronti. Se una richiesta dipende dall'ID restituito dall'altra, l'esecuzione sequenziale è invece corretta. In caso di errore, decidi se una risposta parziale è utilizzabile: Promise.all fallisce quando uno degli elementi rifiuta, mentre allSettled permette di esaminare gli esiti indipendentemente. Prova artificialmente timeout e fallimenti per verificare cosa vede l'utente.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)`,
+- [MDN — Async Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)`,
   },
   {
     id: "web-audio-oscillatore-forme-onda",
@@ -3197,11 +3619,14 @@ async/await rende più leggibile il codice basato su Promise, ma non trasforma a
     date: "2026-05-01",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "〰️",
     excerpt: "sine, square, sawtooth, triangle: come cambia il timbro e perché il suono grezzo è più ricco.",
     tags: ["Web Audio", "Sintesi", "Musica"],
     content: `
 Un \`OscillatorNode\` produce quattro forme d'onda predefinite, e ognuna ha un carattere sonoro diverso.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Web Audio API: AudioContext e primo oscillatore](/blog/web-audio-primo-oscillatore-audiocontext) e [Web Audio drum machine: sample e timing](/blog/web-audio-drum-machine-browser). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 osc.type = "sine";     // pulito, dolce (flauto)
@@ -3219,9 +3644,14 @@ Vuoi un basso acido? Parti da \`sawtooth\` e togli le alte con un filtro passa-b
 
 Un oscillatore genera onde periodiche. Le forme sine, square, sawtooth e triangle hanno contenuti armonici differenti, ma la percezione dipende anche da volume, frequenza, filtri e dispositivo di ascolto. OscillatorNode emette un segnale finché non viene arrestato: per una nota musicale serve anche un inviluppo di ampiezza, di solito tramite GainNode.
 
+
+## Ascoltare un confronto corretto
+
+Prepara quattro pulsanti che usano la stessa nota e lo stesso inviluppo, cambiando soltanto type dell'OscillatorNode fra sine, triangle, square e sawtooth. Tieni basso il livello e confronta a volume percepito simile: una forma ricca di armoniche può sembrare più forte anche se il gain numerico non cambia. Collega poi un filtro lowpass e ascolta come cambiano le armoniche superiori. Una forma d'onda non è una melodia e un oscillatore continuo non definisce da solo un'articolazione musicale. Per ottenere note distinte, usa un GainNode che applichi un breve attacco e rilascio. Verifica che ogni sorgente venga terminata dopo il suono, così più click non accumulano oscillatori attivi.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode)`,
+- [MDN — OscillatorNode](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode)`,
   },
   {
     id: "sonic-pi-sample-libreria-integrata",
@@ -3229,11 +3659,14 @@ Un oscillatore genera onde periodiche. Le forme sine, square, sawtooth e triangl
     date: "2026-05-02",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🥁",
     excerpt: "Sonic Pi ha decine di campioni integrati. Con sample inneschi drum e texture in una riga.",
     tags: ["Sonic Pi", "Campioni", "Ritmo"],
     content: `
 Oltre a sintetizzare note, Sonic Pi include una libreria di **campioni** pronti: batterie, texture, effetti. Li richiami con \`sample\` seguito da un simbolo.
+
+Questo ragionamento si collega anche ai contenuti su [Sonic Pi sample slicing: start, finish e stretch](/blog/sonic-pi-slicing-campioni) e [Sonic Pi drum machine: kick, snare e hi-hat](/blog/sonic-pi-drum-machine). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 sample :bd_haus                  # cassa
@@ -3252,6 +3685,12 @@ Scrivi \`sample\` e usa l'autocompletamento per esplorare le famiglie: \`:drum_\
 
 sample riproduce un campione dalla libreria disponibile o da un percorso supportato. Amp controlla l'ampiezza, rate modifica velocità e altezza e beat_stretch adatta un campione a una durata musicale. Queste opzioni non hanno sempre lo stesso effetto percettivo: valori estremi possono produrre artefatti. Controlla la durata effettiva del sample rispetto al tuo pattern.
 
+
+## Confrontare un sample prima e dopo le trasformazioni
+
+Scegli un campione di cassa dalla libreria e riproducilo prima senza effetti, poi con un rate diverso e infine con beat_stretch. Il primo confronto modifica velocità e altezza, mentre beat_stretch tenta di adattare la durata: l'esito dipende dal materiale originale e può introdurre artefatti. Controlla quanto dura effettivamente il sample per evitare che la coda invada la battuta successiva. Se imposti un amp molto alto su campioni già compressi, la somma dei colpi può diventare eccessiva. Per un pattern stabile definisci un BPM e una griglia di sleep, poi cambia un parametro per ascoltarne l'effetto. Evita di applicare tutte le trasformazioni insieme, perché diventa difficile capire quale ha prodotto il risultato.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -3262,11 +3701,14 @@ sample riproduce un campione dalla libreria disponibile o da un percorso support
     date: "2026-05-03",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
-    excerpt: "Trasformare, filtrare, aggregare. Tre metodi che sostituiscono la maggior parte dei tuoi cicli.",
+    excerpt: "In Ruby raramente scrivi un ciclo for. Il modulo Enumerable ti dà metodi espressivi che dicono cosa vuoi, non come ottenerlo.",
     tags: ["Ruby", "Enumerable"],
     content: `
 In Ruby raramente scrivi un ciclo \`for\`. Il modulo \`Enumerable\` ti dà metodi espressivi che dicono *cosa* vuoi, non *come* ottenerlo.
+
+L'analisi si completa confrontando questa parte con [Ruby blocchi, Proc e lambda: differenze](/blog/ruby-blocchi-proc-lambda) e [Ruby symbol vs string: quando usarli](/blog/ruby-symbol-vs-string). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 numeri = [1, 2, 3, 4, 5, 6]
@@ -3286,9 +3728,14 @@ Quel \`&:even?\` è la forma compatta di \`{ |n| n.even? }\`. Una volta presa la
 
 map trasforma ogni elemento, select ne filtra una parte e reduce accumula un risultato. Le tre operazioni non sono equivalenti e possono richiedere allocazioni differenti. Per elaborare raccolte molto grandi valuta Enumerator e lazy; per operazioni che accedono al database controlla se una query SQL potrebbe evitare di materializzare tutti i record in memoria.
 
+
+## Tre risultati differenti
+
+Prendi un elenco di importi. Con map puoi convertire ciascun importo in centesimi; con select puoi conservare solo gli importi positivi; con reduce puoi calcolarne il totale. Concatenare tre trasformazioni rende il flusso espressivo, ma può allocare raccolte intermedie. Se il risultato finale è soltanto un totale, considera una singola aggregazione oppure un enumeratore lazy quando serve elaborare una sequenza grande. Un test utile parte da array vuoto, valori negativi e numeri decimali, verificando anche quale tipo viene restituito. In ambito finanziario conviene definire precisione e arrotondamento prima di applicare questi metodi.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Enumerable.html)`,
+- [Ruby Core — Enumerable](https://docs.ruby-lang.org/en/master/Enumerable.html)`,
   },
   {
     id: "rails-migrazioni-versionare-il-database",
@@ -3296,11 +3743,14 @@ map trasforma ogni elemento, select ne filtra una parte e reduce accumula un ris
     date: "2026-05-04",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "Le migrazioni descrivono lo schema in Ruby e lo versionano nel tempo. Niente più ALTER TABLE a mano.",
     tags: ["Ruby on Rails", "Database", "Migrazioni"],
     content: `
 Una **migrazione** è un file Ruby che descrive una modifica allo schema del database. È versionata, reversibile e condivisa col team: il "git" della struttura dati.
+
+L'analisi si completa confrontando questa parte con [Rails Active Record: modelli, query e SQL](/blog/rails-activerecord-le-basi) e [Rails associations: belongs_to e has_many](/blog/rails-associazioni-has-many-belongs-to). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 class CreateLaunches < ActiveRecord::Migration[7.1]
@@ -3325,9 +3775,14 @@ La regola: mai modificare una migrazione già eseguita in produzione. Ne crei un
 
 Le migrazioni versionano le trasformazioni dello schema, ma non sono una copia del database e non ripristinano automaticamente i dati persi. Su tabelle grandi, aggiungere un indice o una colonna con vincoli può avere impatti operativi. Prima del deploy valuta compatibilità con il codice ancora in esecuzione e separa le modifiche incompatibili in passaggi progressivi. Verifica migrazione e rollback su un ambiente rappresentativo.
 
+
+## Migrazioni compatibili con il deploy
+
+Aggiungere una colonna è spesso semplice; rinominarne una usata dal codice già distribuito può essere molto più rischioso. Se durante il deploy circolano contemporaneamente due versioni dell'applicazione, entrambe devono funzionare sullo schema disponibile. Una strategia graduale consiste nell'introdurre il nuovo campo, aggiornare il codice affinché lo legga e lo scriva quando necessario, migrare i dati e rimuovere il vecchio campo solo dopo la transizione. Testa la procedura su dati rappresentativi, specialmente per tabelle grandi. Un rollback dell'applicazione non annulla automaticamente modifiche distruttive già applicate al database: pianifica esplicitamente la reversibilità prima di avviare la migrazione.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_migrations.html)`,
+- [Rails Guides — Active Record Migrations](https://guides.rubyonrails.org/active_record_migrations.html)`,
   },
   {
     id: "javascript-event-loop-come-funziona",
@@ -3335,11 +3790,14 @@ Le migrazioni versionano le trasformazioni dello schema, ma non sono una copia d
     date: "2026-05-05",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "Un solo thread ma tutto sembra parallelo. Come JavaScript gestisce l'asincronia con la coda degli eventi.",
     tags: ["JavaScript", "Runtime", "Async"],
     content: `
 JavaScript ha **un solo thread**: esegue una cosa alla volta. Allora come fa a gestire timer, click e richieste di rete senza congelarsi? Grazie all'**event loop**.
+
+Un confronto utile per questa soluzione è quello con [JavaScript Array: map, filter, reduce e find](/blog/javascript-metodi-array-essenziali) e [JavaScript closure: scope e variabili catturate](/blog/javascript-closure-spiegate-bene). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 console.log("1");
@@ -3358,9 +3816,14 @@ Ecco perché un \`setTimeout(fn, 0)\` non è davvero immediato: si mette in coda
 
 L'event loop non impedisce che il main thread venga bloccato: una funzione sincrona lunga può ritardare input e rendering. Le callback di Promise entrano nella coda delle microtask, mentre i callback di timer sono task che non possono essere eseguiti prima della fine del lavoro corrente. setTimeout con ritardo zero non garantisce un'esecuzione immediata; per calcoli pesanti valuta i Web Worker.
 
+
+## Priorità dei task e fluidità della UI
+
+Un setTimeout a zero millisecondi non interrompe il codice sincrono che sta già eseguendo. Allo stesso modo, un lungo ciclo di microtask può ritardare il rendering se continua ad aggiungere lavoro senza lasciare spazio al browser. Un esempio concreto è una ricerca che elabora migliaia di risultati mentre l'utente prova a digitare: il problema non è soltanto la rete, ma il lavoro sul main thread. Misura i long task con DevTools e valuta chunk di lavoro più piccoli o Web Worker per calcoli pesanti. Lo scheduler non garantisce che una callback venga eseguita a un istante preciso, perciò evita di usarlo come orologio rigoroso.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)`,
+- [MDN — Execution Model](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)`,
   },
   {
     id: "web-audio-gainnode-volume-envelope",
@@ -3368,11 +3831,14 @@ L'event loop non impedisce che il main thread venga bloccato: una funzione sincr
     date: "2026-05-06",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎚️",
     excerpt: "Il volume non è un numero fisso: con il GainNode disegni attacco e rilascio per suoni naturali.",
     tags: ["Web Audio", "Sintesi"],
     content: `
 Se colleghi un oscillatore direttamente alle casse, senti un "click" fastidioso all'accensione e allo spegnimento. Serve un **GainNode** per controllare il volume nel tempo: l'inviluppo.
+
+Questo ragionamento si collega anche ai contenuti su [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda) e [BiquadFilterNode: lowpass, highpass e cutoff](/blog/web-audio-biquadfilter). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const gain = ctx.createGain();
@@ -3395,9 +3861,14 @@ Invece di accendere e spegnere di colpo, fai salire e scendere il volume con del
 
 GainNode moltiplica il segnale in ingresso e può essere automatizzato tramite AudioParam. Per evitare click, non interrompere bruscamente l'onda: programma rampe con setTargetAtTime o linearRampToValueAtTime, rispettando i tempi degli eventi. Un inviluppo musicale completo può includere attack, decay, sustain e release, ma i valori dipendono dal suono desiderato.
 
+
+## Evitare click tra una nota e l'altra
+
+Se interrompi bruscamente un segnale mentre la forma d'onda ha ampiezza diversa da zero, puoi introdurre una discontinuità udibile. Per evitarla applica un inviluppo con una breve rampa di attacco e una di rilascio tramite i metodi di AudioParam. Non tutti gli strumenti hanno bisogno dello stesso ADSR: una cassa usa tempi molto diversi da un pad. Prepara una nota di test e cambia soltanto release, osservando quando la coda si sovrappone alla nota successiva. Ricorda che GainNode controlla l'ampiezza, non i decibel in maniera lineare. Anche con singole voci moderate, la somma di più oscillatori può saturare il mix: controlla il livello del bus finale.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/GainNode)`,
+- [MDN — GainNode](https://developer.mozilla.org/en-US/docs/Web/API/GainNode)`,
   },
   {
     id: "sonic-pi-use-synth-scegliere-sintetizzatori",
@@ -3405,11 +3876,14 @@ GainNode moltiplica il segnale in ingresso e può essere automatizzato tramite A
     date: "2026-05-07",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎹",
     excerpt: "Da :prophet a :tb303: con use_synth scegli il sintetizzatore e trasformi completamente il suono.",
     tags: ["Sonic Pi", "Sintesi"],
     content: `
 La stessa nota cambia completamente a seconda del sintetizzatore che la produce. In Sonic Pi lo scegli con \`use_synth\`.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Sonic Pi TB-303: bassline acid e cutoff](/blog/sonic-pi-bassline-tb303) e [Sonic Pi sample: scegliere e trasformare i suoni](/blog/sonic-pi-sample-libreria-integrata). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 use_synth :prophet
@@ -3431,6 +3905,12 @@ Prova a suonare la stessa sequenza cambiando solo \`use_synth\`: è il modo più
 
 use_synth sceglie il sintetizzatore usato dalle chiamate play successive nello stesso contesto. Due synth possono avere parametri differenti e rispondere diversamente a cutoff, release e inviluppo. Non scegliere un timbro soltanto dal nome: confronta più synth sulla stessa nota e durata, regolando il livello per evitare di confondere volume e carattere sonoro.
 
+
+## Timbro e inviluppo sono due scelte differenti
+
+Confronta due sintetizzatori suonando la stessa nota e usando la stessa durata. Prima lascia i valori di default, poi intervieni su attack, sustain o release quando il synth supporta queste opzioni. Alcuni suoni hanno code lunghe e possono sovrapporsi se ripeti il pattern rapidamente. La differenza fra un timbro percussivo e un pad non dipende soltanto dal nome del sintetizzatore: conta la risposta nel tempo e il contenuto armonico. Se introduci un filtro, regola la risonanza con prudenza e abbassa il volume durante il confronto. Una buona prova registra quattro battute con un synth e quattro con l'altro, senza cambiare note o BPM. Solo così il contrasto timbrico diventa evidente.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -3441,11 +3921,14 @@ use_synth sceglie il sintetizzatore usato dalle chiamate play successive nello s
     date: "2026-05-08",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
-    excerpt: "I simboli non sono stringhe carine: sono immutabili e unici. Ecco quando sceglierli.",
+    excerpt: "In Ruby vedi ovunque cose come :name e ti chiedi perché non una stringa \"name\". La differenza è concreta.",
     tags: ["Ruby", "Fondamentali"],
     content: `
 In Ruby vedi ovunque cose come \`:name\` e ti chiedi perché non una stringa \`"name"\`. La differenza è concreta.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby blocchi, Proc e lambda: differenze](/blog/ruby-blocchi-proc-lambda) e [Ruby &:method: sintassi e limiti](/blog/ruby-ampersand-symbol-shorthand). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 "ciao".object_id   # => cambia ogni volta (nuovo oggetto)
@@ -3463,9 +3946,14 @@ Per questo i simboli sono perfetti come chiavi di hash e nomi/identificatori (\`
 
 Una String è una sequenza di caratteri modificabile, salvo congelamento; un Symbol rappresenta un identificatore immutabile. Non sostituire tutte le stringhe con simboli per presunte ottimizzazioni: scegli il tipo in base al significato dei dati. Per input provenienti dall'esterno, valida sempre i valori consentiti prima di trasformarli in chiavi di logica applicativa.
 
+
+## Chiavi e dati provenienti dall'esterno
+
+Un Hash di configurazione può usare simboli come :timeout o :host perché rappresentano nomi stabili controllati dal programma. Un valore inserito da una persona, invece, non diventa automaticamente un identificatore valido solo perché lo si converte in simbolo. Se ricevi JSON da un'API, chiarisci se le chiavi sono stringhe e applica una normalizzazione in un solo punto. Il test più semplice verifica cosa accade quando accedi allo stesso Hash tramite "name" e :name: in Ruby sono chiavi distinte. Preferire una convenzione coerente è più importante di una presunta differenza di prestazioni non misurata.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Symbol.html)`,
+- [Ruby Core — Symbol](https://docs.ruby-lang.org/en/master/Symbol.html)`,
   },
   {
     id: "rails-associazioni-has-many-belongs-to",
@@ -3473,11 +3961,14 @@ Una String è una sequenza di caratteri modificabile, salvo congelamento; un Sym
     date: "2026-05-09",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "has_many e belongs_to collegano le tabelle e ti regalano metodi comodi per navigarle.",
     tags: ["Ruby on Rails", "ActiveRecord", "Database"],
     content: `
 Le **associazioni** dicono a Rails come i modelli sono collegati, e in cambio ti danno metodi per muoverti tra i dati senza scrivere join a mano.
+
+L'analisi si completa confrontando questa parte con [Rails Active Record: modelli, query e SQL](/blog/rails-activerecord-le-basi) e [Rails migrations: cambiare lo schema in sicurezza](/blog/rails-migrazioni-versionare-il-database). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 class Provider < ApplicationRecord
@@ -3503,9 +3994,14 @@ Aggiungi \`dependent: :destroy\` e cancellando un provider elimini anche i suoi 
 
 Le associazioni descrivono le relazioni tra modelli, ma vanno mantenute coerenti con i vincoli del database. Una belongs_to non implica automaticamente che ogni record esistente abbia una riga collegata: dipende da validazioni, nullability e dati. Evita di risolvere la presenza con query dentro ogni ciclo; una lista di record che carica le associazioni una per volta produce il problema N+1. Per le operazioni distruttive definisci esplicitamente le dipendenze.
 
+
+## Modellare relazioni e cancellazioni
+
+Considera un ordine con più righe. Una associazione has_many rende comodo esplorare le righe, ma non determina da sola cosa deve succedere quando l'ordine viene eliminato. Devi definire vincoli sulle chiavi esterne, regole di dipendenza e politica di conservazione dei dati. La relazione inversa belongs_to può avere requisiti di presenza differenti a seconda del dominio. Per evitare query ripetute in un elenco usa un caricamento anticipato adeguato, ma controlla anche quante righe vengono materializzate. Un test utile crea un ordine con due righe, tenta la cancellazione e verifica che il risultato corrisponda alla regola applicativa e al vincolo database.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/association_basics.html)`,
+- [Rails Guides — Association Basics](https://guides.rubyonrails.org/association_basics.html)`,
   },
   {
     id: "javascript-metodi-array-essenziali",
@@ -3513,11 +4009,14 @@ Le associazioni descrivono le relazioni tra modelli, ma vanno mantenute coerenti
     date: "2026-05-10",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "map, filter, reduce, find, some: il coltellino svizzero per lavorare con le liste senza cicli.",
     tags: ["JavaScript", "Array"],
     content: `
 Come in Ruby, anche in JavaScript i cicli \`for\` sono quasi sempre sostituibili da metodi più espressivi.
+
+Nel frontend lo stesso problema si collega a [Event loop JavaScript: task e microtask](/blog/javascript-event-loop-come-funziona) e [JavaScript destructuring: default e valori undefined](/blog/javascript-destructuring). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const nums = [1, 2, 3, 4, 5];
@@ -3539,9 +4038,14 @@ Si concatenano leggendosi come una frase: \`utenti.filter(attivo).map(nome)\`. I
 
 map crea un nuovo array, filter seleziona elementi e find restituisce il primo corrispondente. Non tutte le operazioni sono innocue: sort modifica l'array originale, mentre toSorted produce una copia. Quando lavori con oggetti annidati, copiare l'array non clona automaticamente ogni elemento. Controlla i casi vuoti e valuta la leggibilità prima di concatenare molte trasformazioni.
 
+
+## Scegliere il metodo secondo il risultato
+
+Per trovare il primo elemento che soddisfa una condizione usa find, non filter seguito dall'accesso alla prima posizione, se non ti serve l'intera lista. Per sapere se esiste almeno una corrispondenza, some descrive meglio l'intenzione. Ricorda che map produce un nuovo array ma non clona automaticamente gli oggetti contenuti: se il callback modifica un oggetto esistente, altre parti del programma possono osservare il cambiamento. Un test utile verifica input vuoto, duplicati e oggetti condivisi. Se l'elenco proviene da una chiamata API, controlla anche che il tipo atteso sia effettivamente un array prima di invocare questi metodi.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`,
+- [MDN — Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`,
   },
   {
     id: "web-audio-grafo-nodi-connect",
@@ -3549,11 +4053,14 @@ map crea un nuovo array, filter seleziona elementi e find restituisce il primo c
     date: "2026-05-11",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🕸️",
     excerpt: "Sorgenti, effetti, destinazione: l'audio nel browser è un grafo di nodi che colleghi con connect.",
     tags: ["Web Audio", "Architettura"],
     content: `
 La Web Audio API ragiona come una pedaliera per chitarra: hai delle **sorgenti**, dei nodi di **elaborazione** e una **destinazione**, e li colleghi con \`connect\`.
+
+Questo ragionamento si collega anche ai contenuti su [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda) e [Web Audio API: AudioContext e primo oscillatore](/blog/web-audio-primo-oscillatore-audiocontext). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 // sorgente -> filtro -> volume -> casse
@@ -3571,9 +4078,14 @@ Questo modello dichiarativo è potente: costruisci una catena una volta, poi ti 
 
 Nel Web Audio API i nodi formano un grafo: una sorgente passa attraverso filtri, gain ed effetti prima di raggiungere la destinazione. connect crea collegamenti che possono sdoppiare o sommare segnali; una connessione non prevista può far percepire il suono due volte. Controlla il percorso dry e wet degli effetti e usa disconnect quando cambi struttura in modo dinamico.
 
+
+## Controllare i percorsi dry e wet
+
+Un effetto collegato in parallelo alla sorgente può creare due percorsi, uno diretto e uno processato. È una struttura utile per riverbero e delay, ma se entrambi arrivano alla destination senza controllo del livello possono aumentare il volume. Disegna prima il percorso del segnale, indicando sorgenti, gain, effetti e uscita. Poi attiva e disattiva i rami uno alla volta, assicurandoti che disconnect non rimuova connessioni necessarie ad altri strumenti. Quando cambi preset, verifica che non vengano aggiunti nuovi collegamenti senza eliminare quelli precedenti. Un buon test consiste nel ripetere il cambio effetto molte volte e confrontare il livello iniziale e finale. Se cresce progressivamente, il grafo può contenere duplicazioni.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode/connect)`,
+- [MDN — AudioNode.connect](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode/connect)`,
   },
   {
     id: "sonic-pi-with-fx-effetti",
@@ -3581,11 +4093,14 @@ Nel Web Audio API i nodi formano un grafo: una sorgente passa attraverso filtri,
     date: "2026-05-12",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🌫️",
     excerpt: "Riverbero, echo, distorsione: with_fx avvolge un blocco di codice in un effetto. Anche annidati.",
     tags: ["Sonic Pi", "Effetti"],
     content: `
 Gli effetti in Sonic Pi si applicano con \`with_fx\`, che avvolge un blocco di codice: tutto ciò che suoni al suo interno passa attraverso l'effetto.
+
+Un approfondimento dello stesso percorso si trova in [Sonic Pi use_synth: timbri e parametri](/blog/sonic-pi-use-synth-scegliere-sintetizzatori) e [Sonic Pi scale e chord: costruire melodie](/blog/sonic-pi-scale-accordi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 with_fx :reverb, mix: 0.6 do
@@ -3610,6 +4125,12 @@ Il riverbero dà profondità, l'echo crea il ritmo, la distorsione aggiunge grin
 
 with_fx applica un effetto al codice eseguito nel blocco. Puoi annidare più effetti, ma l'ordine cambia il risultato: un delay prima del riverbero non è equivalente a un riverbero seguito da delay. Mantieni un equilibrio tra segnale diretto e processato tramite mix e verifica che le code degli effetti non invadano i colpi successivi.
 
+
+## Ordine degli effetti e percorso del segnale
+
+Inserire un delay prima del riverbero può produrre una coda diversa dall'ordine inverso, perché ogni ripetizione viene elaborata in modo differente. Inizia con una singola nota e un effetto alla volta; regola mix e livello prima di aggiungerne un secondo. Su una parte ritmica, un riverbero eccessivo può coprire gli attacchi dei colpi successivi e ridurre la definizione del groove. Per studiare l'effetto, alterna quattro battute dry e quattro wet mantenendo gli stessi eventi musicali. Quando annidi più with_fx, considera il consumo di risorse e le code che restano udibili dopo l'ultimo trigger. Evita l'idea che ogni brano debba avere più effetti: spesso una semplice gestione dei volumi rende il mix più comprensibile.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -3620,11 +4141,14 @@ with_fx applica un effetto al codice eseguito nel blocco. Puoi annidare più eff
     date: "2026-05-13",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
     excerpt: "fetch, dig, each_with_object, transform_values: l'hash di Ruby è molto più di un dizionario.",
     tags: ["Ruby", "Collezioni"],
     content: `
 L'hash è la struttura dati che userai di più in Ruby. Oltre a \`[]\`, ha metodi che risolvono problemi ricorrenti.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Ruby symbol vs string: quando usarli](/blog/ruby-symbol-vs-string) e [Ruby metaprogrammazione: quando evitarla](/blog/ruby-metaprogrammazione-basi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 config = { host: "localhost", port: 3000 }
@@ -3647,9 +4171,14 @@ Conoscere questi metodi significa scrivere meno \`if key\`, e lasciare che sia l
 
 Un Hash associa chiavi a valori e conserva l'ordine d'inserimento. fetch è utile quando una chiave mancante deve essere distinguibile da un valore nil. Non usare un default mutabile condiviso senza capire i riferimenti: un array riutilizzato accidentalmente può contaminare chiavi diverse. Verifica merge, transform_values e dig sui casi limite.
 
+
+## Default mutabili e chiavi mancanti
+
+Se scrivi Hash.new([]), più chiavi mancanti possono restituire lo stesso array predefinito. Modificarlo può creare risultati sorprendenti, senza aver inserito davvero la chiave nel contenitore. Per costruire gruppi indipendenti è più sicuro usare un blocco che inizializzi un array per ogni nuova chiave. Distinguere fetch da un accesso con [] aiuta anche a non trattare un campo assente come un valore nil intenzionale. Prova una struttura annidata in cui un campo manca: dig può restituire nil, mentre un controllo più rigoroso potrebbe richiedere un errore esplicito. L'API scelta deve riflettere il contratto dei dati.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Hash.html)`,
+- [Ruby Core — Hash](https://docs.ruby-lang.org/en/master/Hash.html)`,
   },
   {
     id: "rails-validazioni-dati-puliti",
@@ -3657,11 +4186,14 @@ Un Hash associa chiavi a valori e conserva l'ordine d'inserimento. fetch è util
     date: "2026-05-14",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "presence, uniqueness, format: le validazioni tengono fuori dal database i dati sbagliati.",
     tags: ["Ruby on Rails", "ActiveRecord"],
     content: `
 Le **validazioni** vivono nel Model e bloccano il salvataggio se i dati non rispettano le regole. Sono la garanzia che nel database non finisca spazzatura.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Rails associations: belongs_to e has_many](/blog/rails-associazioni-has-many-belongs-to) e [Rails Active Record: modelli, query e SQL](/blog/rails-activerecord-le-basi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 class Launch < ApplicationRecord
@@ -3686,9 +4218,14 @@ Attenzione: le validazioni proteggono a livello applicativo. Per garanzie ferree
 
 Le validazioni di Active Record migliorano feedback e coerenza applicativa, ma non sono una barriera sufficiente contro modifiche concorrenti. Due richieste possono superare contemporaneamente una validazione di unicità. Per i vincoli importanti usa anche indici unici e vincoli sul database, gestendo l'eventuale errore in applicazione. Testa valori nil, input vuoti e stati intermedi della transazione.
 
+
+## Concorrenza e responsabilità del database
+
+Supponi che due richieste provino a registrare contemporaneamente lo stesso identificativo. Entrambe possono superare validates uniqueness prima che una delle due righe venga salvata. Per questo motivo un vincolo unico nel database è indispensabile quando l'unicità è un requisito del dominio. La validazione applicativa continua a servire per offrire un messaggio comprensibile, ma devi gestire anche l'eccezione che il database restituisce quando la concorrenza produce un conflitto. Prova il percorso con due richieste simultanee, non soltanto con due salvataggi sequenziali. Per i valori opzionali considera la semantica di null del database e verifica che il vincolo rifletta esattamente il requisito.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_validations.html)`,
+- [Rails Guides — Active Record Validations](https://guides.rubyonrails.org/active_record_validations.html)`,
   },
   {
     id: "javascript-destructuring",
@@ -3696,11 +4233,14 @@ Le validazioni di Active Record migliorano feedback e coerenza applicativa, ma n
     date: "2026-05-15",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
-    excerpt: "Estrarre valori da oggetti e array in una riga, con default e rinomina. Un piccolo superpotere.",
+    excerpt: "Il destructuring estrae valori da oggetti e array assegnandoli a variabili in una sola riga.",
     tags: ["JavaScript", "Sintassi"],
     content: `
 Il **destructuring** estrae valori da oggetti e array assegnandoli a variabili in una sola riga.
+
+Per considerare anche gli effetti sull'interfaccia, approfondisci [Optional chaining e nullish coalescing in JS](/blog/javascript-optional-chaining-nullish) e [JavaScript Array: map, filter, reduce e find](/blog/javascript-metodi-array-essenziali). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const user = { name: "Ale", role: "dev", city: "Torino" };
@@ -3726,9 +4266,14 @@ Meno \`const x = obj.x\` ripetuti, più codice che dice subito quali dati ti ser
 
 Il destructuring estrae valori da oggetti e array con una sintassi compatta. Un valore di default si applica quando quello estratto è undefined, non quando è null. Per dati provenienti da API controlla prima la struttura: destrutturare direttamente un valore null può generare un errore. Usa alias quando nomi uguali provengono da oggetti differenti.
 
+
+## Default e contratti API
+
+Considera la risposta di un endpoint che dovrebbe restituire un oggetto con settings. Se il campo esiste ma vale null, il destructuring con un default impostato su {} non sostituisce quel null: il default viene usato soltanto in presenza di undefined. Una funzione che destruttura parametri direttamente nella firma dovrebbe quindi gestire esplicitamente il caso dell'argomento assente o nullo, se previsto. Un piccolo test confronta {}, {theme: undefined}, {theme: null} e {theme: "dark"}. Il destructuring rende il codice breve, ma non è un meccanismo di validazione: quando arrivano dati non attendibili serve un controllo del contratto prima dell'uso.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring)`,
+- [MDN — Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring)`,
   },
   {
     id: "web-audio-biquadfilter",
@@ -3736,11 +4281,14 @@ Il destructuring estrae valori da oggetti e array con una sintassi compatta. Un 
     date: "2026-05-16",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎛️",
     excerpt: "Il BiquadFilterNode taglia o esalta le frequenze. È il cuore della sintesi sottrattiva.",
     tags: ["Web Audio", "Sintesi"],
     content: `
 Il **BiquadFilterNode** è il filtro della Web Audio API: decide quali frequenze passano e quali no. È lo stesso \`cutoff\` che in Sonic Pi rende acido un basso.
+
+Per esplorare un caso vicino e capire le differenze, consulta [GainNode e ADSR: controllare l'ampiezza](/blog/web-audio-gainnode-volume-envelope) e [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const filter = ctx.createBiquadFilter();
@@ -3764,9 +4312,14 @@ Automatizzare \`frequency\` nel tempo è ciò che dà vita ai suoni: un filtro c
 
 BiquadFilterNode offre filtri comuni e parametri di frequenza, Q e guadagno. Non tutti i tipi utilizzano gli stessi parametri allo stesso modo; per esempio il gain riguarda filtri come lowshelf o highshelf. Modifiche brusche alla frequenza possono creare artefatti. Prima di aggiungere più filtri valuta la risposta complessiva e il livello finale del segnale.
 
+
+## Automatizzare cutoff con prudenza
+
+Per confrontare lowpass e highpass, usa una sorgente ricca di armoniche e mantieni costanti frequenza fondamentale e volume. Muovi cutoff gradualmente: spostamenti bruschi possono creare artefatti che non dipendono dal timbro della sorgente. Il parametro Q influisce sulla risposta intorno alla frequenza di taglio; un valore elevato può produrre picchi, perciò abbassa il livello durante le prove. Non tutti i tipi di BiquadFilterNode interpretano Q e gain nello stesso modo. Se colleghi più filtri in serie, la risposta complessiva dipende da tutta la catena. Verifica con un AnalyserNode come cambiano le frequenze, ma non considerare quella rappresentazione una misura calibrata del suono.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode)`,
+- [MDN — BiquadFilterNode](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode)`,
   },
   {
     id: "sonic-pi-scale-accordi",
@@ -3774,11 +4327,14 @@ BiquadFilterNode offre filtri comuni e parametri di frequenza, Q e guadagno. Non
     date: "2026-05-17",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎼",
     excerpt: "scale e chord generano le note giuste al posto tuo. La teoria musicale diventa una funzione.",
     tags: ["Sonic Pi", "Teoria musicale"],
     content: `
 Non serve conoscere la teoria musicale a memoria: Sonic Pi ha \`scale\` e \`chord\` che restituiscono le note giuste come una lista.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Sonic Pi with_fx: riverbero e delay](/blog/sonic-pi-with-fx-effetti) e [Sonic Pi drum machine: kick, snare e hi-hat](/blog/sonic-pi-drum-machine). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 scale(:e3, :minor_pentatonic)
@@ -3805,6 +4361,12 @@ Combinali con \`.choose\` per melodie casuali sempre "in chiave", o con \`.tick\
 
 scale genera note appartenenti a una scala, chord note di un accordo. Il fatto che due note siano nella stessa scala non garantisce automaticamente una melodia efficace: contano ritmo, registro e progressione armonica. Usa una scala limitata all'inizio e varia una nota alla volta. Se compaiono ottave troppo alte o basse, definisci esplicitamente il registro desiderato.
 
+
+## Costruire una progressione limitata
+
+Parti da una scala semplice e scegli un registro di note che rimanga udibile senza sovrapporsi completamente alla cassa. Usa chord per costruire un accordo, ma non suonare tutte le note simultaneamente per forza: prova un arpeggio, distribuendole nel tempo. Registra un ciclo di quattro battute e ascolta se la prima nota della ripetizione si collega in modo chiaro all'ultima. Il fatto che tutte le note appartengano alla stessa scala non garantisce automaticamente tensione o risoluzione musicale. Per migliorare la struttura limita inizialmente il numero di note e varia ritmo e durata. Confronta due versioni cambiando un solo grado della progressione, in modo da capire quale scelta ha modificato davvero il risultato.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -3815,11 +4377,14 @@ scale genera note appartenenti a una scala, chord note di un accordo. Il fatto c
     date: "2026-05-18",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
-    excerpt: "define_method e method_missing: come Rails genera metodi al volo. Potente, da maneggiare con cura.",
+    excerpt: "La metaprogrammazione è la capacità di Ruby di definire metodi a runtime. È la magia dietro tante comodità di Rails.",
     tags: ["Ruby", "Metaprogrammazione"],
     content: `
 La **metaprogrammazione** è la capacità di Ruby di definire metodi a runtime. È la magia dietro tante comodità di Rails.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Ruby Hash: chiavi, default e trasformazioni](/blog/ruby-hash-metodi-utili) e [Ruby pattern matching: case/in](/blog/ruby-pattern-matching). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 class Configurazione
@@ -3843,9 +4408,14 @@ Con \`define_method\` crei metodi in un ciclo invece di scriverli a mano uno per
 
 La metaprogrammazione consente di definire metodi e comportamenti dinamicamente. È potente ma rende meno immediato capire da dove provenga una chiamata. Usa define_method e method_missing soltanto quando il vantaggio è concreto; documenta la superficie pubblica ed evita di nascondere errori di battitura dietro fallback generici. Test e introspezione diventano particolarmente importanti.
 
+
+## Metodi dinamici con responsabilità esplicita
+
+Creare metodi con define_method può essere utile quando molte proprietà condividono una regola uniforme. Ma se la lista cambia spesso o dipende da input esterni, il codice dinamico diventa difficile da analizzare. Una parte del programma potrebbe chiamare un metodo che non compare nella ricerca testuale del progetto. Prima di introdurre metaprogrammazione, chiediti se una tabella di configurazione o un metodo esplicito renderebbe più semplice il debug. Prova respond_to?, l'elenco degli instance_methods e il comportamento di un metodo non previsto. Un sistema che gestisce le assenze con method_missing deve offrire errori coerenti, non assorbire ogni chiamata sconosciuta.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Module.html)`,
+- [Ruby Core — Module](https://docs.ruby-lang.org/en/master/Module.html)`,
   },
   {
     id: "rails-api-only-mode",
@@ -3853,11 +4423,14 @@ La metaprogrammazione consente di definire metodi e comportamenti dinamicamente.
     date: "2026-05-19",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "rails new --api crea un backend snello che parla JSON. Niente view, solo endpoint.",
     tags: ["Ruby on Rails", "API"],
     content: `
 Quando il frontend è separato (React, un'app mobile), non ti serve tutto lo strato delle view. Rails offre la modalità **API-only**.
+
+L'analisi si completa confrontando questa parte con [Rails: chiamare API esterne senza perdere affidabilità](/blog/rails-consumare-api-esterne) e [Rails request specs: contratti HTTP e casi limite](/blog/rails-request-specs-testare-api). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`bash
 rails new launch-tracker-api --api
@@ -3887,9 +4460,14 @@ Rispetto a un'app classica, la modalità \`--api\` rimuove middleware inutili (c
 
 La modalità API-only parte da una configurazione più leggera per servizi che espongono API, ma non impone automaticamente un buon contratto HTTP. Definisci formato degli errori, autorizzazioni, paginazione, timeout e versioni delle risposte. La serializzazione deve esporre soltanto i campi necessari. Testa separatamente successo, validazione fallita, risorsa assente e accesso non autorizzato.
 
+
+## Definire un contratto HTTP verificabile
+
+Un'API che restituisce JSON deve offrire più della serializzazione di un model. Specifica quali campi sono pubblici, quali sono obbligatori in input e quali status HTTP corrispondono a creazione, validazione fallita o risorsa mancante. Evita di esporre indiscriminatamente colonne del database: aggiungerne una in futuro potrebbe modificare la risposta senza intenzione. Per endpoint paginati definisci cursor o pagina, ordinamento stabile e limiti ragionevoli. Prepara request spec per una richiesta autorizzata, una senza permessi e una con un parametro inatteso. Se il client dipende da una struttura particolare, mantieni il contratto documentato e valuta l'impatto delle modifiche prima di rilasciare.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/api_app.html)`,
+- [Rails Guides — Api App](https://guides.rubyonrails.org/api_app.html)`,
   },
   {
     id: "javascript-moduli-es-import-export",
@@ -3897,11 +4475,14 @@ La modalità API-only parte da una configurazione più leggera per servizi che e
     date: "2026-05-20",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "Dividere il codice in file con import/export. named vs default, e perché conta per il bundle.",
     tags: ["JavaScript", "Moduli"],
     content: `
 I **moduli ES** dividono il codice in file, ognuno con la sua interfaccia pubblica dichiarata con \`export\` e \`import\`.
+
+Un confronto utile per questa soluzione è quello con [JavaScript destructuring: default e valori undefined](/blog/javascript-destructuring) e [JavaScript Array: map, filter, reduce e find](/blog/javascript-metodi-array-essenziali). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 // math.js
@@ -3922,9 +4503,14 @@ Preferire i named export aiuta il **tree-shaking**: il bundler può scartare le 
 
 Gli ES modules definiscono dipendenze esplicite, ma non ogni import è gratuito: un modulo può eseguire codice durante l'inizializzazione. Gli import dinamici consentono di caricare funzionalità quando servono; valuta come il bundler gestisce code splitting e side effect. Per evitare dipendenze circolari, mantieni una direzione chiara fra livelli e componenti.
 
+
+## Dipendenze e codice che parte all'import
+
+Importare un modulo può eseguire il codice presente al suo livello superiore. Se una libreria inizializza connessioni, listener o configurazioni al momento dell'import, lo stato dell'applicazione può dipendere dall'ordine di inizializzazione. Preferisci funzioni esplicite quando l'avvio ha effetti collaterali importanti. Un import dinamico è utile per caricare un editor o una funzionalità pesante soltanto quando l'utente la richiede, ma l'utente deve ricevere un indicatore di caricamento e un percorso di errore. Dopo aver introdotto code splitting controlla che i bundle risultanti non duplicano inutilmente librerie e che le navigazioni dirette alle pagine secondarie funzionino.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)`,
+- [MDN — Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)`,
   },
   {
     id: "web-audio-convolver-riverbero",
@@ -3932,11 +4518,14 @@ Gli ES modules definiscono dipendenze esplicite, ma non ogni import è gratuito:
     date: "2026-05-21",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🏛️",
     excerpt: "Il ConvolverNode usa la 'impronta' acustica di un luogo reale per far suonare il tuo audio lì dentro.",
     tags: ["Web Audio", "Effetti"],
     content: `
 Il riverbero più realistico nel browser si ottiene con il **ConvolverNode**, che applica al suono l'impronta acustica di un luogo reale: una chiesa, una stanza, un garage.
+
+Un approfondimento dello stesso percorso si trova in [Web Audio delay e feedback: controllo della stabilità](/blog/web-audio-delay-feedback) e [BiquadFilterNode: lowpass, highpass e cutoff](/blog/web-audio-biquadfilter). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const convolver = ctx.createConvolver();
@@ -3959,9 +4548,14 @@ Il trucco è la **impulse response**: un breve file audio che cattura come un am
 
 ConvolverNode elabora il segnale usando una risposta all'impulso caricata in AudioBuffer. La qualità del riverbero dipende dal file e dal mix dry/wet; non è sufficiente collegare un nodo senza dati validi. File più lunghi richiedono più memoria ed elaborazione. Per applicazioni interattive prevedi gestione del caricamento, fallback e volume dell'effetto.
 
+
+## Una risposta all'impulso non è un preset magico
+
+ConvolverNode elabora il segnale usando un AudioBuffer che rappresenta una risposta all'impulso. Per una prova controllata carica un campione valido, decodificalo e separa il percorso asciutto dal percorso processato. Regola il bilanciamento dei due rami, perché una risposta molto lunga può far sembrare sfocate anche le note brevi. Se il caricamento fallisce, mostra un errore e lascia utilizzabile il percorso dry. Gli impulsi lunghi occupano memoria e richiedono calcolo: prova sul dispositivo target e non soltanto sul computer di sviluppo. Prima di distribuire un'applicazione assicurati di poter usare legalmente il campione e indica quando l'asset viene scaricato.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode)`,
+- [MDN — ConvolverNode](https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode)`,
   },
   {
     id: "sonic-pi-drum-machine",
@@ -3969,11 +4563,14 @@ ConvolverNode elabora il segnale usando una risposta all'impulso caricata in Aud
     date: "2026-05-22",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🥁",
-    excerpt: "Cassa, rullante e charleston in tre live_loop: le fondamenta ritmiche di qualsiasi brano.",
+    excerpt: "Il groove nasce da pochi elementi ben incastrati. Con tre liveloop costruisci una drum machine completa.",
     tags: ["Sonic Pi", "Ritmo"],
     content: `
 Il groove nasce da pochi elementi ben incastrati. Con tre \`live_loop\` costruisci una drum machine completa.
+
+Questo ragionamento si collega anche ai contenuti su [Sonic Pi sample: scegliere e trasformare i suoni](/blog/sonic-pi-sample-libreria-integrata) e [Sonic Pi scale e chord: costruire melodie](/blog/sonic-pi-scale-accordi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 use_bpm 120
@@ -4004,6 +4601,12 @@ Per irrobustire, aggiungi variazione: \`sample :sn_dolf if one_in(4)\` fa scatta
 
 Una drum machine programmata in Sonic Pi combina eventi di sample con una griglia di sleep. Prima di aggiungere casualità, costruisci un pattern ripetibile su quattro battute e verifica l'allineamento tra kick, snare e hi-hat. Regola amp e la distanza tra colpi per evitare sovrapposizioni che mascherano i transienti. Solo dopo introduci variazioni ritmiche.
 
+
+## Un pattern a sedici step
+
+Definisci una battuta suddivisa in sedicesimi e inserisci i colpi di cassa sugli accenti principali, lasciando volutamente alcune caselle vuote. Aggiungi hi-hat con un livello inferiore alla cassa e poi una snare in una posizione riconoscibile. Conta gli step prima di introdurre un secondo live_loop: due pattern con durate diverse possono creare poliritmi involontari. Una variazione ogni quarta battuta può rendere interessante il groove, ma deve essere verificata prima di aggiungere casualità. Registra qualche ciclo e ascolta il rapporto tra transienti e code, perché alcuni sample possono sovrapporsi. Un pattern musicale non migliora semplicemente aumentando il numero di eventi; pause e differenze di dinamica sono parte essenziale del ritmo.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -4014,11 +4617,14 @@ Una drum machine programmata in Sonic Pi combina eventi di sample con una grigli
     date: "2026-05-23",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
     excerpt: "Destrutturare e far match su struttura dei dati con case/in. Elegante per JSON e API.",
     tags: ["Ruby", "Ruby 3"],
     content: `
 Ruby 3 ha portato il **pattern matching**: con \`case/in\` fai match sulla *struttura* dei dati, non solo sul valore.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby Ractor: isolamento e concorrenza](/blog/ruby-ractor-concorrenza) e [Ruby metaprogrammazione: quando evitarla](/blog/ruby-metaprogrammazione-basi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 response = { status: "ok", data: { name: "Falcon 9", provider: "SpaceX" } }
@@ -4042,9 +4648,14 @@ Nota la potenza: \`name:\` e \`provider:\` non solo verificano che le chiavi esi
 
 Il pattern matching permette di verificare struttura e contenuto di array e hash con case/in. È utile con payload eterogenei, ma il pattern non convalida automaticamente l'intero contratto dei dati. Definisci una gestione esplicita per i casi non previsti e prova differenze fra chiavi mancanti, valori nil e tipi incompatibili.
 
+
+## Pattern parziali e input non attendibili
+
+Un payload API potrebbe contenere un hash con status e data. Un pattern può verificare entrambi i campi e assegnare nomi locali, ma l'assenza di una chiave o un valore di tipo imprevisto deve essere gestita. Non confondere un match riuscito con una validazione completa del documento: il payload potrebbe avere altri campi malformati. Un test utile passa un hash valido, uno senza status e uno con status nullo. Prevedi un ramo else che produca un risultato comprensibile, soprattutto quando i dati arrivano da servizi esterni. È preferibile rifiutare esplicitamente i casi non supportati anziché farli procedere per errore.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/syntax/pattern_matching_rdoc.html)`,
+- [Ruby Core — Pattern Matching](https://docs.ruby-lang.org/en/master/syntax/pattern_matching_rdoc.html)`,
   },
   {
     id: "rails-consumare-api-esterne",
@@ -4052,11 +4663,14 @@ Il pattern matching permette di verificare struttura e contenuto di array e hash
     date: "2026-05-24",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "Come un backend Rails interroga un'API pubblica (Launch Library 2), la elabora e la ripubblica migliore.",
     tags: ["Ruby on Rails", "API", "Faraday"],
     content: `
 Un pattern classico: il tuo backend interroga un'API pubblica, salva e arricchisce i dati, e li ri-espone in un formato migliore. È il cuore di un progetto come Launch Tracker.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Rails API-only: controller e JSON](/blog/rails-api-only-mode) e [Rails request specs: contratti HTTP e casi limite](/blog/rails-request-specs-testare-api). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 require "faraday"
@@ -4084,9 +4698,14 @@ In produzione: fai girare questa chiamata in un **job in background** e salva i 
 
 Un esempio che scarica e normalizza JSON è utile per capire il flusso, ma in produzione non basta verificare che il body sia presente. Controlla status HTTP, timeout, schema dei dati e limiti di richiesta. Differenzia errori temporanei da quelli permanenti; un retry senza limiti può saturare l'API. Se devi persistere i risultati, registra l'ultimo aggiornamento riuscito e proteggi gli utenti da dati parziali.
 
+
+## Gestire i fallimenti di un servizio remoto
+
+Interrogare un provider esterno può funzionare durante una demo e produrre dati incompleti in presenza di timeout o risposte parziali. Prima del parsing controlla lo status HTTP e il formato dichiarato, applica limiti di tempo ragionevoli e distingui errori permanenti da quelli temporanei. Un retry senza backoff può peggiorare un servizio già sovraccarico. Quando salvi record ricavati da quell'API, usa identificativi stabili e stabilisci che cosa succede ai campi assenti o nulli. Un controllo utile simula una risposta valida, una vuota e una 429. La logica deve impedire che un singolo fallimento venga scambiato per un catalogo definitivamente privo di dati.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_job_basics.html)`,
+- [Rails Guides — Active Job Basics](https://guides.rubyonrails.org/active_job_basics.html)`,
   },
   {
     id: "javascript-fetch-api",
@@ -4094,11 +4713,14 @@ Un esempio che scarica e normalizza JSON è utile per capire il flusso, ma in pr
     date: "2026-05-25",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "GET, POST, header e gestione errori: tutto quello che serve per chiamare un'API con fetch.",
     tags: ["JavaScript", "Networking"],
     content: `
 \`fetch\` è il modo nativo per fare richieste HTTP dal browser. Restituisce una Promise che si risolve in un oggetto \`Response\`.
+
+Un confronto utile per questa soluzione è quello con [JavaScript ES modules: import, export e bundle](/blog/javascript-moduli-es-import-export) e [JavaScript this: call, bind e arrow function](/blog/javascript-this-binding). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 // GET
@@ -4123,9 +4745,14 @@ Ricorda anche che \`res.json()\` è a sua volta asincrono (va awaitato). Due \`a
 
 Una Promise restituita da fetch normalmente non viene rifiutata per una risposta HTTP 404 o 500: controlla Response.ok o status. Può invece fallire per problemi di rete o essere annullata. Anche leggere e interpretare il body può generare errori separati. Prevedi AbortController per cancellare richieste non più utili e gestisci esplicitamente eventuali risposte senza JSON.
 
+
+## Risposte senza body e tipi inattesi
+
+Un endpoint può restituire uno status di successo ma nessun JSON, ad esempio una risposta 204. Chiamare sempre res.json() può quindi produrre un errore di parsing anche quando la richiesta HTTP è andata bene. In altri casi il server può restituire HTML per una pagina di errore, rendendo il parsing ugualmente impossibile. Controlla status e content-type quando il contratto lo richiede, poi differenzia errori di rete, HTTP e parsing. Una richiesta annullata tramite AbortController deve essere trattata in modo distinto da un vero guasto. Prepara test con 200 JSON, 204 vuota, 404 e un timeout. Il codice robusto gestisce tutti questi esiti senza presentare un risultato falso all'utente.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)`,
+- [MDN — Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)`,
   },
   {
     id: "web-audio-metronomo-preciso",
@@ -4133,11 +4760,14 @@ Una Promise restituita da fetch normalmente non viene rifiutata per una risposta
     date: "2026-05-26",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "⏱️",
     excerpt: "setInterval sbanda. Il trucco è schedulare in anticipo sull'orologio audio, preciso al campione.",
     tags: ["Web Audio", "Timing"],
     content: `
 Fare un metronomo con \`setInterval\` è la strada per la frustrazione: l'event loop non è puntuale e il click sbanda. La soluzione è schedulare i suoni **in anticipo** usando l'orologio dell'\`AudioContext\`, che è preciso al campione.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Web Audio drum machine: sample e timing](/blog/web-audio-drum-machine-browser) e [Web Audio graph: connect e catena del segnale](/blog/web-audio-grafo-nodi-connect). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 let nextNote = ctx.currentTime;
@@ -4167,9 +4797,14 @@ L'idea: un \`setTimeout\` impreciso fa da "sveglia" ogni 25 ms, ma i suoni vengo
 
 Un metronomo affidabile non dovrebbe affidare ogni colpo al solo setInterval, perché il main thread può ritardare le callback. Usa l'orologio audioContext.currentTime per programmare gli eventi con un piccolo anticipo. Il timer JavaScript può limitarsi a riempire una finestra di scheduling. Verifica il comportamento durante rallentamenti della pagina e quando il tab passa in background.
 
+
+## Separare timer dell'interfaccia e orologio audio
+
+Un timer JavaScript non è una sorgente temporale perfetta: il main thread può essere occupato e i tab inattivi possono subire limitazioni. Invece di generare un click esattamente quando scatta setInterval, usa il timer per programmare una piccola finestra di eventi futuri basata su audioContext.currentTime. Mantieni un indice dei beat già pianificati e aggiorna la finestra a intervalli regolari. Se il tempo cambia durante la riproduzione, definisci da quale battuta applicare il nuovo BPM per evitare trigger duplicati. Prova a rallentare deliberatamente l'interfaccia con DevTools: l'animazione grafica può saltare un frame, ma i colpi già schedulati devono rimanere corretti. Verifica anche lo stop e la ripartenza.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/currentTime)`,
+- [MDN — CurrentTime](https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/currentTime)`,
   },
   {
     id: "sonic-pi-randomizzazione-controllata",
@@ -4177,11 +4812,14 @@ Un metronomo affidabile non dovrebbe affidare ogni colpo al solo setInterval, pe
     date: "2026-05-27",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎲",
     excerpt: "rrand e choose danno varietà; use_random_seed rende la casualità riproducibile. Il paradosso del caso controllato.",
     tags: ["Sonic Pi", "Generative"],
     content: `
 La casualità rende la musica viva, ma in Sonic Pi è **deterministica**: con lo stesso seme, la stessa sequenza "casuale". Un paradosso utilissimo.
+
+Un approfondimento dello stesso percorso si trova in [Sonic Pi ring e tick: sequenze generative](/blog/sonic-pi-generative-ring-tick) e [Sonic Pi drum machine: kick, snare e hi-hat](/blog/sonic-pi-drum-machine). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 use_random_seed 42
@@ -4203,6 +4841,12 @@ Cambia il seme e ottieni una variazione completamente diversa, ma altrettanto ri
 
 use_random_seed inizializza una sequenza pseudocasuale riproducibile, utile quando vuoi conservare lo stesso groove durante un live. La riproducibilità dipende anche dall'ordine in cui vengono consumati i valori casuali: aggiungere una chiamata rand può cambiare i risultati successivi. Imposta il seed in punti coerenti del ciclo e annota i valori che producono sequenze interessanti.
 
+
+## Conservare le variazioni migliori
+
+Se una scelta casuale produce un pattern interessante, annota il seed usato per renderlo ripetibile durante le prove successive. Il seed da solo non basta se cambi l'ordine delle chiamate random: aggiungere una nuova estrazione può spostare tutta la sequenza. Per un groove stabile imposta il seed nel punto coerente della struttura e limita le variazioni a un sottoinsieme di note o durate. Puoi lasciare fissi kick e basso e variare soltanto alcuni hi-hat, evitando che la casualità disgreghi il tempo principale. Registra più versioni con seed differenti e confronta densità, ripetizione e dinamica. L'obiettivo è usare la randomizzazione per produrre alternative controllabili, non per sostituire ogni decisione musicale.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -4213,11 +4857,14 @@ use_random_seed inizializza una sequenza pseudocasuale riproducibile, utile quan
     date: "2026-05-28",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
     excerpt: "Se cammina come un'anatra... In Ruby conta cosa un oggetto sa fare, non a quale classe appartiene.",
     tags: ["Ruby", "Design"],
     content: `
 In Ruby non chiedi "di che tipo sei?", chiedi "sai fare questo?". È il **duck typing**: se un oggetto risponde ai metodi che ti servono, va bene, indipendentemente dalla sua classe.
+
+L'analisi si completa confrontando questa parte con [Ruby module e mixin: include, prepend, extend](/blog/ruby-moduli-mixin) e [Ruby Comparable: implementare <=>](/blog/ruby-comparable-enumerable-custom). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 def stampa_tutto(collezione)
@@ -4238,9 +4885,14 @@ Se proprio devi controllare, usa \`respond_to?(:each)\` invece della classe: ver
 
 Il duck typing si basa sui metodi supportati da un oggetto più che sull'appartenenza a una classe specifica. Un oggetto che risponde a un metodo non garantisce però che restituisca il risultato atteso. Per API condivise documenta argomenti, eccezioni e valori di ritorno e scrivi test di contratto sui diversi oggetti che devono sostituirsi a vicenda.
 
+
+## Definire un contratto senza ereditarietà
+
+Due oggetti possono esporre entrambi un metodo calculate e comportarsi diversamente. Il duck typing facilita la sostituzione di implementazioni, ma funziona bene soltanto quando i chiamanti conoscono il significato degli argomenti e dell'output. Per esempio, una classe potrebbe restituire un numero e un'altra un hash: la semplice presenza del metodo non evita un errore successivo. Prepara un set di test condiviso che eserciti entrambe le implementazioni sugli stessi input. Il contratto deve includere anche gli errori che i chiamanti possono gestire. Non è necessario introdurre una superclasse per documentare aspettative chiare.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://www.ruby-lang.org/en/documentation/)`,
+- [Ruby — Documentazione del linguaggio](https://www.ruby-lang.org/en/documentation/)`,
   },
   {
     id: "rails-background-job-active-job",
@@ -4248,11 +4900,14 @@ Il duck typing si basa sui metodi supportati da un oggetto più che sull'apparte
     date: "2026-05-29",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
-    excerpt: "Inviare email o chiamare API esterne durante una request è lento. ActiveJob sposta il lavoro fuori.",
+    excerpt: "Se durante una request fai qualcosa di lento (mandare una mail, chiamare un'API esterna, elaborare dati), l'utente aspetta. La soluzione è spostare quel lavoro in un job in…",
     tags: ["Ruby on Rails", "Background Jobs"],
     content: `
 Se durante una request fai qualcosa di lento (mandare una mail, chiamare un'API esterna, elaborare dati), l'utente aspetta. La soluzione è spostare quel lavoro in un **job in background**.
+
+L'analisi si completa confrontando questa parte con [Rails Active Record: modelli, query e SQL](/blog/rails-activerecord-le-basi) e [Active Storage: upload e sicurezza dei file](/blog/rails-active-storage-allegati). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 class SyncLaunchesJob < ApplicationJob
@@ -4278,9 +4933,14 @@ Così la sincronizzazione dei lanci da un'API lenta non blocca nessuno: la reque
 
 Un job asincrono sposta lavoro fuori dal ciclo della richiesta HTTP, ma non garantisce esecuzione immediata né esattamente una volta. L'adapter scelto, le policy di retry e la disponibilità dei worker influiscono sul risultato. Progetta i job in modo idempotente quando possibile, conserva identificativi utili al monitoraggio e gestisci l'errore che si ripete senza creare elaborazioni duplicate.
 
+
+## Progettare job ripetibili
+
+Un job che invia un evento a un gestionale potrebbe essere interrotto dopo la chiamata remota ma prima del salvataggio locale dell'esito. Al riavvio, un retry può inviare nuovamente lo stesso evento. Progetta quindi una chiave idempotente o un meccanismo di deduplicazione, invece di assumere che il worker esegua ogni task una sola volta. Registra tentativi, errori e identificativo della risorsa; gestisci separatamente i guasti temporanei e quelli che richiedono una correzione dei dati. In un test prova l'esecuzione duplicata e l'interruzione a metà del processo. La coda è una forma di esecuzione differita, non una garanzia automatica di integrità.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_job_basics.html)`,
+- [Rails Guides — Active Job Basics](https://guides.rubyonrails.org/active_job_basics.html)`,
   },
   {
     id: "javascript-this-binding",
@@ -4288,11 +4948,14 @@ Un job asincrono sposta lavoro fuori dal ciclo della richiesta HTTP, ma non gara
     date: "2026-05-30",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "Il valore di this dipende da come chiami la funzione, non da dove la scrivi. call, bind e arrow function.",
     tags: ["JavaScript", "Fondamentali"],
     content: `
 La confusione su \`this\` nasce da un equivoco: il suo valore dipende da **come** chiami la funzione, non da dove è scritta.
+
+Per considerare anche gli effetti sull'interfaccia, approfondisci [Prototipi JavaScript: inheritance e class](/blog/javascript-prototipi-ereditarieta) e [JavaScript closure: scope e variabili catturate](/blog/javascript-closure-spiegate-bene). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const user = {
@@ -4318,9 +4981,14 @@ Le **arrow function** sono l'eccezione salvavita: non hanno un proprio \`this\`,
 
 Il valore di this dipende da come una funzione viene invocata; nelle arrow function deriva invece dall'ambiente circostante. Estrarre un metodo e passarne il riferimento come callback può perdere il contesto desiderato. bind crea una nuova funzione con un contesto fissato. Usa esempi con oggetti, event listener e funzioni standalone per distinguere comportamento lessicale e dinamico.
 
+
+## Callback e perdita del contesto
+
+Un oggetto può esporre un metodo increment che usa this.value. Se passi direttamente il metodo come callback a un altro componente, il valore di this potrebbe non essere più quello dell'oggetto originario. Puoi preservare il contesto usando bind, una funzione wrapper o un'altra struttura che non dipende da this dinamico. Una arrow function definita all'interno di un metodo eredita il contesto lessicale appropriato, mentre una arrow usata come metodo non crea automaticamente un proprio this. Prova a invocare il metodo normalmente, poi estrailo in una variabile e confronta il comportamento. Questo chiarisce perché bug apparentemente casuali compaiono quando si passano funzioni tra moduli.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)`,
+- [MDN — This](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)`,
   },
   {
     id: "web-audio-drum-machine-browser",
@@ -4328,11 +4996,14 @@ Il valore di this dipende da come una funzione viene invocata; nelle arrow funct
     date: "2026-05-31",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🥁",
-    excerpt: "Sintetizzare cassa e charleston senza campioni: solo oscillatori, rumore e inviluppi.",
+    excerpt: "Non servono file audio per fare una batteria: la sintetizzi con oscillatori e rumore. Una cassa è un'onda che scende di frequenza e volume in fretta.",
     tags: ["Web Audio", "Ritmo", "Sintesi"],
     content: `
 Non servono file audio per fare una batteria: la sintetizzi con oscillatori e rumore. Una **cassa** è un'onda che scende di frequenza e volume in fretta.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda) e [Step sequencer JavaScript: tempo e note](/blog/web-audio-sequencer-step). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 function kick(time) {
@@ -4359,9 +5030,14 @@ Sintetizzare la batteria dà controllo totale sul timbro, e pesa zero byte in do
 
 Una drum machine può usare AudioBufferSourceNode distinti per ogni colpo, programmati sul tempo audio. Ogni AudioBufferSourceNode è pensato per un singolo avvio: dopo start non va riutilizzato per riprodurre un nuovo evento. Conserva il buffer decodificato e crea una nuova sorgente quando serve. Distingui il pattern musicale dal motore di scheduling per non accumulare drift.
 
+
+## Riutilizzare buffer, non sorgenti
+
+Per la cassa di una drum machine puoi caricare e decodificare il sample una volta, quindi conservarne l'AudioBuffer. A ogni colpo devi creare una nuova istanza AudioBufferSourceNode: un nodo già avviato non può essere riavviato. Programma gli eventi su una griglia di tempo audio, non facendo affidamento esclusivamente sulla precisione del rendering React. Quando l'utente modifica uno step, stabilisci se il cambiamento interessa i colpi già schedulati o solo i successivi. Prepara uno stop che non lasci campioni suonare all'infinito e gestisci lo stato del caricamento dei file. Il livello sommato di kick, snare e hi-hat può superare quello di ogni singolo sample: verifica il bus finale.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode)`,
+- [MDN — AudioBufferSourceNode](https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode)`,
   },
   {
     id: "sonic-pi-sync-cue",
@@ -4369,11 +5045,14 @@ Una drum machine può usare AudioBufferSourceNode distinti per ogni colpo, progr
     date: "2026-06-01",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🔗",
     excerpt: "Loop con tempi diversi tendono a sfasarsi. cue lancia un segnale, sync lo aspetta: ritmo bloccato.",
     tags: ["Sonic Pi", "Live Coding"],
     content: `
 Più \`live_loop\` con durate diverse tendono a sfasarsi nel tempo. Per tenerli agganciati usi la coppia \`cue\` (manda un segnale) e \`sync\` (lo aspetta).
+
+Questo ragionamento si collega anche ai contenuti su [Sonic Pi live_loop: scrivere musica in tempo reale](/blog/sonic-pi-live-loop-cuore-del-live-coding) e [Sonic Pi MIDI: input e controllo dal vivo](/blog/sonic-pi-midi-controllo). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 live_loop :metronomo do
@@ -4397,6 +5076,12 @@ Il loop \`:metronomo\` fa da direttore d'orchestra: a ogni battuta emette \`cue 
 
 cue emette un evento temporizzato e sync può attendere un evento specifico, rendendo possibile il coordinamento tra thread e live loop. Una dipendenza circolare, in cui due loop attendono entrambi un evento che nessuno invia, può bloccare la progressione musicale. Scegli un loop master per la pulsazione, dai nomi distinti ai segnali e testa l'avvio da zero.
 
+
+## Un segnale master per avviare le sezioni
+
+Immagina due live_loop, uno dedicato alla cassa e uno al basso. Se entrambi partono in momenti diversi, potrebbero mantenere uno sfasamento. Una strategia consiste nel definire un evento master a ogni battuta e fare attendere i loop dipendenti tramite sync. Occorre però evitare dipendenze circolari: se due loop aspettano un evento che nessuno invia, non succederà nulla. Dai nomi distinti ai cue e prova la sessione partendo da uno stato vuoto. Quando un loop viene modificato durante l'esecuzione, verifica che mantenga la stessa durata rispetto all'evento master. Aggiungere un cue a ogni singolo colpo non è sempre necessario; sincronizza le unità musicali significative.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -4407,11 +5092,14 @@ cue emette un evento temporizzato e sync può attendere un evento specifico, ren
     date: "2026-06-02",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
     excerpt: "include ed extend aggiungono comportamenti condivisi a classi diverse, senza gerarchie rigide.",
     tags: ["Ruby", "Design"],
     content: `
 Ruby ha ereditarietà singola: una classe ha un solo genitore. I **moduli** aggirano il limite condividendo comportamenti tra classi diverse tramite \`include\`.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Ruby duck typing e protocolli impliciti](/blog/ruby-duck-typing) e [Ruby Comparable: implementare <=>](/blog/ruby-comparable-enumerable-custom). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 module Tracciabile
@@ -4440,9 +5128,14 @@ Rails ne è pieno (\`Comparable\`, \`Enumerable\`, i \`Concern\`). Un modulo per
 
 I moduli permettono di condividere comportamento senza costruire una lunga catena di ereditarietà. include, prepend ed extend agiscono in modi diversi sulla ricerca dei metodi. Se due mixin definiscono lo stesso metodo, controlla l'ordine degli antenati e il comportamento di super. Preferisci moduli con responsabilità limitate e nomi chiari.
 
+
+## Capire l'ordine di risoluzione dei metodi
+
+Una classe può includere due moduli che definiscono metodi con lo stesso nome. Quale implementazione viene usata dipende dalla catena degli antenati; prepend modifica ulteriormente il percorso. Prima di inserire un modulo in una libreria esistente, stampa la lista ancestors e controlla le chiamate a super. Un test utile crea una classe minima con include e prepend, poi osserva l'ordine delle chiamate. Questo esercizio evita di attribuire i risultati a una precedenza intuitiva che non corrisponde al linguaggio. I moduli sono più facili da mantenere quando espongono poche responsabilità e non modificano silenziosamente comportamento non correlato.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Module.html)`,
+- [Ruby Core — Module](https://docs.ruby-lang.org/en/master/Module.html)`,
   },
   {
     id: "rails-hotwire-turbo",
@@ -4450,11 +5143,14 @@ I moduli permettono di condividere comportamento senza costruire una lunga caten
     date: "2026-06-03",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "Turbo aggiorna porzioni di pagina inviando HTML dal server. Interattività moderna, quasi zero JavaScript.",
     tags: ["Ruby on Rails", "Hotwire"],
     content: `
 **Hotwire** è la scommessa di Rails: interfacce reattive inviando HTML invece di JSON, con pochissimo JavaScript. Il pezzo centrale è **Turbo**.
+
+L'analisi si completa confrontando questa parte con [Stimulus Rails: comportamento associato all'HTML](/blog/rails-stimulus-js-leggero) e [Active Job: job asincroni e retry](/blog/rails-background-job-active-job). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`erb
 <%# la lista si aggiorna da sola quando cambia %>
@@ -4480,9 +5176,14 @@ Il vantaggio: ottieni gran parte della reattività di una SPA restando in Rails,
 
 Turbo permette aggiornamenti e navigazione efficienti sfruttando HTML inviato dal server. Non equivale a eliminare JavaScript: lo utilizza internamente e può essere affiancato a Stimulus. Verifica link, form, stato di caricamento e interazioni con script terzi durante i cambi di pagina. Scegli Turbo quando un'applicazione server-rendered trae beneficio da navigazione reattiva senza una SPA completa.
 
+
+## Navigazione e lifecycle degli elementi
+
+Quando Turbo sostituisce il contenuto della pagina, gli script che erano legati a un nodo precedente possono non funzionare più come previsto. Per un menu espandibile o un campo con validazione dinamica, verifica inizializzazione e cleanup a ogni navigazione. Stimulus consente di descrivere quel ciclo di vita tramite controller collegati al markup, senza costruire necessariamente una SPA. Controlla i link che richiedono una navigazione completa e i form con risposte di validazione. Prima di adottare Turbo per un'interfaccia complessa, prova i componenti di terze parti che modificano direttamente il DOM, perché potrebbero richiedere un'integrazione specifica.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://turbo.hotwired.dev/handbook/introduction)`,
+- [Documentazione tecnica — Introduction](https://turbo.hotwired.dev/handbook/introduction)`,
   },
   {
     id: "javascript-prototipi-ereditarieta",
@@ -4490,11 +5191,14 @@ Turbo permette aggiornamenti e navigazione efficienti sfruttando HTML inviato da
     date: "2026-06-04",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "Le class sono zucchero: sotto c'è la catena dei prototipi. Capirla spiega perché tutto funziona.",
     tags: ["JavaScript", "Fondamentali"],
     content: `
 Le \`class\` in JavaScript sono zucchero sintattico: sotto, l'ereditarietà è basata su **prototipi**. Ogni oggetto ha un collegamento a un altro oggetto (il suo prototipo) da cui eredita metodi.
+
+Un confronto utile per questa soluzione è quello con [JavaScript this: call, bind e arrow function](/blog/javascript-this-binding) e [JavaScript closure: scope e variabili catturate](/blog/javascript-closure-spiegate-bene). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const animale = {
@@ -4518,9 +5222,14 @@ Capire la catena spiega tanti misteri: perché \`class extends\` funziona, perch
 
 Le classi JavaScript sono una sintassi costruita sopra il sistema dei prototipi. La ricerca di una proprietà attraversa la prototype chain quando il valore non è presente nell'oggetto corrente. Evita di modificare prototipi globali di oggetti built-in in applicazioni condivise: può creare collisioni. Preferisci composizione e funzioni esplicite quando l'ereditarietà aggiunge più complessità che valore.
 
+
+## Ombreggiare una proprietà
+
+Se un oggetto eredita una proprietà dal prototipo e poi definisce una proprietà omonima direttamente su sé stesso, l'accesso restituisce il valore proprio dell'oggetto. La catena dei prototipi non viene modificata: cambia il punto in cui la ricerca si ferma. Un test utile usa Object.hasOwn per distinguere una proprietà locale da una ereditata e confronta Object.getPrototypeOf su oggetti creati da una classe. Evita di estendere Object.prototype in un'applicazione: un cambiamento globale può interferire con librerie e cicli che enumerano proprietà. Quando non ti serve davvero ereditarietà, la composizione può ridurre dipendenze nascoste.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)`,
+- [MDN — Inheritance And The Prototype Chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)`,
   },
   {
     id: "web-audio-sequencer-step",
@@ -4528,11 +5237,14 @@ Le classi JavaScript sono una sintassi costruita sopra il sistema dei prototipi.
     date: "2026-06-05",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎚️",
-    excerpt: "Un array di 0 e 1 diventa un pattern ritmico. La logica dietro ogni drum machine software.",
+    excerpt: "Un sequencer a step è, in fondo, un array di booleani letto in loop: a ogni passo, se è acceso, suoni.",
     tags: ["Web Audio", "Ritmo"],
     content: `
 Un sequencer a step è, in fondo, un array di booleani letto in loop: a ogni passo, se è acceso, suoni.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Web Audio drum machine: sample e timing](/blog/web-audio-drum-machine-browser) e [Web MIDI API: note e accesso ai dispositivi](/blog/web-audio-web-midi-api). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const pattern = [1, 0, 0, 1, 0, 0, 1, 0]; // 8 step
@@ -4560,9 +5272,14 @@ Da qui a una drum machine completa il passo è breve: più array (uno per strume
 
 Uno step sequencer rappresenta una griglia temporale di eventi. Per convertirla in secondi occorre considerare BPM, suddivisioni e swing eventuale. La UI può aggiornarsi con requestAnimationFrame, mentre l'audio dovrebbe essere programmato sull'orologio del contesto. Se modifichi il pattern in esecuzione, scegli quando applicare il cambiamento per non creare note duplicate.
 
+
+## Definire lo step in battute
+
+Un sequencer a sedici step può rappresentare una battuta suddivisa in sedicesimi oppure un'altra lunghezza: non esiste una corrispondenza obbligatoria fra step e secondi. Conserva tempo, griglia e pattern come dati separati, così un cambio di BPM modifica la durata degli eventi senza alterare la struttura musicale. Usa l'orologio audio per programmare il suono e un'animazione leggera per mostrare la posizione corrente. Se un utente modifica uno step mentre il sequencer suona, definisci una regola chiara per applicare la modifica. Verifica che il trasporto riparta dallo step atteso e che i loop non producano trigger doppi. Confronta il comportamento con una rete o CPU rallentata, senza confondere fluidità grafica e precisione audio.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Advanced_techniques)`,
+- [MDN — Advanced Techniques](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Advanced_techniques)`,
   },
   {
     id: "sonic-pi-bassline-tb303",
@@ -4570,11 +5287,14 @@ Uno step sequencer rappresenta una griglia temporale di eventi. Per convertirla 
     date: "2026-06-06",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎚️",
     excerpt: "Il cutoff che si muove è la firma dell'acid. Ricostruiamo quel basso ipnotico in poche righe.",
     tags: ["Sonic Pi", "Sintesi"],
     content: `
 Il suono "acid" nasce da un sintetizzatore leggendario, il Roland TB-303, e dal suo filtro che si apre e chiude di continuo. In Sonic Pi lo ricrei con \`:tb303\` e un \`cutoff\` che si muove.
+
+Un approfondimento dello stesso percorso si trova in [Sonic Pi use_synth: timbri e parametri](/blog/sonic-pi-use-synth-scegliere-sintetizzatori) e [Sonic Pi sync e cue: sincronizzare i loop](/blog/sonic-pi-sync-cue). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 use_bpm 128
@@ -4599,6 +5319,12 @@ Aggiungi un \`with_fx :distortion\` attorno e ottieni quel ringhio sporco tipico
 
 Il synth tb303 richiama un carattere acid attraverso risonanza, cutoff, inviluppo e note ripetute. Il risultato dipende anche dal registro e dalla durata delle note, non soltanto dalla velocità del pattern. Evita livelli eccessivi quando aumenti la risonanza e confronta variazioni sullo stesso groove. Prima costruisci una sequenza stabile, poi automatizza il filtro.
 
+
+## Accenti e filtro prima di aggiungere note
+
+Una linea acid efficace può utilizzare poche note in ottave vicine, ripetute con durata e accenti differenti. Inizia senza effetti esterni, poi controlla cutoff e risonanza del synth tb303 per riconoscere il carattere del filtro. Un'elevata risonanza può rendere certe frequenze molto prominenti, quindi lavora con volumi prudenti. Confronta un pattern di otto step con una variante che cambia soltanto il ritmo di una nota: spesso la differenza musicale è maggiore che aggiungere altre armonie. Inserisci poi un filtro che evolve lentamente su più battute e registra l'automazione. Evita cambiamenti casuali a ogni colpo finché non riesci a riprodurre consapevolmente un groove stabile.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -4609,11 +5335,14 @@ Il synth tb303 richiama un carattere acid attraverso risonanza, cutoff, invilupp
     date: "2026-06-07",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
     excerpt: "Sollevare, catturare e ripulire. E perché rescue senza classe è quasi sempre un errore.",
     tags: ["Ruby", "Errori"],
     content: `
 In Ruby gli errori sono oggetti (\`Exception\`) che si sollevano con \`raise\` e si catturano con \`rescue\`.
+
+L'analisi si completa confrontando questa parte con [Ruby module e mixin: include, prepend, extend](/blog/ruby-moduli-mixin) e [Ruby gem: packaging, dipendenze e versioni](/blog/ruby-creare-una-gem). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 def leggi_config(path)
@@ -4637,9 +5366,14 @@ Puoi anche usare \`retry\` dentro un \`rescue\` per ritentare (utile con le reti
 
 rescue dovrebbe intercettare gli errori che il codice sa realmente gestire. Catturare tutto e continuare può nascondere condizioni gravi. ensure è utile per rilasciare risorse anche quando un'operazione fallisce; non sostituisce transazioni o meccanismi di retry. Registra il contesto minimo necessario senza esporre segreti e mantieni visibile l'errore originale.
 
+
+## Non intercettare ciò che non sai correggere
+
+Una chiamata HTTP può fallire per timeout, autorizzazione o dati non validi. Mettere ogni operazione dentro rescue StandardError e restituire sempre un array vuoto nasconde questi casi e rende impossibile distinguere assenza di dati e guasto. Identifica prima le eccezioni recuperabili, definisci un risultato per chi chiama e lascia propagare quelle inattese. Se apri un file o una risorsa, ensure può essere necessario per la chiusura; quando esiste un blocco di gestione automatica della risorsa, valutane l'utilizzo. Prova che cosa accade con errori diversi e verifica che i log non contengano token o payload sensibili.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/syntax/exceptions_rdoc.html)`,
+- [Ruby Core — Exceptions](https://docs.ruby-lang.org/en/master/syntax/exceptions_rdoc.html)`,
   },
   {
     id: "rails-stimulus-js-leggero",
@@ -4647,11 +5381,14 @@ rescue dovrebbe intercettare gli errori che il codice sa realmente gestire. Catt
     date: "2026-06-08",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "Stimulus collega comportamenti JS all'HTML tramite data-attribute. Niente framework pesanti per piccole interazioni.",
     tags: ["Ruby on Rails", "JavaScript", "Hotwire"],
     content: `
 Per le piccole interazioni (un menu, un contatore, un toggle) non serve React. **Stimulus**, parte di Hotwire, collega comportamenti JavaScript all'HTML tramite \`data-attribute\`.
+
+L'analisi si completa confrontando questa parte con [Hotwire e Turbo: navigazione HTML reattiva](/blog/rails-hotwire-turbo) e [Rails caching: invalidazione e dati coerenti](/blog/rails-caching-basi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`html
 <div data-controller="clipboard">
@@ -4680,9 +5417,14 @@ Filosofia opposta a React: l'HTML resta il protagonista, il JavaScript è un con
 
 Stimulus collega comportamento JavaScript agli elementi tramite controller e attributi data. È adatto a interazioni locali, come un menu o la gestione di un campo, senza replicare uno store applicativo completo. Controlla il ciclo di vita connect e disconnect, soprattutto quando Turbo sostituisce parti della pagina. Evita di distribuire la logica di dominio tra controller JavaScript e backend.
 
+
+## Controller piccoli e ciclo di vita prevedibile
+
+Un controller Stimulus può gestire l'apertura di un pannello o il conteggio dei caratteri di un campo. Se però contiene regole che dovrebbero essere validate dal server, l'interfaccia rischia di funzionare in modo diverso rispetto all'API. Lascia sul client i comportamenti di presentazione e verifica sul backend i vincoli di business. Quando un elemento viene rimosso da Turbo, disconnect è il punto appropriato per pulire timer, eventi globali o connessioni create dal controller. Prepara una prova navigando avanti e indietro più volte: se un click scatena due handler, probabilmente una risorsa non è stata rilasciata o è stata registrata due volte.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://stimulus.hotwired.dev/handbook/introduction)`,
+- [Documentazione tecnica — Introduction](https://stimulus.hotwired.dev/handbook/introduction)`,
   },
   {
     id: "javascript-debounce-throttle",
@@ -4690,11 +5432,14 @@ Stimulus collega comportamento JavaScript agli elementi tramite controller e att
     date: "2026-06-09",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "Ricerca live, scroll, resize: eventi che sparano centinaia di volte. Debounce e throttle li tengono a bada.",
     tags: ["JavaScript", "Performance"],
     content: `
 Eventi come \`input\`, \`scroll\` e \`resize\` scattano decine di volte al secondo. Chiamare un'API o un calcolo pesante a ogni scatto è uno spreco. Due tecniche lo risolvono.
+
+Un confronto utile per questa soluzione è quello con [Web Workers: lavoro in background e limiti](/blog/javascript-web-workers) e [Prototipi JavaScript: inheritance e class](/blog/javascript-prototipi-ereditarieta). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 function debounce(fn, ms) {
@@ -4718,9 +5463,14 @@ Debounce = "aspetta la pausa". Throttle = "a intervalli regolari". Sceglierne un
 
 Il debounce rimanda l'esecuzione fino a una pausa degli eventi; il throttle limita la frequenza delle esecuzioni. Per una ricerca live, debounce non basta a impedire che una risposta vecchia arrivi dopo quella nuova: abbinalo a cancellazione o controllo dell'identità della richiesta. Per scroll e resize valuta anche requestAnimationFrame e la possibilità di usare API come IntersectionObserver.
 
+
+## Ricerca live senza risultati obsoleti
+
+Immagina che l'utente digiti prima "rea" e poi "react". Il debounce può ridurre il numero di chiamate, ma non garantisce che il risultato della prima richiesta arrivi prima di quello della seconda. Se entrambe partono, una risposta tardiva può mostrare dati non più pertinenti. Aggiungi un identificativo di ricerca o annulla esplicitamente la richiesta precedente. Per lo scroll, invece, il throttle limita l'aggiornamento nel tempo e può essere preferibile a un ritardo dopo la fine degli eventi. Verifica in DevTools le richieste effettive e prova una rete lenta, non soltanto una connessione locale veloce.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)`,
+- [MDN — RequestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)`,
   },
   {
     id: "web-audio-web-midi-api",
@@ -4728,11 +5478,14 @@ Il debounce rimanda l'esecuzione fino a una pausa degli eventi; il throttle limi
     date: "2026-06-10",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎹",
     excerpt: "La Web MIDI API collega controller hardware alla pagina. Ogni tasto premuto diventa un evento JS.",
     tags: ["Web Audio", "MIDI"],
     content: `
 La **Web MIDI API** collega un controller hardware (una tastiera MIDI, dei pad) direttamente al browser. Ogni tasto premuto arriva come un evento JavaScript.
+
+Un approfondimento dello stesso percorso si trova in [Step sequencer JavaScript: tempo e note](/blog/web-audio-sequencer-step) e [AnalyserNode: spettro e waveform nel browser](/blog/web-audio-analyser-visualizzare). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const access = await navigator.requestMIDIAccess();
@@ -4756,9 +5509,14 @@ In poche righe hai un synth suonabile con hardware vero, dentro una pagina web. 
 
 Web MIDI API permette di ricevere e inviare messaggi MIDI su browser compatibili. Accesso e permessi dipendono dal contesto e dal browser; non devi presumere disponibilità universale. Gestisci il collegamento o scollegamento delle periferiche e distingui noteOn con velocity zero da un evento noteOff quando necessario. MIDI trasporta eventi di controllo, non audio digitale.
 
+
+## Porte MIDI e differenze fra browser
+
+L'accesso ai dispositivi MIDI dipende dal supporto del browser, dal contesto sicuro e dai permessi. Prima di mostrare un elenco di controlli, verifica che requestMIDIAccess sia disponibile e gestisci esplicitamente il rifiuto. Un dispositivo può essere scollegato mentre l'applicazione è in uso, perciò aggiorna l'elenco delle porte e non presumere che rimanga valido l'ID salvato in precedenza. I messaggi di controllo contengono valori numerici da mappare sui range dei parametri audio: evita movimenti improvvisi del filtro quando un controller invia dati rumorosi. MIDI non trasporta il segnale audio; per produrre suono devi collegare l'evento a un sintetizzatore o ad una sorgente Web Audio.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API)`,
+- [MDN — Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API)`,
   },
   {
     id: "sonic-pi-slicing-campioni",
@@ -4766,11 +5524,14 @@ Web MIDI API permette di ricevere e inviare messaggi MIDI su browser compatibili
     date: "2026-06-11",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "✂️",
     excerpt: "start, finish e beat_stretch trasformano un break in materiale nuovo. Il cuore del campionamento.",
     tags: ["Sonic Pi", "Campioni"],
     content: `
 Un singolo campione può diventare infinito materiale se lo **affetti**. Con \`start\` e \`finish\` suoni solo una porzione, con \`beat_stretch\` lo sincronizzi al tempo.
+
+Questo ragionamento si collega anche ai contenuti su [Sonic Pi sample: scegliere e trasformare i suoni](/blog/sonic-pi-sample-libreria-integrata) e [Sonic Pi TB-303: bassline acid e cutoff](/blog/sonic-pi-bassline-tb303). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 use_bpm 120
@@ -4794,6 +5555,12 @@ Rimescola l'ordine delle fette (con \`choose\` invece di \`tick\`) e lo stesso b
 
 Puoi isolare sezioni di un sample con parametri di inizio e fine e adattare la durata con opzioni di stretch. La frazione selezionata si riferisce al campione originale: cambiare i punti di taglio modifica anche il contenuto ritmico. Usa campioni di durata conosciuta e verifica che i confini non generino click. Quando serve, applica inviluppi brevi ai frammenti.
 
+
+## Scegliere i punti di taglio all'ascolto
+
+Tagliare un campione al 25 o al 50 per cento della durata non garantisce che il taglio coincida con un evento ritmico. Ascolta prima il materiale originale, individua gli attacchi interessanti e prova start e finish su una regione breve. Un frammento che inizia nel mezzo di una forma d'onda può produrre un click: un inviluppo breve può ridurre il problema. Valuta anche se la coda del frammento termina prima della nota successiva. Se usi beat_stretch insieme al slicing, confronta il risultato con il campione originale per individuare artefatti. Una sequenza di quattro frammenti diversi può generare un nuovo ritmo anche senza sintetizzatori aggiuntivi, purché gli eventi rispettino una griglia chiara.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -4804,11 +5571,14 @@ Puoi isolare sezioni di un sample con parametri di inizio e fine e adattare la d
     date: "2026-06-12",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
-    excerpt: "bundle gem impalca tutto. Struttura, versione e push su RubyGems: condividere codice è facile.",
+    excerpt: "Una gem è un pacchetto Ruby riutilizzabile. Crearne una è sorprendentemente semplice: Bundler impalca tutto per te.",
     tags: ["Ruby", "Gem", "Open Source"],
     content: `
 Una **gem** è un pacchetto Ruby riutilizzabile. Crearne una è sorprendentemente semplice: Bundler impalca tutto per te.
+
+L'analisi si completa confrontando questa parte con [Ruby begin/rescue/ensure: gestione degli errori](/blog/ruby-gestione-errori) e [RSpec in Ruby: test affidabili e leggibili](/blog/ruby-rspec-testare). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`bash
 bundle gem saluti
@@ -4841,9 +5611,14 @@ I punti chiave: versiona con cura (segui il semantic versioning nel file \`versi
 
 Una gem distribuisce codice Ruby e metadati di dipendenza. Prima della pubblicazione verifica file inclusi, licenza, versione e compatibilità con i runtime supportati. Non pubblicare credenziali o artefatti locali nel pacchetto. Usa versioning coerente e test di installazione da un progetto distinto, non soltanto dall'ambiente di sviluppo.
 
+
+## Versioni e distribuzione affidabile
+
+Quando una gem espone una classe pubblica, altre applicazioni iniziano a dipendere dal suo comportamento. Una modifica incompatibile può rompere progetti anche se i test locali passano. Prima della prima release definisci gli entry point, la dipendenza minima da Ruby e la struttura dei file inclusi nel pacchetto. Controlla il contenuto effettivo dell'archivio costruito e prova l'installazione in un progetto separato. Un piccolo CHANGELOG aiuta a spiegare cosa è cambiato fra versioni. Se la libreria legge configurazioni o segreti, non includere file di sviluppo personali nell'artefatto pubblicato.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubygems.org/make-your-own-gem/)`,
+- [Documentazione tecnica — Make Your Own Gem](https://guides.rubygems.org/make-your-own-gem/)`,
   },
   {
     id: "rails-caching-basi",
@@ -4851,11 +5626,14 @@ Una gem distribuisce codice Ruby e metadati di dipendenza. Prima della pubblicaz
     date: "2026-06-13",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "Rails.cache.fetch memorizza risultati costosi. La regola: se è lento e cambia poco, mettilo in cache.",
     tags: ["Ruby on Rails", "Performance", "Cache"],
     content: `
 Il modo più semplice per rendere un'app Rails veloce è **non rifare** il lavoro costoso. \`Rails.cache.fetch\` calcola una volta e ricorda.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Rails N+1: includes, preload ed eager_load](/blog/rails-problema-n-piu-1) e [Stimulus Rails: comportamento associato all'HTML](/blog/rails-stimulus-js-leggero). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 def statistiche_lanci
@@ -4880,9 +5658,14 @@ Attento a due cose: scegliere una **chiave** che identifichi bene il dato, e inv
 
 Una cache riduce letture o calcoli ripetuti, ma introduce il problema di quando invalidare un valore. La chiave dovrebbe dipendere dai dati che influenzano il risultato e, dove opportuno, da una versione. Non inserire dati personali in cache condivise senza una politica esplicita. Misura hit ratio, dimensione della cache e latenza prima di concludere che il caching sia efficace.
 
+
+## Una cache deve avere una politica di invalidazione
+
+Immagina la scheda di un prodotto con prezzo e disponibilità. Se la cache usa una chiave che cambia solo quando aggiorni il testo descrittivo, il prezzo potrebbe rimanere obsoleto dopo una sincronizzazione. Stabilisci quali dati compongono il risultato e quali eventi devono aggiornare o invalidare la chiave. Per un contenuto differente fra utenti, verifica che la cache non condivida informazioni private. Misura latenza, hit ratio e costo dell'invalidazione: una cache troppo aggressiva può ridurre le query ma peggiorare la correttezza. Nei test controlla sia il caso di cache hit sia quello in cui un aggiornamento richiede una nuova lettura.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/caching_with_rails.html)`,
+- [Rails Guides — Caching With Rails](https://guides.rubyonrails.org/caching_with_rails.html)`,
   },
   {
     id: "javascript-generatori",
@@ -4890,11 +5673,14 @@ Una cache riduce letture o calcoli ripetuti, ma introduce il problema di quando 
     date: "2026-06-14",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "function* e yield producono valori uno alla volta, anche infiniti. Sequenze pigre e su richiesta.",
     tags: ["JavaScript", "Avanzato"],
     content: `
 Un **generatore** è una funzione che può mettersi in pausa e riprendere, producendo valori uno alla volta con \`yield\`.
+
+Per considerare anche gli effetti sull'interfaccia, approfondisci [JavaScript Proxy e Reflect: intercettare operazioni](/blog/javascript-proxy-reflect) e [JavaScript this: call, bind e arrow function](/blog/javascript-this-binding). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 function* contatore() {
@@ -4924,9 +5710,14 @@ Sono la base degli iteratori personalizzati e delle librerie di streaming di dat
 
 Una funzione generator produce valori gradualmente attraverso yield, mantenendo il proprio stato tra un passo e l'altro. Non equivale automaticamente a esecuzione asincrona: un generator sincrono che compie calcoli lunghi blocca il thread durante next. Per flussi asincroni esistono async generator e for await...of. Gestisci l'interruzione dell'iterazione quando il generator controlla risorse esterne.
 
+
+## Quando serve produrre valori a richiesta
+
+Un generator può attraversare una sequenza di grandi dimensioni restituendo un elemento per volta, senza costruire necessariamente un array completo. Ma se chi lo consuma richiama next in un ciclo sincrono molto lungo, il browser continua comunque a lavorare sul main thread. I generator asincroni sono adatti ad altri scenari, per esempio il consumo progressivo di dati da una sorgente asincrona. Verifica che cosa accade quando chi consuma interrompe l'iterazione con break e se occorre chiudere una risorsa sottostante. Scegli un generator quando rende più comprensibile la gestione della sequenza, non perché il termine lazy sembri automaticamente più performante.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*)`,
+- [MDN — Function*](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*)`,
   },
   {
     id: "web-audio-analyser-visualizzare",
@@ -4934,11 +5725,14 @@ Una funzione generator produce valori gradualmente attraverso yield, mantenendo 
     date: "2026-06-15",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "📊",
     excerpt: "L'AnalyserNode estrae forma d'onda e spettro in tempo reale. Da lì a un visualizer su canvas è un attimo.",
     tags: ["Web Audio", "Visualizzazione"],
     content: `
 L'**AnalyserNode** ti dà i dati grezzi del suono in tempo reale: la forma d'onda e lo spettro delle frequenze. È il ponte tra audio e grafica.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Web MIDI API: note e accesso ai dispositivi](/blog/web-audio-web-midi-api) e [AudioWorklet: DSP fuori dal main thread](/blog/web-audio-audioworklet). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const analyser = ctx.createAnalyser();
@@ -4965,9 +5759,14 @@ Bassi a sinistra, alti a destra: ecco lo spettro che pulsa a ritmo. È il classi
 
 AnalyserNode espone dati nel dominio del tempo e della frequenza senza modificare necessariamente il segnale. getByteFrequencyData restituisce valori scalati, non un'analisi scientifica della pressione sonora. Scegli fftSize e smoothingTimeConstant in funzione della visualizzazione e limita la frequenza di redraw per non occupare inutilmente la CPU.
 
+
+## Uno spettro non è un fonometro
+
+AnalyserNode permette di leggere valori di frequenza o campioni nel dominio temporale, ma i numeri restituiti non equivalgono automaticamente a decibel acustici calibrati. Imposta fftSize secondo il compromesso fra dettaglio spettrale e aggiornamento visivo; una FFT molto grande può essere inutile per una semplice animazione. Limita il redraw con requestAnimationFrame e sospendi il lavoro quando la visualizzazione non è visibile. Confronta una sinusoide a frequenza nota con un segnale ricco di armoniche e osserva come cambia la rappresentazione. Se aggiungi smoothing, ricorda che una transizione più fluida può nascondere variazioni rapide. La visualizzazione serve a comprendere il segnale, non a dimostrare che il mix è sicuro per l'ascolto.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode)`,
+- [MDN — AnalyserNode](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode)`,
   },
   {
     id: "sonic-pi-generative-ring-tick",
@@ -4975,11 +5774,14 @@ AnalyserNode espone dati nel dominio del tempo e della frequenza senza modificar
     date: "2026-06-16",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🌱",
     excerpt: "Un ring è una lista circolare; tick la scorre all'infinito. La base per pattern che si evolvono da soli.",
     tags: ["Sonic Pi", "Generative"],
     content: `
 La musica generativa è codice che compone al posto tuo. In Sonic Pi il mattone è il \`ring\`: una lista circolare che scorri con \`.tick\`.
+
+Questo ragionamento si collega anche ai contenuti su [Sonic Pi use_random_seed: pattern riproducibili](/blog/sonic-pi-randomizzazione-controllata) e [Sonic Pi sample slicing: start, finish e stretch](/blog/sonic-pi-slicing-campioni). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 notes = (ring :c4, :e4, :g4, :b4, :a4)
@@ -5006,6 +5808,12 @@ Poca scrittura, tanta musica: è il fascino del generativo.
 
 ring crea una sequenza ciclica, mentre tick avanza lungo i valori nel contesto di esecuzione. È utile per note, durate e filtri che seguono pattern ripetuti. Quando due parti usano lo stesso contatore senza nomi distinti possono influenzarsi nel modo di avanzare: separa i contatori per responsabilità. Un pattern generativo diventa musicale se limiti scelta delle note, ritmo e densità.
 
+
+## Contatori indipendenti per parti diverse
+
+Un ring può contenere quattro note e un altro ring quattro durate. Se i due pattern avanzano usando lo stesso tick, il risultato dipende dall'ordine in cui i valori vengono letti: aggiungere un'istruzione può cambiare la sequenza. Per ridurre questa dipendenza, separa i contatori per la melodia e per il ritmo quando il codice lo richiede. Prova a costruire una frase di otto step con tre valori di cutoff e ascolta dopo quanti cicli torna la stessa combinazione. La generazione può essere deterministica anche quando il risultato sembra variabile. Scrivi prima una versione senza casualità, registrala, poi introduci cambiamenti controllati. Se tutto cambia a ogni beat, il risultato può perdere un punto di riferimento musicale.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -5016,11 +5824,14 @@ ring crea una sequenza ciclica, mentre tick avanza lungo i valori nel contesto d
     date: "2026-06-17",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
     excerpt: "describe, it, expect: RSpec rende i test leggibili come frasi. Scrivere test è progettare meglio.",
     tags: ["Ruby", "Testing", "RSpec"],
     content: `
 **RSpec** è il framework di test più amato in Ruby. La sua forza è la leggibilità: un test si legge quasi come una frase in inglese.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby gem: packaging, dipendenze e versioni](/blog/ruby-creare-una-gem) e [Ruby Ractor: isolamento e concorrenza](/blog/ruby-ractor-concorrenza). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 RSpec.describe Launch do
@@ -5046,9 +5857,14 @@ Il valore vero non è "trovare bug": è **progettare meglio**. Se un metodo è d
 
 Un test utile descrive un comportamento e fallisce se il requisito viene violato. Evita aspettative che replicano l'implementazione riga per riga: diventano fragili durante il refactoring. Prepara esempi per input validi, valori limite ed errori; isola chiamate esterne e tempo quando rendono l'esecuzione non deterministica.
 
+
+## Test di comportamento, non di implementazione
+
+Un test che si aspetta una chiamata a un metodo privato può fallire dopo un refactoring innocuo. Un test che verifica l'output pubblico rimane valido se il comportamento non cambia. Prepara esempi chiari per il caso ordinario, gli input limite e gli errori. Dove il tempo influenza il risultato, inietta un orologio controllabile o usa il supporto di test per congelare il tempo. Dove il codice invoca un'API esterna, un mock è utile per il contratto locale, ma non può garantire che il servizio remoto sia rimasto compatibile. Mantieni almeno una verifica di integrazione appropriata quando il sistema lo richiede.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://rspec.info/documentation/)`,
+- [RSpec — Documentazione ufficiale](https://rspec.info/documentation/)`,
   },
   {
     id: "rails-service-objects",
@@ -5056,11 +5872,14 @@ Un test utile descrive un comportamento e fallisce se il requisito viene violato
     date: "2026-06-18",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "Quando un'azione non è di nessun model in particolare, un service object la incapsula pulita e testabile.",
     tags: ["Ruby on Rails", "Architettura"],
     content: `
 Con la crescita dell'app, certe operazioni non appartengono a nessun model in particolare: coinvolgono più oggetti, chiamate esterne, passaggi. Metterle nel controller lo gonfia; metterle in un model lo snatura. La risposta è un **service object**.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Rails MVC: Model, View e Controller](/blog/rails-mvc-in-tre-minuti) e [Rails caching: invalidazione e dati coerenti](/blog/rails-caching-basi). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 class SyncLaunches
@@ -5088,9 +5907,14 @@ Vantaggi: controller magri, logica testabile in isolamento, nomi che raccontano 
 
 I service object non sono un componente obbligatorio di Rails. Sono semplici classi Ruby utili quando un'operazione coordina più modelli o sistemi esterni. Specifica input, output, errori e transazioni; una classe con un metodo call non risolve automaticamente i problemi architetturali. Se il servizio effettua richieste esterne dentro una transazione lunga, valuta il rischio di lock e di fallimenti parziali.
 
+
+## Risultati ed errori espliciti
+
+Un servizio che sincronizza un ordine deve chiarire se restituisce l'ordine aggiornato, un oggetto risultato o un errore. Se inizia una transazione database e poi invoca un'API remota lenta, rischia di tenere aperti lock inutilmente. Se invece chiama prima l'API e poi il database, un fallimento di persistenza può lasciare effetti remoti già eseguiti. La scelta del confine transazionale richiede dunque un modello dei fallimenti, non soltanto un metodo call. Prepara test con dati validi, risposta remota negativa e fallimento di scrittura. Il servizio è utile quando rende più visibile questo flusso, non quando sposta semplicemente molte righe fuori dal controller.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_callbacks.html)`,
+- [Rails Guides — Active Record Callbacks](https://guides.rubyonrails.org/active_record_callbacks.html)`,
   },
   {
     id: "javascript-proxy-reflect",
@@ -5098,11 +5922,14 @@ I service object non sono un componente obbligatorio di Rails. Sono semplici cla
     date: "2026-06-19",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "Un Proxy avvolge un oggetto e intercetta letture e scritture. La magia dietro la reattività di Vue.",
     tags: ["JavaScript", "Avanzato"],
     content: `
 Un **Proxy** avvolge un oggetto e intercetta le operazioni su di esso: letture, scritture, cancellazioni. È come mettere un guardiano davanti a ogni proprietà.
+
+Nel frontend lo stesso problema si collega a [Generator function JavaScript: yield e iterazione](/blog/javascript-generatori) e [JavaScript Intl: date, numeri e valute locali](/blog/javascript-intl-formattazione). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const target = { nome: "Ale", eta: 30 };
@@ -5132,9 +5959,14 @@ Le "trap" (\`get\`, \`set\`, \`has\`, \`deleteProperty\`) ti fanno agganciare lo
 
 Un Proxy intercetta operazioni come lettura, scrittura o eliminazione delle proprietà. I trap devono rispettare gli invarianti del linguaggio; un comportamento incompatibile può generare TypeError. Reflect permette di delegare l'operazione standard senza reinventarla. Preferisci proxy solo quando la trasparenza del wrapper è un requisito: nel codice applicativo comune possono complicare debug e ottimizzazione.
 
+
+## Trap e invarianti da rispettare
+
+Un Proxy può registrare gli accessi a un oggetto o applicare una logica di validazione alle scritture, ma non deve violare i vincoli delle proprietà non configurabili. Se un trap get restituisce un valore incompatibile con un'invariante del target, JavaScript può sollevare un TypeError. Reflect.get e Reflect.set consentono spesso di delegare il comportamento standard mantenendo il corretto receiver. Crea un oggetto con una proprietà non configurabile e prova un Proxy che intercetta la lettura: verifica la differenza fra un handler trasparente e uno che altera il contratto. Per logica applicativa ordinaria, un metodo esplicito può essere più facile da testare e mantenere.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)`,
+- [MDN — Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)`,
   },
   {
     id: "web-audio-audioworklet",
@@ -5142,11 +5974,14 @@ Un Proxy intercetta operazioni come lettura, scrittura o eliminazione delle prop
     date: "2026-06-20",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "⚙️",
     excerpt: "Quando i nodi predefiniti non bastano, l'AudioWorklet ti fa scrivere l'elaborazione campione per campione.",
     tags: ["Web Audio", "Avanzato", "DSP"],
     content: `
 I nodi predefiniti coprono molto, ma se vuoi un tuo effetto o sintetizzatore campione-per-campione ti serve l'**AudioWorklet**: codice che gira nel thread audio, ad alta priorità.
+
+Questo ragionamento si collega anche ai contenuti su [AnalyserNode: spettro e waveform nel browser](/blog/web-audio-analyser-visualizzare) e [Tone.js: transport e scheduling musicale](/blog/web-audio-tone-js). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 // noise-processor.js (gira nel thread audio)
@@ -5180,9 +6015,14 @@ Il metodo \`process\` riceve i buffer di input e output e li riempie campione pe
 
 AudioWorklet permette elaborazione audio personalizzata nel thread di rendering audio, con AudioWorkletProcessor caricato tramite addModule. Il codice deve rispettare vincoli di tempo real-time: operazioni bloccanti o allocazioni eccessive possono causare glitch. La comunicazione con l'interfaccia avviene tramite MessagePort. Usa AudioWorklet quando i nodi standard non bastano e verifica supporto e contesto sicuro.
 
+
+## Vincoli della produzione audio in tempo reale
+
+Un AudioWorkletProcessor esegue elaborazione custom in un contesto separato dal main thread, ma ha comunque una finestra di tempo limitata per restituire il blocco audio. Operazioni bloccanti, allocazioni continue e gestione inefficiente dei messaggi possono causare glitch. Definisci prima che cosa deve calcolare il processore e quali parametri cambiano in tempo reale. Mantieni il codice di interfaccia nel thread principale e comunica attraverso MessagePort quando necessario. Per iniziare prova un semplice controllo di gain o un effetto minimo, confrontando il risultato con un nodo Web Audio standard. Se i nodi integrati soddisfano il requisito, introdurre un worklet potrebbe aggiungere complessità senza un beneficio reale.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet)`,
+- [MDN — AudioWorklet](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet)`,
   },
   {
     id: "sonic-pi-midi-controllo",
@@ -5190,11 +6030,14 @@ AudioWorklet permette elaborazione audio personalizzata nel thread di rendering 
     date: "2026-06-21",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎛️",
     excerpt: "sync con eventi MIDI e get/set per le manopole: trasforma un controller in un'interfaccia dal vivo.",
     tags: ["Sonic Pi", "MIDI", "Live Coding"],
     content: `
 Sonic Pi riceve MIDI da qualsiasi controller collegato. Puoi suonare le note con una tastiera o mappare le manopole ai parametri del codice, dal vivo.
+
+Questo ragionamento si collega anche ai contenuti su [Sonic Pi sync e cue: sincronizzare i loop](/blog/sonic-pi-sync-cue) e [Sonic Pi live_loop: scrivere musica in tempo reale](/blog/sonic-pi-live-loop-cuore-del-live-coding). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 # suona quando premi un tasto della tastiera MIDI
@@ -5220,6 +6063,12 @@ Il risultato: un'esibizione dove la tastiera controlla le note e le manopole pla
 
 Sonic Pi può ricevere eventi MIDI, ma i nomi delle porte e dei dispositivi dipendono dalla configurazione locale. Prima di assegnare un controller a un parametro, controlla gli eventi in ingresso e il formato dei messaggi. Gestisci input mancanti e valori fuori intervallo. Un controller fisico rende comodo il live coding, ma la traccia dovrebbe poter funzionare anche senza periferiche.
 
+
+## Mappare un controllo fisico a un parametro
+
+Un controller MIDI può inviare valori da trasformare in intervalli appropriati per cutoff, ampiezza o altri parametri. Prima di collegarlo al live set verifica nella console il nome del dispositivo, il canale e il tipo dei messaggi ricevuti. Un knob potrebbe inviare salti o dati non continui; smussa le variazioni quando il parametro audio produce artefatti evidenti. Prevedi il caso in cui il dispositivo venga scollegato e non lasciare la traccia dipendere completamente da un evento che non arriverà più. Per una prima prova collega una sola manopola a un filtro, controlla il range e confronta valori minimo e massimo. Solo dopo aggiungi più controller per la performance.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -5230,11 +6079,14 @@ Sonic Pi può ricevere eventi MIDI, ma i nomi delle porte e dei dispositivi dipe
     date: "2026-06-22",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
     excerpt: "I Ractor eseguono codice Ruby in parallelo davvero, senza condividere stato mutabile. Addio GIL, con regole.",
     tags: ["Ruby", "Ruby 3", "Concorrenza"],
     content: `
 Storicamente il GIL di Ruby impediva l'esecuzione parallela di thread. Ruby 3 ha introdotto i **Ractor**, che eseguono codice davvero in parallelo isolando lo stato.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby pattern matching: case/in](/blog/ruby-pattern-matching) e [RSpec in Ruby: test affidabili e leggibili](/blog/ruby-rspec-testare). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 lavoratori = 4.times.map do |i|
@@ -5258,9 +6110,14 @@ Ancora sperimentale in alcuni aspetti, ma è la direzione di Ruby per sfruttare 
 
 Ractor permette un modello di concorrenza basato sull'isolamento di oggetti e messaggi. Non rende automaticamente ogni programma parallelo o più veloce: trasferimento dei dati, API supportate e carichi di lavoro incidono sul risultato. Misura l'overhead e verifica la compatibilità delle librerie prima di usarlo in una pipeline di produzione.
 
+
+## Misurare prima di parallelizzare
+
+Un calcolo CPU-bound può trarre beneficio dal parallelismo, ma la suddivisione del lavoro introduce costi di creazione, comunicazione e raccolta dei risultati. Con Ractor, inoltre, i dati non liberamente condivisibili vanno trasferiti o copiati seguendo le regole del modello. Se il lavoro dura pochi millisecondi, l'overhead potrebbe superare il beneficio. Confronta una versione sequenziale e una concorrente usando lo stesso dataset, poi valuta anche memoria e variabilità dei tempi. Il vantaggio non è garantito e dipende dalla versione di Ruby e dalle librerie coinvolte. Se il collo di bottiglia è la rete, servono strategie diverse.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Ractor.html)`,
+- [Ruby Core — Ractor](https://docs.ruby-lang.org/en/master/Ractor.html)`,
   },
   {
     id: "rails-problema-n-piu-1",
@@ -5268,11 +6125,14 @@ Ractor permette un modello di concorrenza basato sull'isolamento di oggetti e me
     date: "2026-06-23",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "Una lista che fa una query per riga: il killer silenzioso delle performance. includes lo risolve.",
     tags: ["Ruby on Rails", "Performance", "ActiveRecord"],
     content: `
 Il bug di performance più comune in Rails è il **problema N+1**: una query per prendere la lista, più una query per ogni elemento. Con 100 lanci, 101 query.
+
+L'analisi si completa confrontando questa parte con [Rails caching: invalidazione e dati coerenti](/blog/rails-caching-basi) e [Validazioni Rails e vincoli del database](/blog/rails-validazioni-dati-puliti). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 # MALE: 1 query per i lanci + N query per i provider
@@ -5297,9 +6157,14 @@ Regola: ogni volta che in un ciclo accedi a un'associazione, chiediti se serve u
 
 includes può evitare le query ripetute caricando preventivamente le associazioni, ma non garantisce sempre esattamente due query. In base alla query e ai filtri Rails può usare preload o join. Verifica il numero di query nei log e valuta la quantità di dati caricati: anticipare associazioni inutili può peggiorare consumo di memoria. Il criterio è ridurre il lavoro complessivo, non massimizzare l'uso di includes.
 
+
+## Confrontare numero di query e memoria
+
+In una pagina di ordini con il nome del cliente, senza preload il caricamento può produrre una query iniziale più una query per ogni cliente. Con includes la quantità di chiamate può diminuire, ma il piano esatto dipende dalla query e dai filtri. Un join ampio può duplicare righe e far crescere il volume trasferito. Misura un caso con pochi record e uno con molti, confrontando numero di query, tempo e memoria. Se l'associazione viene letta soltanto in una pagina specifica, caricarla indiscriminatamente in ogni endpoint può essere uno spreco. L'obiettivo non è usare includes ovunque, ma eliminare lavoro ripetuto dove serve.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_querying.html)`,
+- [Rails Guides — Active Record Querying](https://guides.rubyonrails.org/active_record_querying.html)`,
   },
   {
     id: "javascript-intl-formattazione",
@@ -5307,11 +6172,14 @@ includes può evitare le query ripetute caricando preventivamente le associazion
     date: "2026-06-24",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "Niente librerie per formattare date, numeri e valute: Intl è nativo e conosce ogni lingua.",
     tags: ["JavaScript", "i18n"],
     content: `
 Per formattare date, numeri e valute non serve una libreria: il browser ha l'oggetto nativo **Intl**, che conosce le convenzioni di ogni lingua.
+
+Un confronto utile per questa soluzione è quello con [JavaScript Proxy e Reflect: intercettare operazioni](/blog/javascript-proxy-reflect) e [Generator function JavaScript: yield e iterazione](/blog/javascript-generatori). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 new Intl.NumberFormat("it-IT", {
@@ -5335,9 +6203,14 @@ C'è anche \`Intl.Collator\` per ordinare le stringhe rispettando gli accenti, e
 
 Intl formatta dati secondo locale e opzioni esplicite. La stessa cifra può usare separatori differenti, ma il valore numerico sottostante non deve essere archiviato come stringa formattata. Per le date, specifica timeZone quando il requisito lo richiede; altrimenti l'ambiente può influenzare il risultato. Per la valuta conserva importo e codice ISO separati dal formato mostrato.
 
+
+## Separare dati numerici e presentazione
+
+Un importo archiviato come 1234.50 non dovrebbe essere inviato al database nella forma "1.234,50 €" soltanto perché la UI usa il locale italiano. La rappresentazione dipende dalla lingua e dalla valuta, mentre il dato deve mantenere una semantica coerente. Intl.NumberFormat è utile per visualizzare un valore, ma un parser di input deve stabilire regole esplicite per separatori e precisione. Per le date, imposta timeZone quando la visualizzazione deve riferirsi a una zona specifica. Prova la stessa cifra e lo stesso istante in it-IT ed en-US e verifica che cambino soltanto le etichette mostrate, non il valore logico.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)`,
+- [MDN — Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)`,
   },
   {
     id: "web-audio-tone-js",
@@ -5345,11 +6218,14 @@ Intl formatta dati secondo locale e opzioni esplicite. La stessa cifra può usar
     date: "2026-06-25",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎵",
     excerpt: "Synth, sequencer e trasporto pronti all'uso. Tone.js ti fa comporre invece di gestire i nodi a mano.",
     tags: ["Web Audio", "Tone.js", "Musica"],
     content: `
 La Web Audio API è potente ma verbosa. **Tone.js** ci costruisce sopra un livello musicale: sintetizzatori, effetti e un "trasporto" con un tempo, pronti all'uso.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Chrome Music Lab: idee per audio interattivo](/blog/web-audio-chrome-music-lab-lezioni) e [Web Audio generativo: vincoli e casualità](/blog/web-audio-generative-browser). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 import * as Tone from "tone";
@@ -5375,9 +6251,14 @@ Se la Web Audio API è l'assembly del suono nel browser, Tone.js è il linguaggi
 
 Tone.js fornisce strumenti musicali ad alto livello sopra Web Audio, come sintetizzatori, sequencer e transport. Il transport mantiene un tempo musicale condiviso, ma la riproduzione dipende comunque dalle restrizioni del browser sull'avvio dell'audio. Gestisci smaltimento degli strumenti e arresto dei pattern quando il componente viene rimosso; evita istanze duplicate a ogni render.
 
+
+## Il transport è condiviso, le risorse no
+
+Tone.js fornisce una struttura musicale utile per sincronizzare pattern, synth e automazioni, ma non elimina le restrizioni del browser sull'avvio dell'audio. La prima interazione dell'utente deve gestire l'attivazione del contesto. Se un componente React crea uno strumento a ogni render senza liberare il precedente, possono accumularsi risorse e callback. Prepara un test che monti e smonti la sezione musicale più volte, verificando che gli strumenti vengano dismessi quando non servono. Mantieni il transport coordinato quando più componenti partecipano allo stesso brano: avviarne diversi senza una gerarchia chiara può generare ritmi fuori fase. Per una semplice riproduzione di un file, considera se l'API browser base sarebbe sufficiente.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://tonejs.github.io/)`,
+- [Documentazione tecnica — Guide](https://tonejs.github.io/)`,
   },
   {
     id: "sonic-pi-use-bpm-tempo",
@@ -5385,11 +6266,14 @@ Tone.js fornisce strumenti musicali ad alto livello sopra Web Audio, come sintet
     date: "2026-06-26",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🕰️",
-    excerpt: "use_bpm cambia il significato di sleep. Pensare in battute invece che in secondi cambia tutto.",
+    excerpt: "Di default in Sonic Pi sleep 1 dura un secondo. Ma con usebpm cambi l'unità di misura: sleep 1 diventa \"un beat\", e la velocità del brano la decidi in battiti al minuto.",
     tags: ["Sonic Pi", "Timing"],
     content: `
 Di default in Sonic Pi \`sleep 1\` dura un secondo. Ma con \`use_bpm\` cambi l'unità di misura: \`sleep 1\` diventa "un beat", e la velocità del brano la decidi in battiti al minuto.
+
+Un approfondimento dello stesso percorso si trova in [Sonic Pi MIDI: input e controllo dal vivo](/blog/sonic-pi-midi-controllo) e [Sonic Pi recording: registrare e controllare il livello](/blog/sonic-pi-registrare-esportare). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 use_bpm 128   # da qui, sleep conta in beat, non in secondi
@@ -5414,6 +6298,12 @@ Puoi anche usare \`use_bpm_mul 2\` per raddoppiare localmente il tempo di un loo
 
 use_bpm modifica la relazione tra beat e tempo reale. sleep 1 rappresenta normalmente un beat nel contesto attivo; valori frazionari permettono suddivisioni come ottavi e sedicesimi. Cambiare BPM senza rivedere le durate dei sample può produrre disallineamenti, soprattutto con loop preregistrati. Per pattern complessi documenta la lunghezza in battute, non soltanto in secondi.
 
+
+## Lo stesso pattern a velocità diverse
+
+Un valore sleep espresso in beat cambia durata reale quando modifichi BPM. Per esempio, un quarto di beat occupa meno millisecondi a 160 BPM che a 120 BPM, pur mantenendo la stessa posizione relativa nella battuta. Costruisci una sequenza di quattro beat e registrala prima a un tempo moderato e poi a uno più alto, senza modificare le attese. Se inserisci campioni preregistrati, considera che la loro durata originale non segue automaticamente il metronomo: potrebbe servirti una trasformazione o un punto di trigger differente. Verifica la ripartenza del loop dopo un cambio tempo e assicurati che tutte le sezioni seguano lo stesso riferimento temporale.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -5424,11 +6314,14 @@ use_bpm modifica la relazione tra beat e tempo reale. sleep 1 rappresenta normal
     date: "2026-06-27",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
-    excerpt: "map(&:upcase) sembra magia. In realtà è una conversione elegante da simbolo a blocco. Ecco come.",
+    excerpt: "Prima o poi in Ruby incontri map(&:upcase) e ti chiedi cosa diavolo sia quel &:. È una delle sintassi più eleganti del linguaggio.",
     tags: ["Ruby", "Fondamentali"],
     content: `
 Prima o poi in Ruby incontri \`map(&:upcase)\` e ti chiedi cosa diavolo sia quel \`&:\`. È una delle sintassi più eleganti del linguaggio.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby symbol vs string: quando usarli](/blog/ruby-symbol-vs-string) e [Ruby blocchi, Proc e lambda: differenze](/blog/ruby-blocchi-proc-lambda). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 %w[ciao mondo].map(&:upcase)   # => ["CIAO", "MONDO"]
@@ -5448,9 +6341,14 @@ Puoi usare \`&\` anche per passare un blocco già pronto: \`def stampa(&blocco);
 
 La forma &:method converte un simbolo in un blocco che invoca il metodo indicato su ciascun elemento. È una scorciatoia leggibile per trasformazioni semplici, non una sostituzione universale dei blocchi: quando occorrono argomenti o logica condizionale un blocco esplicito è spesso più chiaro. Valuta la leggibilità prima di ogni micro-ottimizzazione.
 
+
+## Leggibilità di una pipeline Enumerable
+
+Nella trasformazione users.map(&:name), la scorciatoia evita di scrivere un blocco che invoca soltanto name. Se però la logica richiede di gestire elementi nil, formattare una stringa o passare parametri, una lambda esplicita può essere più chiara. Una pipeline con molte abbreviazioni non diventa migliore soltanto perché è più corta. Verifica il comportamento quando gli elementi non implementano il metodo richiesto: la conversione da Symbol non fornisce un fallback automatico. Durante una code review privilegia una forma immediatamente comprensibile, soprattutto quando il codice verrà modificato da persone che non conoscono ancora tutte le scorciatoie del linguaggio.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Symbol.html)`,
+- [Ruby Core — Symbol](https://docs.ruby-lang.org/en/master/Symbol.html)`,
   },
   {
     id: "rails-strong-parameters",
@@ -5458,11 +6356,14 @@ La forma &:method converte un simbolo in un blocco che invoca il metodo indicato
     date: "2026-06-28",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
-    excerpt: "params.require.permit decide quali campi accetti. Senza, un utente furbo potrebbe scriversi admin: true.",
+    excerpt: "Quando salvi i dati di un form, non ti puoi fidare di ciò che arriva. Gli strong parameters impongono una whitelist: solo i campi che permetti esplicitamente passano.",
     tags: ["Ruby on Rails", "Sicurezza"],
     content: `
 Quando salvi i dati di un form, non ti puoi fidare di ciò che arriva. Gli **strong parameters** impongono una whitelist: solo i campi che permetti esplicitamente passano.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Rails N+1: includes, preload ed eager_load](/blog/rails-problema-n-piu-1) e [Routing RESTful in Rails con resources](/blog/rails-routing-restful). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 class LaunchesController < ApplicationController
@@ -5490,9 +6391,14 @@ La regola: permetti solo ciò che l'utente deve davvero poter impostare. Il butt
 
 Strong Parameters controlla quali attributi del payload possono essere assegnati in massa a un model. Non equivale ad autorizzare un utente a modificare la risorsa: i permessi vanno verificati separatamente. Evita di permettere campi sensibili come ruoli amministrativi soltanto perché presenti nel form. Testa payload con chiavi inattese e strutture annidate per identificare differenze tra il contratto previsto e quello accettato.
 
+
+## Mass assignment e permessi sono problemi diversi
+
+Supponi che un form permetta di cambiare indirizzo e telefono di un utente. Strong Parameters limita i campi accettati dal controller, ma non dimostra che la persona autenticata sia autorizzata a modificare quel particolare record. Le due verifiche devono essere separate: prima individua la risorsa accessibile, poi filtra i campi scrivibili per l'operazione. Non permettere parametri come role, admin o owner_id solo perché presenti nel payload. Un test deve provare anche a cambiare l'identificativo della risorsa e a inviare campi non previsti. La sicurezza dipende dal contratto dell'endpoint completo, non da un singolo metodo params.permit.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/action_controller_overview.html)`,
+- [Rails Guides — Action Controller Overview](https://guides.rubyonrails.org/action_controller_overview.html)`,
   },
   {
     id: "javascript-web-workers",
@@ -5500,11 +6406,14 @@ Strong Parameters controlla quali attributi del payload possono essere assegnati
     date: "2026-06-29",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "Un thread separato per il lavoro pesante. La pagina resta fluida mentre il worker macina i numeri.",
     tags: ["JavaScript", "Performance"],
     content: `
 JavaScript ha un solo thread, quindi un calcolo pesante congela l'interfaccia. I **Web Worker** eseguono codice in un thread separato: la UI resta fluida.
+
+Per considerare anche gli effetti sull'interfaccia, approfondisci [Debounce vs throttle in JavaScript: differenze](/blog/javascript-debounce-throttle) e [structuredClone JavaScript: copie profonde e limiti](/blog/javascript-immutabilita-structuredclone). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 // main.js
@@ -5528,9 +6437,14 @@ Quando usarli: parsing di file enormi, elaborazione di immagini, crittografia, q
 
 I Web Worker eseguono JavaScript su un thread separato dal main thread, ma non hanno accesso diretto al DOM. La comunicazione avviene tramite messaggi e dati clonabili o trasferibili. Creare troppi worker o spostare oggetti grandi può costare più del calcolo stesso. Misura prima l'effetto sul tempo di risposta dell'interfaccia e gestisci la terminazione dei worker non più necessari.
 
+
+## Trasferire dati costa
+
+Spostare un calcolo in un worker libera il main thread dall'elaborazione pesante, ma i dati devono attraversare il confine fra thread. Un oggetto complesso può essere clonato, mentre alcuni buffer possono essere trasferiti per evitare copie costose. Se il problema è piccolo e l'avvio del worker richiede più tempo del calcolo, l'ottimizzazione può peggiorare le prestazioni. Misura l'esperienza durante una digitazione o animazione mentre il task è in corso. Un worker non manipola direttamente il DOM, quindi il risultato deve essere comunicato al thread principale e applicato lì. Gestisci anche l'uscita anticipata dalla pagina per non lasciare processi inutili.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)`,
+- [MDN — Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)`,
   },
   {
     id: "web-audio-audiobuffersource-campioni",
@@ -5538,11 +6452,14 @@ I Web Worker eseguono JavaScript su un thread separato dal main thread, ma non h
     date: "2026-06-30",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎙️",
     excerpt: "Carica un file, decodificalo e suonalo con AudioBufferSourceNode: velocità e loop inclusi.",
     tags: ["Web Audio", "Campioni"],
     content: `
 Per suonare un file audio nel browser lo carichi, lo decodifichi in un buffer e lo riproduci con un **AudioBufferSourceNode**.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Tone.js: transport e scheduling musicale](/blog/web-audio-tone-js) e [Chrome Music Lab: idee per audio interattivo](/blog/web-audio-chrome-music-lab-lezioni). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const res = await fetch("/samples/break.wav");
@@ -5568,9 +6485,14 @@ Nota una peculiarità: un \`AudioBufferSourceNode\` è **usa e getta**: dopo \`s
 
 I file audio vengono scaricati e decodificati in AudioBuffer prima di poter essere usati efficacemente nel grafo. Una nuova riproduzione richiede una nuova istanza AudioBufferSourceNode, non un secondo start sullo stesso nodo. playbackRate e detune modificano l'altezza o velocità; il cambio può alterare la durata. Considera memoria, caching e fallback se un sample non è disponibile.
 
+
+## Caricamento, decoding e memoria
+
+Un AudioBuffer è un insieme di dati audio già decodificati, quindi occupa memoria anche se il file originale era compresso. Per molti campioni lunghi, caricare tutto in anticipo può diventare oneroso. Distingui asset critici per il primo suono da quelli necessari soltanto in una sezione secondaria. Una riproduzione richiede una nuova istanza AudioBufferSourceNode con il buffer già disponibile. Cambiare playbackRate modifica anche l'altezza delle note in modo diverso da un algoritmo dedicato di time stretching. Testa l'assenza del sample, il rifiuto del download e la navigazione via prima del completamento del decoding. Un fallback chiaro evita che l'interfaccia sembri guasta quando il problema è un asset.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode)`,
+- [MDN — AudioBufferSourceNode](https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode)`,
   },
   {
     id: "sonic-pi-registrare-esportare",
@@ -5578,11 +6500,14 @@ I file audio vengono scaricati e decodificati in AudioBuffer prima di poter esse
     date: "2026-07-01",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "💾",
-    excerpt: "Strutturare il codice per un take completo e usare il registratore integrato per esportare un WAV.",
+    excerpt: "Improvvisare è bello, ma prima o poi vuoi salvare un brano. Sonic Pi ha un registratore integrato (il tasto Rec): premi Rec, fai partire i loop, premi di nuovo e ottieni un…",
     tags: ["Sonic Pi", "Produzione"],
     content: `
 Improvvisare è bello, ma prima o poi vuoi **salvare** un brano. Sonic Pi ha un registratore integrato (il tasto Rec): premi Rec, fai partire i loop, premi di nuovo e ottieni un file WAV.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Sonic Pi techno: struttura di un brano](/blog/sonic-pi-brano-techno-passo-passo) e [Sonic Pi use_bpm: battute e suddivisioni](/blog/sonic-pi-use-bpm-tempo). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Il segreto è strutturare il codice perché parta pulito e cresca in modo controllato:
 
@@ -5611,6 +6536,12 @@ Il WAV che ottieni lo porti in qualsiasi editor per il mastering. Il codice dive
 
 La registrazione del set permette di riascoltare transizioni, livelli e durata effettiva delle sequenze. Prima della cattura definitiva prepara un breve test e controlla che il segnale non saturi. Registra una versione riproducibile dello script e annota BPM e parametri critici. L'editing e il mastering richiedono strumenti separati quando vuoi distribuire un brano rifinito.
 
+
+## Registrare una prova prima del set completo
+
+Prima di registrare un brano lungo, cattura trenta secondi e riascoltali su cuffie e diffusori diversi a volume moderato. Controlla che nessuna parte saturi, che gli effetti non coprano il kick e che il silenzio iniziale non sia eccessivo. Se modifichi live_loop durante il set, salva una versione dello script che descriva il punto di partenza e annota le variazioni principali: la registrazione audio da sola non rende riproducibile la performance. Per un'uscita destinata alla distribuzione, una DAW può essere utile per editing e mastering, ma la qualità della sorgente resta fondamentale. Mantieni copie dei file registrati e assegna nomi che permettano di identificare versione, BPM e data.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -5621,11 +6552,14 @@ La registrazione del set permette di riascoltare transizioni, livelli e durata e
     date: "2026-07-02",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
     excerpt: "Definisci l'operatore <=> e includi Comparable: i tuoi oggetti sanno ordinarsi, confrontarsi e trovare il massimo.",
     tags: ["Ruby", "Design"],
     content: `
 Vuoi che i tuoi oggetti si ordinino e si confrontino come i numeri? Basta definire l'operatore "astronave" \`<=>\` e includere il modulo **Comparable**.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Ruby module e mixin: include, prepend, extend](/blog/ruby-moduli-mixin) e [Ruby duck typing e protocolli impliciti](/blog/ruby-duck-typing). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 class Launch
@@ -5656,9 +6590,14 @@ Definendo un solo metodo (\`<=>\`), \`Comparable\` te ne regala una decina: \`<\
 
 Comparable usa il risultato dell'operatore <=> per offrire confronti come < e >=. La funzione deve rispettare un ordinamento coerente; se due oggetti non sono confrontabili può restituire nil. Testa transitività, uguaglianza e valori limite. Un confronto incoerente può rendere ordinamenti e ricerche difficili da prevedere.
 
+
+## Ordinamenti coerenti in presenza di valori mancanti
+
+Se confronti prodotti per prezzo, devi decidere cosa accade quando uno dei due prezzi non è disponibile. Un operatore <=> che restituisce risultati incompatibili tra confronti diversi rende l'ordinamento imprevedibile. Non sostituire i valori mancanti con zero senza un requisito: potrebbe cambiare il significato del confronto. Scrivi test con valori uguali, crescenti e nulli e verifica la transitività. Quando il dominio ammette solo ordinamenti parziali, può essere più sicuro usare una funzione di ordinamento esplicita per la singola vista, anziché dichiarare che tutti gli oggetti sono universalmente comparabili.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Comparable.html)`,
+- [Ruby Core — Comparable](https://docs.ruby-lang.org/en/master/Comparable.html)`,
   },
   {
     id: "rails-routing-restful",
@@ -5666,11 +6605,14 @@ Comparable usa il risultato dell'operatore <=> per offrire confronti come < e >=
     date: "2026-07-03",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "Una riga, resources :launches, genera sette rotte convenzionali. Convenzione sopra configurazione al suo meglio.",
     tags: ["Ruby on Rails", "Routing", "REST"],
     content: `
 Il routing di Rails abbraccia le convenzioni REST: una risorsa, sette azioni standard. E una riga le genera tutte.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Rails Strong Parameters: input e mass assignment](/blog/rails-strong-parameters) e [Rails N+1: includes, preload ed eager_load](/blog/rails-problema-n-piu-1). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 # config/routes.rb
@@ -5698,9 +6640,14 @@ Il valore è la **prevedibilità**: chiunque conosca Rails sa già come sono fat
 
 La dichiarazione resources genera una serie convenzionale di route per elenco, creazione, lettura, aggiornamento ed eliminazione. Non è sempre necessario esporle tutte: limita le azioni a quelle richieste. Controlla l'ordine delle route speciali, il matching dei parametri e le risposte per risorse mancanti. La chiarezza degli URL facilita documentazione e test, ma non sostituisce l'autorizzazione.
 
+
+## Metodi HTTP e risorse, non solo URL
+
+Una route per aggiornare una risorsa usa convenzioni diverse da quella destinata a leggerla. Prima di aggiungere una route custom, verifica se un'azione standard di resources descrive già il comportamento. Esporre create, update e destroy quando non servono aumenta la superficie da proteggere; usa only oppure except dove opportuno. Le nested routes possono chiarire la relazione fra risorse, ma livelli eccessivi rendono gli URL difficili da gestire. Prepara test che distinguano metodo HTTP errato, id assente e permessi insufficienti. Il file di routing definisce come raggiungere un controller; non è una policy di autorizzazione e non valida automaticamente l'input.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/routing.html)`,
+- [Rails Guides — Routing](https://guides.rubyonrails.org/routing.html)`,
   },
   {
     id: "javascript-optional-chaining-nullish",
@@ -5708,11 +6655,14 @@ La dichiarazione resources genera una serie convenzionale di route per elenco, c
     date: "2026-07-04",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "?. evita i crash su proprietà mancanti, ?? dà default solo su null e undefined. Due operatori, meno bug.",
     tags: ["JavaScript", "Sintassi"],
     content: `
 Due operatori moderni eliminano intere righe di controlli difensivi.
+
+Un confronto utile per questa soluzione è quello con [JavaScript destructuring: default e valori undefined](/blog/javascript-destructuring) e [Web Workers: lavoro in background e limiti](/blog/javascript-web-workers). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const user = { profilo: { social: null } };
@@ -5736,9 +6686,14 @@ Insieme risolvono una montagna di \`if (x && x.y && x.y.z)\`. Codice più corto 
 
 L'operatore ?. interrompe l'accesso quando il valore a sinistra è null o undefined. L'operatore ?? usa un fallback soltanto in questi due casi, a differenza di || che considera anche zero, stringa vuota e false. Non usare optional chaining per nascondere proprietà obbligatorie del contratto API: i dati mancanti possono meritare una validazione esplicita.
 
+
+## Un fallback che non cancella dati validi
+
+In un form, il valore 0 può essere una quantità valida e false può rappresentare una preferenza esplicita. Usare || per scegliere un default in questi casi rischia di sostituire informazioni corrette. L'operatore ?? applica il fallback soltanto a null e undefined. L'optional chaining evita errori quando un oggetto intermedio manca, ma può anche nascondere una risposta API che avrebbe dovuto essere obbligatoria. Prova i valori undefined, null, 0, false e stringa vuota per chiarire le differenze. Se il requisito richiede che una proprietà esista sempre, preferisci una validazione esplicita a una catena di accessi che restituisce silenziosamente undefined.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)`,
+- [MDN — Nullish Coalescing](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)`,
   },
   {
     id: "web-audio-chrome-music-lab-lezioni",
@@ -5746,11 +6701,14 @@ L'operatore ?. interrompe l'accesso quando il valore a sinistra è null o undefi
     date: "2026-07-05",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🌈",
     excerpt: "Esperimenti giocosi costruiti con Web Audio: la lezione è rendere visibile e tangibile ciò che è astratto.",
     tags: ["Web Audio", "Design", "Musica"],
     content: `
 **Chrome Music Lab** è una raccolta di esperimenti musicali nel browser, pensati per la didattica. Sono tutti costruiti con la Web Audio API, e per chi programma audio sono una miniera di lezioni.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Web Audio generativo: vincoli e casualità](/blog/web-audio-generative-browser) e [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 La più importante: **rendere visibile l'invisibile**. In "Spectrogram" vedi le frequenze dipingersi, in "Oscillators" trascini il mouse e senti l'onda cambiare, in "Sound Waves" le particelle mostrano la pressione dell'aria. Concetti astratti (frequenza, armoniche, timbro) diventano tangibili.
 
@@ -5765,9 +6723,14 @@ La lezione per noi sviluppatori: quando costruisci uno strumento musicale sul we
 
 Gli esperimenti di Chrome Music Lab mostrano relazioni tra ritmo, frequenza, intervalli e rappresentazioni visive del suono. Sono utili come riferimento didattico, non come API di programmazione. Se vuoi costruire strumenti equivalenti, separa il modello musicale dal rendering e usa Web Audio per la sintesi e lo scheduling. Verifica accessibilità e riduzione del movimento nelle interfacce interattive.
 
+
+## Dall'esperimento a un'interfaccia propria
+
+Un esperimento musicale visivo è utile quando collega un gesto a una conseguenza udibile in modo immediato. Se vuoi riprodurre questo approccio nel browser, separa le regole musicali dalla rappresentazione grafica: le note e le durate sono dati, mentre animazione e colore aiutano a comprenderli. Definisci un controllo di avvio e arresto accessibile anche da tastiera e comunica il risultato senza affidarti solo al colore. Un piccolo esempio può avere una griglia di quattro colpi e un cursore che evidenzia la posizione, ma la temporizzazione del suono deve restare indipendente dagli aggiornamenti del DOM. Verifica il comportamento su mobile, dove gesture e policy di autoplay differiscono spesso dall'ambiente desktop.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://musiclab.chromeexperiments.com/)`,
+- [Documentazione tecnica — Guide](https://musiclab.chromeexperiments.com/)`,
   },
   {
     id: "sonic-pi-ambient-pad-riverbero",
@@ -5775,11 +6738,14 @@ Gli esperimenti di Chrome Music Lab mostrano relazioni tra ritmo, frequenza, int
     date: "2026-07-06",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🌌",
-    excerpt: "Attacchi lenti, riverberi lunghi e campioni allungati creano texture immersive. La musica come atmosfera.",
+    excerpt: "Non tutta la musica è ritmo. L'ambient vive di texture e spazio: note lunghe, attacchi morbidi, riverberi profondi. Sonic Pi lo fa benissimo.",
     tags: ["Sonic Pi", "Ambient"],
     content: `
 Non tutta la musica è ritmo. L'ambient vive di **texture** e spazio: note lunghe, attacchi morbidi, riverberi profondi. Sonic Pi lo fa benissimo.
+
+Questo ragionamento si collega anche ai contenuti su [Sonic Pi recording: registrare e controllare il livello](/blog/sonic-pi-registrare-esportare) e [Sonic Pi techno: struttura di un brano](/blog/sonic-pi-brano-techno-passo-passo). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 use_bpm 60
@@ -5808,6 +6774,12 @@ Niente \`sample :bd_haus\`, niente sedicesimi: qui il tempo si dilata. Aggiungi 
 
 Un pad ambient nasce spesso da note lunghe con attacco graduale, filtri dolci e una coda di riverbero controllata. Se release supera il tempo tra note, più voci restano sovrapposte: può essere desiderato, ma aumenta densità e livello. Prova a ridurre il numero di note prima di alzare il riverbero. Gli spazi fra gli eventi sono parte della composizione.
 
+
+## Lasciare spazio tra le voci
+
+Un pad ambient usa spesso attacchi lenti, note sostenute e riverbero. Quando il release è lungo, più note rimangono attive contemporaneamente e aumentano la densità del mix: non sempre è desiderabile. Prova una progressione di tre note distanti e confronta un riverbero leggero con uno più ampio senza cambiare le note. Controlla che il basso non diventi confuso a causa delle code degli effetti. Se vuoi creare movimento, automatizza lentamente il cutoff o varia il registro, invece di aggiungere continuamente nuove voci. Un esercizio utile consiste nel registrare due minuti con gli stessi suoni e soltanto tre cambiamenti graduali: puoi valutare se ogni intervento è udibile e musicalmente giustificato.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -5818,11 +6790,14 @@ Un pad ambient nasce spesso da note lunghe con attacco graduale, filtri dolci e 
     date: "2026-07-07",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
     excerpt: "gsub, scan, match: Ruby tratta le espressioni regolari come cittadini di prima classe. Testo domato.",
     tags: ["Ruby", "Stringhe", "Regex"],
     content: `
 Ruby ha un rapporto splendido con le stringhe e le espressioni regolari: sono integrate nel linguaggio, non una libreria a parte.
+
+L'analisi si completa confrontando questa parte con [Ruby symbol vs string: quando usarli](/blog/ruby-symbol-vs-string) e [Ruby Comparable: implementare <=>](/blog/ruby-comparable-enumerable-custom). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 testo = "Contattami: ale@mail.it oppure info@site.com"
@@ -5849,9 +6824,14 @@ I gruppi di cattura tornano comodi: \`"2026-07-07".match(/(\\d+)-(\\d+)-(\\d+)/)
 
 gsub sostituisce tutte le occorrenze che corrispondono a una regex o stringa. Prima di usarlo su dati reali valuta Unicode, escaping e caratteri speciali. Una regex troppo permissiva può alterare testo non previsto; su input non attendibile considera anche il costo di pattern complessi. Scrivi test per stringhe vuote, sequenze ripetute e caratteri accentati.
 
+
+## Espressioni regolari e input reale
+
+Una sostituzione gsub può sembrare corretta su una stringa semplice e fallire con caratteri accentati, punteggiatura o testo multilinea. Se il pattern contiene contenuto proveniente dall'utente, verifica che venga trattato come testo quando questo è il requisito, evitando di interpretarlo involontariamente come sintassi regex. Gli esempi di test dovrebbero includere un testo senza corrispondenze, uno con più occorrenze e uno con caratteri non ASCII. Per elaborazioni ripetute su input molto lunghi misura il costo del pattern e valuta se una trasformazione più semplice potrebbe essere sufficiente.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/String.html)`,
+- [Ruby Core — String](https://docs.ruby-lang.org/en/master/String.html)`,
   },
   {
     id: "rails-active-storage-allegati",
@@ -5859,11 +6839,14 @@ gsub sostituisce tutte le occorrenze che corrispondono a una regex o stringa. Pr
     date: "2026-07-08",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "Un metodo, has_one_attached, e il tuo model gestisce upload, storage e varianti immagine. Cloud incluso.",
     tags: ["Ruby on Rails", "File"],
     content: `
 Gestire upload di file (avatar, allegati, immagini) a mano è tedioso. **Active Storage** lo fa per te con una riga nel model.
+
+Per valutare l'effetto di questa scelta sul backend, considera anche [Active Job: job asincroni e retry](/blog/rails-background-job-active-job) e [Rails migrations: cambiare lo schema in sicurezza](/blog/rails-migrazioni-versionare-il-database). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 class Provider < ApplicationRecord
@@ -5888,9 +6871,14 @@ Niente più codice di upload custom, niente gestione manuale dei percorsi. Ti co
 
 Active Storage gestisce associazioni e archiviazione dei file, ma l'upload comporta rischi operativi. Limita dimensioni e formati quando necessario, verifica i permessi per visualizzare e rimuovere allegati e considera la scansione antivirus per file non attendibili. Non usare il nome originale del file come unico identificativo affidabile. Definisci retention e gestione dei file orfani.
 
+
+## File caricati e confini di fiducia
+
+Un file allegato può avere un'estensione plausibile e contenere dati diversi da quelli dichiarati. Prima di renderlo disponibile ad altre persone verifica vincoli sul tipo, dimensione e autorizzazioni, in base al contesto. Per documenti pubblici e privati le politiche di accesso potrebbero essere diverse. Se generi anteprime o varianti di immagini, considera i processi di elaborazione e i limiti di risorse per i file molto grandi. Un test dovrebbe tentare un upload valido, uno troppo grande e l'accesso all'allegato da un utente non autorizzato. Pianifica anche la cancellazione degli allegati abbandonati quando vengono rimossi i record applicativi.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_storage_overview.html)`,
+- [Rails Guides — Active Storage Overview](https://guides.rubyonrails.org/active_storage_overview.html)`,
   },
   {
     id: "javascript-set-e-map",
@@ -5898,11 +6886,14 @@ Active Storage gestisce associazioni e archiviazione dei file, ma l'upload compo
     date: "2026-07-09",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "Set elimina i duplicati in una riga, Map è un dizionario con chiavi di qualsiasi tipo. Struttura giusta, codice pulito.",
     tags: ["JavaScript", "Strutture dati"],
     content: `
 Oggetti e array coprono molto, ma **Set** e **Map** risolvono in modo pulito problemi ricorrenti.
+
+Un confronto utile per questa soluzione è quello con [structuredClone JavaScript: copie profonde e limiti](/blog/javascript-immutabilita-structuredclone) e [JavaScript Intl: date, numeri e valute locali](/blog/javascript-intl-formattazione). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 // Set: valori unici
@@ -5927,9 +6918,14 @@ Regola pratica: se ti serve un insieme di valori unici, \`Set\`; se ti serve una
 
 Set mantiene valori unici secondo una semantica di confronto che non esegue una deep equality degli oggetti. Map permette chiavi di qualsiasi tipo, comprese referenze a oggetti. Scegli Set per membership e deduplicazione di valori adatti; per oggetti che rappresentano la stessa entità, può essere necessario deduplicare per ID invece che per riferimento. Map non sostituisce ogni oggetto JSON.
 
+
+## Identità degli oggetti e deduplicazione
+
+Due oggetti JavaScript distinti con lo stesso campo id non vengono trattati da Set come lo stesso valore: il confronto usa il riferimento dell'oggetto. Per deduplicare elementi provenienti da un'API puoi costruire una Map indicizzata per l'ID stabile, decidendo quale record conservare quando ci sono duplicati. Se invece la collezione contiene stringhe o numeri, Set può essere sufficiente. Un test utile confronta due riferimenti allo stesso oggetto e due oggetti separati ma uguali nel contenuto. Ricorda anche che Map consente chiavi che un semplice oggetto JSON non rappresenta nello stesso modo, come i riferimenti a oggetti.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)`,
+- [MDN — Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)`,
   },
   {
     id: "web-audio-generative-browser",
@@ -5937,11 +6933,14 @@ Set mantiene valori unici secondo una semantica di confronto che non esegue una 
     date: "2026-07-10",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🌀",
     excerpt: "Poche regole e un pizzico di casualità: il browser compone all'infinito. Come in Sonic Pi, ma in JavaScript.",
     tags: ["Web Audio", "Generative", "Musica"],
     content: `
 La stessa idea generativa di Sonic Pi vive anche nella Web Audio API: poche regole più casualità uguale musica infinita.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Chrome Music Lab: idee per audio interattivo](/blog/web-audio-chrome-music-lab-lezioni) e [Web Audio OscillatorNode: sine, square e sawtooth](/blog/web-audio-oscillatore-forme-onda). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const scala = [220, 261.6, 293.7, 329.6, 392]; // La minore pentatonica
@@ -5974,9 +6973,14 @@ Aggiungi un secondo strato più lento per i bassi, un riverbero, e hai un genera
 
 Un sistema generativo produce variazioni secondo regole: scale, intervalli, probabilità, densità e ripetizioni. Senza limiti, la casualità può generare sovrapposizioni troppo forti o sequenze poco ascoltabili. Introduci un seed riproducibile quando vuoi confrontare versioni e definisci un limite di voci contemporanee. L'audio deve essere avviabile e arrestabile esplicitamente dall'utente.
 
+
+## La casualità ha bisogno di limiti
+
+Un generatore che sceglie note completamente a caso può produrre intervalli poco coerenti, troppi eventi simultanei e picchi di volume. Definisci una scala, una densità massima, un registro e una politica per la durata delle voci. Un seed riproducibile permette di confrontare modifiche all'algoritmo senza cambiare ogni volta il materiale musicale. Se il generatore può funzionare a lungo, inserisci un limite alle sorgenti attive e una procedura di stop. Per valutare il risultato registra alcune iterazioni e verifica se le variazioni rispettano il carattere desiderato. Un sistema generativo è utile quando crea differenze controllate, non quando nasconde la struttura dietro valori casuali non verificati.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)`,
+- [MDN — Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)`,
   },
   {
     id: "sonic-pi-brano-techno-passo-passo",
@@ -5984,11 +6988,14 @@ Un sistema generativo produce variazioni secondo regole: scale, intervalli, prob
     date: "2026-07-11",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎚️",
     excerpt: "Cassa dritta, hi-hat, bassline e stab: assembliamo una traccia techno completa, un layer alla volta.",
     tags: ["Sonic Pi", "Techno", "Produzione"],
     content: `
 Mettiamo insieme tutto in una traccia techno completa. Il segreto è stratificare: ogni \`live_loop\` è un elemento, e tutti restano agganciati con \`sync\`.
+
+Un approfondimento dello stesso percorso si trova in [Sonic Pi recording: registrare e controllare il livello](/blog/sonic-pi-registrare-esportare) e [Sonic Pi ambient pad: inviluppo e spazio](/blog/sonic-pi-ambient-pad-riverbero). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 use_bpm 130
@@ -6026,6 +7033,12 @@ Registra partendo dalla sola cassa e aggiungi i loro uno a uno commentando/scomm
 
 Una traccia techno leggibile può essere costruita per livelli: kick, hi-hat, basso e variazioni. Parti da un groove stabile, introduce un elemento alla volta e mantieni allineate le sezioni con durate esplicite. Automazioni troppo rapide dei parametri possono rendere confuso il mix; usa cambiamenti progressivi e verifica le transizioni registrando il set. Un buon loop non basta: serve anche una struttura nel tempo.
 
+
+## Dalla ripetizione alla struttura musicale
+
+Un loop di quattro battute è un punto di partenza, non un brano finito. Scrivi una sezione iniziale con kick e pochi elementi, una seconda in cui entra il basso e una fase di sottrazione prima del ritorno del groove completo. La durata delle sezioni può essere espressa in battute, così il set resta coerente anche quando cambia BPM. Per una traccia veloce, evita che ogni elemento abbia sempre la stessa densità: alterna pause, transienti e automazioni brevi. Registra la progressione completa e riascolta senza guardare il codice. Se non percepisci differenze fra le sezioni, riduci il numero di suoni o cambia davvero un parametro strutturale invece di introdurre decorazioni continue.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -6036,11 +7049,14 @@ Una traccia techno leggibile può essere costruita per livelli: kick, hi-hat, ba
     date: "2026-07-12",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
     excerpt: "Le intuizioni sulle performance ingannano. Benchmark ti dà i numeri veri prima di riscrivere il codice.",
     tags: ["Ruby", "Performance"],
     content: `
 La regola d'oro dell'ottimizzazione: **misura, non indovinare**. Ruby ha il modulo \`Benchmark\` integrato per confrontare approcci diversi con dati reali.
+
+L'analisi si completa confrontando questa parte con [Ruby String gsub e regex: casi limite](/blog/ruby-stringhe-gsub-regex) e [Ruby then, curry e composizione di funzioni](/blog/ruby-programmazione-funzionale). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 require "benchmark"
@@ -6067,9 +7083,14 @@ Perché conta: le intuizioni sulle performance sbagliano di continuo. Quella che
 
 Una misurazione va ripetuta su dati rappresentativi e in condizioni comparabili. Il primo avvio può includere costi di inizializzazione, cache e compilazione che alterano il confronto. Distingui tempo CPU, memoria e attesa I/O. Se il collo di bottiglia è nel database, ottimizzare una piccola funzione Ruby potrebbe non avere alcun effetto sull'esperienza dell'utente.
 
+
+## Misure ripetibili e variabili esterne
+
+Per confrontare due implementazioni devi usare lo stesso input e ridurre il rumore dovuto a inizializzazione, garbage collector e processi concorrenti. Una singola misura isolata non dimostra che una soluzione sia più veloce. Ripeti le prove, osserva distribuzione e differenze relative, poi verifica che l'ottimizzazione abbia effetto nel percorso reale dell'applicazione. Un metodo Ruby più rapido di qualche microsecondo non migliora una request dominata da una query lenta. Formula prima l'ipotesi e scegli una misura pertinente al requisito, come tempo totale o memoria allocata.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Benchmark.html)`,
+- [Ruby Core — Benchmark](https://docs.ruby-lang.org/en/master/Benchmark.html)`,
   },
   {
     id: "rails-full-text-search-postgres",
@@ -6077,11 +7098,14 @@ Una misurazione va ripetuta su dati rappresentativi e in condizioni comparabili.
     date: "2026-07-13",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "PostgreSQL sa cercare nel testo con ranking e pesi. Rails lo espone senza servizi esterni come Elasticsearch.",
     tags: ["Ruby on Rails", "PostgreSQL", "Search"],
     content: `
 Per una ricerca testuale seria non serve subito Elasticsearch: **PostgreSQL** ha il full-text search integrato, con ranking e gestione delle lingue. Rails lo espone con eleganza.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Rails request specs: contratti HTTP e casi limite](/blog/rails-request-specs-testare-api) e [Routing RESTful in Rails con resources](/blog/rails-routing-restful). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 class Launch < ApplicationRecord
@@ -6106,9 +7130,14 @@ Elasticsearch è potente, ma spesso è un cannone per uccidere una mosca. Parti 
 
 La ricerca full-text di PostgreSQL permette tokenizzazione, ranking e indici dedicati, ma la qualità dei risultati dipende dalla lingua e dalla configurazione. Una ricerca che funziona su poche righe può diventare lenta senza un indice coerente. Confronta tsquery, normalizzazione dei termini e risultati attesi prima di aggiungere fuzzy matching. Se i dati contengono lingue diverse, verifica le strategie di stemming.
 
+
+## Ranking e lingua nella ricerca
+
+Una ricerca full-text non confronta soltanto le stringhe carattere per carattere: tokenizzazione e dizionari possono cambiare la corrispondenza dei termini. Se i documenti sono in italiano, una configurazione di lingua non appropriata può alterare stemming e risultati. Prepara un piccolo insieme di articoli con titoli simili ma contenuti diversi e confronta le query di test più frequenti. Valuta la presenza di un indice GIN se il volume lo giustifica, ma verifica anche il piano di esecuzione. La qualità della ricerca dipende da ranking, filtri e gestione delle parole non riconosciute: ottimizzare soltanto l'indice non garantisce risultati migliori.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://www.postgresql.org/docs/current/textsearch-intro.html)`,
+- [PostgreSQL — Textsearch Intro](https://www.postgresql.org/docs/current/textsearch-intro.html)`,
   },
   {
     id: "javascript-immutabilita-structuredclone",
@@ -6116,11 +7145,14 @@ La ricerca full-text di PostgreSQL permette tokenizzazione, ranking e indici ded
     date: "2026-07-14",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "Lo spread copia in superficie, structuredClone copia in profondità. Sapere la differenza evita bug subdoli.",
     tags: ["JavaScript", "Fondamentali"],
     content: `
 In JavaScript gli oggetti si passano per riferimento: assegnarli non li copia. Modificarne uno "condiviso" causa bug subdoli, specie in React dove lo stato va trattato come immutabile.
+
+Nel frontend lo stesso problema si collega a [Prototipi JavaScript: inheritance e class](/blog/javascript-prototipi-ereditarieta) e [JavaScript this: call, bind e arrow function](/blog/javascript-this-binding). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const stato = { user: { nome: "Ale" }, tag: ["a", "b"] };
@@ -6145,9 +7177,14 @@ La regola: se aggiorni uno stato annidato in modo immutabile, ricorda che lo spr
 
 structuredClone copia molte strutture complesse, ma non ogni valore JavaScript può essere clonato: funzioni, alcuni oggetti speciali e risorse non serializzabili generano errori. Non preserva necessariamente comportamenti personalizzati o metodi prototipali. Nei componenti React valuta aggiornamenti immutabili mirati prima di clonare interi alberi di dati, che può essere costoso.
 
+
+## Quando una copia profonda non basta
+
+Una copia profonda può proteggere una struttura da mutazioni accidentali, ma non trasforma automaticamente ogni oggetto in un valore immutabile. Se dopo structuredClone modifichi il clone, il clone resta mutabile. In React, clonare uno stato molto grande a ogni input può introdurre lavoro evitabile: spesso basta ricostruire i rami modificati mantenendo invariati i riferimenti delle parti non toccate. Verifica anche quali tipi possono essere clonati e cosa accade con funzioni o riferimenti speciali. Un test confronta shallow copy e clone profondo su un array di oggetti annidati, modificando una proprietà interna e osservando quali strutture condividono ancora dati.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone)`,
+- [MDN — StructuredClone](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone)`,
   },
   {
     id: "web-audio-synth-polifonico",
@@ -6155,11 +7192,14 @@ structuredClone copia molte strutture complesse, ma non ogni valore JavaScript p
     date: "2026-07-15",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎹",
-    excerpt: "Ogni nota è una voce con oscillatore e inviluppo propri. Gestire le voci è tutto il segreto della polifonia.",
+    excerpt: "Un synth monofonico suona una nota per volta. Per suonare accordi serve la polifonia: ogni nota è una \"voce\" indipendente, con il suo oscillatore e il suo inviluppo.",
     tags: ["Web Audio", "Sintesi"],
     content: `
 Un synth monofonico suona una nota per volta. Per suonare **accordi** serve la polifonia: ogni nota è una "voce" indipendente, con il suo oscillatore e il suo inviluppo.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Web Audio drum machine: sample e timing](/blog/web-audio-drum-machine-browser) e [BiquadFilterNode: lowpass, highpass e cutoff](/blog/web-audio-biquadfilter). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const voci = new Map();
@@ -6194,9 +7234,14 @@ Collega tutto alla Web MIDI API e hai un synth polifonico suonabile con una tast
 
 Ogni nota può usare una o più sorgenti con il proprio inviluppo. Un sintetizzatore polifonico deve allocare e rilasciare le voci, evitare nodi lasciati attivi e decidere cosa succede quando si supera il limite di note simultanee. Una politica di voice stealing può interrompere la nota più vecchia o più debole. Verifica noteOn e noteOff ripetuti e l'uso del pedale sustain se previsto.
 
+
+## Gestire la voce che non può più suonare
+
+In un sintetizzatore polifonico ogni nota può avere la propria sorgente e il proprio inviluppo. Se l'utente tiene premuti molti tasti, raggiungerai un numero massimo di voci contemporanee. Decidi in anticipo come gestirlo: puoi interrompere la nota più vecchia, quella con il livello minore o rifiutare l'evento nuovo, ma la scelta ha conseguenze musicali. Associa ogni noteOn al suo noteOff e prevedi una protezione quando un dispositivo si disconnette senza inviare la fine della nota. Testa note ripetute, sustain e cambio rapido di preset. Controlla inoltre il guadagno complessivo: molte voci individualmente moderate possono produrre un mix eccessivo.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)`,
+- [MDN — Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)`,
   },
   {
     id: "sonic-pi-didattica-codice-e-musica",
@@ -6204,11 +7249,14 @@ Ogni nota può usare una o più sorgenti con il proprio inviluppo. Un sintetizza
     date: "2026-07-16",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎓",
-    excerpt: "Nato per la scuola, Sonic Pi rende il feedback immediato e musicale. Un bug si sente, e questo cambia tutto.",
+    excerpt: "Sonic Pi è nato all'Università di Cambridge come strumento didattico, e non è un caso: fa toccare concetti di programmazione in un modo che pochi ambienti eguagliano.",
     tags: ["Sonic Pi", "Didattica"],
     content: `
 Sonic Pi è nato all'Università di Cambridge come strumento **didattico**, e non è un caso: fa toccare concetti di programmazione in un modo che pochi ambienti eguagliano.
+
+Per esplorare un caso vicino e capire le differenze, consulta [Sonic Pi techno: struttura di un brano](/blog/sonic-pi-brano-techno-passo-passo) e [Sonic Pi vs Web Audio: somiglianze e differenze](/blog/sonic-pi-e-web-audio-stessa-idea). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Il primo motivo è il **feedback immediato e musicale**. Un bug non è un messaggio d'errore astratto: è una nota stonata, un ritmo che zoppica. Sbagli un \`sleep\` e lo *senti*. Questo ciclo cortissimo tra codice e risultato è esattamente ciò che tiene motivati i principianti.
 
@@ -6230,6 +7278,12 @@ La lezione va oltre la musica: qualsiasi strumento didattico dovrebbe puntare a 
 
 Sonic Pi rende osservabili cicli, condizioni, variabili e temporizzazione attraverso il suono. L'immediatezza del feedback aiuta nell'apprendimento, ma non garantisce da sola la comprensione dei concetti: conviene chiedere di prevedere cosa accadrà prima di premere Run. Modifica una sola istruzione per volta e confronta risultato atteso e risultato ascoltato.
 
+
+## Prevedere il risultato prima di ascoltarlo
+
+Per imparare i cicli con Sonic Pi, prepara un pattern di quattro note e chiedi di descrivere quante volte verrà riprodotto prima di premere Run. Modifica poi un valore di sleep e verifica se il cambiamento riguarda numero di note o distanza temporale. Questo separa la sintassi dal comportamento osservabile. Le condizioni possono controllare l'inserimento di un colpo ogni quarto giro; le variabili possono conservare note o durate. Non è necessario partire da un brano complesso: esercizi piccoli rendono più semplice capire gli errori. Dopo ogni modifica annota previsione e risultato, così la pratica musicale diventa anche un metodo per verificare un'ipotesi di programmazione.
+
+
 **Documentazione ufficiale**
 
 - [Sonic Pi — tutorial](https://sonic-pi.net/tutorial.html)`,
@@ -6240,11 +7294,14 @@ Sonic Pi rende osservabili cicli, condizioni, variabili e temporizzazione attrav
     date: "2026-07-17",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "💎",
     excerpt: "then concatena trasformazioni, curry fissa gli argomenti a poco a poco. Ruby non è solo a oggetti.",
     tags: ["Ruby", "Funzionale"],
     content: `
 Ruby è a oggetti fino al midollo, ma ha strumenti funzionali eleganti per comporre trasformazioni in modo leggibile.
+
+L'analisi si completa confrontando questa parte con [Ruby Benchmark: evitare confronti falsati](/blog/ruby-benchmark-misurare) e [Ruby String gsub e regex: casi limite](/blog/ruby-stringhe-gsub-regex). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 # then (o yield_self): incanala un valore in una pipeline
@@ -6270,9 +7327,14 @@ Non trasformano Ruby in Haskell, ma per pulire una stringa o costruire funzioni 
 
 then permette di concatenare trasformazioni leggibili e curry adatta funzioni con più argomenti in applicazioni parziali. Non sono automaticamente preferibili al codice imperativo: una catena troppo lunga nasconde stati intermedi ed errori. Preferisci funzioni con effetti collaterali espliciti e verifica che i nomi rendano comprensibile il flusso.
 
+
+## Effetti collaterali e funzioni composte
+
+Una catena con then è facile da seguire quando ogni passaggio restituisce un valore ben definito. Diventa più difficile da comprendere se alcune funzioni modificano oggetti esterni o sollevano eccezioni senza un contratto chiaro. Prima di comporre trasformazioni su dati API, decidi dove validare la struttura e dove gestire gli errori. Prova un input vuoto, un valore inatteso e un caso in cui una funzione intermedia fallisce. La composizione è utile quando rende esplicito il percorso dei dati; non è un obiettivo di stile da applicare a ogni metodo.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Method.html)`,
+- [Ruby Core — Method](https://docs.ruby-lang.org/en/master/Method.html)`,
   },
   {
     id: "rails-request-specs-testare-api",
@@ -6280,11 +7342,14 @@ then permette di concatenare trasformazioni leggibili e curry adatta funzioni co
     date: "2026-07-18",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "rails-backend",
     icon: "🛤️",
     excerpt: "I request spec colpiscono gli endpoint veri e controllano status e JSON. La rete di sicurezza di un backend.",
     tags: ["Ruby on Rails", "Testing", "API"],
     content: `
 Per un backend API, i test più utili sono i **request spec**: fanno una vera richiesta HTTP a un endpoint e verificano la risposta, dallo status code al corpo JSON.
+
+Un caso correlato, utile per definire i confini della soluzione, è [Rails: chiamare API esterne senza perdere affidabilità](/blog/rails-consumare-api-esterne) e [Rails API-only: controller e JSON](/blog/rails-api-only-mode). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`ruby
 RSpec.describe "Launches API", type: :request do
@@ -6319,9 +7384,14 @@ Sono la rete di sicurezza ideale per un'API: se rompi un endpoint durante un ref
 
 I request spec verificano il comportamento della richiesta attraverso il routing e il controller. Oltre al caso di successo, includi autenticazione, autorizzazione, input invalido e risorsa inesistente. Non controllare soltanto il codice HTTP: verifica la forma del JSON, le modifiche persistite e gli effetti collaterali. Stub delle API esterne possono rendere i test ripetibili, ma serve anche un controllo di integrazione del contratto.
 
+
+## Verificare il contratto e gli effetti
+
+Un endpoint POST può restituire 201 senza avere scritto correttamente tutti i dati necessari. Un buon request spec controlla sia risposta HTTP sia effetti persistenti e, quando richiesto, eventi generati. Per una risorsa con permessi, confronta richiesta autorizzata, anonima e autenticata ma non autorizzata. Quando invii un payload errato, verifica la struttura degli errori e l'assenza di effetti parziali. Evita che ogni test dipenda da un servizio esterno reale, ma non affidarti soltanto ai mock per la compatibilità con quell'API. Prepara una verifica separata dell'integrazione del contratto quando è una parte critica del sistema.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://rspec.info/documentation/)`,
+- [RSpec — Documentazione ufficiale](https://rspec.info/documentation/)`,
   },
   {
     id: "javascript-localstorage-persistenza",
@@ -6329,11 +7399,14 @@ I request spec verificano il comportamento della richiesta attraverso il routing
     date: "2026-07-19",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
+    hub: "react-frontend",
     icon: "🟨",
-    excerpt: "Preferenze e bozze che sopravvivono al refresh, senza backend. Con le sue insidie: solo stringhe e niente segreti.",
+    excerpt: "localStorage salva dati nel browser che sopravvivono a refresh e riavvii, senza alcun backend. Perfetto per preferenze, temi, bozze, carrelli.",
     tags: ["JavaScript", "Browser"],
     content: `
 \`localStorage\` salva dati nel browser che sopravvivono a refresh e riavvii, senza alcun backend. Perfetto per preferenze, temi, bozze, carrelli.
+
+Nel frontend lo stesso problema si collega a [structuredClone JavaScript: copie profonde e limiti](/blog/javascript-immutabilita-structuredclone) e [JavaScript Set e Map: struttura e uguaglianza](/blog/javascript-set-e-map). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 // salva (solo stringhe!)
@@ -6358,9 +7431,14 @@ Per il resto è oro: un tema che resta scelto, un form che non perde i dati al r
 
 localStorage conserva stringhe per origine e offre un'API sincrona. Non usarlo per segreti, credenziali o token sensibili: gli script eseguiti sulla pagina possono accedere ai dati. Gestisci assenza di spazio, modalità privata e formati non validi. Per dati strutturati più grandi e operazioni asincrone valuta IndexedDB; per uno stato temporaneo spesso basta la memoria dell'applicazione.
 
+
+## Gestire versioni e dati corrotti
+
+Un valore scritto in localStorage mesi prima può avere una struttura diversa da quella che l'applicazione si aspetta oggi. Non basta JSON.parse: devi validare il tipo e stabilire un comportamento di fallback quando il formato è obsoleto o malformato. Se una preferenza può essere ripristinata, potresti eliminarla e usare il default; se si tratta di dati importanti serve una strategia di migrazione più prudente. localStorage è sincrono e accessibile agli script della stessa origine, perciò non è adatto a credenziali segrete. Prova l'assenza della chiave, JSON invalido, un valore vecchio e un ambiente dove la scrittura fallisce per quota o restrizioni.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)`,
+- [MDN — LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)`,
   },
   {
     id: "web-audio-delay-feedback",
@@ -6368,11 +7446,14 @@ localStorage conserva stringhe per origine e offre un'API sincrona. Non usarlo p
     date: "2026-07-20",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🔊",
-    excerpt: "Un DelayNode più un anello di gain crea echi che si ripetono e svaniscono. Attento a non far esplodere il segnale.",
+    excerpt: "Un'eco nasce da un'idea semplice: ritardare il suono e rimandarne una parte all'ingresso. In Web Audio è un DelayNode con un anello di feedback.",
     tags: ["Web Audio", "Effetti"],
     content: `
 Un'eco nasce da un'idea semplice: ritardare il suono e rimandarne una parte all'ingresso. In Web Audio è un **DelayNode** con un anello di **feedback**.
+
+Un approfondimento dello stesso percorso si trova in [ConvolverNode: riverbero a convoluzione](/blog/web-audio-convolver-riverbero) e [Web Audio generativo: vincoli e casualità](/blog/web-audio-generative-browser). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 \`\`\`javascript
 const delay = ctx.createDelay();
@@ -6400,9 +7481,14 @@ Cambia \`delayTime\` a ritmo di beat e l'eco diventa parte del groove: è l'effe
 
 DelayNode ritarda il segnale; aggiungendo un collegamento di feedback puoi produrre echi successivi. Il gain del percorso di feedback deve restare sotto condizioni che evitino crescita incontrollata del livello: filtri, altri nodi e segnali influenzano il comportamento reale. Inserisci un controllo di volume a valle e verifica che il percorso wet non venga sommato involontariamente due volte.
 
+
+## Echi e stabilità del circuito
+
+Collegare l'uscita di un delay al suo ingresso tramite un gain produce ripetizioni successive. Se il livello di feedback è troppo alto, il segnale può persistere o crescere in modo indesiderato; filtri e altri effetti cambiano ulteriormente il comportamento. Per una prima prova imposta un valore prudente e verifica il livello dopo diversi secondi. Il controllo del tempo del delay va automatizzato con attenzione, perché cambiamenti improvvisi possono produrre variazioni di altezza o artefatti. Prevedi un percorso dry separato e un controllo sul bus finale per impedire saturazioni. Testa l'arresto del playback e il cambio preset: vecchie connessioni non devono rimanere attive all'insaputa dell'utente.
+
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/DelayNode)`,
+- [MDN — DelayNode](https://developer.mozilla.org/en-US/docs/Web/API/DelayNode)`,
   },
   {
     id: "sonic-pi-e-web-audio-stessa-idea",
@@ -6410,11 +7496,14 @@ DelayNode ritarda il segnale; aggiungendo un collegamento di feedback puoi produ
     date: "2026-07-21",
     updatedAt: "2026-11-11",
     category: "musica-audio",
+    hub: "scienza-passioni",
     icon: "🎧",
     excerpt: "Codice che diventa suono. Che sia Ruby in Sonic Pi o JavaScript nel browser, il pensiero è identico. E qui si chiude il cerchio.",
     tags: ["Sonic Pi", "Web Audio", "Musica"],
     content: `
 Dopo tre mesi tra Sonic Pi, Ruby, Rails, JavaScript e Web Audio, chiudo il cerchio con l'idea che li lega tutti: **il codice può diventare suono**.
+
+Questo ragionamento si collega anche ai contenuti su [Sonic Pi: play e sleep per iniziare](/blog/sonic-pi-primo-suono-play-sleep) e [Imparare a programmare con Sonic Pi](/blog/sonic-pi-didattica-codice-e-musica). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
 
 Sonic Pi lo fa in Ruby, con \`play\`, \`sample\`, \`live_loop\`. La Web Audio API lo fa in JavaScript, con oscillatori, gain e grafi di nodi. Linguaggi e ambienti diversi, ma lo stesso pensiero: descrivi la musica come istruzioni, e la macchina la esegue.
 
@@ -6442,6 +7531,12 @@ Grazie per aver seguito questi tre mesi di articoli quotidiani. Ci si sente in c
 ## Da provare e verificare
 
 Sonic Pi è pensato per la composizione e il live coding musicale con un linguaggio vicino a Ruby. Web Audio è un'API del browser per costruire grafi audio programmabili in JavaScript. Condividono concetti come oscillatori, inviluppi e timing, ma hanno obiettivi e interfacce diverse. Scegli Sonic Pi per sperimentare rapidamente con un set; scegli Web Audio quando il suono deve essere integrato in un'applicazione web.
+
+
+## Quando scegliere l'uno o l'altro
+
+Se l'obiettivo è costruire un set dal vivo scrivendo codice progressivamente, Sonic Pi fornisce comandi musicali e un ambiente orientato alla performance. Se vuoi inserire un sintetizzatore interattivo dentro un sito React, Web Audio permette di collegare nodi e controllarli dal browser. Il contesto è diverso anche per distribuzione: uno script Sonic Pi richiede il relativo ambiente, mentre un'applicazione Web Audio dipende dal browser e dalle sue policy. Entrambi usano concetti come tempo, frequenza, ampiezza e inviluppi, ma non sono intercambiabili. Prima di scegliere valuta dove deve suonare la musica, chi deve controllarla e quali risorse sono disponibili. Un prototipo in uno strumento può ispirare l'altro senza imporne l'architettura.
+
 
 **Documentazione ufficiale**
 

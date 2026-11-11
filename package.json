@@ -11,7 +11,7 @@
     "publish-post": "git add -- src/data/blogPosts.ts blog-topics.md && git commit -m '\ud83d\udcdd Pubblicato nuovo post' && git push origin main",
     "typecheck": "tsc --noEmit",
     "lint:fix": "eslint . --fix",
-    "check:build": "node scripts/check-build.mjs",
+    "check:build": "node scripts/check-build.mjs && node scripts/check-blog-content.mjs",
     "check:routing": "node scripts/check-routing.mjs",
     "check:header": "playwright test tests/header.spec.ts",
     "check:browser": "playwright test"

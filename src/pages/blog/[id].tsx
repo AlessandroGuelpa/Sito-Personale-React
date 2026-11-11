@@ -86,7 +86,7 @@ function PostContent({
         type="article"
       />
       <Helmet>
-        <meta content={post.date} property="article:published_time" />
+        <meta content={post.firstPublishedAt ?? post.date} property="article:published_time" />
         <meta content={post.updatedAt ?? post.date} property="article:modified_time" />
         <meta content={AUTHOR_NAME} property="article:author" />
         {post.tags?.map((tag) => (

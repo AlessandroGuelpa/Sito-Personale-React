@@ -17,6 +17,7 @@ function blogMetadata(): Plugin {
       date: post.date,
       updatedAt: post.updatedAt,
       category: post.category,
+      hub: post.hub,
       excerpt: buildExcerpt(post, 180),
       tags: post.tags ?? [],
       minutes: readingTimeMinutes(post.content),
@@ -107,7 +108,7 @@ function blogMetadata(): Plugin {
         ),
         ...index.map(
           (post) =>
-            `  <url><loc>https://alessandroguelpa.it/blog/${post.id}</loc><lastmod>${post.updatedAt ?? post.date}</lastmod></url>`,
+            `  <url><loc>https://alessandroguelpa.it/blog/${post.id}</loc><lastmod>${post.updatedAt ?? post.firstPublishedAt ?? post.date}</lastmod></url>`,
         ),
       );
       this.emitFile({

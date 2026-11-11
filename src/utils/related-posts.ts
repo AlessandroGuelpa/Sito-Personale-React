@@ -24,49 +24,37 @@ function titleTerms(title: string) {
 // editorial topic plus one closely related article. This avoids dead ends
 // and preserves coherent reading paths for older articles.
 export function selectRelatedPosts(
-  post: Pick<BlogSummary, "id" | "title" | "tags" | "category">,
+  post: Pick<BlogSummary, "id" | "title" | "tags" | "category" | "hub">,
   index: BlogSummary[],
 ): BlogSummary[] {
   const hub = blogHubForPost(post);
-  const prefix = post.id.startsWith("sonic-pi-") ? "sonic-pi-"
-    : post.id.startsWith("web-audio-") ? "web-audio-"
-    : post.id.startsWith("rails-") ? "rails-"
-    : post.id.startsWith("ruby-") ? "ruby-"
-    : post.id.startsWith("javascript-") ? "javascript-"
-    : null;
-
-  const inHub = index.filter((candidate) =>
-    blogHubForPost(candidate) === hub &&
-    (hub !== "scienza-passioni" || candidate.category === post.category),
-  );
-  const series = prefix
-    ? inHub.filter((candidate) => candidate.id.startsWith(prefix))
-    : inHub;
-  const ordered = (series.length >= 2 ? series : inHub)
-    .slice()
-    .sort((a, b) => b.date.localeCompare(a.date) || a.id.localeCompare(b.id));
-  const position = ordered.findIndex((candidate) => candidate.id === post.id);
-  const neighbors = position === -1 ? [] : [
-    ordered[position - 1],
-    ordered[position + 1],
-  ].filter((candidate): candidate is BlogSummary => Boolean(candidate));
-
+  const prefix = ["sonic-pi-", "web-audio-", "rails-", "ruby-", "javascript-"]
+    .find((part) => post.id.startsWith(part));
   const tags = new Set(post.tags.map(normalize));
   const terms = titleTerms(post.title);
-  const selected = new Set([post.id, ...neighbors.map((candidate) => candidate.id)]);
-  const relevant = inHub
-    .filter((candidate) => !selected.has(candidate.id))
-    .map((candidate) => ({
-      candidate,
-      score:
-        candidate.tags.filter((tag) => tags.has(normalize(tag))).length * 4 +
-        [...titleTerms(candidate.title)].filter((term) => terms.has(term)).length,
-    }))
+
+  const candidates = index
+    .filter((candidate) =>
+      candidate.id !== post.id &&
+      blogHubForPost(candidate) === hub &&
+      (hub !== "scienza-passioni" || candidate.category === post.category),
+    )
+    .map((candidate) => {
+      const sharedTags = candidate.tags.filter((tag) => tags.has(normalize(tag))).length;
+      const sharedWords = [...titleTerms(candidate.title)].filter((term) => terms.has(term)).length;
+      const sameSeries = Boolean(prefix && candidate.id.startsWith(prefix));
+      return { candidate, score: sharedTags * 4 + sharedWords * 2 + (sameSeries ? 4 : 0) };
+    })
     .sort((a, b) =>
       b.score - a.score ||
       b.candidate.date.localeCompare(a.candidate.date) ||
       a.candidate.id.localeCompare(b.candidate.id),
     );
 
-  return [...neighbors, ...relevant.map(({ candidate }) => candidate)].slice(0, 3);
+  // Avoid unrelated newer articles whenever any topically relevant item exists.
+  // Only fall back to latest posts inside the hub when the topic has no matches.
+  const relevant = candidates.filter(({ score }) => score > 0);
+  return (relevant.length ? relevant : candidates)
+    .slice(0, 3)
+    .map(({ candidate }) => candidate);
 }
