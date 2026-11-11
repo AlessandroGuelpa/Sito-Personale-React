@@ -158,7 +158,7 @@ Per valutare un sistema spaziale chiederei quindi dove nasce il calore, quale pe
     content: `
 Un job legge 10 pezzi disponibili su Shopify. Il gestionale ha appena registrato una rettifica e vuole portare il totale a 12. Tra la lettura e la scrittura arriva però un ordine, che fa scendere la disponibilità a 9. Se il job scrive comunque 12, quella vendita sparisce dal conteggio delle disponibilità.
 
-La stessa decisione può incidere sulla sincronizzazione dei dati: leggi [Shopify GraphQL: il limite è un budget, non un invito a insistere](/blog/shopify-graphql-budget-query) e [Shopify line item properties: campi personalizzati](/blog/shopify-custom-fields-app-vs-codice-nativo). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La scrittura assoluta delle scorte richiede di conoscere il valore effettivamente letto; il [budget della GraphQL Admin API](/blog/shopify-graphql-budget-query) va considerato quando devi recuperare e riconciliare quantità dopo un conflitto. Se un evento non viene consegnato, [webhook e job periodici](/blog/webhook-riconciliazione-sincronizzazione) coprono un problema distinto dalla concorrenza sulla singola quantità.
 
 ## Scrivere solo se il valore di partenza coincide
 
@@ -329,7 +329,7 @@ Separare massa, peso e condizioni di contatto evita una scorciatoia intuitiva ch
     content: `
 Un webhook avvisa che qualcosa è cambiato. È veloce e permette di evitare molte interrogazioni inutili. Ma cosa succede se il destinatario è indisponibile, un handler fallisce o un evento viene gestito male?
 
-Le condizioni descritte qui sono collegate anche a [Lo stesso webhook due volte: come evitare due ordini](/blog/webhook-idempotenza-ordini) e [Shopify GraphQL: il limite è un budget, non un invito a insistere](/blog/shopify-graphql-budget-query). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La riconciliazione recupera differenze che il percorso rapido non ha gestito. Prima di aggiungerla, verifica che [l'idempotenza dei webhook](/blog/webhook-idempotenza-ordini) impedisca effetti duplicati: sono protezioni complementari, non alternative.
 
 Una sincronizzazione affidabile deve poter scoprire una differenza anche quando il percorso dell'evento non l'ha risolta.
 
@@ -510,7 +510,7 @@ Prima di aggiungere sensori o dashboard, bisogna quindi distinguere ciò che mis
     content: `
 Un sito React può funzionare bene dopo la navigazione dalla home e comportarsi diversamente quando qualcuno apre direttamente il link di un articolo. Se il server restituisce sempre la stessa pagina vuota, contenuto e metadati dipendono dall'esecuzione del JavaScript.
 
-Nel frontend lo stesso problema si collega a [React: il totale del carrello deve davvero stare nello state?](/blog/react-stato-derivato-carrello) e [React state: evitare dipendenze globali inutili](/blog/entanglement-quantistico-e-i-disastri-del-global-state). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Il prerendering riguarda il contenuto consegnato dal server, non il modo in cui React gestisce il carrello: lo [stato derivato](/blog/react-stato-derivato-carrello) resta un problema dell'interazione client. Per l'esplorazione delle pagine è utile anche [progressive enhancement](/blog/progressive-enhancement-funzione-base), che mantiene disponibile la funzione essenziale senza affidarsi a JavaScript.
 
 Per pagine editoriali note al momento della build, il prerender è una possibilità concreta: produrre prima l'HTML di ogni rotta.
 
@@ -690,7 +690,7 @@ Quando valuto un'architettura, cerco anche le risorse lontane dall'oggetto princ
     content: `
 Un'integrazione può usare poche richieste e consumare comunque molto budget, se ogni query chiede una grande quantità di dati collegati. Contare soltanto le chiamate non basta per comprendere i limiti della GraphQL Admin API di Shopify.
 
-Per verificare le conseguenze di questa scelta su un'integrazione, puoi confrontare [Shopify, scorte e ordini: come evitare di sovrascrivere una vendita](/blog/shopify-inventario-scritture-concorrenti) e [Shopify line item properties: campi personalizzati](/blog/shopify-custom-fields-app-vs-codice-nativo). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Quando una lettura deve essere ripetuta dopo un conflitto sull'[inventario Shopify](/blog/shopify-inventario-scritture-concorrenti), il client deve rispettare i costi della GraphQL API. I [job periodici di riconciliazione](/blog/webhook-riconciliazione-sincronizzazione) dovrebbero condividere lo stesso budget senza sovraccaricare le chiamate interattive.
 
 Il modello considera il costo delle query e la combinazione di applicazione e negozio. Anche due worker indipendenti possono quindi competere per la stessa disponibilità.
 
@@ -868,7 +868,7 @@ Per capire un annuncio guarderei quindi cosa identifica quella finestra e a qual
     content: `
 Un componente conserva le righe del carrello e anche il totale. Ogni modifica alle righe deve aggiornare entrambi. Poi arriva uno sconto, un cambio quantità o una rimozione e uno dei percorsi dimentica il secondo aggiornamento.
 
-Nel frontend lo stesso problema si collega a [React e HTML già pronto: cosa cambia quando apri un link diretto](/blog/react-prerender-html-metadati) e [Optimistic UI: gestire latenza e rollback](/blog/dilatazione-temporale-interstellar-e-optimistic-ui). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Quando memorizzi separatamente righe e totale, crei due fonti di verità. Il tema si collega allo [stato condiviso in React](/blog/entanglement-quantistico-e-i-disastri-del-global-state); se mostri una modifica prima della conferma del server, l'[optimistic UI](/blog/dilatazione-temporale-interstellar-e-optimistic-ui) richiede una strategia di rollback.
 
 Abbiamo creato due rappresentazioni della stessa informazione e adesso dobbiamo mantenerle d'accordo.
 
@@ -1243,7 +1243,7 @@ Quando vedo un disegno con un satellite appoggiato su un puntino, lo leggo quind
     content: `
 Un browser possiede già una risorsa, ma non sa se la copia sia ancora utilizzabile. Deve scaricarla tutta ogni volta? Non necessariamente. Può chiedere al server se la rappresentazione che conosce è cambiata.
 
-Un confronto utile per questa soluzione è quello con [React: il totale del carrello deve davvero stare nello state?](/blog/react-stato-derivato-carrello) e [React e HTML già pronto: cosa cambia quando apri un link diretto](/blog/react-prerender-html-metadati). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un ETag è un identificatore di versione della rappresentazione, non un meccanismo per risolvere conflitti di stato React. La [gestione del caching HTTP](/blog/velocita-della-luce-ping-e-content-delivery-network) affronta durata e convalida delle risposte; il [prerendering React](/blog/react-prerender-html-metadati) riguarda invece il documento iniziale consegnato al browser.
 
 ETag è uno dei meccanismi che rendono possibile questo dialogo.
 
@@ -1427,7 +1427,7 @@ Quando leggo una proposta di permanenza lunare, cerco quindi il collegamento fra
     content: `
 Salvo un ordine nel database e poi mando un messaggio al gestionale. Se il processo si arresta fra le due operazioni, l'ordine esiste ma il destinatario non lo sa. Invertire la sequenza sposta il problema: il messaggio potrebbe partire anche se il salvataggio fallisce.
 
-Le condizioni descritte qui sono collegate anche a [Retry: riprovare subito può essere il problema](/blog/retry-backoff-jitter-integrazioni) e [Lo stesso webhook due volte: come evitare due ordini](/blog/webhook-idempotenza-ordini). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+L'outbox conserva l'intenzione d'invio, ma la consegna successiva può comunque fallire: la politica di [retry con backoff](/blog/retry-backoff-jitter-integrazioni) decide quando ritentare. Anche il destinatario deve proteggersi dagli eventi duplicati, come nel caso dell'[idempotenza degli ordini](/blog/webhook-idempotenza-ordini).
 
 È il problema della doppia scrittura su sistemi distinti. Una transazione del database locale non si estende magicamente alla rete.
 
@@ -1614,7 +1614,7 @@ Il dettaglio apparentemente secondario può decidere la disponibilità dell'inte
     content: `
 Un servizio risponde lentamente. Cento client vanno in timeout e riprovano nello stesso istante. Il servizio, già in difficoltà, riceve un'altra ondata di lavoro. Ogni singolo client sta cercando di recuperare; tutti insieme peggiorano il guasto.
 
-Le condizioni descritte qui sono collegate anche a [Salvato nel database, perso nell’invio: a cosa serve l’outbox](/blog/transactional-outbox-invio-erp) e [Lo stesso webhook due volte: come evitare due ordini](/blog/webhook-idempotenza-ordini). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Riprovare una richiesta senza classificare l'errore può moltiplicare gli effetti. Un [outbox transazionale](/blog/transactional-outbox-invio-erp) conserva il lavoro ancora da inviare, mentre l'[idempotenza dei webhook](/blog/webhook-idempotenza-ordini) impedisce che due tentativi creino due ordini.
 
 Un retry è una nuova richiesta, con un costo reale. Non è una parentesi gratuita attorno all'errore.
 
@@ -1979,7 +1979,7 @@ Il limite fisico resta. Il buon progetto decide cosa fare durante l'attesa, qual
     content: `
 Scrivi «Roma», poi correggi subito in «Romania». La seconda ricerca termina prima della prima. Per un istante vedi il risultato giusto, poi la risposta più lenta lo sovrascrive. Il server non ha necessariamente sbagliato: il frontend ha confuso l'ordine di arrivo con l'intenzione più recente.
 
-Per considerare anche gli effetti sull'interfaccia, approfondisci [localStorage: persistenza e sicurezza nel browser](/blog/javascript-localstorage-persistenza) e [Logging JavaScript: cosa registrare e cosa evitare](/blog/radiazione-di-fondo-e-il-cimitero-dei-console-log). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Annullare una richiesta non garantisce da solo che ogni callback venga ignorata: per questo il codice deve identificare l'operazione corrente. Il confronto con [debounce e throttle](/blog/javascript-debounce-throttle) distingue la riduzione del numero di richieste dalla correttezza delle risposte; la [Fetch API](/blog/javascript-fetch-api) chiarisce come trattare HTTP e abort.
 
 Questo è uno dei casi in cui aggiungere un caricamento animato non risolve niente.
 
@@ -2175,7 +2175,7 @@ Per capire il rientro tengo insieme tre elementi: l'energia iniziale, la forma d
     content: `
 Un ordine arriva dal negozio, l'integrazione lo salva e inoltra la conferma. La risposta si perde. Il mittente riprova: il server riceve di nuovo una richiesta che sembra perfettamente valida. Se ogni consegna crea un ordine nuovo, il problema è già nel database.
 
-Per verificare le conseguenze di questa scelta su un'integrazione, puoi confrontare [Webhook e job periodici: l’integrazione ha bisogno anche di un controllo](/blog/webhook-riconciliazione-sincronizzazione) e [Retry: riprovare subito può essere il problema](/blog/retry-backoff-jitter-integrazioni). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Deduplicare una consegna protegge la singola operazione, ma non dimostra che tutti gli eventi siano arrivati: servono [riconciliazione e job periodici](/blog/webhook-riconciliazione-sincronizzazione). Quando un errore è temporaneo, il [backoff con jitter](/blog/retry-backoff-jitter-integrazioni) riduce i tentativi simultanei.
 
 I webhook possono essere duplicati. Shopify lo documenta e fornisce identificativi delle consegne. Io parto da qui: **ricevere due volte non deve significare eseguire due volte lo stesso effetto**.
 
@@ -2321,7 +2321,7 @@ Docker è utile per uniformare sviluppo, test e deploy, ma introduce un livello 
     content: `
 Ogni campo aggiuntivo chiede tempo, attenzione e informazioni. In un modulo di contatto o durante il checkout, la complessità può aumentare gli errori e scoraggiare la compilazione. Non basta però ridurre il numero dei campi: occorre chiedere le informazioni corrette, nel momento opportuno.
 
-Un confronto utile per questa soluzione è quello con [Bundle JavaScript: ridurre il peso iniziale](/blog/equazione-del-razzo-e-il-problema-del-bundle-da-830kb) e [Fetch API: errori HTTP, timeout e abort](/blog/javascript-fetch-api). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La riduzione dei campi serve solo se il form mantiene chiarezza ed errori recuperabili. Nella [Fetch API](/blog/javascript-fetch-api) trovi come distinguere un invio fallito da una risposta non valida; lo [stato ottimistico](/blog/dilatazione-temporale-interstellar-e-optimistic-ui) non deve far credere che una richiesta sia già stata accettata.
 
 ## Prima il compito dell'utente
 
@@ -2356,7 +2356,7 @@ Definisci un evento di avvio, uno di invio e uno di errore. Confronta completame
     content: `
 Il codice legacy non è necessariamente vecchio o scritto male: è soprattutto codice che oggi è difficile modificare con sicurezza. Può contenere regole di business che nessuno ha documentato o dipendenze che emergono soltanto quando si cambia un comportamento.
 
-Per considerare anche gli effetti sull'interfaccia, approfondisci [Rubber duck debugging: capire i bug spiegandoli](/blog/la-paperella-di-gomma-e-larte-di-sentirsi-stupidi) e [CSS globale: specificità e regressioni](/blog/teoria-del-caos-effetto-farfalla-e-css-globale). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un refactoring del codice legacy è più sicuro quando parti da un comportamento riproducibile: il [rubber duck debugging](/blog/la-paperella-di-gomma-e-larte-di-sentirsi-stupidi) aiuta a formulare le ipotesi, mentre i [conflitti del CSS globale](/blog/teoria-del-caos-effetto-farfalla-e-css-globale) mostrano come una modifica locale possa avere effetti lontani.
 
 ## Prima di modificare, capire
 
@@ -2396,7 +2396,7 @@ Se una funzione legacy calcola prezzi e sconti, una riscrittura totale può camb
     content: `
 Un'interfaccia può sembrare lenta anche quando il server impiega soltanto qualche centinaio di millisecondi. Un aggiornamento ottimistico mostra subito il risultato previsto di un'azione mentre la richiesta di rete è ancora in corso.
 
-Per considerare anche gli effetti sull'interfaccia, approfondisci [React: il totale del carrello deve davvero stare nello state?](/blog/react-stato-derivato-carrello) e [CDN e latenza: perché la distanza conta](/blog/velocita-della-luce-ping-e-content-delivery-network). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Se lo stato provvisorio deriva da un carrello, il [totale calcolato da React](/blog/react-stato-derivato-carrello) dovrebbe restare coerente anche durante il rollback. Le [risposte asincrone fuori ordine](/blog/fetch-abortcontroller-risposte-obsolete) sono un altro rischio per la correttezza dell'interfaccia.
 
 ## La differenza fra intenzione e conferma
 
@@ -2436,7 +2436,7 @@ Un pulsante per aggiungere un elemento ai preferiti può aggiornare il conteggio
     content: `
 I log possono chiarire un guasto, ma una quantità indiscriminata di messaggi rende più difficile individuare il problema. La console del browser è utile in sviluppo; in produzione servono segnali intenzionali e una politica di raccolta.
 
-Nel frontend lo stesso problema si collega a [Bundle JavaScript: ridurre il peso iniziale](/blog/equazione-del-razzo-e-il-problema-del-bundle-da-830kb) e [JavaScript closure: scope e variabili catturate](/blog/javascript-closure-spiegate-bene). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un log strutturato serve a correlare operazioni, non ad accumulare messaggi senza criterio. La [diagnosi di race condition](/blog/effetto-osservatore-fisica-quantistica-e-l-arte-del-debugging) illustra quali eventi registrare; le [metriche di latenza](/blog/latenza-percentili-media-p99) aiutano a distinguere un caso isolato da un problema sistematico.
 
 ## Un log deve rispondere a una domanda
 
@@ -2476,7 +2476,7 @@ Quando un utente segnala che un ordine non è stato sincronizzato, un messaggio 
     content: `
 Quando molti componenti dipendono dallo stesso stato, una modifica può produrre effetti inattesi. Il problema non è la condivisione in sé, ma la proprietà poco chiara dei dati e l'accoppiamento fra componenti che non dovrebbero conoscersi.
 
-Un confronto utile per questa soluzione è quello con [React: il totale del carrello deve davvero stare nello state?](/blog/react-stato-derivato-carrello) e [React memory leak: cleanup di effetti e listener](/blog/conservazione-della-massa-e-memory-leaks-in-react). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Prima di spostare uno stato in alto, chiediti se è realmente condiviso o se può essere calcolato: il [totale del carrello in React](/blog/react-stato-derivato-carrello) mostra questo confine. Un [effect senza cleanup](/blog/conservazione-della-massa-e-memory-leaks-in-react) aggiunge un diverso rischio quando lo stato globale coordina listener esterni.
 
 ## Conserva lo stato vicino a chi lo usa
 
@@ -2516,7 +2516,7 @@ Un totale di carrello può essere calcolato a partire dalle righe e dalle quanti
     content: `
 Una richiesta HTTP attraversa una rete fatta di tratte, apparati e server. La velocità di propagazione impone un limite fisico, ma la latenza reale comprende anche instradamento, code, negoziazione della connessione e tempo di elaborazione.
 
-Nel frontend lo stesso problema si collega a [Optimistic UI: gestire latenza e rollback](/blog/dilatazione-temporale-interstellar-e-optimistic-ui) e [Bundle JavaScript: ridurre il peso iniziale](/blog/equazione-del-razzo-e-il-problema-del-bundle-da-830kb). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una CDN riduce alcuni tempi di rete, ma non elimina l'elaborazione JavaScript necessaria dopo il download: per questo conta il [peso del bundle iniziale](/blog/equazione-del-razzo-e-il-problema-del-bundle-da-830kb). Anche [ETag e rivalidazione](/blog/http-etag-cache-rivalidazione) cambiano quali risorse richiedono una nuova risposta.
 
 ## Cosa può fare una CDN
 
@@ -2598,7 +2598,7 @@ Un assistente AI può proporre una funzione di libreria che sembra plausibile ma
     content: `
 Un prodotto può richiedere un testo da incidere, una dedica o un'informazione specifica per la singola riga d'ordine. Prima di installare un'app aggiuntiva, verifica se le **line item properties** native di Shopify risolvono il requisito.
 
-La stessa decisione può incidere sulla sincronizzazione dei dati: leggi [Shopify GraphQL: il limite è un budget, non un invito a insistere](/blog/shopify-graphql-budget-query) e [Shopify, scorte e ordini: come evitare di sovrascrivere una vendita](/blog/shopify-inventario-scritture-concorrenti). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Le line item properties nascono nel form prodotto, ma devono restare correttamente associate alla riga d'ordine: l'articolo sull'[idempotenza dei webhook](/blog/webhook-idempotenza-ordini) chiarisce cosa verificare quando quell'ordine viene inoltrato a un sistema esterno. Per un dato stabile di catalogo servono invece meccanismi differenti, come quelli della [sincronizzazione ERP](/blog/webhook-riconciliazione-sincronizzazione).
 
 ## Come acquisire una proprietà nel product form
 
@@ -2691,7 +2691,7 @@ Supponi che un branch modifichi la validazione di un form mentre un altro aggior
     content: `
 Un componente React può registrare listener, avviare timer o aprire una connessione. Se queste risorse restano attive quando non servono più, aumentano il lavoro del browser e talvolta il consumo di memoria.
 
-Per considerare anche gli effetti sull'interfaccia, approfondisci [React state: evitare dipendenze globali inutili](/blog/entanglement-quantistico-e-i-disastri-del-global-state) e [React: il totale del carrello deve davvero stare nello state?](/blog/react-stato-derivato-carrello). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una richiesta non più pertinente deve essere annullata o ignorata quando l'Effect termina: l'articolo su [AbortController e risposte obsolete](/blog/fetch-abortcontroller-risposte-obsolete) mostra il lato asincrono. Il [modello dello stato React](/blog/entanglement-quantistico-e-i-disastri-del-global-state) aiuta a capire perché un riferimento può restare raggiungibile.
 
 ## Che cosa significa memory leak
 
@@ -2769,7 +2769,7 @@ Un evento ricorrente alle 09:00 Europe/Rome non può essere rappresentato per se
     content: `
 Una modifica a un selettore CSS può cambiare componenti lontani dalla pagina su cui stai lavorando. Non è caos matematico, ma il comportamento prevedibile della cascade quando le regole sono troppo ampie.
 
-Nel frontend lo stesso problema si collega a [Optimistic UI: gestire latenza e rollback](/blog/dilatazione-temporale-interstellar-e-optimistic-ui) e [React: il totale del carrello deve davvero stare nello state?](/blog/react-stato-derivato-carrello). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Quando una regola generica cambia un componente inatteso, il problema è la superficie della cascade. Il [progressive enhancement](/blog/progressive-enhancement-funzione-base) offre una prospettiva su HTML e stati essenziali; la [UX dei form](/blog/forza-di-attrito-e-la-ux-dei-form) mostra perché focus ed errori devono restare leggibili.
 
 ## Perché una modifica si propaga
 
@@ -2921,7 +2921,7 @@ Un modulo lungo non è necessariamente il più rischioso del progetto. Una picco
     content: `
 Un bundle grande può aumentare download, parsing ed esecuzione, soprattutto su dispositivi mobili meno potenti. Il peso trasferito non è l'unico costo: uno script compresso richiede comunque lavoro sul dispositivo.
 
-Nel frontend lo stesso problema si collega a [JavaScript ES modules: import, export e bundle](/blog/javascript-moduli-es-import-export) e [JavaScript closure: scope e variabili catturate](/blog/javascript-closure-spiegate-bene). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Per ridurre il JavaScript iniziale conviene separare moduli critici da codice caricato soltanto all'occorrenza: [ES Modules e import dinamici](/blog/javascript-moduli-es-import-export) spiegano il meccanismo. Il [prerendering React](/blog/react-prerender-html-metadati) rende il contenuto disponibile prima dell'idratazione.
 
 ## Misurare prima
 
@@ -3109,7 +3109,7 @@ Aggiungi un test per il caso che falliva e verifica anche l'interfaccia dopo una
 `
 Quando un bug resiste a molti tentativi, descriverlo ad alta voce può aiutare a individuare assunzioni nascoste. Nel rubber duck debugging la paperella è un ascoltatore simbolico, non uno strumento tecnico.
 
-Nel frontend lo stesso problema si collega a [Logging JavaScript: cosa registrare e cosa evitare](/blog/radiazione-di-fondo-e-il-cimitero-dei-console-log) e [Legacy code: come intervenire senza regressioni](/blog/principio-di-inerzia-e-la-sindrome-del-non-toccare). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Descrivere il bug ad alta voce è utile quando produce un caso riproducibile. Il [debugging basato su ipotesi](/blog/effetto-osservatore-fisica-quantistica-e-l-arte-del-debugging) struttura quella prova; i [test su codice legacy](/blog/principio-di-inerzia-e-la-sindrome-del-non-toccare) impediscono di rompere comportamenti già esistenti.
 
 ## Spiegare il comportamento
 
@@ -3359,7 +3359,7 @@ Immagina una pagina che mostra gli ordini di un utente. Il controller identifica
     content: `
 Una **closure** è semplicemente una funzione che continua ad avere accesso alle variabili del contesto in cui è stata creata, anche dopo che quel contesto è terminato.
 
-Per considerare anche gli effetti sull'interfaccia, approfondisci [JavaScript this: call, bind e arrow function](/blog/javascript-this-binding) e [Prototipi JavaScript: inheritance e class](/blog/javascript-prototipi-ereditarieta). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una closure cattura variabili dell'ambiente lessicale, mentre [this e il binding delle funzioni](/blog/javascript-this-binding) dipendono dalla modalità di chiamata. Per distinguere i due modelli, confronta anche [prototipi ed ereditarietà](/blog/javascript-prototipi-ereditarieta).
 
 \`\`\`javascript
 function contatore() {
@@ -3574,14 +3574,14 @@ Scrivere where non significa necessariamente che una query sia già stata esegui
     date: "2026-04-30",
     updatedAt: "2026-11-11",
     category: "sviluppo-software",
-    hub: "shopify-integrazioni",
+    hub: "react-frontend",
     icon: "🟨",
     excerpt: "Dal callback hell alle Promise, fino ad async/await: gestire l'asincronia con eleganza.",
     tags: ["JavaScript", "Async"],
     content: `
 Una **Promise** rappresenta un valore che arriverà in futuro: una risposta di rete, un file, un timer. Ha tre stati: pending, fulfilled, rejected.
 
-La stessa decisione può incidere sulla sincronizzazione dei dati: leggi [Shopify line item properties: campi personalizzati](/blog/shopify-custom-fields-app-vs-codice-nativo) e [Lo stesso webhook due volte: come evitare due ordini](/blog/webhook-idempotenza-ordini). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Quando due chiamate indipendenti partono insieme, Promise.all cambia i tempi di attesa ma non risolve i problemi di una risposta non più pertinente. La [Fetch API e i controlli HTTP](/blog/javascript-fetch-api) aiutano a gestire il risultato; [AbortController](/blog/fetch-abortcontroller-risposte-obsolete) gestisce richieste che non servono più.
 
 \`\`\`javascript
 async function caricaUtente(id) {
@@ -3797,7 +3797,7 @@ Aggiungere una colonna è spesso semplice; rinominarne una usata dal codice già
     content: `
 JavaScript ha **un solo thread**: esegue una cosa alla volta. Allora come fa a gestire timer, click e richieste di rete senza congelarsi? Grazie all'**event loop**.
 
-Un confronto utile per questa soluzione è quello con [JavaScript Array: map, filter, reduce e find](/blog/javascript-metodi-array-essenziali) e [JavaScript closure: scope e variabili catturate](/blog/javascript-closure-spiegate-bene). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un callback non esegue prima che il main thread lo consenta: l'uso di [Promise e async/await](/blog/javascript-promise-async-await) modifica la composizione dell'attesa, non rende gratuito il calcolo. I [Web Worker](/blog/javascript-web-workers) sono un'alternativa quando il lavoro è realmente CPU-bound.
 
 \`\`\`javascript
 console.log("1");
@@ -4016,7 +4016,7 @@ Considera un ordine con più righe. Una associazione has_many rende comodo esplo
     content: `
 Come in Ruby, anche in JavaScript i cicli \`for\` sono quasi sempre sostituibili da metodi più espressivi.
 
-Nel frontend lo stesso problema si collega a [Event loop JavaScript: task e microtask](/blog/javascript-event-loop-come-funziona) e [JavaScript destructuring: default e valori undefined](/blog/javascript-destructuring). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+La scelta fra map, filter e reduce dipende dal risultato richiesto. Il [destructuring](/blog/javascript-destructuring) rende più chiara la lettura degli oggetti trasformati, mentre [Set e Map](/blog/javascript-set-e-map) aiutano quando devi costruire un indice o deduplicare record.
 
 \`\`\`javascript
 const nums = [1, 2, 3, 4, 5];
@@ -4240,7 +4240,7 @@ Supponi che due richieste provino a registrare contemporaneamente lo stesso iden
     content: `
 Il **destructuring** estrae valori da oggetti e array assegnandoli a variabili in una sola riga.
 
-Per considerare anche gli effetti sull'interfaccia, approfondisci [Optional chaining e nullish coalescing in JS](/blog/javascript-optional-chaining-nullish) e [JavaScript Array: map, filter, reduce e find](/blog/javascript-metodi-array-essenziali). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un valore di default nel destructuring non ha la stessa semantica di un fallback su null: [optional chaining e nullish coalescing](/blog/javascript-optional-chaining-nullish) spiegano la differenza. I [metodi Array](/blog/javascript-metodi-array-essenziali) tornano utili quando la struttura estratta è una raccolta.
 
 \`\`\`javascript
 const user = { name: "Ale", role: "dev", city: "Torino" };
@@ -4482,7 +4482,7 @@ Un'API che restituisce JSON deve offrire più della serializzazione di un model.
     content: `
 I **moduli ES** dividono il codice in file, ognuno con la sua interfaccia pubblica dichiarata con \`export\` e \`import\`.
 
-Un confronto utile per questa soluzione è quello con [JavaScript destructuring: default e valori undefined](/blog/javascript-destructuring) e [JavaScript Array: map, filter, reduce e find](/blog/javascript-metodi-array-essenziali). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Gli import dinamici sono uno strumento per distribuire il costo dell'applicazione: il [bundle JavaScript iniziale](/blog/equazione-del-razzo-e-il-problema-del-bundle-da-830kb) mostra dove misurare il vantaggio. Le [closure](/blog/javascript-closure-spiegate-bene) chiariscono come mantenere lo stato di un modulo senza esporlo globalmente.
 
 \`\`\`javascript
 // math.js
@@ -4720,7 +4720,7 @@ Interrogare un provider esterno può funzionare durante una demo e produrre dati
     content: `
 \`fetch\` è il modo nativo per fare richieste HTTP dal browser. Restituisce una Promise che si risolve in un oggetto \`Response\`.
 
-Un confronto utile per questa soluzione è quello con [JavaScript ES modules: import, export e bundle](/blog/javascript-moduli-es-import-export) e [JavaScript this: call, bind e arrow function](/blog/javascript-this-binding). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un status HTTP non riuscito non causa automaticamente il reject di fetch: nel caso di ricerche veloci devi anche gestire le [risposte fuori ordine con AbortController](/blog/fetch-abortcontroller-risposte-obsolete). Il modello di [Promise e async/await](/blog/javascript-promise-async-await) permette di separare attesa, errori e parsing.
 
 \`\`\`javascript
 // GET
@@ -4955,7 +4955,7 @@ Un job che invia un evento a un gestionale potrebbe essere interrotto dopo la ch
     content: `
 La confusione su \`this\` nasce da un equivoco: il suo valore dipende da **come** chiami la funzione, non da dove è scritta.
 
-Per considerare anche gli effetti sull'interfaccia, approfondisci [Prototipi JavaScript: inheritance e class](/blog/javascript-prototipi-ereditarieta) e [JavaScript closure: scope e variabili catturate](/blog/javascript-closure-spiegate-bene). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Estrarre un metodo può cambiare il suo this anche quando il codice è identico. Le [closure](/blog/javascript-closure-spiegate-bene) mostrano invece lo scope lessicale, mentre la [catena dei prototipi](/blog/javascript-prototipi-ereditarieta) spiega dove vengono trovati i metodi.
 
 \`\`\`javascript
 const user = {
@@ -5198,7 +5198,7 @@ Quando Turbo sostituisce il contenuto della pagina, gli script che erano legati 
     content: `
 Le \`class\` in JavaScript sono zucchero sintattico: sotto, l'ereditarietà è basata su **prototipi**. Ogni oggetto ha un collegamento a un altro oggetto (il suo prototipo) da cui eredita metodi.
 
-Un confronto utile per questa soluzione è quello con [JavaScript this: call, bind e arrow function](/blog/javascript-this-binding) e [JavaScript closure: scope e variabili catturate](/blog/javascript-closure-spiegate-bene). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Una proprietà ereditata non è equivalente a una proprietà presente sull'oggetto: il comportamento di [this nei metodi](/blog/javascript-this-binding) completa la lettura delle chiamate. [Proxy e Reflect](/blog/javascript-proxy-reflect) permettono di intercettare alcune operazioni, ma richiedono di rispettarne gli invarianti.
 
 \`\`\`javascript
 const animale = {
@@ -5439,7 +5439,7 @@ Un controller Stimulus può gestire l'apertura di un pannello o il conteggio dei
     content: `
 Eventi come \`input\`, \`scroll\` e \`resize\` scattano decine di volte al secondo. Chiamare un'API o un calcolo pesante a ogni scatto è uno spreco. Due tecniche lo risolvono.
 
-Un confronto utile per questa soluzione è quello con [Web Workers: lavoro in background e limiti](/blog/javascript-web-workers) e [Prototipi JavaScript: inheritance e class](/blog/javascript-prototipi-ereditarieta). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Debounce evita chiamate inutili, ma non protegge dai risultati che arrivano fuori ordine: [AbortController e identità della richiesta](/blog/fetch-abortcontroller-risposte-obsolete) affrontano quel caso. Per operazioni costose, i [Web Worker](/blog/javascript-web-workers) possono liberare il main thread.
 
 \`\`\`javascript
 function debounce(fn, ms) {
@@ -5680,7 +5680,7 @@ Immagina la scheda di un prodotto con prezzo e disponibilità. Se la cache usa u
     content: `
 Un **generatore** è una funzione che può mettersi in pausa e riprendere, producendo valori uno alla volta con \`yield\`.
 
-Per considerare anche gli effetti sull'interfaccia, approfondisci [JavaScript Proxy e Reflect: intercettare operazioni](/blog/javascript-proxy-reflect) e [JavaScript this: call, bind e arrow function](/blog/javascript-this-binding). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un generator produce valori a richiesta, ma non sposta automaticamente il calcolo fuori dal main thread come fanno i [Web Worker](/blog/javascript-web-workers). Se trasformi quei risultati in collezioni, i [metodi degli Array](/blog/javascript-metodi-array-essenziali) permettono di gestirne i dati.
 
 \`\`\`javascript
 function* contatore() {
@@ -5929,7 +5929,7 @@ Un servizio che sincronizza un ordine deve chiarire se restituisce l'ordine aggi
     content: `
 Un **Proxy** avvolge un oggetto e intercetta le operazioni su di esso: letture, scritture, cancellazioni. È come mettere un guardiano davanti a ogni proprietà.
 
-Nel frontend lo stesso problema si collega a [Generator function JavaScript: yield e iterazione](/blog/javascript-generatori) e [JavaScript Intl: date, numeri e valute locali](/blog/javascript-intl-formattazione). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un Proxy modifica le operazioni osservabili, ma non riscrive le regole della [prototype chain](/blog/javascript-prototipi-ereditarieta). Quando serve soltanto trasformare dati, [Array e metodi di collezione](/blog/javascript-metodi-array-essenziali) sono spesso più trasparenti.
 
 \`\`\`javascript
 const target = { nome: "Ale", eta: 30 };
@@ -6179,7 +6179,7 @@ In una pagina di ordini con il nome del cliente, senza preload il caricamento pu
     content: `
 Per formattare date, numeri e valute non serve una libreria: il browser ha l'oggetto nativo **Intl**, che conosce le convenzioni di ogni lingua.
 
-Un confronto utile per questa soluzione è quello con [JavaScript Proxy e Reflect: intercettare operazioni](/blog/javascript-proxy-reflect) e [Generator function JavaScript: yield e iterazione](/blog/javascript-generatori). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Intl cambia il modo in cui date e numeri vengono mostrati, non il loro significato interno. Per i calendari serve distinguere [timezone e istanti persistiti](/blog/relativita-del-tempo-e-timezone-nei-database); nelle strutture di dati, [Map e Set](/blog/javascript-set-e-map) mantengono valori non formattati.
 
 \`\`\`javascript
 new Intl.NumberFormat("it-IT", {
@@ -6413,7 +6413,7 @@ Supponi che un form permetta di cambiare indirizzo e telefono di un utente. Stro
     content: `
 JavaScript ha un solo thread, quindi un calcolo pesante congela l'interfaccia. I **Web Worker** eseguono codice in un thread separato: la UI resta fluida.
 
-Per considerare anche gli effetti sull'interfaccia, approfondisci [Debounce vs throttle in JavaScript: differenze](/blog/javascript-debounce-throttle) e [structuredClone JavaScript: copie profonde e limiti](/blog/javascript-immutabilita-structuredclone). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un worker sposta il calcolo, ma il trasferimento dei dati può essere costoso: [structuredClone e le copie profonde](/blog/javascript-immutabilita-structuredclone) spiegano parte del problema. [Debounce e throttle](/blog/javascript-debounce-throttle) risolvono invece la frequenza degli eventi, non la CPU consumata.
 
 \`\`\`javascript
 // main.js
@@ -6662,7 +6662,7 @@ Una route per aggiornare una risorsa usa convenzioni diverse da quella destinata
     content: `
 Due operatori moderni eliminano intere righe di controlli difensivi.
 
-Un confronto utile per questa soluzione è quello con [JavaScript destructuring: default e valori undefined](/blog/javascript-destructuring) e [Web Workers: lavoro in background e limiti](/blog/javascript-web-workers). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+L'operatore ?? preserva valori validi come zero e false, mentre un default nel [destructuring](/blog/javascript-destructuring) si applica con condizioni specifiche. Se la struttura arriva da un endpoint, la [Fetch API](/blog/javascript-fetch-api) non garantisce da sola la validità del JSON.
 
 \`\`\`javascript
 const user = { profilo: { social: null } };
@@ -6893,7 +6893,7 @@ Un file allegato può avere un'estensione plausibile e contenere dati diversi da
     content: `
 Oggetti e array coprono molto, ma **Set** e **Map** risolvono in modo pulito problemi ricorrenti.
 
-Un confronto utile per questa soluzione è quello con [structuredClone JavaScript: copie profonde e limiti](/blog/javascript-immutabilita-structuredclone) e [JavaScript Intl: date, numeri e valute locali](/blog/javascript-intl-formattazione). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Set deduplica primitive ma non oggetti distinti con lo stesso contenuto: [structuredClone](/blog/javascript-immutabilita-structuredclone) chiarisce la differenza fra riferimento e copia. I [metodi Array](/blog/javascript-metodi-array-essenziali) permettono di trasformare le raccolte in input per una Map.
 
 \`\`\`javascript
 // Set: valori unici
@@ -7152,7 +7152,7 @@ Una ricerca full-text non confronta soltanto le stringhe carattere per carattere
     content: `
 In JavaScript gli oggetti si passano per riferimento: assegnarli non li copia. Modificarne uno "condiviso" causa bug subdoli, specie in React dove lo stato va trattato come immutabile.
 
-Nel frontend lo stesso problema si collega a [Prototipi JavaScript: inheritance e class](/blog/javascript-prototipi-ereditarieta) e [JavaScript this: call, bind e arrow function](/blog/javascript-this-binding). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Un clone profondo crea copie ma non rende i dati immutabili. Confrontalo con [Set e Map](/blog/javascript-set-e-map), che conservano chiavi e valori con regole proprie; nei [Web Worker](/blog/javascript-web-workers) il trasferimento dei dati introduce altri costi.
 
 \`\`\`javascript
 const stato = { user: { nome: "Ale" }, tag: ["a", "b"] };
@@ -7406,7 +7406,7 @@ Un endpoint POST può restituire 201 senza avere scritto correttamente tutti i d
     content: `
 \`localStorage\` salva dati nel browser che sopravvivono a refresh e riavvii, senza alcun backend. Perfetto per preferenze, temi, bozze, carrelli.
 
-Nel frontend lo stesso problema si collega a [structuredClone JavaScript: copie profonde e limiti](/blog/javascript-immutabilita-structuredclone) e [JavaScript Set e Map: struttura e uguaglianza](/blog/javascript-set-e-map). I casi sono diversi, ma evidenziano precondizioni e verifiche che conviene valutare insieme prima di applicare una modifica.
+Prima di salvare stato nel browser verifica se deve davvero sopravvivere alla navigazione. La [struttura dei dati con Map e Set](/blog/javascript-set-e-map) non coincide automaticamente con JSON; [optional chaining e nullish coalescing](/blog/javascript-optional-chaining-nullish) aiutano a gestire proprietà facoltative dopo il parsing.
 
 \`\`\`javascript
 // salva (solo stringhe!)
