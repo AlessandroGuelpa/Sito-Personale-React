@@ -2902,7 +2902,7 @@ Il bello è la coerenza: una volta capito il modello, esplori qualsiasi valore c
   },
   {
     id: "rails-mvc-in-tre-minuti",
-    title: "Rails: capire l'MVC in tre minuti",
+    title: "Rails MVC: Model, View e Controller",
     date: "2026-04-24",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -2924,7 +2924,15 @@ end
 \`\`\`
 
 La regola d'oro: **fat model, skinny controller**. La logica vive nel Model, il Controller coordina soltanto. Se un controller inizia a gonfiarsi di \`if\`, è il segnale che quella logica deve traslocare altrove.
-`,
+
+
+## Da verificare nella pratica
+
+Il controller riceve una richiesta HTTP, coordina le operazioni e seleziona una risposta. Il model rappresenta dati e regole del dominio, mentre la view genera la rappresentazione destinata all'utente. Non tutto deve stare in queste tre classi: logiche di integrazione o processi complessi possono richiedere componenti dedicati. Quando una modifica è difficile da testare, controlla se il controller sta mescolando validazione, accesso ai dati e formattazione.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/getting_started.html)`,
   },
   {
     id: "javascript-closure-spiegate-bene",
@@ -3036,7 +3044,7 @@ Regola pratica: usa la \`lambda\` quando vuoi qualcosa che si comporta come una 
   },
   {
     id: "rails-activerecord-le-basi",
-    title: "Rails: ActiveRecord, il database senza SQL",
+    title: "Rails Active Record: modelli, query e SQL",
     date: "2026-04-29",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -3060,7 +3068,15 @@ launch.update(status: "success")
 Ogni metodo genera SQL sotto il cofano, ma tu ragioni in Ruby. \`where\`, \`order\`, \`limit\` restituiscono relazioni concatenabili e "lazy": la query parte solo quando i dati servono davvero.
 
 Il rischio? Dimenticarsi che c'è un database sotto e sparare mille query senza accorgersene. Ma quello è un discorso per un altro giorno.
-`,
+
+
+## Da verificare nella pratica
+
+Active Record non elimina SQL: costruisce query SQL e le invia al database. Una relazione restituita da where può rimanere lazy finché non viene materializzata; find e metodi simili possono invece eseguire immediatamente una query. Controlla il log SQL durante lo sviluppo e usa explain per capire query costose. Le colonne usate spesso nei filtri potrebbero richiedere indici verificati sul carico reale.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_querying.html)`,
   },
   {
     id: "javascript-promise-async-await",
@@ -3164,7 +3180,7 @@ Quel \`&:even?\` è la forma compatta di \`{ |n| n.even? }\`. Una volta presa la
   },
   {
     id: "rails-migrazioni-versionare-il-database",
-    title: "Rails: le migrazioni, il git del database",
+    title: "Rails migrations: cambiare lo schema in sicurezza",
     date: "2026-05-04",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -3190,7 +3206,15 @@ end
 Lanci \`rails db:migrate\` e la tabella nasce; \`rails db:rollback\` la annulla. Il metodo \`change\` è abbastanza intelligente da sapere come invertire la maggior parte delle operazioni.
 
 La regola: mai modificare una migrazione già eseguita in produzione. Ne crei una nuova. Lo storico deve restare fedele a ciò che è successo davvero.
-`,
+
+
+## Da verificare nella pratica
+
+Le migrazioni versionano le trasformazioni dello schema, ma non sono una copia del database e non ripristinano automaticamente i dati persi. Su tabelle grandi, aggiungere un indice o una colonna con vincoli può avere impatti operativi. Prima del deploy valuta compatibilità con il codice ancora in esecuzione e separa le modifiche incompatibili in passaggi progressivi. Verifica migrazione e rollback su un ambiente rappresentativo.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_migrations.html)`,
   },
   {
     id: "javascript-event-loop-come-funziona",
@@ -3296,7 +3320,7 @@ Per questo i simboli sono perfetti come chiavi di hash e nomi/identificatori (\`
   },
   {
     id: "rails-associazioni-has-many-belongs-to",
-    title: "Rails: le associazioni tra i modelli",
+    title: "Rails associations: belongs_to e has_many",
     date: "2026-05-09",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -3323,7 +3347,15 @@ spacex.launches.create(name: "Starship")
 \`belongs_to\` vuole la colonna \`provider_id\` sulla tabella dei lanci (la crei in migrazione con \`t.references :provider\`). Da lì Rails costruisce le query giuste.
 
 Aggiungi \`dependent: :destroy\` e cancellando un provider elimini anche i suoi lanci: comodo, ma usalo con la testa.
-`,
+
+
+## Da verificare nella pratica
+
+Le associazioni descrivono le relazioni tra modelli, ma vanno mantenute coerenti con i vincoli del database. Una belongs_to non implica automaticamente che ogni record esistente abbia una riga collegata: dipende da validazioni, nullability e dati. Evita di risolvere la presenza con query dentro ogni ciclo; una lista di record che carica le associazioni una per volta produce il problema N+1. Per le operazioni distruttive definisci esplicitamente le dipendenze.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/association_basics.html)`,
   },
   {
     id: "javascript-metodi-array-essenziali",
@@ -3435,7 +3467,7 @@ Conoscere questi metodi significa scrivere meno \`if key\`, e lasciare che sia l
   },
   {
     id: "rails-validazioni-dati-puliti",
-    title: "Rails: validazioni, la prima linea di difesa",
+    title: "Validazioni Rails e vincoli del database",
     date: "2026-05-14",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -3461,7 +3493,15 @@ launch.save!         # solleva un'eccezione invece di restituire false
 \`save\` restituisce \`false\` se una validazione fallisce; \`save!\` solleva un'eccezione. In \`errors\` trovi i messaggi da mostrare all'utente.
 
 Attenzione: le validazioni proteggono a livello applicativo. Per garanzie ferree (unicità sotto concorrenza) aggiungi anche un indice unico nel database.
-`,
+
+
+## Da verificare nella pratica
+
+Le validazioni di Active Record migliorano feedback e coerenza applicativa, ma non sono una barriera sufficiente contro modifiche concorrenti. Due richieste possono superare contemporaneamente una validazione di unicità. Per i vincoli importanti usa anche indici unici e vincoli sul database, gestendo l'eventuale errore in applicazione. Testa valori nil, input vuoti e stati intermedi della transazione.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_validations.html)`,
   },
   {
     id: "javascript-destructuring",
@@ -3586,7 +3626,7 @@ Con \`define_method\` crei metodi in un ciclo invece di scriverli a mano uno per
   },
   {
     id: "rails-api-only-mode",
-    title: "Rails come API pura: la modalità api-only",
+    title: "Rails API-only: controller e JSON",
     date: "2026-05-19",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -3617,7 +3657,15 @@ end
 Rispetto a un'app classica, la modalità \`--api\` rimuove middleware inutili (cookie, sessioni, view) e alleggerisce lo stack. Ottieni un backend snello che espone dati, perfetto da consumare con \`fetch\` da un frontend separato.
 
 È esattamente l'architettura dietro un progetto come Launch Tracker: Rails serve i dati, il frontend li disegna.
-`,
+
+
+## Da verificare nella pratica
+
+La modalità API-only parte da una configurazione più leggera per servizi che espongono API, ma non impone automaticamente un buon contratto HTTP. Definisci formato degli errori, autorizzazioni, paginazione, timeout e versioni delle risposte. La serializzazione deve esporre soltanto i campi necessari. Testa separatamente successo, validazione fallita, risorsa assente e accesso non autorizzato.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/api_app.html)`,
   },
   {
     id: "javascript-moduli-es-import-export",
@@ -3740,7 +3788,7 @@ Nota la potenza: \`name:\` e \`provider:\` non solo verificano che le chiavi esi
   },
   {
     id: "rails-consumare-api-esterne",
-    title: "Rails: consumare un'API esterna e arricchirla",
+    title: "Rails: chiamare API esterne senza perdere affidabilità",
     date: "2026-05-24",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -3769,7 +3817,15 @@ end
 Interroghi la fonte con \`Faraday\`, ne estrai solo i campi che ti servono con \`dig\` (che non esplode sulle chiavi mancanti), e li normalizzi.
 
 In produzione: fai girare questa chiamata in un **job in background** e salva i risultati in tabella, così i tuoi utenti leggono dal tuo database veloce, non dall'API lenta di qualcun altro.
-`,
+
+
+## Da verificare nella pratica
+
+Un esempio che scarica e normalizza JSON è utile per capire il flusso, ma in produzione non basta verificare che il body sia presente. Controlla status HTTP, timeout, schema dei dati e limiti di richiesta. Differenzia errori temporanei da quelli permanenti; un retry senza limiti può saturare l'API. Se devi persistere i risultati, registra l'ultimo aggiornamento riuscito e proteggi gli utenti da dati parziali.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/active_job_basics.html)`,
   },
   {
     id: "javascript-fetch-api",
@@ -3891,7 +3947,7 @@ Se proprio devi controllare, usa \`respond_to?(:each)\` invece della classe: ver
   },
   {
     id: "rails-background-job-active-job",
-    title: "Rails: i job in background, per non far aspettare l'utente",
+    title: "Active Job: job asincroni e retry",
     date: "2026-05-29",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -3918,7 +3974,15 @@ SyncLaunchesJob.perform_later
 \`perform_later\` mette il job in coda e restituisce il controllo immediatamente; un worker separato (Sidekiq, Solid Queue) lo esegue in background.
 
 Così la sincronizzazione dei lanci da un'API lenta non blocca nessuno: la request torna in millisecondi, il lavoro pesante avviene fuori scena. È il modo giusto per tenere l'app reattiva.
-`,
+
+
+## Da verificare nella pratica
+
+Un job asincrono sposta lavoro fuori dal ciclo della richiesta HTTP, ma non garantisce esecuzione immediata né esattamente una volta. L'adapter scelto, le policy di retry e la disponibilità dei worker influiscono sul risultato. Progetta i job in modo idempotente quando possibile, conserva identificativi utili al monitoraggio e gestisci l'errore che si ripete senza creare elaborazioni duplicate.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/active_job_basics.html)`,
   },
   {
     id: "javascript-this-binding",
@@ -4048,7 +4112,7 @@ Rails ne è pieno (\`Comparable\`, \`Enumerable\`, i \`Concern\`). Un modulo per
   },
   {
     id: "rails-hotwire-turbo",
-    title: "Rails: Hotwire e Turbo, SPA senza scrivere JS",
+    title: "Hotwire e Turbo: navigazione HTML reattiva",
     date: "2026-06-03",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -4075,7 +4139,15 @@ end
 I **Turbo Frame** isolano porzioni di pagina che si aggiornano da sole; i **Turbo Stream** spingono frammenti di HTML dal server (anche via WebSocket) e il DOM si aggiorna senza reload.
 
 Il vantaggio: ottieni gran parte della reattività di una SPA restando in Rails, scrivendo view invece di componenti. Per molte app CRUD è più che sufficiente, e ti risparmi un intero frontend separato.
-`,
+
+
+## Da verificare nella pratica
+
+Turbo permette aggiornamenti e navigazione efficienti sfruttando HTML inviato dal server. Non equivale a eliminare JavaScript: lo utilizza internamente e può essere affiancato a Stimulus. Verifica link, form, stato di caricamento e interazioni con script terzi durante i cambi di pagina. Scegli Turbo quando un'applicazione server-rendered trae beneficio da navigazione reattiva senza una SPA completa.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://turbo.hotwired.dev/handbook/introduction)`,
   },
   {
     id: "javascript-prototipi-ereditarieta",
@@ -4200,7 +4272,7 @@ Puoi anche usare \`retry\` dentro un \`rescue\` per ritentare (utile con le reti
   },
   {
     id: "rails-stimulus-js-leggero",
-    title: "Rails: Stimulus, JavaScript giusto quel che basta",
+    title: "Stimulus Rails: comportamento associato all'HTML",
     date: "2026-06-08",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -4230,7 +4302,15 @@ export default class extends Controller {
 L'HTML dichiara *cosa* fa (il controller, i target, le action); il JavaScript dice *come*. Stimulus non genera l'HTML, si aggancia a quello che c'è già, anche a quello arrivato via Turbo.
 
 Filosofia opposta a React: l'HTML resta il protagonista, il JavaScript è un condimento leggero. Per un'app Rails, spesso è tutto ciò che serve.
-`,
+
+
+## Da verificare nella pratica
+
+Stimulus collega comportamento JavaScript agli elementi tramite controller e attributi data. È adatto a interazioni locali, come un menu o la gestione di un campo, senza replicare uno store applicativo completo. Controlla il ciclo di vita connect e disconnect, soprattutto quando Turbo sostituisce parti della pagina. Evita di distribuire la logica di dominio tra controller JavaScript e backend.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://stimulus.hotwired.dev/handbook/introduction)`,
   },
   {
     id: "javascript-debounce-throttle",
@@ -4359,7 +4439,7 @@ I punti chiave: versiona con cura (segui il semantic versioning nel file \`versi
   },
   {
     id: "rails-caching-basi",
-    title: "Rails: il caching, ricordare invece di ricalcolare",
+    title: "Rails caching: invalidazione e dati coerenti",
     date: "2026-06-13",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -4385,7 +4465,15 @@ La prima chiamata esegue il blocco (le query pesanti) e salva il risultato; le s
 La domanda giusta è: "questo dato è costoso da produrre e cambia di rado?". Se sì, è un candidato perfetto per la cache. Statistiche, classifiche, risposte di API esterne.
 
 Attento a due cose: scegliere una **chiave** che identifichi bene il dato, e invalidare la cache quando i dati cambiano davvero. Il caching è potente, ma dati vecchi mostrati come nuovi sono un bug.
-`,
+
+
+## Da verificare nella pratica
+
+Una cache riduce letture o calcoli ripetuti, ma introduce il problema di quando invalidare un valore. La chiave dovrebbe dipendere dai dati che influenzano il risultato e, dove opportuno, da una versione. Non inserire dati personali in cache condivise senza una politica esplicita. Misura hit ratio, dimensione della cache e latenza prima di concludere che il caching sia efficace.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/caching_with_rails.html)`,
   },
   {
     id: "javascript-generatori",
@@ -4519,7 +4607,7 @@ Il valore vero non è "trovare bug": è **progettare meglio**. Se un metodo è d
   },
   {
     id: "rails-service-objects",
-    title: "Rails: i service object, dove mettere la logica complessa",
+    title: "Rails service objects: responsabilità e test",
     date: "2026-06-18",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -4548,7 +4636,15 @@ SyncLaunches.new.call
 Un service object è una semplice classe Ruby con un metodo pubblico (di solito \`call\`) che fa **una** cosa. Riceve le dipendenze nel costruttore (comodo per i test), incapsula il flusso, restituisce un risultato.
 
 Vantaggi: controller magri, logica testabile in isolamento, nomi che raccontano cosa fa l'app (\`SyncLaunches\`, \`RegisterUser\`, \`ChargeOrder\`). Non è magia di Rails: è solo buon design a oggetti applicato con disciplina.
-`,
+
+
+## Da verificare nella pratica
+
+I service object non sono un componente obbligatorio di Rails. Sono semplici classi Ruby utili quando un'operazione coordina più modelli o sistemi esterni. Specifica input, output, errori e transazioni; una classe con un metodo call non risolve automaticamente i problemi architetturali. Se il servizio effettua richieste esterne dentro una transazione lunga, valuta il rischio di lock e di fallimenti parziali.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_callbacks.html)`,
   },
   {
     id: "javascript-proxy-reflect",
@@ -4686,7 +4782,7 @@ Ancora sperimentale in alcuni aspetti, ma è la direzione di Ruby per sfruttare 
   },
   {
     id: "rails-problema-n-piu-1",
-    title: "Rails: il problema N+1 e come ucciderlo con includes",
+    title: "Rails N+1: includes, preload ed eager_load",
     date: "2026-06-23",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -4712,7 +4808,15 @@ end
 Il problema è insidioso perché in sviluppo, con pochi dati, non lo noti; in produzione, con migliaia di righe, la pagina crolla. Strumenti come il gem \`bullet\` te lo segnalano in tempo reale.
 
 Regola: ogni volta che in un ciclo accedi a un'associazione, chiediti se serve un \`includes\`. Due query battono sempre centouno.
-`,
+
+
+## Da verificare nella pratica
+
+includes può evitare le query ripetute caricando preventivamente le associazioni, ma non garantisce sempre esattamente due query. In base alla query e ai filtri Rails può usare preload o join. Verifica il numero di query nei log e valuta la quantità di dati caricati: anticipare associazioni inutili può peggiorare consumo di memoria. Il criterio è ridurre il lavoro complessivo, non massimizzare l'uso di includes.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_querying.html)`,
   },
   {
     id: "javascript-intl-formattazione",
@@ -4831,7 +4935,7 @@ Puoi usare \`&\` anche per passare un blocco già pronto: \`def stampa(&blocco);
   },
   {
     id: "rails-strong-parameters",
-    title: "Rails: strong parameters, il buttafuori dei form",
+    title: "Rails Strong Parameters: input e mass assignment",
     date: "2026-06-28",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -4860,7 +4964,15 @@ end
 Perché è vitale: senza questa barriera, un utente malintenzionato potrebbe inviare nel form un campo non previsto, per esempio \`admin: true\` o \`role: "superadmin"\`, e ritrovarsi privilegi che non doveva avere. È il famoso "mass assignment", una vulnerabilità classica.
 
 La regola: permetti solo ciò che l'utente deve davvero poter impostare. Il buttafuori all'ingresso decide chi entra, non chi bussa.
-`,
+
+
+## Da verificare nella pratica
+
+Strong Parameters controlla quali attributi del payload possono essere assegnati in massa a un model. Non equivale ad autorizzare un utente a modificare la risorsa: i permessi vanno verificati separatamente. Evita di permettere campi sensibili come ruoli amministrativi soltanto perché presenti nel form. Testa payload con chiavi inattese e strutture annidate per identificare differenze tra il contratto previsto e quello accettato.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/action_controller_overview.html)`,
   },
   {
     id: "javascript-web-workers",
@@ -4994,7 +5106,7 @@ Definendo un solo metodo (\`<=>\`), \`Comparable\` te ne regala una decina: \`<\
   },
   {
     id: "rails-routing-restful",
-    title: "Rails: il routing RESTful con resources",
+    title: "Routing RESTful in Rails con resources",
     date: "2026-07-03",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -5023,7 +5135,15 @@ DELETE /launches/:id      destroy  (elimina)
 Verbo + URL mappano su un'azione del controller in modo prevedibile. Puoi limitare (\`only: [:index, :show]\`), annidare (\`resources :providers do resources :launches end\`) o aggiungere rotte custom con \`member\` e \`collection\`.
 
 Il valore è la **prevedibilità**: chiunque conosca Rails sa già come sono fatte le tue rotte, senza leggere il file. Lanci \`rails routes\` e vedi la mappa completa. Convenzione sopra configurazione: meno decisioni, meno sorprese.
-`,
+
+
+## Da verificare nella pratica
+
+La dichiarazione resources genera una serie convenzionale di route per elenco, creazione, lettura, aggiornamento ed eliminazione. Non è sempre necessario esporle tutte: limita le azioni a quelle richieste. Controlla l'ordine delle route speciali, il matching dei parametri e le risposte per risorse mancanti. La chiarezza degli URL facilita documentazione e test, ma non sostituisce l'autorizzazione.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/routing.html)`,
   },
   {
     id: "javascript-optional-chaining-nullish",
@@ -5142,7 +5262,7 @@ I gruppi di cattura tornano comodi: \`"2026-07-07".match(/(\\d+)-(\\d+)-(\\d+)/)
   },
   {
     id: "rails-active-storage-allegati",
-    title: "Rails: allegare file con Active Storage",
+    title: "Active Storage: upload e sicurezza dei file",
     date: "2026-07-08",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -5168,7 +5288,15 @@ provider.logo.attach(params[:logo])
 La chicca sono le **varianti**: \`variant(resize_to_limit: [200, 200])\` genera al volo una versione ridimensionata dell'immagine (serve la libreria di image processing), e la memorizza per le volte successive.
 
 Niente più codice di upload custom, niente gestione manuale dei percorsi. Ti concentri sul dominio, Active Storage si occupa dei bit. Dallo sviluppo locale al cloud, senza cambiare una riga del model.
-`,
+
+
+## Da verificare nella pratica
+
+Active Storage gestisce associazioni e archiviazione dei file, ma l'upload comporta rischi operativi. Limita dimensioni e formati quando necessario, verifica i permessi per visualizzare e rimuovere allegati e considera la scansione antivirus per file non attendibili. Non usare il nome originale del file come unico identificativo affidabile. Definisci retention e gestione dei file orfani.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://guides.rubyonrails.org/active_storage_overview.html)`,
   },
   {
     id: "javascript-set-e-map",
@@ -5315,7 +5443,7 @@ Perché conta: le intuizioni sulle performance sbagliano di continuo. Quella che
   },
   {
     id: "rails-full-text-search-postgres",
-    title: "Rails: ricerca full-text con PostgreSQL",
+    title: "PostgreSQL full-text search con Rails",
     date: "2026-07-13",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -5341,7 +5469,15 @@ Sotto il cofano, Postgres trasforma il testo in \`tsvector\` (parole normalizzat
 Il vantaggio: nessun servizio esterno da mantenere, i dati restano nel tuo database, e per la maggior parte delle app la qualità è più che sufficiente. Aggiungi un indice GIN sulla colonna \`tsvector\` e resta veloce anche su tabelle grandi.
 
 Elasticsearch è potente, ma spesso è un cannone per uccidere una mosca. Parti da Postgres: la ricerca del tuo Launch Tracker probabilmente non chiede di più.
-`,
+
+
+## Da verificare nella pratica
+
+La ricerca full-text di PostgreSQL permette tokenizzazione, ranking e indici dedicati, ma la qualità dei risultati dipende dalla lingua e dalla configurazione. Una ricerca che funziona su poche righe può diventare lenta senza un indice coerente. Confronta tsquery, normalizzazione dei termini e risultati attesi prima di aggiungere fuzzy matching. Se i dati contengono lingue diverse, verifica le strategie di stemming.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://www.postgresql.org/docs/current/textsearch-intro.html)`,
   },
   {
     id: "javascript-immutabilita-structuredclone",
@@ -5473,7 +5609,7 @@ Non trasformano Ruby in Haskell, ma per pulire una stringa o costruire funzioni 
   },
   {
     id: "rails-request-specs-testare-api",
-    title: "Rails: testare un'API con i request spec",
+    title: "Rails request specs: contratti HTTP e casi limite",
     date: "2026-07-18",
     category: "sviluppo-software",
     icon: "🛤️",
@@ -5509,7 +5645,15 @@ end
 Un request spec esercita l'intero stack (routing, controller, model, serializzazione) come farebbe un client reale. Verifichi lo status (\`:ok\`, \`:unprocessable_entity\`), la struttura del JSON e i casi d'errore.
 
 Sono la rete di sicurezza ideale per un'API: se rompi un endpoint durante un refactor, il test te lo dice subito. Testi il **contratto** che offri al frontend, non i dettagli interni. E un contratto testato è un contratto di cui ti puoi fidare.
-`,
+
+
+## Da verificare nella pratica
+
+I request spec verificano il comportamento della richiesta attraverso il routing e il controller. Oltre al caso di successo, includi autenticazione, autorizzazione, input invalido e risorsa inesistente. Non controllare soltanto il codice HTTP: verifica la forma del JSON, le modifiche persistite e gli effetti collaterali. Stub delle API esterne possono rendere i test ripetibili, ma serve anche un controllo di integrazione del contratto.
+
+**Documentazione**
+
+- [Riferimento ufficiale](https://rspec.info/documentation/)`,
   },
   {
     id: "javascript-localstorage-persistenza",
