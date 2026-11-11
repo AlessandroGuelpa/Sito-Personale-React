@@ -42,12 +42,21 @@ precedente non è una fonte aggiornata né un prerequisito del processo.
    Evitare titoli puramente narrativi che nascondono la domanda o la tecnologia cercata.
    Il titolo, l'introduzione, le sezioni e l'estratto devono rispondere allo stesso intento di ricerca.
 5. Inserire un solo oggetto in cima all'array, con `id` univoco kebab-case,
-   `title`, data di pubblicazione reale `AAAA-MM-GG`, `category`, `icon`, `excerpt`,
+   `title`, data di pubblicazione reale `AAAA-MM-GG`, `category`, `hub`, `icon`, `excerpt`,
    `tags` e `content` Markdown. Conservare tutti gli articoli precedenti.
    Nella template string eseguire l'escape di backslash, backtick e `${`.
    Scegliere una sola `category` fra `sviluppo-software`, `ingegneria`, `spazio`,
    `ambiente`, `musica-audio`, in base all'argomento principale. Non creare
-   categorie nuove per tecnologie o singoli temi: Rails, JavaScript, Artemis,
+   categorie nuove per tecnologie o singoli temi. Il campo `hub` è obbligatorio
+   e va selezionato esplicitamente fra `shopify-integrazioni`, `react-frontend`,
+   `rails-backend` e `scienza-passioni`: non viene dedotto automaticamente
+   da titolo o tag. Il testo editoriale deve contenere almeno 251 parole
+   (escludendo blocchi di codice e bibliografia), con almeno un link contestuale
+   funzionante verso un altro articolo. Non aggiungere riempitivi per arrivare
+   alla soglia. Se necessario, approfondire con casi limite, esempi e verifiche.
+   Nei recuperi storici usare `firstPublishedAt` per la vera prima data online,
+   conservando la data editoriale `date`.
+   Rails, JavaScript, Artemis,
    materiali ed effetti audio restano tag specifici. Il filtro mostra soltanto
    le cinque categorie; i tag sono cercabili e i loro link continuano a filtrare
    l'archivio tramite `?tag=`.
@@ -70,7 +79,9 @@ npm run check:build
 npm run check:routing
 ```
 
-La build deve includere HTML, metadati e sitemap del nuovo articolo. Verificare
+La build deve includere HTML, metadati e sitemap del nuovo articolo.
+`check:build` esegue anche `check-blog-content.mjs` e fallisce se un articolo
+non ha il tema esplicito, scende sotto 251 parole o contiene link interni rotti. Verificare
 slug univoco, correttezza degli esempi, link alle fonti e conservazione dei post
 esistenti. Per soli contenuti non occorre modificare componenti o configurazioni
 di hosting. Correggere gli errori introdotti prima di pubblicare.
