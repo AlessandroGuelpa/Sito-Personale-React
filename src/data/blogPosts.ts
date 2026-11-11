@@ -2372,6 +2372,11 @@ Le revisioni del codice dovrebbero distinguere refactoring e cambiamento funzion
 
 Una riscrittura può essere giustificata se costi di manutenzione, rischi o vincoli tecnologici sono documentati. Prima, considera una migrazione graduale: sostituisci un comportamento alla volta e confronta gli output. L'obiettivo non è avere codice «nuovo», ma un sistema che si possa evolvere e verificare.
 
+
+## Scegliere una modifica piccola e verificabile
+
+Se una funzione legacy calcola prezzi e sconti, una riscrittura totale può cambiare condizioni poco documentate. Prima crea un insieme di esempi che descrivano il comportamento attuale, inclusi casi limite con importi zero, sconti multipli e dati mancanti. Poi isola un solo problema, come una dipendenza da un servizio esterno o una duplicazione di calcolo, e verifica che l'output non cambi al termine del refactoring. Se il requisito di business è realmente cambiato, separa il test del nuovo comportamento da quello di caratterizzazione. L'obiettivo non è conservare ogni bug, ma sapere quali differenze sono intenzionali. Una modifica che riesci a spiegare e invertire è più sicura di una riscrittura senza misure.
+
 **Fonti**
 
 - [Martin Fowler — Strangler Fig Application](https://martinfowler.com/bliki/StranglerFigApplication.html)
@@ -2406,6 +2411,11 @@ Immagina due modifiche successive allo stesso elemento. La seconda richiesta pu�
 ## Verificare l'esperienza
 
 Simula una rete lenta, errori HTTP e richieste contemporanee. Controlla il comportamento con tastiera e screen reader, le indicazioni di caricamento e l'eventuale rollback. La percezione di rapidità è utile soltanto se non compromette la fiducia nell'interfaccia.
+
+
+## Quando non mostrare un successo anticipato
+
+Un pulsante per aggiungere un elemento ai preferiti può aggiornare il conteggio subito, salvo ripristinarlo se la richiesta fallisce. È un'azione generalmente reversibile e relativamente semplice da riconciliare. Un pagamento o l'eliminazione definitiva di dati richiedono invece una conferma del server e messaggi espliciti sullo stato dell'operazione. Anche nelle interfacce ottimistiche devi identificare quale richiesta ha prodotto un aggiornamento: due click rapidi possono generare operazioni che terminano in ordine inverso. Prova un errore HTTP, una rete lenta e l'annullamento della navigazione. Se la correzione dello stato arriva dopo molti secondi, comunica che il risultato mostrato era provvisorio. La velocità percepita non deve trasformarsi in un'informazione falsa.
 
 **Fonti**
 
@@ -2442,6 +2452,11 @@ Un identificativo di richiesta permette di seguire un'operazione tra frontend, b
 
 Una metrica aggregata può segnalare un aumento degli errori; i log servono per analizzare casi specifici. Definisci soglie e periodi di conservazione. Quando aggiungi un nuovo evento, verifica anche quanto può costare raccoglierlo e se davvero aiuta durante un incidente.
 
+
+## Log che permettono di seguire una richiesta
+
+Quando un utente segnala che un ordine non è stato sincronizzato, un messaggio generico «errore sync» offre poche informazioni. Inserisci un identificativo correlabile, il tipo di operazione, il sistema chiamato e una categoria di errore, evitando dettagli personali o credenziali. Se il processo avviene in più job, usa lo stesso correlation ID lungo il percorso per ricostruire l'evento. I log non sostituiscono le metriche: un aumento del numero di retry dovrebbe emergere da un contatore e, quando rilevante, da un alert. Prova il percorso con una richiesta riuscita e una fallita, verificando che le informazioni siano sufficienti per una diagnosi senza esporre token. Definisci anche una durata di conservazione adeguata.
+
 **Fonti**
 
 - [OpenTelemetry — log e correlazione](https://opentelemetry.io/docs/concepts/signals/logs/)
@@ -2476,6 +2491,11 @@ Dati provenienti da API possono diventare obsoleti, fallire o arrivare fuori ord
 ## Come decidere
 
 Scrivi chi modifica ciascun dato, chi lo legge e quanto deve vivere. Se più aggiornamenti concorrenti sono possibili, scegli un modello di transizione prevedibile. Le librerie aggiuntive possono aiutare, ma una gerarchia di stato chiara vale più dell'aggiunta precoce di un nuovo strumento.
+
+
+## Quando evitare di duplicare lo stato
+
+Un totale di carrello può essere calcolato a partire dalle righe e dalle quantità: memorizzarlo anche come valore globale introduce una seconda fonte di verità. Ogni aggiornamento deve allora mantenere coerenti due dati, anche quando una richiesta fallisce o arriva in ritardo. Prima di introdurre Context o una libreria di state management, elenca chi legge e chi modifica ciascuna informazione. Mantieni locale lo stato temporaneo di una finestra di dialogo e sposta verso l'alto soltanto quello condiviso realmente. Un test utile aggiorna una quantità, rimuove una riga e verifica il totale senza interventi manuali di sincronizzazione. Per i dati server-side definisci una strategia di aggiornamento e invalidazione distinta da quella dello stato locale.
 
 **Fonti**
 
@@ -2514,6 +2534,11 @@ Prima di aggiungere caching, chiarisci cosa deve succedere quando pubblichi una 
 
 Confronta TTFB, hit ratio e tempi osservati da regioni diverse. Distingui laboratorio e utenti reali. Se il tempo dominante è nel database o nell'elaborazione del backend, avvicinare i file statici non risolve quel collo di bottiglia.
 
+
+## Quando la CDN non accelera la risposta
+
+Un file CSS con nome versionato è un ottimo candidato alla cache distribuita: cambia URL quando cambia il contenuto e può essere conservato a lungo. Un endpoint che restituisce un carrello personalizzato, invece, richiede una politica molto più prudente. Se la cache riutilizza la risposta fra utenti, l'ottimizzazione diventa un errore di correttezza e potenzialmente di privacy. Prima di configurare Cache-Control, identifica quali dati dipendono dall'identità e quale sistema deve invalidarli. Confronta TTFB e tempi di trasferimento da regioni diverse, distinguendo cache hit e miss. Se il collo di bottiglia è una query database lenta, spostare gli asset più vicino all'utente non risolve il costo della risposta dinamica.
+
 **Fonti**
 
 - [MDN — HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)
@@ -2548,6 +2573,11 @@ I test sono necessari ma non sufficienti: una suite incompleta può confermare u
 ## Dati e responsabilità
 
 Non inviare credenziali, dati personali o codice riservato a strumenti senza una valutazione delle regole di utilizzo. Mantieni tracciabili le decisioni tecniche e attribuisci agli sviluppatori la verifica finale.
+
+
+## Verificare un esempio prima di integrarlo
+
+Un assistente AI può proporre una funzione di libreria che sembra plausibile ma appartiene a una versione differente o non esiste. Prima di copiarla, controlla la documentazione ufficiale e il lockfile del progetto. Se l'esempio modifica dati, prepara un test con un caso ordinario e almeno un errore; se usa una API esterna, verifica autorizzazioni e gestione dei limiti. Non considerare il superamento del typecheck una prova di correttezza semantica: i tipi possono essere troppo permissivi e i test possono non coprire l'operazione reale. Nelle richieste all'assistente non inserire token, credenziali o dati aziendali riservati. Registra la decisione architetturale e usa la review per discutere il comportamento prodotto, non soltanto la forma del codice.
 
 **Fonti**
 
@@ -2597,6 +2627,11 @@ Per un campo semplice, la soluzione nativa può evitare una dipendenza esterna. 
 
 Prova più varianti, quantità, carrelli AJAX e passaggi di checkout. Verifica che il dato sia visibile nella riga dell'ordine e disponibile ai processi downstream che devono usarlo. Il limite HTML maxlength migliora la UX, ma i controlli importanti non devono affidarsi soltanto al browser.
 
+
+## Verificare il passaggio dal form all'ordine
+
+Una line item property associata al prodotto può raccogliere un testo di personalizzazione, ma devi verificare dove il valore viene mostrato e a quali sistemi arriva. Prova il form con più varianti, un carrello AJAX e un ordine di test, controllando che la proprietà rimanga associata alla riga corretta. Se un sistema esterno usa quel dato per una lavorazione, definisci un limite di lunghezza e una validazione applicativa, non soltanto maxlength nel browser. Una funzionalità nativa è preferibile a un'app aggiuntiva quando soddisfa l'intero requisito, non semplicemente perché richiede meno dipendenze. Se servono anteprime, calcoli di sovrapprezzo o workflow complessi, valuta un'implementazione differente e documentane i limiti.
+
 **Fonti**
 
 - [Shopify Developer — line item properties](https://shopify.dev/docs/api/liquid/objects/line_item)
@@ -2631,6 +2666,11 @@ I feature branch isolano il lavoro fino alla review, ma non eliminano i conflitt
 ## Perché non forzare main
 
 Un force push su un branch condiviso può sovrascrivere riferimenti a commit su cui altre persone stanno lavorando. Usa protezioni, pull request e controlli automatici dove possibile. La strategia migliore non è «mai avere conflitti», ma saperli risolvere in modo verificabile e senza perdere lavoro.
+
+
+## Una risoluzione senza perdere i due cambiamenti
+
+Supponi che un branch modifichi la validazione di un form mentre un altro aggiorna la gestione degli errori nella stessa funzione. Accettare interamente una delle due versioni può eliminare lavoro valido. Leggi entrambi i diff e ricostruisci il comportamento finale desiderato, poi rimuovi i marker di conflitto e riesegui i test. Se una modifica introduce una nuova dipendenza, controlla anche i file vicini: Git può risolvere automaticamente un merge che è comunque semanticamente errato. Evita force push sul branch condiviso senza una procedura concordata. Una pull request piccola e aggiornata spesso è più semplice da verificare di una lunga sequenza di modifiche divergenti.
 
 **Fonti**
 
@@ -2667,6 +2707,11 @@ In sviluppo React Strict Mode può aggiungere un ciclo di setup e cleanup per ev
 
 Usa il pannello Memory, controlla listener duplicati e ripeti la navigazione fra pagine. Osserva se le risorse tornano a stabilizzarsi. Ridurre i componenti non corregge una connessione aperta senza cleanup.
 
+
+## Una prova con eventi duplicati
+
+Considera un componente che registra un listener resize sul window quando viene montato. Se non lo rimuove al cleanup, navigare avanti e indietro può lasciare più callback attive, ciascuna con riferimenti allo stato del componente precedente. Prova a montare e smontare la pagina ripetutamente, osservando il numero di listener e l'attività del browser. In Strict Mode React può eseguire un ciclo extra di setup e cleanup durante lo sviluppo proprio per aiutarti a scoprire risorse non rilasciate. Non risolvere il sintomo disabilitando indiscriminatamente quel controllo. Se un effetto avvia una richiesta, valuta AbortController e gestisci la risposta che arriva quando l'input è già cambiato. La memoria che cresce temporaneamente non è automaticamente una perdita: cerca riferimenti che rimangono raggiungibili inutilmente.
+
 **Fonti**
 
 - [React — useEffect](https://react.dev/reference/react/useEffect)
@@ -2699,6 +2744,11 @@ Una stringa senza offset può essere interpretata diversamente da parser e ambie
 ## Test di confine
 
 Verifica le transizioni dell'ora legale, gli utenti in zone differenti e i round-trip tra API e database. Nei log usa istanti non ambigui; nell'interfaccia formatta la data nella zona prevista dal requisito.
+
+
+## Un appuntamento durante il cambio d'ora
+
+Un evento ricorrente alle 09:00 Europe/Rome non può essere rappresentato per sempre da un singolo offset UTC: l'offset cambia quando entra o termina l'ora legale. Per una ricorrenza conserva la zona IANA e la regola in orario civile, calcolando gli istanti effettivi quando generi le occorrenze. Per un log di un evento già accaduto, conserva invece un istante non ambiguo, generalmente in UTC, e formatta soltanto in fase di visualizzazione. Prova le date vicine ai cambi d'ora, compresi gli orari locali che non esistono o si ripetono. Evita di aggiungere sempre 24 ore a un timestamp quando il requisito è «domani alla stessa ora locale»: sono operazioni differenti.
 
 **Fonti**
 
@@ -2733,6 +2783,11 @@ Preferisci classi con responsabilità riconoscibili e componenti con convenzioni
 
 Prova componenti riutilizzati in pagine differenti, inclusi pulsanti, campi e dialoghi. Screenshot comparison e test visuali aiutano a intercettare variazioni inattese; DevTools permette di capire quale regola ha prevalso.
 
+
+## Diagnosticare la regola vincente
+
+Quando un pulsante cambia improvvisamente aspetto dopo una modifica al layout, apri DevTools e controlla le regole effettivamente applicate. La dichiarazione vincente dipende da origine, layer, specificità e ordine, non soltanto dall'ultimo file modificato. Se un selettore generico raggiunge molte pagine, restringine lo scope invece di aggiungere !important a ogni componente che si rompe. Un test visuale con screenshot del pulsante in più stati, compresi hover, focus e disabled, può rendere visibile una regressione prima del deploy. Per i componenti riutilizzati verifica anche le dimensioni mobili e la modalità scura. Le regole di base possono restare globali, ma gli stili che appartengono a un componente dovrebbero essere riconoscibili e verificabili localmente.
+
 **Fonti**
 
 - [MDN — Cascade](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascade/Cascade)
@@ -2765,6 +2820,11 @@ Un adapter può isolare una chiamata esterna; un test di integrazione verifica i
 ## Refactoring graduale
 
 Prima di intervenire, proteggi il comportamento con un test. Scegli una modifica piccola e verificabile. Un monolite ben strutturato può essere più semplice di microservizi che introducono contratti e guasti distribuiti.
+
+
+## Un confine concreto per isolare una dipendenza
+
+Immagina una funzione che salva un ordine e invia immediatamente un messaggio a un sistema remoto. Se la chiamata fallisce, potresti non sapere quale parte è stata completata. Separare l'accesso alla rete da quello al database rende più chiari i test, ma il confine deve avere un contratto preciso: quali dati riceve, quali errori restituisce e che cosa può essere ripetuto? Inizia da un test di caratterizzazione che copra il comportamento attuale. Introduci un adapter per il sistema remoto e verifica che il risultato visibile non cambi. Solo dopo valuta refactoring ulteriori. L'obiettivo non è moltiplicare classi o layer, ma ridurre il numero di ragioni per cui una modifica in un modulo richiede di toccarne molti altri.
 
 **Fonti**
 
@@ -2799,6 +2859,11 @@ Quando il tempo cambia, chiarisci quali funzioni sono indispensabili. Saltare te
 
 Rendi visibili gli impedimenti non appena emergono: ambienti non disponibili, requisiti incompleti, sistemi esterni in errore. Aggiorna le previsioni quando cambiano i fatti, anziché difendere la prima stima.
 
+
+## Separare ambito, data e livello di rischio
+
+Quando il tempo è fissato, il lavoro non si riduce automaticamente: bisogna ridiscutere l'ambito e la qualità richiesta. Per una migrazione ecommerce elenca i flussi indispensabili, come catalogo, ordini, pagamenti e redirect, poi distingue quelli che possono essere rimandati senza rompere il servizio. Una data stimata senza accesso ai sistemi esterni o senza un ambiente di test contiene un'incertezza non risolta. Documenta le dipendenze e assegna a ciascuna una verifica concreta. Se il tempo diminuisce, conserva i controlli che proteggono la correttezza dei dati e riduci funzionalità secondarie. Un rilascio limitato ma verificato è spesso preferibile a un rilascio completo che non permette di riconoscere errori o tornare indietro. Aggiorna le stime quando emergono informazioni nuove.
+
 **Fonti**
 
 - [Atlassian — Agile estimation](https://www.atlassian.com/agile/project-management/estimation)
@@ -2831,6 +2896,11 @@ Proteggi con test i componenti che cambiano spesso, documenta le decisioni impor
 ## Indicatori utili
 
 Tempi di risoluzione dei bug, frequenza delle regressioni e tempi di review possono aiutare a capire dove intervenire. Non trasformare il numero di righe in un obiettivo: meno codice non significa necessariamente meno complessità.
+
+
+## Misurare il rischio del debito tecnico
+
+Un modulo lungo non è necessariamente il più rischioso del progetto. Una piccola funzione invocata da molti servizi può avere un costo di modifica maggiore se il contratto non è documentato. Mappa quindi dipendenze, frequenza delle modifiche, regressioni e tempo necessario a verificare una nuova release. Se un componente genera errori ricorrenti, prepara prima test che descrivano il comportamento desiderato e poi riduci i punti in cui lo stato viene modificato. Un refactoring ampio senza criteri di uscita può introdurre nuovo debito sotto un nome diverso. Definisci un risultato misurabile, per esempio meno duplicazioni nella logica o una regressione riproducibile ora coperta da test. Non trasformare il numero di righe o di classi in un indicatore isolato della manutenibilità.
 
 **Fonti**
 
@@ -2865,6 +2935,11 @@ Route-based code splitting e import dinamici rimandano funzionalità non necessa
 
 Il prerendering rende disponibile il contenuto importante senza aspettare tutta l'esecuzione React. Per valutare l'intervento misura tempi di rendering, LCP e INP, non soltanto i kilobyte generati dalla build.
 
+
+## Separare il peso scaricato dal costo eseguito
+
+Un bundle può essere piccolo dopo la compressione ma comunque costoso da analizzare ed eseguire su un dispositivo lento. Nel pannello Performance confronta attività del main thread, tempi di scripting e momenti in cui l'utente prova a interagire. Se una libreria viene usata soltanto su una pagina secondaria, prova l'import dinamico e verifica l'effetto sulla navigazione iniziale. Il caricamento differito introduce comunque un'attesa quando quella funzione viene richiesta: misura entrambi i percorsi e mostra uno stato di caricamento comprensibile. Nel caso di contenuti SEO importanti, l'HTML prerenderizzato riduce la dipendenza dal lavoro JavaScript del browser, ma non elimina la necessità di ottimizzare gli script. Considera anche il costo di download delle immagini e la latenza del server prima di attribuire tutto il ritardo al bundle.
+
 **Fonti**
 
 - [web.dev — JavaScript performance](https://web.dev/learn/performance/optimize-javascript)
@@ -2897,6 +2972,11 @@ Cambia una variabile per volta. Log, metriche e tracce possono aiutare a individ
 ## Chiudere il ciclo
 
 Inserisci un test di regressione, controlla scenari vicini e conserva le informazioni diagnostiche utili. Una patch non è completa se non sai dimostrare che il difetto è stato corretto.
+
+
+## Riprodurre una race condition
+
+Una race condition può sparire quando inserisci un breakpoint: fermando il programma modifichi l'ordine temporale delle operazioni. Per indagarla registra identificativi, timestamp e sequenza degli eventi invece di usare soltanto console.log senza struttura. Costruisci un test che avvii due richieste concorrenti e verifichi quale stato deve prevalere, includendo il caso in cui la seconda termini prima della prima. Se modifichi contemporaneamente retry, timeout e logica di salvataggio, non saprai quale intervento ha eliminato il difetto. Cambia una variabile per volta e conserva la versione che riproduce l'errore. La correzione va confermata anche in un ambiente simile alla produzione, dove rete e carico possono produrre tempi molto diversi da localhost.
 
 **Fonti**
 
@@ -3043,6 +3123,11 @@ Una funzione calcola il prezzo finale del carrello. Spiegandone il flusso si not
 
 La tecnica aiuta a formulare ipotesi, non sostituisce log, test o profiler. Dopo aver individuato il passaggio sospetto, prepara un caso minimo che distingua comportamento corretto ed errato.
 
+
+## Una sequenza di domande utile
+
+Quando descrivi una funzione alla paperella, non limitarti a raccontare il codice nell'ordine in cui appare. Comincia dal contratto: quale input è valido e quale risultato deve essere restituito? Poi indica le trasformazioni e gli effetti esterni. Se il bug compare soltanto con una lista vuota, spiega perché quel caso è stato considerato oppure escluso. Questa tecnica aiuta a individuare ipotesi nascoste, ma non offre da sola una prova della correzione. Dopo la spiegazione prepara un test con input minimo che riproduca l'errore e verifica che la modifica non rompa il comportamento normale. Se il guasto dipende da concorrenza o rete, aggiungi osservabilità e simulazioni specifiche: una spiegazione orale non sostituisce il controllo degli eventi reali.
+
 **Approfondimenti**
 
 - [Chrome DevTools — debugging JavaScript](https://developer.chrome.com/docs/devtools/javascript/)
@@ -3074,6 +3159,11 @@ Dichiara le versioni delle dipendenze e usa build riproducibili. La presenza di 
 ## Rilasciare con controllo
 
 Esegui test, controlli delle route e verifiche di configurazione. Dopo il deploy monitora errori e latenze e prevedi un rollback. Una procedura ripetibile è più affidabile di modifiche manuali dell'ultimo minuto.
+
+
+## Una checklist per un deploy fallito
+
+Supponi che l'applicazione compili, ma la prima richiesta a un'API ritorni 401. Prima di cambiare codice, verifica quale ambiente ha eseguito il deploy e se la credenziale usata in quel contesto è valida per l'endpoint. Una variabile disponibile durante la build non è necessariamente disponibile in runtime; allo stesso modo una variabile Vite destinata al browser non deve contenere segreti. Registra il tipo di errore e il contesto della richiesta, evitando di mostrare token e valori sensibili nei log. Se invece la pagina restituisce 404 quando la apri direttamente, controlla il routing del server e la presenza del documento HTML prerenderizzato. Sono due guasti diversi: trattarli insieme porterebbe a tentativi inutili. Una volta risolta la causa, documenta una verifica automatica che fallisca prima del rilascio.
 
 **Fonti**
 
@@ -3117,6 +3207,11 @@ Lo snippet assume che l'endpoint restituisca JSON valido in caso di successo. Se
 Un componente dovrebbe distinguere caricamento, errore e risultato disponibile. Se la persona cambia pagina o query mentre la richiesta è in corso, annulla o ignora la risposta precedente quando non è più pertinente. Evita che una risposta lenta sovrascriva dati più recenti.
 
 Per approfondire leggi [Promise e async/await](/blog/javascript-promise-async-await) e [le richieste obsolete con AbortController](/blog/fetch-abortcontroller-risposte-obsolete).
+
+
+## Attenzione agli errori di parsing
+
+Una Promise di fetch può risolversi anche quando il server restituisce un errore HTTP: devi controllare response.ok o lo status prima di utilizzare i dati. Una risposta 204, per esempio, può non avere un corpo JSON da interpretare. Nel frontend considera quindi tre percorsi distinti: risposta valida, HTTP non riuscito e problema di rete o parsing. Un test con dati fittizi evita che l'interfaccia mostri undefined durante il caricamento. Se l'utente cambia rapidamente ricerca, collega la risposta alla richiesta che l'ha generata oppure annulla quella precedente. La parte asincrona non è soltanto scrivere await, ma progettare cosa vede la persona mentre l'operazione è ancora incerta.
 
 **Fonti**
 
