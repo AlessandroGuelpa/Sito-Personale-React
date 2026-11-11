@@ -105,7 +105,6 @@ export default function BlogPage() {
               key={item.slug}
               to={blogHubPath(item.slug)}
               className="block border border-zinc-200 rounded-xl p-5 hover:border-violet-500 dark:border-zinc-800 dark:hover:border-violet-500"
-              aria-current={hub?.slug === item.slug ? "page" : undefined}
             >
               <h3 className="font-bold">{item.title}</h3>
               <p className="text-sm leading-relaxed mt-2 text-zinc-600 dark:text-zinc-400">{item.description}</p>
