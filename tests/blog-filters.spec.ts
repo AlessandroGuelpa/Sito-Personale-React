@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const articleTitle = "JavaScript: salvare dati nel browser con localStorage";
+const articleTitle = "localStorage: persistenza e sicurezza nel browser";
 
 test("the archive offers five categories and combines them with search", async ({ page }) => {
   await page.goto("/blog");
