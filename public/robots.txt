@@ -1,4 +1,3 @@
-# /robots.txt
 User-agent: *
 Allow: /
 Disallow: /admin/
@@ -6,8 +5,7 @@ Disallow: /api/private/
 Disallow: /drafts/
 Disallow: /404
 Disallow: /500
-# Evita duplicati di query se lo schema non porta valore SEO
-Disallow: /*?*
-# Rimuovi la riga sopra se usi filtri faceted essenziali
 
+# Pagine di archivio e percorsi tematici sono raggiungibili tramite URL puliti.
+# Filtri e ricerche del blog mantengono il canonical della pagina di archivio.
 Sitemap: https://alessandroguelpa.it/sitemap.xml

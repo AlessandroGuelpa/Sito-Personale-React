@@ -37,6 +37,9 @@ export default function App() {
         <Routes>
           <Route element={<IndexPage />} path="/" />
           <Route element={<BlogPage />} path="/blog" />
+          <Route element={<BlogPage />} path="/blog/page/:page" />
+          <Route element={<BlogPage />} path="/blog/temi/:hub" />
+          <Route element={<BlogPage />} path="/blog/temi/:hub/page/:page" />
           <Route element={<BlogPostPage />} path="/blog/:id" />
           <Route element={<ProjectPage />} path="/project" />
           <Route element={<ContactPage />} path="/contact" />
