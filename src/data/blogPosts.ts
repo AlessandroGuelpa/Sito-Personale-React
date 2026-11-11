@@ -3301,7 +3301,7 @@ Un numero intero risponde a metodi come next, mentre una stringa supporta trasfo
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://www.ruby-lang.org/en/documentation/)`,
+- [Ruby — Documentazione del linguaggio](https://www.ruby-lang.org/en/documentation/)`,
   },
   {
     id: "rails-mvc-in-tre-minuti",
@@ -3344,7 +3344,7 @@ Immagina una pagina che mostra gli ordini di un utente. Il controller identifica
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/getting_started.html)`,
+- [Rails Guides — Getting Started](https://guides.rubyonrails.org/getting_started.html)`,
   },
   {
     id: "javascript-closure-spiegate-bene",
@@ -3391,7 +3391,7 @@ Una funzione che incrementa un contatore può mantenere privata la variabile cou
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures)`,
+- [MDN — Closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures)`,
   },
   {
     id: "web-audio-primo-oscillatore-audiocontext",
@@ -3434,7 +3434,7 @@ Per verificare un oscillatore nel browser, collega la sorgente a un GainNode e p
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext)`,
+- [MDN — AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext)`,
   },
   {
     id: "sonic-pi-live-loop-cuore-del-live-coding",
@@ -3521,7 +3521,7 @@ Immagina un'operazione che filtra numeri e riutilizza la regola in due punti. Un
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Proc.html)`,
+- [Ruby Core — Proc](https://docs.ruby-lang.org/en/master/Proc.html)`,
   },
   {
     id: "rails-activerecord-le-basi",
@@ -3566,7 +3566,7 @@ Scrivere where non significa necessariamente che una query sia già stata esegui
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_querying.html)`,
+- [Rails Guides — Active Record Querying](https://guides.rubyonrails.org/active_record_querying.html)`,
   },
   {
     id: "javascript-promise-async-await",
@@ -3611,7 +3611,7 @@ Supponi di richiedere in parallelo informazioni su un prodotto e un elenco di ca
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)`,
+- [MDN — Async Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)`,
   },
   {
     id: "web-audio-oscillatore-forme-onda",
@@ -3651,7 +3651,7 @@ Prepara quattro pulsanti che usano la stessa nota e lo stesso inviluppo, cambian
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode)`,
+- [MDN — OscillatorNode](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode)`,
   },
   {
     id: "sonic-pi-sample-libreria-integrata",
@@ -3735,7 +3735,7 @@ Prendi un elenco di importi. Con map puoi convertire ciascun importo in centesim
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Enumerable.html)`,
+- [Ruby Core — Enumerable](https://docs.ruby-lang.org/en/master/Enumerable.html)`,
   },
   {
     id: "rails-migrazioni-versionare-il-database",
@@ -3782,7 +3782,7 @@ Aggiungere una colonna è spesso semplice; rinominarne una usata dal codice già
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_migrations.html)`,
+- [Rails Guides — Active Record Migrations](https://guides.rubyonrails.org/active_record_migrations.html)`,
   },
   {
     id: "javascript-event-loop-come-funziona",
@@ -3823,7 +3823,7 @@ Un setTimeout a zero millisecondi non interrompe il codice sincrono che sta già
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)`,
+- [MDN — Execution Model](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)`,
   },
   {
     id: "web-audio-gainnode-volume-envelope",
@@ -3868,7 +3868,7 @@ Se interrompi bruscamente un segnale mentre la forma d'onda ha ampiezza diversa 
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/GainNode)`,
+- [MDN — GainNode](https://developer.mozilla.org/en-US/docs/Web/API/GainNode)`,
   },
   {
     id: "sonic-pi-use-synth-scegliere-sintetizzatori",
@@ -3953,7 +3953,7 @@ Un Hash di configurazione può usare simboli come :timeout o :host perché rappr
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Symbol.html)`,
+- [Ruby Core — Symbol](https://docs.ruby-lang.org/en/master/Symbol.html)`,
   },
   {
     id: "rails-associazioni-has-many-belongs-to",
@@ -4001,7 +4001,7 @@ Considera un ordine con più righe. Una associazione has_many rende comodo esplo
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/association_basics.html)`,
+- [Rails Guides — Association Basics](https://guides.rubyonrails.org/association_basics.html)`,
   },
   {
     id: "javascript-metodi-array-essenziali",
@@ -4045,7 +4045,7 @@ Per trovare il primo elemento che soddisfa una condizione usa find, non filter s
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`,
+- [MDN — Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`,
   },
   {
     id: "web-audio-grafo-nodi-connect",
@@ -4085,7 +4085,7 @@ Un effetto collegato in parallelo alla sorgente può creare due percorsi, uno di
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode/connect)`,
+- [MDN — AudioNode.connect](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode/connect)`,
   },
   {
     id: "sonic-pi-with-fx-effetti",
@@ -4178,7 +4178,7 @@ Se scrivi Hash.new([]), più chiavi mancanti possono restituire lo stesso array 
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Hash.html)`,
+- [Ruby Core — Hash](https://docs.ruby-lang.org/en/master/Hash.html)`,
   },
   {
     id: "rails-validazioni-dati-puliti",
@@ -4225,7 +4225,7 @@ Supponi che due richieste provino a registrare contemporaneamente lo stesso iden
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_validations.html)`,
+- [Rails Guides — Active Record Validations](https://guides.rubyonrails.org/active_record_validations.html)`,
   },
   {
     id: "javascript-destructuring",
@@ -4273,7 +4273,7 @@ Considera la risposta di un endpoint che dovrebbe restituire un oggetto con sett
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring)`,
+- [MDN — Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring)`,
   },
   {
     id: "web-audio-biquadfilter",
@@ -4319,7 +4319,7 @@ Per confrontare lowpass e highpass, usa una sorgente ricca di armoniche e mantie
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode)`,
+- [MDN — BiquadFilterNode](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode)`,
   },
   {
     id: "sonic-pi-scale-accordi",
@@ -4415,7 +4415,7 @@ Creare metodi con define_method può essere utile quando molte proprietà condiv
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Module.html)`,
+- [Ruby Core — Module](https://docs.ruby-lang.org/en/master/Module.html)`,
   },
   {
     id: "rails-api-only-mode",
@@ -4467,7 +4467,7 @@ Un'API che restituisce JSON deve offrire più della serializzazione di un model.
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/api_app.html)`,
+- [Rails Guides — Api App](https://guides.rubyonrails.org/api_app.html)`,
   },
   {
     id: "javascript-moduli-es-import-export",
@@ -4510,7 +4510,7 @@ Importare un modulo può eseguire il codice presente al suo livello superiore. S
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)`,
+- [MDN — Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)`,
   },
   {
     id: "web-audio-convolver-riverbero",
@@ -4555,7 +4555,7 @@ ConvolverNode elabora il segnale usando un AudioBuffer che rappresenta una rispo
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode)`,
+- [MDN — ConvolverNode](https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode)`,
   },
   {
     id: "sonic-pi-drum-machine",
@@ -4655,7 +4655,7 @@ Un payload API potrebbe contenere un hash con status e data. Un pattern può ver
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/syntax/pattern_matching_rdoc.html)`,
+- [Ruby Core — Pattern Matching](https://docs.ruby-lang.org/en/master/syntax/pattern_matching_rdoc.html)`,
   },
   {
     id: "rails-consumare-api-esterne",
@@ -4705,7 +4705,7 @@ Interrogare un provider esterno può funzionare durante una demo e produrre dati
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_job_basics.html)`,
+- [Rails Guides — Active Job Basics](https://guides.rubyonrails.org/active_job_basics.html)`,
   },
   {
     id: "javascript-fetch-api",
@@ -4752,7 +4752,7 @@ Un endpoint può restituire uno status di successo ma nessun JSON, ad esempio un
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)`,
+- [MDN — Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)`,
   },
   {
     id: "web-audio-metronomo-preciso",
@@ -4804,7 +4804,7 @@ Un timer JavaScript non è una sorgente temporale perfetta: il main thread può 
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/currentTime)`,
+- [MDN — CurrentTime](https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/currentTime)`,
   },
   {
     id: "sonic-pi-randomizzazione-controllata",
@@ -4892,7 +4892,7 @@ Due oggetti possono esporre entrambi un metodo calculate e comportarsi diversame
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://www.ruby-lang.org/en/documentation/)`,
+- [Ruby — Documentazione del linguaggio](https://www.ruby-lang.org/en/documentation/)`,
   },
   {
     id: "rails-background-job-active-job",
@@ -4940,7 +4940,7 @@ Un job che invia un evento a un gestionale potrebbe essere interrotto dopo la ch
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_job_basics.html)`,
+- [Rails Guides — Active Job Basics](https://guides.rubyonrails.org/active_job_basics.html)`,
   },
   {
     id: "javascript-this-binding",
@@ -4988,7 +4988,7 @@ Un oggetto può esporre un metodo increment che usa this.value. Se passi diretta
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)`,
+- [MDN — This](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)`,
   },
   {
     id: "web-audio-drum-machine-browser",
@@ -5037,7 +5037,7 @@ Per la cassa di una drum machine puoi caricare e decodificare il sample una volt
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode)`,
+- [MDN — AudioBufferSourceNode](https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode)`,
   },
   {
     id: "sonic-pi-sync-cue",
@@ -5135,7 +5135,7 @@ Una classe può includere due moduli che definiscono metodi con lo stesso nome. 
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Module.html)`,
+- [Ruby Core — Module](https://docs.ruby-lang.org/en/master/Module.html)`,
   },
   {
     id: "rails-hotwire-turbo",
@@ -5183,7 +5183,7 @@ Quando Turbo sostituisce il contenuto della pagina, gli script che erano legati 
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://turbo.hotwired.dev/handbook/introduction)`,
+- [Documentazione tecnica — Introduction](https://turbo.hotwired.dev/handbook/introduction)`,
   },
   {
     id: "javascript-prototipi-ereditarieta",
@@ -5229,7 +5229,7 @@ Se un oggetto eredita una proprietà dal prototipo e poi definisce una propriet�
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)`,
+- [MDN — Inheritance And The Prototype Chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)`,
   },
   {
     id: "web-audio-sequencer-step",
@@ -5279,7 +5279,7 @@ Un sequencer a sedici step può rappresentare una battuta suddivisa in sedicesim
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Advanced_techniques)`,
+- [MDN — Advanced Techniques](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Advanced_techniques)`,
   },
   {
     id: "sonic-pi-bassline-tb303",
@@ -5373,7 +5373,7 @@ Una chiamata HTTP può fallire per timeout, autorizzazione o dati non validi. Me
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/syntax/exceptions_rdoc.html)`,
+- [Ruby Core — Exceptions](https://docs.ruby-lang.org/en/master/syntax/exceptions_rdoc.html)`,
   },
   {
     id: "rails-stimulus-js-leggero",
@@ -5424,7 +5424,7 @@ Un controller Stimulus può gestire l'apertura di un pannello o il conteggio dei
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://stimulus.hotwired.dev/handbook/introduction)`,
+- [Documentazione tecnica — Introduction](https://stimulus.hotwired.dev/handbook/introduction)`,
   },
   {
     id: "javascript-debounce-throttle",
@@ -5470,7 +5470,7 @@ Immagina che l'utente digiti prima "rea" e poi "react". Il debounce può ridurre
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)`,
+- [MDN — RequestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)`,
   },
   {
     id: "web-audio-web-midi-api",
@@ -5516,7 +5516,7 @@ L'accesso ai dispositivi MIDI dipende dal supporto del browser, dal contesto sic
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API)`,
+- [MDN — Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API)`,
   },
   {
     id: "sonic-pi-slicing-campioni",
@@ -5618,7 +5618,7 @@ Quando una gem espone una classe pubblica, altre applicazioni iniziano a dipende
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubygems.org/make-your-own-gem/)`,
+- [Documentazione tecnica — Make Your Own Gem](https://guides.rubygems.org/make-your-own-gem/)`,
   },
   {
     id: "rails-caching-basi",
@@ -5665,7 +5665,7 @@ Immagina la scheda di un prodotto con prezzo e disponibilità. Se la cache usa u
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/caching_with_rails.html)`,
+- [Rails Guides — Caching With Rails](https://guides.rubyonrails.org/caching_with_rails.html)`,
   },
   {
     id: "javascript-generatori",
@@ -5717,7 +5717,7 @@ Un generator può attraversare una sequenza di grandi dimensioni restituendo un 
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*)`,
+- [MDN — Function*](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*)`,
   },
   {
     id: "web-audio-analyser-visualizzare",
@@ -5766,7 +5766,7 @@ AnalyserNode permette di leggere valori di frequenza o campioni nel dominio temp
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode)`,
+- [MDN — AnalyserNode](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode)`,
   },
   {
     id: "sonic-pi-generative-ring-tick",
@@ -5864,7 +5864,7 @@ Un test che si aspetta una chiamata a un metodo privato può fallire dopo un ref
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://rspec.info/documentation/)`,
+- [RSpec — Documentazione ufficiale](https://rspec.info/documentation/)`,
   },
   {
     id: "rails-service-objects",
@@ -5914,7 +5914,7 @@ Un servizio che sincronizza un ordine deve chiarire se restituisce l'ordine aggi
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_callbacks.html)`,
+- [Rails Guides — Active Record Callbacks](https://guides.rubyonrails.org/active_record_callbacks.html)`,
   },
   {
     id: "javascript-proxy-reflect",
@@ -5966,7 +5966,7 @@ Un Proxy può registrare gli accessi a un oggetto o applicare una logica di vali
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)`,
+- [MDN — Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)`,
   },
   {
     id: "web-audio-audioworklet",
@@ -6022,7 +6022,7 @@ Un AudioWorkletProcessor esegue elaborazione custom in un contesto separato dal 
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet)`,
+- [MDN — AudioWorklet](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet)`,
   },
   {
     id: "sonic-pi-midi-controllo",
@@ -6117,7 +6117,7 @@ Un calcolo CPU-bound può trarre beneficio dal parallelismo, ma la suddivisione 
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Ractor.html)`,
+- [Ruby Core — Ractor](https://docs.ruby-lang.org/en/master/Ractor.html)`,
   },
   {
     id: "rails-problema-n-piu-1",
@@ -6164,7 +6164,7 @@ In una pagina di ordini con il nome del cliente, senza preload il caricamento pu
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_record_querying.html)`,
+- [Rails Guides — Active Record Querying](https://guides.rubyonrails.org/active_record_querying.html)`,
   },
   {
     id: "javascript-intl-formattazione",
@@ -6210,7 +6210,7 @@ Un importo archiviato come 1234.50 non dovrebbe essere inviato al database nella
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)`,
+- [MDN — Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)`,
   },
   {
     id: "web-audio-tone-js",
@@ -6258,7 +6258,7 @@ Tone.js fornisce una struttura musicale utile per sincronizzare pattern, synth e
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://tonejs.github.io/)`,
+- [Documentazione tecnica — Guide](https://tonejs.github.io/)`,
   },
   {
     id: "sonic-pi-use-bpm-tempo",
@@ -6348,7 +6348,7 @@ Nella trasformazione users.map(&:name), la scorciatoia evita di scrivere un bloc
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Symbol.html)`,
+- [Ruby Core — Symbol](https://docs.ruby-lang.org/en/master/Symbol.html)`,
   },
   {
     id: "rails-strong-parameters",
@@ -6398,7 +6398,7 @@ Supponi che un form permetta di cambiare indirizzo e telefono di un utente. Stro
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/action_controller_overview.html)`,
+- [Rails Guides — Action Controller Overview](https://guides.rubyonrails.org/action_controller_overview.html)`,
   },
   {
     id: "javascript-web-workers",
@@ -6444,7 +6444,7 @@ Spostare un calcolo in un worker libera il main thread dall'elaborazione pesante
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)`,
+- [MDN — Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)`,
   },
   {
     id: "web-audio-audiobuffersource-campioni",
@@ -6492,7 +6492,7 @@ Un AudioBuffer è un insieme di dati audio già decodificati, quindi occupa memo
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode)`,
+- [MDN — AudioBufferSourceNode](https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode)`,
   },
   {
     id: "sonic-pi-registrare-esportare",
@@ -6597,7 +6597,7 @@ Se confronti prodotti per prezzo, devi decidere cosa accade quando uno dei due p
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Comparable.html)`,
+- [Ruby Core — Comparable](https://docs.ruby-lang.org/en/master/Comparable.html)`,
   },
   {
     id: "rails-routing-restful",
@@ -6647,7 +6647,7 @@ Una route per aggiornare una risorsa usa convenzioni diverse da quella destinata
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/routing.html)`,
+- [Rails Guides — Routing](https://guides.rubyonrails.org/routing.html)`,
   },
   {
     id: "javascript-optional-chaining-nullish",
@@ -6693,7 +6693,7 @@ In un form, il valore 0 può essere una quantità valida e false può rappresent
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)`,
+- [MDN — Nullish Coalescing](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)`,
   },
   {
     id: "web-audio-chrome-music-lab-lezioni",
@@ -6730,7 +6730,7 @@ Un esperimento musicale visivo è utile quando collega un gesto a una conseguenz
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://musiclab.chromeexperiments.com/)`,
+- [Documentazione tecnica — Guide](https://musiclab.chromeexperiments.com/)`,
   },
   {
     id: "sonic-pi-ambient-pad-riverbero",
@@ -6831,7 +6831,7 @@ Una sostituzione gsub può sembrare corretta su una stringa semplice e fallire c
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/String.html)`,
+- [Ruby Core — String](https://docs.ruby-lang.org/en/master/String.html)`,
   },
   {
     id: "rails-active-storage-allegati",
@@ -6878,7 +6878,7 @@ Un file allegato può avere un'estensione plausibile e contenere dati diversi da
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://guides.rubyonrails.org/active_storage_overview.html)`,
+- [Rails Guides — Active Storage Overview](https://guides.rubyonrails.org/active_storage_overview.html)`,
   },
   {
     id: "javascript-set-e-map",
@@ -6925,7 +6925,7 @@ Due oggetti JavaScript distinti con lo stesso campo id non vengono trattati da S
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)`,
+- [MDN — Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)`,
   },
   {
     id: "web-audio-generative-browser",
@@ -6980,7 +6980,7 @@ Un generatore che sceglie note completamente a caso può produrre intervalli poc
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)`,
+- [MDN — Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)`,
   },
   {
     id: "sonic-pi-brano-techno-passo-passo",
@@ -7090,7 +7090,7 @@ Per confrontare due implementazioni devi usare lo stesso input e ridurre il rumo
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Benchmark.html)`,
+- [Ruby Core — Benchmark](https://docs.ruby-lang.org/en/master/Benchmark.html)`,
   },
   {
     id: "rails-full-text-search-postgres",
@@ -7137,7 +7137,7 @@ Una ricerca full-text non confronta soltanto le stringhe carattere per carattere
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://www.postgresql.org/docs/current/textsearch-intro.html)`,
+- [PostgreSQL — Textsearch Intro](https://www.postgresql.org/docs/current/textsearch-intro.html)`,
   },
   {
     id: "javascript-immutabilita-structuredclone",
@@ -7184,7 +7184,7 @@ Una copia profonda può proteggere una struttura da mutazioni accidentali, ma no
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone)`,
+- [MDN — StructuredClone](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone)`,
   },
   {
     id: "web-audio-synth-polifonico",
@@ -7241,7 +7241,7 @@ In un sintetizzatore polifonico ogni nota può avere la propria sorgente e il pr
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)`,
+- [MDN — Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)`,
   },
   {
     id: "sonic-pi-didattica-codice-e-musica",
@@ -7334,7 +7334,7 @@ Una catena con then è facile da seguire quando ogni passaggio restituisce un va
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://docs.ruby-lang.org/en/master/Method.html)`,
+- [Ruby Core — Method](https://docs.ruby-lang.org/en/master/Method.html)`,
   },
   {
     id: "rails-request-specs-testare-api",
@@ -7391,7 +7391,7 @@ Un endpoint POST può restituire 201 senza avere scritto correttamente tutti i d
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://rspec.info/documentation/)`,
+- [RSpec — Documentazione ufficiale](https://rspec.info/documentation/)`,
   },
   {
     id: "javascript-localstorage-persistenza",
@@ -7438,7 +7438,7 @@ Un valore scritto in localStorage mesi prima può avere una struttura diversa da
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)`,
+- [MDN — LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)`,
   },
   {
     id: "web-audio-delay-feedback",
@@ -7488,7 +7488,7 @@ Collegare l'uscita di un delay al suo ingresso tramite un gain produce ripetizio
 
 **Documentazione**
 
-- [Riferimento ufficiale](https://developer.mozilla.org/en-US/docs/Web/API/DelayNode)`,
+- [MDN — DelayNode](https://developer.mozilla.org/en-US/docs/Web/API/DelayNode)`,
   },
   {
     id: "sonic-pi-e-web-audio-stessa-idea",
