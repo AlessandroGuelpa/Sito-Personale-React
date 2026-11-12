@@ -22,7 +22,9 @@ export function ProjectCard({
             decoding="async"
             height={824}
             loading="lazy"
-            src="/projects/shopify-mapper.webp"
+            src="/projects/shopify-mapper-800.webp"
+            srcSet="/projects/shopify-mapper-400.webp 400w, /projects/shopify-mapper-800.webp 800w, /projects/shopify-mapper.webp 1200w"
+            sizes="(min-width: 1280px) 350px, (min-width: 768px) 50vw, calc(100vw - 40px)"
             width={1200}
           />
         ) : project.cover === "ballerini" ? (
@@ -31,7 +33,9 @@ export function ProjectCard({
             decoding="async"
             height={760}
             loading="lazy"
-            src="/balleriniesapori.com.webp"
+            src="/balleriniesapori-800.webp"
+            srcSet="/balleriniesapori-400.webp 400w, /balleriniesapori-800.webp 800w, /balleriniesapori.com.webp 1200w"
+            sizes="(min-width: 1280px) 350px, (min-width: 768px) 50vw, calc(100vw - 40px)"
             width={1200}
           />
         ) : project.cover === "vehrt" ? (

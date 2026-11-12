@@ -3,7 +3,6 @@ import { PassThrough } from "node:stream";
 import { renderToPipeableStream } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import { HelmetProvider, type HelmetServerState } from "react-helmet-async";
-import { MotionConfig } from "framer-motion";
 
 import App from "./App";
 
@@ -35,9 +34,7 @@ export function render(
     const stream = renderToPipeableStream(
       <HelmetProvider context={context}>
         <StaticRouter future={{ v7_relativeSplatPath: true }} location={url}>
-          <MotionConfig reducedMotion="user">
-            <App />
-          </MotionConfig>
+          <App />
         </StaticRouter>
       </HelmetProvider>,
       {

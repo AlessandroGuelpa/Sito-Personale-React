@@ -128,16 +128,5 @@ export default defineConfig({
   ssr: { noExternal: ["react-helmet-async"] },
   build: {
     manifest: true,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (
-            id.includes("node_modules/framer-motion") ||
-            id.includes("node_modules/motion-")
-          )
-            return "vendor-motion";
-        },
-      },
-    },
   },
 });

@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { MotionConfig } from "framer-motion";
 
 import App from "./App.tsx";
 import "@/styles/globals.css";
@@ -14,9 +13,7 @@ const app = (
       <BrowserRouter
         future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
       >
-        <MotionConfig reducedMotion="user">
-          <App />
-        </MotionConfig>
+        <App />
       </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>

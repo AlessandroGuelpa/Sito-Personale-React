@@ -1,5 +1,6 @@
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
+import Beasties from "beasties";
 process.env.NODE_ENV = "production";
 const { render } = await import("../dist-ssr/entry-server.js");
 
@@ -24,6 +25,18 @@ function pageKey(route) {
   if (route.startsWith("/blog/")) return "src/pages/blog/[id].tsx";
   return ({ "/": "src/pages/index.tsx", "/project": "src/pages/proj.tsx", "/about": "src/pages/about.tsx", "/contact": "src/pages/contact.tsx", "/blog": "src/pages/blog/index.tsx", "/sports": "src/pages/sports.tsx", "/vehrt": "src/pages/vehrt.tsx" })[route] ?? "src/pages/not-found.tsx";
 }
+// Inline styles used in the prerendered homepage; load the remaining CSS
+// asynchronously without changing how other routes receive their styles.
+const homeCriticalCss = new Beasties({
+  path: output,
+  publicPath: "/",
+  preload: "media",
+  noscriptFallback: true,
+  pruneSource: false,
+  compress: true,
+  fonts: false,
+  logLevel: "warn",
+});
 let homeBytes = 0;
 for (const route of [...routes, "/404"]) {
   const { html, head, attributes } = await render(route);
@@ -33,7 +46,10 @@ for (const route of [...routes, "/404"]) {
   // Preload only code needed by this page. Article code is never preloaded in home or archive.
   const existingJs = new Set(assetsFor("src/main.tsx").js);
   const preload = [...new Set(assets.js)].filter(file => !existingJs.has(file)).map(file => `<link rel="modulepreload" crossorigin href="/${file}">`).join("\n");
-  const document = template.replace('<html lang="it">', `<html ${attributes}>`).replace("<!--app-head-->", () => `${head}\n${css}\n${preload}`).replace("<!--app-html-->", () => html);
+  let document = template.replace('<html lang="it">', `<html ${attributes}>`).replace("<!--app-head-->", () => `${head}\n${css}\n${preload}`).replace("<!--app-html-->", () => html);
+  if (route === "/") {
+    document = await homeCriticalCss.process(document);
+  }
   const file = route === "/" ? "index.html" : `${route.slice(1)}.html`;
   await mkdir(path.dirname(path.join(output, file)), { recursive: true });
   await writeFile(path.join(output, file), document);

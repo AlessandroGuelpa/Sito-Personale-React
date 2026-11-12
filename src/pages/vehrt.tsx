@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import {
+  MotionConfig,
   motion,
   useMotionTemplate,
   useReducedMotion,
@@ -107,7 +108,8 @@ export default function VehrtPage() {
   }, [hash]);
 
   return (
-    <div className="vehrt-page" lang="en">
+    <MotionConfig reducedMotion="user">
+      <div className="vehrt-page" lang="en">
       <Helmet>
         <html data-vehrt="true" lang="en" />
         <title>{pageTitle}</title>
@@ -388,6 +390,7 @@ export default function VehrtPage() {
           </Link>
         </div>
       </footer>
-    </div>
+      </div>
+    </MotionConfig>
   );
 }
