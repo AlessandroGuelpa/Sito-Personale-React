@@ -15,7 +15,7 @@ Per la procedura completa leggere [docs/blog-publishing.md](docs/blog-publishing
 
 ## Stato
 
-Prossimo tema: 2
+Prossimo tema: 3
 
 ## Storico
 
@@ -75,6 +75,7 @@ La rotazione parte dal tema 1 già indicato nel registro precedente.
 | 2026-11-06 | 2026-11-06 | 3 — Spazio e Artemis | orion-controllo-termico-radiatori-vuoto | Orion: nel vuoto il calore non se ne va con una ventola | programmata |
 | 2026-11-09 | 2026-11-09 | 4 — Salvaguardia del pianeta | giardini-pioggia-deflusso-tetti | Dove va la pioggia del tetto? Un giardino può rallentarla | programmata |
 | 2026-11-11 | 2026-11-11 | 1 — Ingegneria generale | fatica-metalli-carichi-ciclici | Perché una staffa può cedere dopo migliaia di cicli | programmata |
+| 2026-11-13 | 2026-11-13 | 2 — Coding | react-key-liste-indice-stato | React key nelle liste: perché l’indice sposta lo stato tra le righe | programmata |
 
 Le nuove esecuzioni aggiungono una riga con origine `programmata` e uscita
 odierna. Una riga programmata già presente per la data locale impedisce un

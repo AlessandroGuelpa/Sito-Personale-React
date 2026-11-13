@@ -19,6 +19,86 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "react-key-liste-indice-stato",
+    title: "React key nelle liste: perché l’indice sposta lo stato tra le righe",
+    date: "2026-11-13",
+    category: "sviluppo-software",
+    hub: "react-frontend",
+    icon: "⚛️",
+    excerpt: "Una nota finisce sulla variante sbagliata dopo un riordino. Riproduci il bug delle key basate sull’indice e verifica quando una chiave stabile conserva lo stato.",
+    tags: ["React", "JavaScript", "Frontend", "State management"],
+    content: `
+Stai modificando le varianti di un prodotto in una lista React. Scrivi «Controllare etichetta» accanto alla variante Rossa e poi inverti l’ordine delle righe. I nomi seguono il nuovo ordine. La nota compare accanto alla variante Nera. Bastano due elementi per riprodurre il problema, anche senza richieste di rete.
+
+## Come l’indice lega lo stato alla posizione
+
+Se usi l’indice come \`key\`, React vede ancora la stessa sequenza di chiavi, \`0\` e \`1\`, dopo il riordino. Il componente che occupava il secondo posto rimane associato alla chiave \`1\`. Il nome cambia perché arriva dalle prop aggiornate. La nota rimane nello stato locale del componente che React ha riutilizzato. Anche inserire o cancellare una riga prima di quella modificata può produrre lo stesso effetto.
+
+## Un esempio con due varianti
+
+Questo esempio usa l’ID della variante come \`key\`. Ogni riga tiene la propria bozza in uno stato locale.
+
+\`\`\`jsx
+import { useState } from 'react';
+
+const variants = [
+  { id: 'v-101', name: 'Nera' },
+  { id: 'v-102', name: 'Rossa' },
+];
+
+function VariantRow({ variant }) {
+  const [note, setNote] = useState('');
+
+  return (
+    <li>
+      <label>
+        Nota per la variante {variant.name}
+        <input value={note} onChange={(event) => setNote(event.target.value)} />
+      </label>
+    </li>
+  );
+}
+
+export default function VariantNotes() {
+  const [reversed, setReversed] = useState(false);
+  const rows = reversed ? [...variants].reverse() : variants;
+
+  return (
+    <>
+      <button type="button" onClick={() => setReversed((current) => !current)}>
+        Inverti ordine
+      </button>
+      <ul>
+        {rows.map((variant) => (
+          <VariantRow key={variant.id} variant={variant} />
+        ))}
+      </ul>
+    </>
+  );
+}
+\`\`\`
+
+Per riprodurre il difetto, usa \`(variant, index)\` nella \`map\` e sostituisci \`key={variant.id}\` con \`key={index}\`. Scrivi una nota per la Rossa e premi **Inverti ordine**. La nota finisce accanto alla Nera, che ora occupa la seconda posizione. Ripeti la prova con l’ID e vedrai che la nota segue la Rossa al primo posto.
+
+## Quale ID usare per la chiave
+
+Scegli un valore stabile e univoco fra le righe della stessa lista. Metti la chiave sul componente restituito dalla \`map\`, qui \`VariantRow\`. Se la chiave è il nome della variante, correggere un refuso può ricreare la riga e svuotare la nota. \`Math.random()\` ha un effetto simile a ogni render, perché genera nuove chiavi anche quando i dati sono identici.
+
+Se la stessa variante può comparire due volte, per esempio in un carrello con due personalizzazioni, usa l’ID della singola riga di carrello. Se la riga nasce prima di ricevere un ID dal server, puoi assegnarle un identificatore locale al momento della creazione e mantenerlo come chiave anche dopo il salvataggio. Così la risposta del server può aggiornare i dati della riga senza azzerare un campo ancora in modifica.
+
+## Che cosa cambia quando filtri la lista
+
+Con una chiave stabile, la nota segue la variante finché React mantiene montata la riga. Se un filtro esclude la Rossa dal render, React smonta il componente. Quando togli il filtro, l’input riparte vuoto anche con lo stesso ID. Se devi recuperare la bozza, puoi conservarla in una mappa per ID nel componente che gestisce la lista. È un caso in cui [scegliere dove tenere lo stato in React](/blog/entanglement-quantistico-e-i-disastri-del-global-state) determina quanto a lungo resta disponibile una modifica.
+
+In un editor che consente riordino, rimozione e filtri, scrivi due note diverse e controlla i valori degli input dopo ciascuna operazione. Se il test verifica soltanto i nomi delle varianti, può passare anche quando la nota è sulla riga sbagliata.
+
+**Fonti**
+
+- [Documentazione React sulle chiavi nelle liste](https://react.dev/learn/rendering-lists)
+- [Documentazione React sulla conservazione e il reset dello stato](https://react.dev/learn/preserving-and-resetting-state)
+`,
+  },
+  {
     id: "fatica-metalli-carichi-ciclici",
     title: "Perché una staffa può cedere dopo migliaia di cicli",
     date: "2026-11-11",
