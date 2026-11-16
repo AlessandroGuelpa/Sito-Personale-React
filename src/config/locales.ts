@@ -47,6 +47,31 @@ export const translatedArticleSlugs = {
   "entanglement-quantistico-e-i-disastri-del-global-state":
     "react-local-shared-global-state",
   "web-audio-delay-feedback": "web-audio-delaynode-feedback",
+  "javascript-set-e-map": "javascript-set-map-equality",
+  "javascript-optional-chaining-nullish":
+    "javascript-optional-chaining-nullish-coalescing",
+  "javascript-closure-spiegate-bene": "javascript-closures-lexical-scope",
+  "javascript-fetch-api": "javascript-fetch-api-http-errors-timeouts",
+  "javascript-debounce-throttle": "javascript-debounce-vs-throttle",
+  "react-stato-derivato-carrello": "react-derived-state-cart-total",
+  "progressive-enhancement-funzione-base":
+    "progressive-enhancement-without-javascript",
+  "equazione-del-razzo-e-il-problema-del-bundle-da-830kb":
+    "reduce-initial-javascript-bundle-size",
+  "rails-activerecord-le-basi": "rails-active-record-models-queries",
+  "rails-associazioni-has-many-belongs-to":
+    "rails-associations-belongs-to-has-many",
+  "rails-validazioni-dati-puliti":
+    "rails-active-record-validations-database-constraints",
+  "rails-caching-basi": "rails-cache-keys-invalidation",
+  "rails-api-only-mode": "rails-api-only-json-endpoints",
+  "latenza-percentili-media-p99": "latency-percentiles-p95-p99",
+  "ghiaccio-lunare-risorsa-utilizzabile": "lunar-ice-extraction-and-use",
+  "kw-kwh-potenza-energia": "kilowatt-vs-kilowatt-hour",
+  "allunaggio-paracadute-propulsione": "lunar-landing-parachutes-propulsion",
+  "sonic-pi-sync-cue": "sonic-pi-sync-cue-live-loops",
+  "sonic-pi-primo-suono-play-sleep": "sonic-pi-play-sleep-first-notes",
+  "web-audio-convolver-riverbero": "web-audio-convolvernode-impulse-response",
 } as const;
 
 export const inventoryArticleRoutes = {
