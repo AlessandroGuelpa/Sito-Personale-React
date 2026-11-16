@@ -67,6 +67,7 @@ test("the English archive paginates, searches and links to the equivalent Italia
 
   await search.pressSequentially("metal fatigue");
   await expect(search).toBeFocused();
+  await expect(search).toHaveValue("metal fatigue");
   await expect(page).toHaveURL(/\/en\/blog\/page\/2\?q=metal\+fatigue$/);
   await expect(page.getByRole("article")).toHaveCount(1);
   await page

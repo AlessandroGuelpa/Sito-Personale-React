@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigationType,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 
 import DefaultLayout from "@/layouts/default";
 import NotFoundPage from "@/pages/not-found";
@@ -92,13 +98,21 @@ export function BlogArchive({
     page?: string;
   }>();
   const [params, setParams] = useSearchParams();
+  const { key: locationKey } = useLocation();
+  const isHistoryNavigation = useNavigationType() === "POP";
   const [hydrated, setHydrated] = useState(false);
+  const [draftQuery, setDraftQuery] = useState<string | null>(null);
   const resultsHeading = useRef<HTMLHeadingElement>(null);
   const hub = getBlogHub(hubSlug);
   const guide = hub ? BLOG_HUB_GUIDES[hub.slug] : undefined;
   // Static HTML represents the path. Apply query-string filters after hydration.
   useEffect(() => setHydrated(true), []);
   const query = hydrated ? params.get("q") || "" : "";
+  useEffect(() => {
+    setDraftQuery((draft) =>
+      isHistoryNavigation || draft === query ? null : draft,
+    );
+  }, [isHistoryNavigation, locationKey, query]);
   const tag = hydrated ? params.get("tag") || "" : "";
   const requestedCategory = hydrated ? params.get("category") : null;
   const category = isBlogCategory(requestedCategory) ? requestedCategory : "";
@@ -143,6 +157,13 @@ export function BlogArchive({
 
   function change(key: string, value: string) {
     const next = new URLSearchParams(params);
+
+    if (key === "q") {
+      setDraftQuery(value);
+    } else if (draftQuery !== null) {
+      if (draftQuery) next.set("q", draftQuery);
+      else next.delete("q");
+    }
     if (value) next.set(key, value);
     else next.delete(key);
     if (key === "category") next.delete("tag");
@@ -252,7 +273,7 @@ export function BlogArchive({
             id="blog-search"
             placeholder={copy.placeholder}
             type="search"
-            value={query}
+            value={draftQuery ?? query}
             onChange={(event) => change("q", event.target.value)}
           />
         </div>
@@ -312,7 +333,10 @@ export function BlogArchive({
             <button
               className="button-secondary mt-5"
               type="button"
-              onClick={() => setParams({})}
+              onClick={() => {
+                setDraftQuery(null);
+                setParams({});
+              }}
             >
               {copy.reset}
             </button>
