@@ -19,6 +19,46 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "polo-sud-lunare-ombre-energia-solare",
+    title: "Polo sud lunare: come le ombre cambiano l’autonomia delle batterie",
+    date: "2026-11-16",
+    category: "spazio",
+    hub: "scienza-passioni",
+    icon: "🌗",
+    excerpt: "Due siti lunari possono ricevere le stesse ore di luce e richiedere batterie diverse. Un esempio da 250 W mostra come contare ombre e ricariche.",
+    tags: ["Spazio", "Luna", "Artemis", "Energia solare", "Batterie"],
+    content: `
+Immagina due siti al polo sud lunare che ricevono entrambi luce per l’80% del tempo. Sul primo il Sole scompare per otto ore di fila. Sul secondo le stesse otto ore sono distribuite in quattro interruzioni brevi. Per un apparato alimentato da pannelli solari, quella differenza cambia quanta energia deve avere a disposizione quando entra in ombra.
+
+## Perché pochi metri cambiano l’illuminazione
+
+Vicino al polo sud il Sole resta basso sull’orizzonte e il rilievo proietta ombre lunghe. Una cresta può ricevere luce per molto tempo, mentre il fondo di un cratere vicino può restare in ombra permanente. È anche una delle ragioni per cui alcuni crateri possono [conservare ghiaccio lunare](/blog/ghiaccio-lunare-risorsa-utilizzabile).
+
+Per pianificare le operazioni di superficie nel contesto di Artemis, la NASA può simulare come cambiano luce e ombra usando la topografia misurata dall’altimetro laser LOLA del Lunar Reconnaissance Orbiter. Nei modelli NASA di alcuni siti polari, l’illuminazione viene valutata a quote diverse sopra il terreno. La posizione di un pannello è quindi descritta anche dalla sua altezza. E una struttura aggiunta sul posto può a sua volta fare ombra ai pannelli vicini.
+
+## Stessa percentuale di luce, batterie diverse
+
+Prendiamo due siti ipotetici osservati per 40 ore, con 32 ore illuminate ciascuno. In entrambi un apparato deve restare acceso a 250 W. Durante l’ombra assumiamo che la produzione solare scenda a zero.
+
+- **Sito A.** Otto ore consecutive di ombra richiedono 250 W × 8 h, cioè **2 kWh** di energia erogata all’apparato.
+- **Sito B.** Quattro ombre da due ore richiedono **0,5 kWh per intervallo**. Se la batteria recupera tutta quell’energia fra un’ombra e l’altra, deve coprire solo due ore alla volta.
+
+In entrambi i casi l’apparato consuma 2 kWh durante le ore al buio. Cambia la riserva utile necessaria fra una ricarica e l’altra. La distinzione fra [potenza in kW ed energia in kWh](/blog/kw-kwh-potenza-energia) aiuta a leggere i due requisiti della batteria. Deve sostenere il carico quando manca il Sole e avere autonomia fino alla ricarica.
+
+## Quando torna il Sole, quanto recuperi?
+
+Supponiamo che, con i pannelli illuminati, restino 500 W per ricaricare la batteria dopo aver alimentato l’apparato. In questo esempio ideale servirebbe un’ora per recuperare 0,5 kWh. Con appena mezz’ora di luce ne rientrerebbero 0,25 kWh. Per superare due ombre da due ore separate da quella mezz’ora, servirebbero quindi 0,75 kWh disponibili all’inizio della prima ombra.
+
+Per confrontare due posizioni partirei da una stima della produzione alla quota dei pannelli e da un profilo dei consumi. Userei un passo di calcolo abbastanza breve da distinguere le finestre di ricarica. Seguendo la carica della batteria attraverso tutti i periodi di ombra e di luce, includerei le perdite di conversione, la capacità utilizzabile al freddo e l’energia necessaria a eventuali riscaldatori. Il dato che cercherei alla fine è la carica minima raggiunta durante le operazioni previste.
+
+**Fonti**
+
+- [NASA — luce, ombra e ambiente del polo sud lunare](https://www.nasa.gov/reference/moonbase-environment/)
+- [NASA Scientific Visualization Studio — simulazioni dell’illuminazione al polo sud](https://svs.gsfc.nasa.gov/4930/)
+- [NASA Goddard — modelli topografici LOLA e illuminazione a quote diverse](https://pgda.gsfc.nasa.gov/products/78)
+`,
+  },
+  {
     id: "react-key-liste-indice-stato",
     title: "React key nelle liste: perché l’indice sposta lo stato tra le righe",
     date: "2026-11-13",
