@@ -9,6 +9,7 @@ import { SITE_URL } from "@/utils/seo";
 import { siteConfig } from "@/config/site";
 import { BLOG_HUBS, blogHubPath } from "@/config/blog-hubs";
 import {
+  blogRoots,
   inventoryArticleRoutes,
   portfolioRoutes,
   type SiteLanguage,
@@ -202,9 +203,14 @@ export default function IndexPage({ language }: { language: SiteLanguage }) {
         <ItalianBlogSections />
       ) : (
         <section aria-labelledby="writing-title" className="section-space">
-          <h2 className="section-title" id="writing-title">
-            Technical writing
-          </h2>
+          <div className="flex flex-wrap items-baseline justify-between gap-4">
+            <h2 className="section-title" id="writing-title">
+              Technical writing
+            </h2>
+            <Link className="text-link" to={blogRoots.en}>
+              All articles →
+            </Link>
+          </div>
           <div className="mt-8 border-t border-zinc-200 py-5 dark:border-zinc-800">
             <h3 className="text-xl font-bold">
               <Link className="text-link" to={inventoryArticleRoutes.en}>

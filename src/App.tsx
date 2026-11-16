@@ -13,6 +13,7 @@ import {
 
 const IndexPage = lazy(() => import("@/pages/index"));
 const BlogPage = lazy(() => import("@/pages/blog/index"));
+const EnglishBlogPage = lazy(() => import("@/pages/blog/en"));
 const BlogPostPage = lazy(() => import("@/pages/blog/[id]"));
 const AboutPage = lazy(() => import("@/pages/about"));
 const ProjectPage = lazy(() => import("@/pages/proj"));
@@ -66,6 +67,11 @@ export default function App() {
           <Route element={<BlogPage />} path="/blog/page/:page" />
           <Route element={<BlogPage />} path="/blog/temi/:hub" />
           <Route element={<BlogPage />} path="/blog/temi/:hub/page/:page" />
+          <Route element={<EnglishBlogPage />} path={blogRoots.en} />
+          <Route
+            element={<EnglishBlogPage />}
+            path={`${blogRoots.en}/page/:page`}
+          />
           <Route element={<BlogPostPage />} path={`${blogRoots.it}/:id`} />
           <Route
             element={<BlogPostPage language="en" />}

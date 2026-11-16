@@ -1,11 +1,11 @@
-import { inventoryArticleRoutes, portfolioRoutes } from "./locales";
+import { blogRoots, portfolioRoutes } from "./locales";
 
 export type SiteConfig = typeof siteConfig;
 
 export const englishNavigation = [
   { href: portfolioRoutes.projects.en, label: "Projects" },
   { href: portfolioRoutes.about.en, label: "About" },
-  { href: inventoryArticleRoutes.en, label: "Writing" },
+  { href: blogRoots.en, label: "Blog" },
   { href: "/vehrt", label: "VEHRT" },
 ];
 

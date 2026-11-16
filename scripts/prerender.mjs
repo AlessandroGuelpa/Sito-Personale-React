@@ -21,6 +21,7 @@ function assetsFor(key, seen = new Set()) {
   return result;
 }
 function pageKey(route) {
+  if (route === "/en/blog" || route.startsWith("/en/blog/page/")) return "src/pages/blog/en.tsx";
   const baseRoute = route === "/en" ? "/" : route.replace(/^\/en\//, "/");
   if (baseRoute.startsWith("/blog/page/") || baseRoute.startsWith("/blog/temi/")) return "src/pages/blog/index.tsx";
   if (baseRoute.startsWith("/blog/")) return "src/pages/blog/[id].tsx";

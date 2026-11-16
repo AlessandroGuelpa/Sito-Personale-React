@@ -4,9 +4,10 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/logo";
 import {
+  blogRoots,
   languageAlternates,
-  languageForPath,
   portfolioRoutes,
+  type SiteLanguage,
 } from "@/config/locales";
 import { englishNavigation } from "@/config/site";
 
@@ -19,10 +20,9 @@ const italianNavigation = [
   { href: "/sports", label: "Sport" },
   { href: "/vehrt", label: "VEHRT" },
 ];
-export function Navbar() {
+export function Navbar({ language }: { language: SiteLanguage }) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
-  const language = languageForPath(location.pathname);
   const english = language === "en";
   const navigation = english ? englishNavigation : italianNavigation;
   const contact = {
@@ -32,8 +32,12 @@ export function Navbar() {
   const mobileNavigation = [...navigation, contact];
   const alternates = languageAlternates(location.pathname);
   const otherLanguage = english ? "it" : "en";
+  const languageDestination =
+    alternates ?? (english ? blogRoots : portfolioRoutes.home);
   const languageLabel = english
-    ? "Read in Italian"
+    ? alternates
+      ? "Read in Italian"
+      : "Open the Italian blog"
     : alternates
       ? "Leggi in inglese"
       : "Vai alla home in inglese";
@@ -135,7 +139,7 @@ export function Navbar() {
               aria-label={languageLabel}
               className="header-control header-language"
               hrefLang={otherLanguage}
-              to={(alternates ?? portfolioRoutes.home)[otherLanguage]}
+              to={languageDestination[otherLanguage]}
               onClick={() => setOpen(false)}
             >
               {otherLanguage.toUpperCase()}

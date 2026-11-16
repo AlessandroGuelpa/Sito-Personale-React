@@ -1,3 +1,5 @@
+import { blogRoots, type SiteLanguage } from "./locales";
+
 export const BLOG_HUBS = [
   {
     slug: "shopify-integrazioni",
@@ -42,8 +44,8 @@ export function blogHubPath(slug: BlogHubSlug) {
   return `/blog/temi/${slug}`;
 }
 
-export function blogArchivePath(page: number, slug?: BlogHubSlug) {
-  const base = slug ? blogHubPath(slug) : "/blog";
+export function blogArchivePath(page: number, slug?: BlogHubSlug, language: SiteLanguage = "it") {
+  const base = slug ? blogHubPath(slug) : blogRoots[language];
   return page <= 1 ? base : `${base}/page/${page}`;
 }
 
