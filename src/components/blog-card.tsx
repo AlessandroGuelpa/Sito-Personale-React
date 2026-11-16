@@ -2,24 +2,37 @@ import type { BlogSummary } from "@/types/blog";
 
 import { Link } from "react-router-dom";
 
-export function BlogCard({ post }: { post: BlogSummary }) {
+import { blogRoots, type SiteLanguage } from "@/config/locales";
+
+export function BlogCard({
+  post,
+  language = "it",
+}: {
+  post: BlogSummary;
+  language?: SiteLanguage;
+}) {
+  const english = language === "en";
+  const destination = `${blogRoots[language]}/${post.id}`;
+
   return (
     <article className="flex min-w-0 flex-col border-t border-zinc-200 py-6 dark:border-zinc-800">
       <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm text-zinc-600 dark:text-zinc-400">
         <time dateTime={post.date}>
-          {new Date(post.date).toLocaleDateString("it-IT", {
+          {new Date(post.date).toLocaleDateString(english ? "en-GB" : "it-IT", {
             day: "numeric",
             month: "short",
             year: "numeric",
             timeZone: "UTC",
           })}
         </time>
-        <span>· {post.minutes} min di lettura</span>
+        <span>
+          · {post.minutes} {english ? "min read" : "min di lettura"}
+        </span>
       </div>
       <h3 className="mt-4 text-xl font-bold leading-snug">
         <Link
           className="hover:text-violet-700 dark:hover:text-violet-400"
-          to={`/blog/${post.id}`}
+          to={destination}
         >
           {post.title}
         </Link>
@@ -28,7 +41,10 @@ export function BlogCard({ post }: { post: BlogSummary }) {
         {post.excerpt}
       </p>
       {post.tags.length > 0 && (
-        <ul aria-label="Argomenti" className="mt-4 flex flex-wrap gap-2">
+        <ul
+          aria-label={english ? "Topics" : "Argomenti"}
+          className="mt-4 flex flex-wrap gap-2"
+        >
           {post.tags.slice(0, 3).map((tag) => (
             <li key={tag} className="tech-tag">
               {tag}
@@ -38,9 +54,10 @@ export function BlogCard({ post }: { post: BlogSummary }) {
       )}
       <Link
         className="text-link mt-5 inline-flex min-h-11 items-center"
-        to={`/blog/${post.id}`}
+        to={destination}
       >
-        Leggi l’articolo <span className="sr-only">: {post.title}</span>
+        {english ? "Read the article" : "Leggi l’articolo"}{" "}
+        <span className="sr-only">: {post.title}</span>
         <span aria-hidden="true" className="ml-2">
           →
         </span>

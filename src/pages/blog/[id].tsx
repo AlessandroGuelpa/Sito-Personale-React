@@ -3,6 +3,7 @@ import { effectiveArticleDates } from "@/utils/blog-dates";
 import { blogHubForPost, blogHubPath, getBlogHub } from "@/config/blog-hubs";
 import {
   blogRoots,
+  languageAlternates,
   portfolioRoutes,
   type SiteLanguage,
 } from "@/config/locales";
@@ -75,6 +76,9 @@ const articleCopy = {
     by: "Di",
     updated: "Aggiornato il",
     tags: "Argomenti",
+    relatedLabel: "Dal blog",
+    relatedTitle: "Continua a leggere",
+    more: "← Altri articoli dal blog",
     authorLabel: "Informazioni sull'autore",
     authorTitle: "Chi scrive",
     authorBio:
@@ -82,11 +86,14 @@ const articleCopy = {
     authorLink: "Esperienza, progetti e curriculum dell’autore →",
   },
   en: {
-    back: "← Back to the portfolio",
+    back: "← Back to the blog",
     readingTime: "min read",
     by: "By",
     updated: "Updated on",
     tags: "Topics",
+    relatedLabel: "From the blog",
+    relatedTitle: "Related articles",
+    more: "← All articles",
     authorLabel: "About the author",
     authorTitle: "About the author",
     authorBio:
@@ -124,9 +131,10 @@ function PostContent({
   const hub = english ? undefined : getBlogHub(blogHubForPost(post));
   const homePath = portfolioRoutes.home[language];
   const authorPath = portfolioRoutes.about[language];
+  const blogPath = blogRoots[language];
   const breadcrumbs = [
     { name: "Home", url: sitePageUrl(homePath) },
-    ...(english ? [] : [{ name: "Blog", url: sitePageUrl(blogRoots.it) }]),
+    { name: "Blog", url: sitePageUrl(blogPath) },
     { name: post.title, url: sitePageUrl(path) },
   ];
 
@@ -157,7 +165,7 @@ function PostContent({
       <article className="mx-auto max-w-3xl py-4 sm:py-8">
         <Link
           className="text-link mb-8 inline-flex min-h-11 items-center"
-          to={english ? homePath : blogRoots.it}
+          to={blogPath}
         >
           {copy.back}
         </Link>
@@ -199,18 +207,12 @@ function PostContent({
           <ul aria-label={copy.tags} className="mt-6 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
               <li key={tag}>
-                {english ? (
-                  <span className="tech-tag inline-flex min-h-9 items-center">
-                    {tag}
-                  </span>
-                ) : (
-                  <Link
-                    className="tech-tag inline-flex min-h-9 items-center"
-                    to={`/blog?tag=${encodeURIComponent(tag)}`}
-                  >
-                    {tag}
-                  </Link>
-                )}
+                <Link
+                  className="tech-tag inline-flex min-h-9 items-center"
+                  to={`${blogPath}?tag=${encodeURIComponent(tag)}`}
+                >
+                  {tag}
+                </Link>
               </li>
             ))}
           </ul>
@@ -218,6 +220,27 @@ function PostContent({
         <div className="article-body prose prose-zinc dark:prose-invert prose-lg prose-a:text-violet-700 dark:prose-a:text-violet-400 mt-10 max-w-none">
           <ReactMarkdown
             components={{
+              a: ({ node: _node, href, children, ...props }) => {
+                const italianArticle =
+                  english && href?.startsWith(`${blogRoots.it}/`);
+                const translation =
+                  italianArticle && href
+                    ? languageAlternates(href)?.en
+                    : undefined;
+
+                return (
+                  <a
+                    {...props}
+                    href={translation ?? href}
+                    hrefLang={
+                      italianArticle ? (translation ? "en" : "it") : undefined
+                    }
+                  >
+                    {children}
+                    {italianArticle && !translation && " (in Italian)"}
+                  </a>
+                );
+              },
               pre: ({ node: _node, ...props }) => (
                 <ArticleCodeBlock {...props} language={language} />
               ),
@@ -239,24 +262,24 @@ function PostContent({
             aria-labelledby="related-title"
             className="related-posts not-prose"
           >
-            <p className="eyebrow">Dal blog</p>
+            <p className="eyebrow">{copy.relatedLabel}</p>
             <h2
               className="text-2xl font-bold tracking-tight"
               id="related-title"
             >
-              Continua a leggere
+              {copy.relatedTitle}
             </h2>
             <ul className="mt-6">
               {relatedPosts.map((related) => (
                 <li key={related.id}>
                   <Link
                     className="related-post-link"
-                    to={`/blog/${related.id}`}
+                    to={`${blogPath}/${related.id}`}
                   >
                     <span>
                       <strong>{related.title}</strong>
                       <span className="related-post-meta">
-                        {related.minutes} min di lettura
+                        {related.minutes} {copy.readingTime}
                       </span>
                     </span>
                     <span aria-hidden="true">→</span>
@@ -278,13 +301,11 @@ function PostContent({
             {copy.authorLink}
           </Link>
         </aside>
-        {!english && (
-          <div className="mt-10 border-t border-zinc-200 pt-6 dark:border-zinc-800">
-            <Link className="text-link" to={blogRoots.it}>
-              ← Altri articoli dal blog
-            </Link>
-          </div>
-        )}
+        <div className="mt-10 border-t border-zinc-200 pt-6 dark:border-zinc-800">
+          <Link className="text-link" to={blogPath}>
+            {copy.more}
+          </Link>
+        </div>
       </article>
     </DefaultLayout>
   );

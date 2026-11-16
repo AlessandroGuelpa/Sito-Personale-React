@@ -4,6 +4,7 @@ import {
   languageAlternates,
   languageForPath,
   siteLanguages,
+  type SiteLanguage,
 } from "@/config/locales";
 import { DEFAULT_OG_IMAGE, SITE_NAME, sitePageUrl } from "@/utils/seo";
 
@@ -11,6 +12,7 @@ export function PageSeo({
   title,
   description,
   path,
+  language = languageForPath(path),
   image = DEFAULT_OG_IMAGE,
   type = "website",
   noindex = false,
@@ -19,6 +21,7 @@ export function PageSeo({
   title: string;
   description: string;
   path: string;
+  language?: SiteLanguage;
   image?: string;
   type?: string;
   noindex?: boolean;
@@ -26,7 +29,6 @@ export function PageSeo({
 }) {
   const url = sitePageUrl(path);
   const pageTitle = `${title} | ${SITE_NAME}`;
-  const language = languageForPath(path);
   const alternates = noindex ? undefined : languageAlternates(path);
 
   return (

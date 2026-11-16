@@ -3,6 +3,9 @@
 declare module "virtual:blog-index" {
   export const blogIndex: import("./types/blog").BlogSummary[];
 }
+declare module "virtual:english-blog-index" {
+  export const blogIndex: import("./types/blog").BlogSummary[];
+}
 declare module "virtual:home-posts" {
   export const latestPosts: import("./types/blog").BlogSummary[];
 }

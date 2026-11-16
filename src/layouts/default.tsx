@@ -5,7 +5,11 @@ import { LuCoffee } from "react-icons/lu";
 
 import { Navbar } from "@/components/navbar";
 import { Logo } from "@/components/logo";
-import { languageForPath, portfolioRoutes } from "@/config/locales";
+import {
+  languageForPath,
+  portfolioRoutes,
+  type SiteLanguage,
+} from "@/config/locales";
 import { englishNavigation, siteConfig } from "@/config/site";
 
 const socialLinks = [
@@ -33,11 +37,13 @@ const socialLinks = [
 
 export default function DefaultLayout({
   children,
+  language: pageLanguage,
 }: {
   children: React.ReactNode;
+  language?: SiteLanguage;
 }) {
   const { pathname } = useLocation();
-  const language = languageForPath(pathname);
+  const language = pageLanguage ?? languageForPath(pathname);
   const english = language === "en";
   const navigation = english
     ? [
@@ -55,7 +61,7 @@ export default function DefaultLayout({
       >
         {english ? "Skip to content" : "Salta al contenuto"}
       </a>
-      <Navbar />
+      <Navbar language={language} />
       <main
         className="mx-auto w-full max-w-6xl px-5 sm:px-8 flex-grow outline-none"
         id="main-content"

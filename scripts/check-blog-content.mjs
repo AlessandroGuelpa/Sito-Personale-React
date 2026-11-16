@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 
 const source = await readFile("src/data/blogPosts.ts", "utf8");
 const matches = [...source.matchAll(/^  \{\s*\n\s*id: "([^"]+)"/gm)];
@@ -96,3 +96,20 @@ wordCounts.sort((a, b) => a - b);
 const median = wordCounts[Math.floor(wordCounts.length / 2)];
 assert(median > 250, `Median article word count must exceed 250, got ${median}`);
 console.log(`Blog quality validated: ${entries.length} articles, min ${minWords} words, median ${median}, ${internalLinks} contextual links.`);
+
+const translatedFiles = (await readdir("src/data/blog-en")).filter((name) => name.endsWith(".md"));
+for (const file of translatedFiles) {
+  const originalId = file.slice(0, -3);
+  assert(ids.has(originalId), `Translation without an Italian original: ${file}`);
+  const markdown = await readFile(`src/data/blog-en/${file}`, "utf8");
+  const text = markdown.split(/^## Sources?$/m)[0];
+  const wordCount = editorialWordCount(text);
+  assert(wordCount >= 251, `Translation ${file} has ${wordCount} editorial words: minimum 251`);
+  const links = [...text.matchAll(/\]\(\/blog\/([a-z0-9-]+)\)/g)].map((match) => match[1]);
+  assert(links.length > 0, `Translation ${file} needs at least one contextual internal link`);
+  for (const slug of links) {
+    assert(ids.has(slug), `Broken internal link from ${file} to ${slug}`);
+    assert.notEqual(slug, originalId, `Translation ${file} links to itself`);
+  }
+}
+console.log(`Translation quality validated: ${translatedFiles.length} English articles.`);

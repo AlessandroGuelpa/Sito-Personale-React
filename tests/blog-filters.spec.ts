@@ -47,3 +47,37 @@ test("specific tag links stay usable and switching category resets tag and pagin
   await expect(page.locator("#blog-results")).toContainText("Pagina 1 di 1");
   expect(new URL(page.url()).searchParams.has("page")).toBe(false);
 });
+
+test("the English archive paginates, searches and links to the equivalent Italian article", async ({
+  page,
+}) => {
+  await page.goto("/en/blog");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.getByRole("article")).toHaveCount(12);
+
+  await page.getByRole("link", { name: "Next →", exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/blog\/page\/2$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://alessandroguelpa.it/en/blog/page/2",
+  );
+
+  const search = page.getByRole("searchbox", { name: "Search the archive" });
+
+  await search.pressSequentially("metal fatigue");
+  await expect(search).toBeFocused();
+  await expect(search).toHaveValue("metal fatigue");
+  await expect(page).toHaveURL(/\/en\/blog\/page\/2\?q=metal\+fatigue$/);
+  await expect(page.getByRole("article")).toHaveCount(1);
+  await page
+    .getByRole("link", {
+      name: "Metal Fatigue Under Cyclic Loading",
+      exact: true,
+    })
+    .click();
+  await expect(page).toHaveURL(/\/en\/blog\/metal-fatigue-cyclic-loading$/);
+  await page.getByRole("link", { name: "Read in Italian" }).click();
+  await expect(page).toHaveURL(/\/blog\/fatica-metalli-carichi-ciclici$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "it");
+});
