@@ -66,7 +66,7 @@ export function blogPostJsonLd(
   language: SiteLanguage,
 ) {
   const url = sitePageUrl(path);
-  const description = buildExcerpt(post, 200);
+  const description = post.seoDescription ?? buildExcerpt(post, 200);
   const image = post.coverImage ?? DEFAULT_OG_IMAGE;
   const { publishedAt, modifiedAt } = effectiveArticleDates(post);
 

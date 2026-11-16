@@ -141,7 +141,7 @@ function PostContent({
   return (
     <DefaultLayout>
       <PageSeo
-        description={buildExcerpt(post)}
+        description={post.seoDescription ?? buildExcerpt(post)}
         image={post.coverImage ?? DEFAULT_OG_IMAGE}
         path={path}
         schema={{
@@ -151,7 +151,7 @@ function PostContent({
             breadcrumbJsonLd(breadcrumbs),
           ],
         }}
-        title={post.title}
+        title={post.seoTitle ?? post.title}
         type="article"
       />
       <Helmet>

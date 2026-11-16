@@ -5,6 +5,8 @@ import type { BlogHubSlug } from "../config/blog-hubs";
 export interface BlogPost {
   id: string;
   title: string;
+  seoTitle?: string;
+  seoDescription?: string;
   date: string;
   updatedAt?: string;
   firstPublishedAt?: string;
@@ -419,6 +421,8 @@ La scelta utile è rendere esplicito lo stato: ancora usabile, riparabile oppure
   },
   {
     id: "luna-massa-peso-inerzia",
+    seoTitle: "Massa e peso sulla Luna: calcolo e inerzia",
+    seoDescription: "Quanto pesa un oggetto da 12 kg sulla Luna? Calcola il peso in newton e scopri cosa comporta l’inerzia quando devi accelerarlo o fermarlo.",
     title: "Sulla Luna pesi meno. La tua massa non è diventata più piccola",
     date: "2026-10-28",
     firstPublishedAt: "2026-11-03",
@@ -2890,6 +2894,8 @@ Quando un utente segnala che un ordine non è stato sincronizzato, un messaggio 
   },
   {
     id: "entanglement-quantistico-e-i-disastri-del-global-state",
+    seoTitle: "Stato globale in React e quando usare Context",
+    seoDescription: "Decidi fra stato locale, Context e stato globale. Con l’esempio di un carrello, separa lo stato condiviso dai valori derivati e dai dati delle API.",
     title: "React state: evitare dipendenze globali inutili",
     date: "2026-04-20",
     updatedAt: "2026-11-11",
@@ -3183,6 +3189,8 @@ Un evento ricorrente alle 09:00 Europe/Rome non può essere rappresentato per se
   },
   {
     id: "teoria-del-caos-effetto-farfalla-e-css-globale",
+    seoTitle: "CSS globale: cascade, specificità e regressioni",
+    seoDescription: "Scopri perché una regola CSS cambia più componenti. Usa DevTools per trovare la dichiarazione vincente e verifica focus, hover e modalità scura.",
     title: "CSS globale: specificità e regressioni",
     date: "2026-04-08",
     updatedAt: "2026-11-11",
@@ -3863,6 +3871,8 @@ Per verificare un oscillatore nel browser, collega la sorgente a un GainNode e p
   },
   {
     id: "sonic-pi-live-loop-cuore-del-live-coding",
+    seoTitle: "Sonic Pi live_loop per creare un beat dal vivo",
+    seoDescription: "Crea due live_loop per cassa e hi-hat, aggiorna i pattern durante il playback e verifica l’allineamento di loop con durate diverse.",
     title: "Sonic Pi live_loop: scrivere musica in tempo reale",
     date: "2026-04-27",
     updatedAt: "2026-11-11",
@@ -4900,6 +4910,8 @@ Un'API che restituisce JSON deve offrire più della serializzazione di un model.
   },
   {
     id: "javascript-moduli-es-import-export",
+    seoTitle: "Moduli ES in JavaScript con import ed export",
+    seoDescription: "Esempi di export nominati e default, import dinamici e tree shaking. Controlla gli effetti all’importazione e il peso dei bundle generati.",
     title: "JavaScript ES modules: import, export e bundle",
     date: "2026-05-20",
     updatedAt: "2026-11-11",
@@ -6621,6 +6633,8 @@ Distingui i problemi di query da quelli della [cache Rails](/blog/rails-caching-
   },
   {
     id: "javascript-intl-formattazione",
+    seoTitle: "Intl in JavaScript per formattare date, numeri e valute",
+    seoDescription: "Formatta euro, numeri e date con Intl.NumberFormat, DateTimeFormat e locale. Gli esempi mostrano anche tempi relativi e gestione del fuso orario.",
     title: "JavaScript Intl: date, numeri e valute locali",
     date: "2026-06-24",
     updatedAt: "2026-11-11",
@@ -7791,6 +7805,8 @@ Una catena con then è facile da seguire quando ogni passaggio restituisce un va
   },
   {
     id: "rails-request-specs-testare-api",
+    seoTitle: "Rails request spec con RSpec per testare le API",
+    seoDescription: "Esempi GET e POST con RSpec per verificare status HTTP, JSON, permessi e modifiche al database nei test di un’API Rails.",
     title: "Rails request specs: contratti HTTP e casi limite",
     date: "2026-07-18",
     updatedAt: "2026-11-11",
@@ -7848,6 +7864,8 @@ Un endpoint POST può restituire 201 senza avere scritto correttamente tutti i d
   },
   {
     id: "javascript-localstorage-persistenza",
+    seoTitle: "localStorage in JavaScript per salvare dati nel browser",
+    seoDescription: "Salva preferenze e bozze con localStorage, setItem e JSON. Gestisci valori mancanti o corrotti, limiti di spazio e dati sensibili.",
     title: "localStorage: persistenza e sicurezza nel browser",
     date: "2026-07-19",
     updatedAt: "2026-11-11",
@@ -7895,6 +7913,8 @@ Un valore scritto in localStorage mesi prima può avere una struttura diversa da
   },
   {
     id: "web-audio-delay-feedback",
+    seoTitle: "Delay con feedback nella Web Audio API",
+    seoDescription: "Crea un eco con DelayNode e GainNode. Regola tempo, feedback e mix dry/wet, verifica il livello in uscita e prova il cambio di preset.",
     title: "Web Audio delay e feedback: controllo della stabilità",
     date: "2026-07-20",
     updatedAt: "2026-11-11",
