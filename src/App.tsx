@@ -1,9 +1,15 @@
-import { Suspense, lazy, useEffect, useRef } from "react";
+import { Fragment, Suspense, lazy, useEffect, useRef } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import { ScrollProgress } from "@/components/scroll-progress";
+import {
+  blogRoots,
+  languageForPath,
+  portfolioRoutes,
+  siteLanguages,
+} from "@/config/locales";
 
 const IndexPage = lazy(() => import("@/pages/index"));
 const BlogPage = lazy(() => import("@/pages/blog/index"));
@@ -17,6 +23,7 @@ const NotFoundPage = lazy(() => import("@/pages/not-found"));
 
 export default function App() {
   const location = useLocation();
+  const language = languageForPath(location.pathname);
   const music = ["/vehrt", "/dj-qbit"].includes(
     location.pathname.replace(/\/$/, ""),
   );
@@ -30,20 +37,40 @@ export default function App() {
             className="flex min-h-screen items-center justify-center"
             role="status"
           >
-            Caricamento…
+            {language === "en" ? "Loading…" : "Caricamento…"}
           </div>
         }
       >
         <Routes>
-          <Route element={<IndexPage />} path="/" />
+          {siteLanguages.map((language) => (
+            <Fragment key={language}>
+              <Route
+                element={<IndexPage language={language} />}
+                path={portfolioRoutes.home[language]}
+              />
+              <Route
+                element={<ProjectPage language={language} />}
+                path={portfolioRoutes.projects[language]}
+              />
+              <Route
+                element={<ContactPage language={language} />}
+                path={portfolioRoutes.contact[language]}
+              />
+              <Route
+                element={<AboutPage language={language} />}
+                path={portfolioRoutes.about[language]}
+              />
+            </Fragment>
+          ))}
           <Route element={<BlogPage />} path="/blog" />
           <Route element={<BlogPage />} path="/blog/page/:page" />
           <Route element={<BlogPage />} path="/blog/temi/:hub" />
           <Route element={<BlogPage />} path="/blog/temi/:hub/page/:page" />
-          <Route element={<BlogPostPage />} path="/blog/:id" />
-          <Route element={<ProjectPage />} path="/project" />
-          <Route element={<ContactPage />} path="/contact" />
-          <Route element={<AboutPage />} path="/about" />
+          <Route element={<BlogPostPage />} path={`${blogRoots.it}/:id`} />
+          <Route
+            element={<BlogPostPage language="en" />}
+            path={`${blogRoots.en}/:id`}
+          />
           <Route element={<SportPage />} path="/sports" />
           <Route element={<VehrtPage />} path="/vehrt" />
           <Route

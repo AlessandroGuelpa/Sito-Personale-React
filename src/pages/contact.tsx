@@ -2,19 +2,102 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 
 import DefaultLayout from "@/layouts/default";
 import { PageSeo } from "@/components/page-seo";
+import { portfolioRoutes, type SiteLanguage } from "@/config/locales";
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/utils/analytics";
 
 const initialForm = { name: "", email: "", service: "shopify", message: "" };
 const services = [
-  { value: "shopify", label: "E-commerce Shopify" },
-  { value: "integration", label: "API e integrazioni" },
-  { value: "web", label: "Sito o applicazione web" },
-  { value: "work", label: "Opportunità di lavoro / collaborazione" },
-  { value: "other", label: "Altro" },
+  { value: "shopify", it: "E-commerce Shopify", en: "Shopify e-commerce" },
+  {
+    value: "integration",
+    it: "API e integrazioni",
+    en: "API and ERP integrations",
+  },
+  {
+    value: "web",
+    it: "Sito o applicazione web",
+    en: "Website or web application",
+  },
+  {
+    value: "work",
+    it: "Opportunità di lavoro / collaborazione",
+    en: "Role or collaboration",
+  },
+  { value: "other", it: "Altro", en: "Other" },
 ];
 
-export default function Contact() {
+const contactCopy = {
+  it: {
+    title: "Contatti e collaborazioni",
+    description:
+      "Contatta Alessandro Guelpa per Shopify, sviluppo web, integrazioni API o opportunità di lavoro. Scrivi direttamente via email o usa il modulo.",
+    label: "Contatti",
+    heading: "Parliamo di cosa vuoi costruire.",
+    intro:
+      "Un e-commerce, un’integrazione o una collaborazione: raccontami l’obiettivo e da dove parti.",
+    direct: "Preferisci scrivermi direttamente?",
+    channels: "Usa l’email oppure trovi il mio percorso su LinkedIn.",
+    newTab: " (nuova scheda)",
+    context: "Cosa mi aiuta a capire il progetto",
+    checklist: [
+      "L’obiettivo e la piattaforma attuale",
+      "Le funzionalità o le integrazioni necessarie",
+      "Tempistiche e budget indicativi, se già definiti",
+    ],
+    form: "Mandami un messaggio",
+    name: "Nome",
+    required: "(obbligatorio)",
+    emailRequired: "(obbligatoria)",
+    topic: "Di cosa parliamo?",
+    message: "Messaggio",
+    example: "Obiettivo, piattaforma e cosa ti serve…",
+    privacy:
+      "Nome, email e messaggio vengono inviati tramite Web3Forms per consentirmi di rispondere alla tua richiesta. Puoi anche usare l’email diretta.",
+    sending: "Invio in corso…",
+    send: "Invia il messaggio",
+    success:
+      "Messaggio inviato. Grazie, ti risponderò all’indirizzo che hai indicato.",
+    error:
+      "L’invio non è riuscito. Il testo è ancora qui: puoi riprovare oppure",
+    emailMe: "scrivermi via email",
+  },
+  en: {
+    title: "Contact · Shopify & Web Development",
+    description:
+      "Contact Alessandro Guelpa about Shopify development, ERP and API integrations, or roles and collaborations. Use the form or email him directly.",
+    label: "Contact",
+    heading: "Let’s talk about what you’re building.",
+    intro:
+      "If you’re working on a store, an integration or a collaboration, tell me your goal and what you have so far.",
+    direct: "Prefer to contact me directly?",
+    channels: "Send me an email or find my work experience on LinkedIn.",
+    newTab: " (opens in a new tab)",
+    context: "What helps me understand your project",
+    checklist: [
+      "Your goal and current platform",
+      "The features or integrations you need",
+      "An approximate timeline and budget, if you have them",
+    ],
+    form: "Send me a message",
+    name: "Name",
+    required: "(required)",
+    emailRequired: "(required)",
+    topic: "What would you like to discuss?",
+    message: "Message",
+    example: "Your goal, current platform and what you need…",
+    privacy:
+      "Your name, email and message are sent through Web3Forms so I can respond. You can also email me directly.",
+    sending: "Sending…",
+    send: "Send message",
+    success: "Thanks for your message. I’ll reply to the address you provided.",
+    error: "Your message couldn’t be sent. You can try again or",
+    emailMe: "email me directly",
+  },
+};
+
+export default function Contact({ language }: { language: SiteLanguage }) {
+  const copy = contactCopy[language];
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState<
     "idle" | "sending" | "success" | "error"
@@ -51,7 +134,7 @@ export default function Contact() {
       payload.append("email", form.email.trim());
       payload.append(
         "Type of Service",
-        services.find((service) => service.value === form.service)?.label ??
+        services.find((service) => service.value === form.service)?.it ??
           form.service,
       );
       payload.append("message", form.message.trim());
@@ -85,25 +168,20 @@ export default function Contact() {
   return (
     <DefaultLayout>
       <PageSeo
-        description="Contatta Alessandro Guelpa per Shopify, sviluppo web, integrazioni API o opportunità di lavoro. Scrivi direttamente via email o usa il modulo."
-        path="/contact"
-        title="Contatti e collaborazioni"
+        description={copy.description}
+        path={portfolioRoutes.contact[language]}
+        title={copy.title}
       />
       <header className="max-w-3xl">
-        <p className="eyebrow">Contatti</p>
-        <h1 className="page-title">Parliamo di cosa vuoi costruire.</h1>
-        <p className="page-intro">
-          Un e-commerce, un’integrazione o una collaborazione: raccontami
-          l’obiettivo e da dove parti.
-        </p>
+        <p className="eyebrow">{copy.label}</p>
+        <h1 className="page-title">{copy.heading}</h1>
+        <p className="page-intro">{copy.intro}</p>
       </header>
       <div className="mt-10 grid items-start gap-8 lg:grid-cols-[0.8fr_1.2fr]">
         <aside className="min-w-0 py-2 lg:pr-6">
-          <h2 className="text-2xl font-bold">
-            Preferisci scrivermi direttamente?
-          </h2>
+          <h2 className="text-2xl font-bold">{copy.direct}</h2>
           <p className="mt-4 leading-relaxed text-zinc-600 dark:text-zinc-300">
-            Usa l’email oppure trovi il mio percorso su LinkedIn.
+            {copy.channels}
           </p>
           <a
             className="text-link mt-5 block min-h-11 break-all py-3"
@@ -121,14 +199,14 @@ export default function Contact() {
               trackEvent("contact_intent", { channel: "linkedin" })
             }
           >
-            LinkedIn ↗<span className="sr-only"> (nuova scheda)</span>
+            LinkedIn ↗<span className="sr-only">{copy.newTab}</span>
           </a>
           <div className="mt-7 border-t border-zinc-200 pt-6 dark:border-zinc-800">
-            <h3 className="font-bold">Cosa mi aiuta a capire il progetto</h3>
+            <h3 className="font-bold">{copy.context}</h3>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-              <li>L’obiettivo e la piattaforma attuale</li>
-              <li>Le funzionalità o le integrazioni necessarie</li>
-              <li>Tempistiche e budget indicativi, se già definiti</li>
+              {copy.checklist.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
             </ul>
           </div>
         </aside>
@@ -137,11 +215,12 @@ export default function Contact() {
           className="surface-card min-w-0 p-6 sm:p-8"
           onSubmit={submit}
         >
-          <h2 className="mb-6 text-2xl font-bold">Mandami un messaggio</h2>
+          <h2 className="mb-6 text-2xl font-bold">{copy.form}</h2>
           <fieldset className="space-y-5" disabled={status === "sending"}>
             <div>
               <label className="field-label" htmlFor="contact-name">
-                Nome <span className="text-zinc-500">(obbligatorio)</span>
+                {copy.name}{" "}
+                <span className="text-zinc-500">{copy.required}</span>
               </label>
               <input
                 required
@@ -156,7 +235,8 @@ export default function Contact() {
             </div>
             <div>
               <label className="field-label" htmlFor="contact-email">
-                Email <span className="text-zinc-500">(obbligatoria)</span>
+                Email{" "}
+                <span className="text-zinc-500">{copy.emailRequired}</span>
               </label>
               <input
                 required
@@ -172,7 +252,7 @@ export default function Contact() {
             </div>
             <div>
               <label className="field-label" htmlFor="contact-service">
-                Di cosa parliamo?
+                {copy.topic}
               </label>
               <select
                 className="form-field"
@@ -183,14 +263,15 @@ export default function Contact() {
               >
                 {services.map((service) => (
                   <option key={service.value} value={service.value}>
-                    {service.label}
+                    {service[language]}
                   </option>
                 ))}
               </select>
             </div>
             <div>
               <label className="field-label" htmlFor="contact-message">
-                Messaggio <span className="text-zinc-500">(obbligatorio)</span>
+                {copy.message}{" "}
+                <span className="text-zinc-500">{copy.required}</span>
               </label>
               <textarea
                 required
@@ -199,7 +280,7 @@ export default function Contact() {
                 maxLength={5000}
                 minLength={10}
                 name="message"
-                placeholder="Obiettivo, piattaforma e cosa ti serve…"
+                placeholder={copy.example}
                 rows={6}
                 value={form.message}
                 onChange={(event) => update("message", event.target.value)}
@@ -214,14 +295,10 @@ export default function Contact() {
               type="checkbox"
             />
             <p className="text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
-              Nome, email e messaggio vengono inviati tramite Web3Forms per
-              consentirmi di rispondere alla tua richiesta. Puoi anche usare
-              l’email diretta.
+              {copy.privacy}
             </p>
             <button className="button-primary w-full" type="submit">
-              {status === "sending"
-                ? "Invio in corso…"
-                : "Invia il messaggio →"}
+              {status === "sending" ? copy.sending : `${copy.send} →`}
             </button>
           </fieldset>
           <div
@@ -232,16 +309,14 @@ export default function Contact() {
           >
             {status === "success" && (
               <p className="rounded-xl border border-emerald-600/30 bg-emerald-600/10 p-4 text-emerald-800 dark:text-emerald-300">
-                Messaggio inviato. Grazie, ti risponderò all’indirizzo che hai
-                indicato.
+                {copy.success}
               </p>
             )}
             {status === "error" && (
               <p className="rounded-xl border border-red-600/30 bg-red-600/10 p-4 text-red-800 dark:text-red-300">
-                L’invio non è riuscito. Il testo è ancora qui: puoi riprovare
-                oppure{" "}
+                {copy.error}{" "}
                 <a className="underline" href={siteConfig.links.email}>
-                  scrivermi via email
+                  {copy.emailMe}
                 </a>
                 .
               </p>

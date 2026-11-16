@@ -1,4 +1,6 @@
 import type { BlogPost } from "@/data/blogPosts";
+import { portfolioRoutes, type SiteLanguage } from "../config/locales";
+
 import { effectiveArticleDates } from "./blog-dates";
 
 export const SITE_URL = "https://alessandroguelpa.it";
@@ -6,6 +8,10 @@ export const SITE_NAME = "Alessandro Guelpa";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og/portfolio.png`;
 export const AUTHOR_NAME = "Alessandro Guelpa";
 export const TWITTER_HANDLE = "@AlessandroGuelpa";
+
+export function sitePageUrl(path: string): string {
+  return `${SITE_URL}${path === "/" ? "" : path}`;
+}
 
 const MARKDOWN_TOKEN_REGEX =
   /(```[\s\S]*?```)|(`[^`]*`)|(!\[[^\]]*\]\([^)]*\))|(\[[^\]]*\]\([^)]*\))|(^>\s?)|(^#{1,6}\s+)|([*_~]{1,3})|(\$\$[\s\S]*?\$\$)|(\$[^$]*\$)/gm;
@@ -54,12 +60,12 @@ export function readingTimeMinutes(content: string): number {
   return Math.max(1, Math.ceil(words / 200));
 }
 
-export function blogPostUrl(id: string): string {
-  return `${SITE_URL}/blog/${id}`;
-}
-
-export function blogPostJsonLd(post: BlogPost) {
-  const url = blogPostUrl(post.id);
+export function blogPostJsonLd(
+  post: BlogPost,
+  path: string,
+  language: SiteLanguage,
+) {
+  const url = sitePageUrl(path);
   const description = buildExcerpt(post, 200);
   const image = post.coverImage ?? DEFAULT_OG_IMAGE;
   const { publishedAt, modifiedAt } = effectiveArticleDates(post);
@@ -73,11 +79,11 @@ export function blogPostJsonLd(post: BlogPost) {
     image,
     datePublished: publishedAt,
     dateModified: modifiedAt,
-    inLanguage: "it-IT",
+    inLanguage: language === "en" ? "en" : "it-IT",
     author: {
       "@type": "Person",
       name: AUTHOR_NAME,
-      url: `${SITE_URL}/about`,
+      url: sitePageUrl(portfolioRoutes.about[language]),
       "@id": `${SITE_URL}/#author`,
     },
     publisher: {

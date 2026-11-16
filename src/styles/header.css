@@ -143,6 +143,11 @@
   color: var(--header-strong);
 }
 
+.header-language {
+  font-size: 13px;
+  font-weight: 700;
+}
+
 .header-contact {
   display: inline-flex;
   align-items: center;
@@ -256,5 +261,20 @@
 @media (max-width: 479px) {
   .header-brand-name {
     display: none;
+  }
+}
+
+@media (max-width: 359px) {
+  .header-row {
+    gap: 6px;
+    padding-inline: 8px;
+  }
+
+  .header-actions {
+    gap: 2px;
+  }
+
+  .header-contact {
+    padding-inline: 8px;
   }
 }

@@ -1,8 +1,20 @@
 import { useEffect, useState } from "react";
 
 import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
+import type { SiteLanguage } from "@/config/locales";
 
-export function ThemeSwitch({ className = "" }: { className?: string }) {
+const themeLabels = {
+  it: { light: "Attiva il tema chiaro", dark: "Attiva il tema scuro" },
+  en: { light: "Switch to light theme", dark: "Switch to dark theme" },
+};
+
+export function ThemeSwitch({
+  className = "",
+  language,
+}: {
+  className?: string;
+  language: SiteLanguage;
+}) {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
@@ -23,7 +35,7 @@ export function ThemeSwitch({ className = "" }: { className?: string }) {
 
   return (
     <button
-      aria-label={dark ? "Attiva il tema chiaro" : "Attiva il tema scuro"}
+      aria-label={themeLabels[language][dark ? "light" : "dark"]}
       aria-pressed={dark}
       className={`icon-button ${className}`}
       type="button"

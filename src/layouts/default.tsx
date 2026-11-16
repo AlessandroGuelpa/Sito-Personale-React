@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { LuCoffee } from "react-icons/lu";
 
 import { Navbar } from "@/components/navbar";
 import { Logo } from "@/components/logo";
-import { siteConfig } from "@/config/site";
+import { languageForPath, portfolioRoutes } from "@/config/locales";
+import { englishNavigation, siteConfig } from "@/config/site";
 
 const socialLinks = [
   {
@@ -35,13 +36,24 @@ export default function DefaultLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { pathname } = useLocation();
+  const language = languageForPath(pathname);
+  const english = language === "en";
+  const navigation = english
+    ? [
+        ...englishNavigation,
+        { href: portfolioRoutes.contact.en, label: "Contact" },
+      ]
+    : siteConfig.navMenuItems;
+  const newTab = english ? " (opens in a new tab)" : " (nuova scheda)";
+
   return (
     <div className="relative flex flex-col min-h-screen">
       <a
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-violet-600 focus:text-white focus:font-bold focus:shadow-lg"
         href="#main-content"
       >
-        Salta al contenuto
+        {english ? "Skip to content" : "Salta al contenuto"}
       </a>
       <Navbar />
       <main
@@ -59,7 +71,7 @@ export default function DefaultLayout({
               <Link
                 aria-label="Alessandro Guelpa — home"
                 className="inline-flex min-h-11 items-center gap-2 font-bold tracking-tight"
-                to="/"
+                to={portfolioRoutes.home[language]}
               >
                 <span aria-hidden="true" className="shrink-0">
                   <Logo markOnly height={30} />
@@ -69,14 +81,16 @@ export default function DefaultLayout({
                 </span>
               </Link>
               <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                {siteConfig.description}
+                {english
+                  ? "Shopify development, API and ERP integrations, and personal projects built with React and Rails."
+                  : siteConfig.description}
               </p>
             </div>
             <nav
-              aria-label="Pagine nel footer"
+              aria-label={english ? "Footer navigation" : "Pagine nel footer"}
               className="grid grid-cols-2 gap-x-10 gap-y-1 self-start text-sm font-medium sm:gap-x-16"
             >
-              {siteConfig.navMenuItems.map((item) => (
+              {navigation.map((item) => (
                 <Link
                   key={item.href}
                   className="footer-link inline-flex min-h-11 items-center"
@@ -89,7 +103,9 @@ export default function DefaultLayout({
           </div>
           <div className="mt-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-t border-zinc-200 pt-5 dark:border-zinc-800">
             <ul
-              aria-label="Social e contatti"
+              aria-label={
+                english ? "Social links and contact" : "Social e contatti"
+              }
               className="flex flex-wrap gap-x-5 gap-y-1"
             >
               {socialLinks.map((social) => (
@@ -105,7 +121,7 @@ export default function DefaultLayout({
                     <span aria-hidden="true">{social.icon}</span>
                     {social.label}
                     {!social.href.startsWith("mailto:") && (
-                      <span className="sr-only"> (nuova scheda)</span>
+                      <span className="sr-only">{newTab}</span>
                     )}
                   </a>
                 </li>
@@ -118,12 +134,17 @@ export default function DefaultLayout({
               target="_blank"
             >
               <LuCoffee aria-hidden="true" className="h-4 w-4" />
-              Offrimi un caffè<span className="sr-only"> (nuova scheda)</span>
+              {english ? "Buy me a coffee" : "Offrimi un caffè"}
+              <span className="sr-only">{newTab}</span>
             </a>
           </div>
           <div className="mt-5 flex flex-col gap-2 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400 sm:flex-row sm:justify-between">
             <p>© {new Date().getFullYear()} Alessandro Guelpa.</p>
-            <p>Progettato e sviluppato con React e Tailwind.</p>
+            <p>
+              {english
+                ? "Designed and built with React and Tailwind."
+                : "Progettato e sviluppato con React e Tailwind."}
+            </p>
           </div>
         </div>
       </footer>
