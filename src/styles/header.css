@@ -263,3 +263,18 @@
     display: none;
   }
 }
+
+@media (max-width: 359px) {
+  .header-row {
+    gap: 6px;
+    padding-inline: 8px;
+  }
+
+  .header-actions {
+    gap: 2px;
+  }
+
+  .header-contact {
+    padding-inline: 8px;
+  }
+}

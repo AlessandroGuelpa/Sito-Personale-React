@@ -166,15 +166,27 @@ test("language links open the equivalent page and update the document", async ({
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
     "Projects and the code behind them.",
   );
-  await expect(header.getByRole("link", { name: "Contact", exact: true })).toBeVisible();
+  await expect(
+    header.getByRole("link", { name: "Contact", exact: true }),
+  ).toBeVisible();
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth),
+  ).toBeLessThanOrEqual(320);
 
-  await page.getByRole("link", { name: /Read about Shopify–ERP inventory sync/ }).click();
+  await page
+    .getByRole("link", { name: /Read about Shopify–ERP inventory sync/ })
+    .click();
   await expect(page).toHaveURL(/\/en\/blog\/shopify-erp-inventory-sync$/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Handling Concurrent Stock Updates",
   );
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth),
+  ).toBeLessThanOrEqual(320);
   await header.getByRole("link", { name: "Read in Italian" }).click();
-  await expect(page).toHaveURL(/\/blog\/shopify-inventario-scritture-concorrenti$/);
+  await expect(page).toHaveURL(
+    /\/blog\/shopify-inventario-scritture-concorrenti$/,
+  );
   await expect(page.locator("html")).toHaveAttribute("lang", "it");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "riconciliazione delle scorte",
