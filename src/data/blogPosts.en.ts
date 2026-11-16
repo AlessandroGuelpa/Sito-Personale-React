@@ -220,4 +220,144 @@ export const englishBlogMetadata: Record<
       "Route a delay through a feedback gain to create controllable browser audio echoes.",
     tags: ["Web Audio", "DelayNode", "Audio effects", "JavaScript"],
   },
+  "javascript-set-e-map": {
+    date: publicationDate,
+    title: "JavaScript Set and Map for Equality and Deduplication",
+    excerpt:
+      "Choose Set for unique values and Map for keyed data. See how object identity affects deduplication and how to index API records by ID.",
+    tags: ["JavaScript", "Set", "Map", "Data structures"],
+  },
+  "javascript-optional-chaining-nullish": {
+    date: publicationDate,
+    title: "Optional Chaining and Nullish Coalescing in JavaScript",
+    excerpt:
+      "Use ?. for optional fields and ?? for defaults while keeping zero, false and empty strings. Includes examples and API validation checks.",
+    tags: ["JavaScript", "Optional chaining", "API", "Validation"],
+  },
+  "javascript-closure-spiegate-bene": {
+    date: publicationDate,
+    title: "JavaScript Closures and Lexical Scope",
+    excerpt:
+      "Build a private counter with a closure. See how separate instances capture variables and why callback lifetime matters.",
+    tags: ["JavaScript", "Closures", "Functions", "State"],
+  },
+  "javascript-fetch-api": {
+    date: publicationDate,
+    title: "Fetch API for HTTP Errors, Timeouts and Aborts",
+    excerpt:
+      "Make GET and POST requests with fetch, check HTTP status, handle empty responses and cancel obsolete requests with AbortController.",
+    tags: ["JavaScript", "Fetch", "API", "AbortController"],
+  },
+  "javascript-debounce-throttle": {
+    date: publicationDate,
+    title: "Debounce vs Throttle in JavaScript",
+    excerpt:
+      "Pick debounce for live search or throttle for periodic updates. A 300 ms example shows how to reduce requests and handle stale results.",
+    tags: ["JavaScript", "Debounce", "Throttle", "Frontend"],
+  },
+  "react-stato-derivato-carrello": {
+    date: publicationDate,
+    title: "React Derived State for Cart Totals",
+    excerpt:
+      "Calculate a React cart total from line items and quantities. Keep rendered state consistent during edits, removals and failed updates.",
+    tags: ["React", "State management", "E-commerce", "Frontend"],
+  },
+  "progressive-enhancement-funzione-base": {
+    date: publicationDate,
+    title: "Progressive Enhancement When JavaScript Loads Slowly",
+    excerpt:
+      "Start with working HTML links and forms. Test which tasks visitors can complete before scripts or third-party integrations load.",
+    tags: ["Frontend", "HTML", "Accessibility", "Performance"],
+  },
+  "equazione-del-razzo-e-il-problema-del-bundle-da-830kb": {
+    date: publicationDate,
+    title: "How to Reduce the Initial JavaScript Bundle",
+    excerpt:
+      "Measure JavaScript download and execution, split route code with dynamic imports, and check that deferred features still load smoothly.",
+    tags: ["JavaScript", "Performance", "Code splitting", "SEO"],
+  },
+  "rails-activerecord-le-basi": {
+    date: publicationDate,
+    title: "Rails Active Record Models, Queries and SQL",
+    excerpt:
+      "Create and update records in Rails, compose lazy relations and inspect the SQL and query plans behind Active Record calls.",
+    tags: ["Rails", "Active Record", "SQL", "Databases"],
+  },
+  "rails-associazioni-has-many-belongs-to": {
+    date: publicationDate,
+    title: "Rails belongs_to and has_many Associations",
+    excerpt:
+      "Connect Rails models with foreign keys, choose how dependent records are handled, and check query counts when loading associations.",
+    tags: ["Rails", "Active Record", "Associations", "Databases"],
+  },
+  "rails-validazioni-dati-puliti": {
+    date: publicationDate,
+    title: "Rails Validations and Database Constraints",
+    excerpt:
+      "Give users clear model validation errors and enforce uniqueness under concurrent writes with a database constraint.",
+    tags: ["Rails", "Active Record", "Validation", "Concurrency"],
+  },
+  "rails-caching-basi": {
+    date: publicationDate,
+    title: "Rails Caching, Cache Keys and Invalidation",
+    excerpt:
+      "Use Rails.cache.fetch for expensive results. Choose keys and expiry rules, and test that users see updated data when its source changes.",
+    tags: ["Rails", "Caching", "Performance", "Databases"],
+  },
+  "rails-api-only-mode": {
+    date: publicationDate,
+    title: "Rails API-Only Mode for JSON Endpoints",
+    excerpt:
+      "Start a Rails API-only app, return JSON from controllers and define response, permission and pagination rules clients can test.",
+    tags: ["Rails", "API", "JSON", "Backend"],
+  },
+  "latenza-percentili-media-p99": {
+    date: publicationDate,
+    title: "Latency Percentiles and How to Read p95 and p99",
+    excerpt:
+      "See what p50, p95 and p99 reveal about slow requests. Read percentiles with traffic volume, route scope and error rates.",
+    tags: ["Engineering", "Latency", "Observability", "Performance"],
+  },
+  "ghiaccio-lunare-risorsa-utilizzabile": {
+    date: publicationDate,
+    title: "Lunar Ice and the Challenge of Recovering Water",
+    excerpt:
+      "Follow the engineering steps between finding ice on the Moon and supplying water reliably, from locating deposits to extraction and storage.",
+    tags: ["Moon", "Lunar ice", "Space", "Engineering"],
+  },
+  "kw-kwh-potenza-energia": {
+    date: publicationDate,
+    title: "kW vs kWh in Power and Energy Calculations",
+    excerpt:
+      "Calculate how much energy an 800 W device uses in three hours. Learn when to read power, energy or battery capacity.",
+    tags: ["Energy", "Power", "Electricity", "Engineering"],
+  },
+  "allunaggio-paracadute-propulsione": {
+    date: publicationDate,
+    title: "Why Lunar Landers Use Propulsion to Slow Down",
+    excerpt:
+      "The Moon’s thin exosphere offers little drag. See how thrust, orbital velocity and terrain shape a controlled lunar landing.",
+    tags: ["Moon", "Space", "Lunar landing", "Physics"],
+  },
+  "sonic-pi-sync-cue": {
+    date: publicationDate,
+    title: "Sonic Pi cue and sync for Aligning Live Loops",
+    excerpt:
+      "Send a timing event from a metronome loop and let a bass line wait for it. Check cold starts and edits against the shared pulse.",
+    tags: ["Sonic Pi", "Live coding", "Music", "Ruby"],
+  },
+  "sonic-pi-primo-suono-play-sleep": {
+    date: publicationDate,
+    title: "Your First Sonic Pi Notes with play and sleep",
+    excerpt:
+      "Write and run a short Sonic Pi phrase. Use MIDI note numbers and beat durations, and hear how changing sleep changes the rhythm.",
+    tags: ["Sonic Pi", "Ruby", "Music", "Live coding"],
+  },
+  "web-audio-convolver-riverbero": {
+    date: publicationDate,
+    title: "Convolution Reverb with Web Audio ConvolverNode",
+    excerpt:
+      "Load an impulse response and build a convolution reverb in Web Audio. Set the dry/wet mix and handle failed audio loads.",
+    tags: ["Web Audio", "ConvolverNode", "Reverb", "JavaScript"],
+  },
 };
