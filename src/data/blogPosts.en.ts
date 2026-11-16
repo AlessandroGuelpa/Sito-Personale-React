@@ -640,4 +640,144 @@ export const englishBlogMetadata: Record<
       "Turn a pattern grid into timed Web Audio events, derive step duration from BPM, and manage edits to the sequence during playback.",
     tags: ["JavaScript", "Web Audio API", "Sequencer", "Scheduling"],
   },
+  "orion-controllo-termico-radiatori-vuoto": {
+    title: "Orion Thermal Control and Radiators in Space",
+    date: publicationDate,
+    excerpt:
+      "Follow heat from Orion's systems to the service module radiators. A hypothetical 600 W load shows how to check the thermal balance.",
+    tags: ["Orion", "Artemis", "Thermal control", "Spacecraft"],
+  },
+  "raee-elettronica-fine-vita": {
+    title: "E-Waste, Repair and Recycling for Old Electronics",
+    date: publicationDate,
+    excerpt:
+      "Decide whether an old device can be reused or repaired, protect the data on it, and use the right collection route for electronic waste.",
+    tags: ["E-waste", "Electronics", "Repair", "Recycling"],
+  },
+  "ridondanza-guasti-correlati": {
+    title: "Redundancy and Correlated Failures",
+    date: publicationDate,
+    excerpt:
+      "See how shared databases, regions or releases can fail together, then define fault domains and test whether failover actually works.",
+    tags: ["Engineering", "Reliability", "Redundancy", "Failover"],
+  },
+  "biodiversita-impollinatori-reti": {
+    title: "Pollinator Diversity and Habitat Networks",
+    date: publicationDate,
+    excerpt:
+      "Look beyond hive counts at wild pollinators, seasonal resources and the local habitat conditions that support pollination.",
+    tags: ["Biodiversity", "Pollinators", "Habitat", "Environment"],
+  },
+  "navigazione-spaziale-posizione-orientamento": {
+    title: "Spacecraft Navigation with Position and Attitude",
+    date: publicationDate,
+    excerpt:
+      "See what star trackers, optical navigation and radio ranging measure, and how those observations help estimate a spacecraft's state.",
+    tags: ["Spacecraft", "Navigation", "Attitude", "Orion"],
+  },
+  "adr-decisioni-architetturali": {
+    title: "Architecture Decision Records with a Queue Example",
+    date: publicationDate,
+    excerpt:
+      "Capture the context, alternatives and consequences of a significant decision in an ADR, and preserve its history when requirements change.",
+    tags: ["Engineering", "Architecture", "ADR", "Documentation"],
+  },
+  "rete-elettrica-flessibilita-domanda": {
+    title: "Electricity Grid Flexibility with Storage and Demand Response",
+    date: publicationDate,
+    excerpt:
+      "See why annual energy totals hide grid constraints, how to read a battery's MW and MWh ratings, and when shifting demand can help.",
+    tags: ["Electricity grid", "Energy storage", "Demand response", "Energy"],
+  },
+  "deep-space-network-collegamento": {
+    title: "How NASA's Deep Space Network Supports Missions",
+    date: publicationDate,
+    excerpt:
+      "Follow a spacecraft's data and navigation measurements through ground antennas, and see why contact time and bandwidth need planning.",
+    tags: ["NASA", "Deep Space Network", "Space communications", "Navigation"],
+  },
+  "lca-confini-unita-funzionale": {
+    title: "Life Cycle Assessment and the Functional Unit",
+    date: publicationDate,
+    excerpt:
+      "Compare products on a shared functional unit and system boundary. See how reuse, washing and transport can change the result.",
+    tags: ["Environment", "Life cycle assessment", "LCA", "Sustainability"],
+  },
+  "finestre-lancio-luna-orbite": {
+    title: "How Lunar Launch Windows Work",
+    date: publicationDate,
+    excerpt:
+      "See how Earth–Moon geometry, flight manoeuvres, lighting and return conditions determine when a mission can launch.",
+    tags: ["Moon", "Artemis", "Orbital mechanics", "Launch windows"],
+  },
+  "alberi-citta-calore-progetto": {
+    title: "How Urban Trees Provide Shade and Cooling",
+    date: publicationDate,
+    excerpt:
+      "See how tree canopy and evapotranspiration change heat exposure, and plan for soil, water, shade coverage and maintenance.",
+    tags: ["Urban trees", "Heat", "Shade", "Environment"],
+  },
+  "tolleranze-catena-dimensionale": {
+    title: "Worst-Case Tolerance Stack-Up for an Assembly",
+    date: publicationDate,
+    excerpt:
+      "Add the tolerances of three spacers, distinguish tolerance from measurement uncertainty, and check the final fit against the requirement.",
+    tags: ["Engineering", "Tolerances", "Design", "Manufacturing"],
+  },
+  "riciclo-raccolta-qualita-materiale": {
+    title: "Recycling Collection and Material Quality",
+    date: publicationDate,
+    excerpt:
+      "Follow packaging from collection through sorting and treatment, and see how contamination and local rules affect usable recycled material.",
+    tags: ["Recycling", "Waste", "Materials", "Circular economy"],
+  },
+  "punti-lagrange-equilibrio-instabile": {
+    title: "Lagrange Points, L2 and the Webb Telescope's Orbit",
+    date: publicationDate,
+    excerpt:
+      "Understand L2 in a rotating frame, why nearby trajectories need corrections, and how the Sun–Earth geometry helps Webb observe.",
+    tags: ["Space", "Lagrange points", "Orbital mechanics", "Webb"],
+  },
+  "campionamento-aliasing-segnali": {
+    title: "Sampling and Aliasing in Signals",
+    date: publicationDate,
+    excerpt:
+      "A wheel that appears to turn backwards illustrates aliasing. Learn what the sampling theorem assumes and why the filter comes first.",
+    tags: ["Engineering", "Sampling", "Aliasing", "Signal processing"],
+  },
+  "impronta-idrica-contesto": {
+    title: "Virtual Water and the Green, Blue and Grey Footprints",
+    date: publicationDate,
+    excerpt:
+      "See what each water footprint component measures and why basin, season and supply chain boundaries matter when comparing products.",
+    tags: ["Environment", "Water footprint", "Virtual water", "Supply chains"],
+  },
+  "radiazioni-luna-protezione-massa": {
+    title: "Lunar Radiation Shielding and the Spacecraft Mass Budget",
+    date: publicationDate,
+    excerpt:
+      "See how solar particle events and cosmic rays affect lunar mission design, and how materials already on board can help shield the crew.",
+    tags: ["Moon", "Radiation shielding", "Orion", "Mission design"],
+  },
+  "legge-little-code-tempi-attesa": {
+    title: "Little's Law for Queue Length and Wait Time",
+    date: publicationDate,
+    excerpt:
+      "Use L = λW to connect average throughput, time in the system and work in progress. A 12-jobs-per-minute example shows the units.",
+    tags: ["Engineering", "Queues", "Little's law", "Latency"],
+  },
+  "spreco-alimentare-misurare-prima": {
+    title: "Measuring Food Waste at Home",
+    date: publicationDate,
+    excerpt:
+      "Track what you throw away and why, then compare similar weeks to see whether changing shopping, storage or portion sizes helps.",
+    tags: ["Food waste", "Environment", "Measurement", "Households"],
+  },
+  "polvere-lunare-progettazione": {
+    title: "Lunar Dust and the Design of Surface Equipment",
+    date: publicationDate,
+    excerpt:
+      "See why abrasive lunar dust sticks to surfaces, affects seals and joints, and changes how equipment is tested and maintained.",
+    tags: ["Moon", "Lunar dust", "Regolith", "Engineering"],
+  },
 };

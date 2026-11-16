@@ -128,6 +128,32 @@ export const translatedArticleSlugs = {
   "web-audio-drum-machine-browser":
     "web-audio-drum-machine-kick-samples-timing",
   "web-audio-sequencer-step": "javascript-web-audio-step-sequencer",
+  "orion-controllo-termico-radiatori-vuoto":
+    "orion-thermal-control-radiators-in-space",
+  "raee-elettronica-fine-vita": "e-waste-electronics-reuse-and-recycling",
+  "ridondanza-guasti-correlati": "redundancy-and-correlated-failures",
+  "biodiversita-impollinatori-reti":
+    "pollinator-diversity-and-habitat-networks",
+  "navigazione-spaziale-posizione-orientamento":
+    "spacecraft-navigation-position-attitude",
+  "adr-decisioni-architetturali": "architecture-decision-records-adr-examples",
+  "rete-elettrica-flessibilita-domanda":
+    "electricity-grid-flexibility-storage-demand",
+  "deep-space-network-collegamento": "nasa-deep-space-network-how-it-works",
+  "lca-confini-unita-funzionale":
+    "life-cycle-assessment-functional-unit-boundary",
+  "finestre-lancio-luna-orbite": "lunar-launch-windows-and-orbital-geometry",
+  "alberi-citta-calore-progetto": "urban-trees-shade-heat-and-cooling",
+  "tolleranze-catena-dimensionale": "tolerance-stack-up-worst-case-assembly",
+  "riciclo-raccolta-qualita-materiale":
+    "recycling-collection-and-material-quality",
+  "punti-lagrange-equilibrio-instabile": "lagrange-points-l2-and-webb-orbit",
+  "campionamento-aliasing-segnali": "sampling-and-aliasing-in-signals",
+  "impronta-idrica-contesto": "virtual-water-footprint-blue-green-grey",
+  "radiazioni-luna-protezione-massa": "lunar-radiation-shielding-mass-budget",
+  "legge-little-code-tempi-attesa": "littles-law-queue-length-and-wait-time",
+  "spreco-alimentare-misurare-prima": "measuring-food-waste-at-home",
+  "polvere-lunare-progettazione": "lunar-dust-regolith-and-equipment-design",
 } as const;
 
 export const inventoryArticleRoutes = {
