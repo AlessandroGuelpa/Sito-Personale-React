@@ -100,6 +100,34 @@ export const translatedArticleSlugs = {
   "javascript-this-binding": "javascript-this-call-bind-arrow-functions",
   "rails-hotwire-turbo": "rails-hotwire-turbo-frames-streams",
   "rails-strong-parameters": "rails-strong-parameters-mass-assignment",
+  "velocita-della-luce-ping-e-content-delivery-network":
+    "cdn-caching-and-network-latency",
+  "javascript-metodi-array-essenziali":
+    "javascript-array-map-filter-reduce-find",
+  "javascript-destructuring":
+    "javascript-destructuring-defaults-null-undefined",
+  "javascript-prototipi-ereditarieta":
+    "javascript-prototype-chain-and-inheritance",
+  "javascript-generatori": "javascript-generators-yield-lazy-iteration",
+  "javascript-proxy-reflect": "javascript-proxy-reflect-traps-invariants",
+  "javascript-web-workers": "javascript-web-workers-background-computation",
+  "javascript-immutabilita-structuredclone":
+    "javascript-structuredclone-deep-copy-limits",
+  "rails-mvc-in-tre-minuti": "rails-mvc-model-view-controller",
+  "rails-stimulus-js-leggero": "rails-stimulus-controllers-targets-actions",
+  "rails-service-objects": "rails-service-objects-contracts-and-testing",
+  "rails-routing-restful": "rails-restful-routing-with-resources",
+  "rails-active-storage-allegati": "rails-active-storage-uploads-and-variants",
+  "rails-full-text-search-postgres": "postgresql-full-text-search-with-rails",
+  "sonic-pi-sample-libreria-integrata":
+    "sonic-pi-sample-library-rate-pan-stretch",
+  "sonic-pi-use-synth-scegliere-sintetizzatori":
+    "sonic-pi-use-synth-timbre-envelopes",
+  "sonic-pi-with-fx-effetti": "sonic-pi-with-fx-reverb-echo-distortion",
+  "sonic-pi-scale-accordi": "sonic-pi-scales-chords-and-arpeggios",
+  "web-audio-drum-machine-browser":
+    "web-audio-drum-machine-kick-samples-timing",
+  "web-audio-sequencer-step": "javascript-web-audio-step-sequencer",
 } as const;
 
 export const inventoryArticleRoutes = {
