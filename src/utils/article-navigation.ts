@@ -1,3 +1,5 @@
+import type { SiteLanguage } from "@/config/locales";
+
 // Operate on the parsed HTML tree so code fences, links and inline formatting
 // cannot create false headings or different labels in the index.
 interface ArticleNode {
@@ -20,7 +22,15 @@ function element(
   return { type: "element", tagName, properties, children };
 }
 
-export function rehypeArticleNavigation({ showOutline = false } = {}) {
+export function rehypeArticleNavigation({
+  language = "it",
+  showOutline = false,
+}: {
+  language?: SiteLanguage;
+  showOutline?: boolean;
+} = {}) {
+  const english = language === "en";
+
   return (tree: ArticleNode) => {
     const usedIds = new Map<string, number>();
     const headings: { id: string; label: string; nested: boolean }[] = [];
@@ -32,9 +42,9 @@ export function rehypeArticleNavigation({ showOutline = false } = {}) {
           label
             .normalize("NFKD")
             .replace(/\p{M}/gu, "")
-            .toLocaleLowerCase("it")
+            .toLocaleLowerCase(language)
             .replace(/[^\p{L}\p{N}]+/gu, "-")
-            .replace(/^-|-$/g, "") || "titolo";
+            .replace(/^-|-$/g, "") || (english ? "heading" : "titolo");
         const count = (usedIds.get(slug) ?? 0) + 1;
         const id = `sezione-${slug}${count > 1 ? `-${count}` : ""}`;
 
@@ -59,9 +69,14 @@ export function rehypeArticleNavigation({ showOutline = false } = {}) {
     const outline = element(
       "details",
       [
-        element("summary", [{ type: "text", value: "In questo articolo" }]),
+        element("summary", [
+          {
+            type: "text",
+            value: english ? "In this article" : "In questo articolo",
+          },
+        ]),
         element("nav", [element("ol", links)], {
-          "aria-label": "Indice dell’articolo",
+          "aria-label": english ? "Article outline" : "Indice dell’articolo",
         }),
       ],
       { className: ["article-outline", "not-prose"] },

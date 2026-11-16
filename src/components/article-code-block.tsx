@@ -1,11 +1,34 @@
 import type { ComponentProps } from "react";
+import type { SiteLanguage } from "@/config/locales";
 
 import { useEffect, useRef, useState } from "react";
 
+const codeCopy = {
+  it: {
+    label: "Codice",
+    example: "Codice dell’esempio",
+    copy: "Copia codice",
+    copied: "Copiato ✓",
+    announced: "Codice copiato negli appunti.",
+    error:
+      "Non riesco ad accedere agli appunti. Puoi selezionare e copiare il codice.",
+  },
+  en: {
+    label: "Code",
+    example: "Example code",
+    copy: "Copy code",
+    copied: "Copied ✓",
+    announced: "Code copied to the clipboard.",
+    error: "Clipboard access failed. You can select and copy the code.",
+  },
+};
+
 export function ArticleCodeBlock({
   children,
+  language,
   ...props
-}: ComponentProps<"pre">) {
+}: ComponentProps<"pre"> & { language: SiteLanguage }) {
+  const labels = codeCopy[language];
   const code = useRef<HTMLPreElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>();
   const [status, setStatus] = useState<"idle" | "copying" | "copied" | "error">(
@@ -29,14 +52,14 @@ export function ArticleCodeBlock({
   return (
     <div className="article-code-block">
       <div className="article-code-toolbar not-prose">
-        <span>Codice</span>
+        <span>{labels.label}</span>
         <button disabled={status === "copying"} type="button" onClick={copy}>
-          {status === "copied" ? "Copiato ✓" : "Copia codice"}
+          {status === "copied" ? labels.copied : labels.copy}
         </button>
       </div>
       <pre
         ref={code}
-        aria-label="Codice dell’esempio"
+        aria-label={labels.example}
         role="region"
         tabIndex={0}
         {...props}
@@ -44,12 +67,11 @@ export function ArticleCodeBlock({
         {children}
       </pre>
       <p className="sr-only" role="status">
-        {status === "copied" ? "Codice copiato negli appunti." : ""}
+        {status === "copied" ? labels.announced : ""}
       </p>
       {status === "error" && (
         <p className="article-code-error not-prose" role="status">
-          Non riesco ad accedere agli appunti. Puoi selezionare e copiare il
-          codice.
+          {labels.error}
         </p>
       )}
     </div>

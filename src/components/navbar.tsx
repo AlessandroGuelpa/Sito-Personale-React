@@ -3,24 +3,40 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/logo";
+import {
+  languageAlternates,
+  languageForPath,
+  portfolioRoutes,
+} from "@/config/locales";
+import { englishNavigation } from "@/config/site";
 
 import "@/styles/header.css";
 
-const navigation = [
+const italianNavigation = [
   { href: "/project", label: "Progetti" },
   { href: "/about", label: "Chi sono" },
   { href: "/blog", label: "Blog" },
   { href: "/sports", label: "Sport" },
   { href: "/vehrt", label: "VEHRT" },
 ];
-const mobileNavigation = [
-  ...navigation,
-  { href: "/contact", label: "Contatti" },
-];
-
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const language = languageForPath(location.pathname);
+  const english = language === "en";
+  const navigation = english ? englishNavigation : italianNavigation;
+  const contact = {
+    href: portfolioRoutes.contact[language],
+    label: english ? "Contact" : "Contatti",
+  };
+  const mobileNavigation = [...navigation, contact];
+  const alternates = languageAlternates(location.pathname);
+  const otherLanguage = english ? "it" : "en";
+  const languageLabel = english
+    ? "Read in Italian"
+    : alternates
+      ? "Leggi in inglese"
+      : "Vai alla home in inglese";
   const shell = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLElement>(null);
@@ -89,7 +105,7 @@ export function Navbar() {
           <Link
             aria-label="Alessandro Guelpa — home"
             className="header-brand"
-            to="/"
+            to={portfolioRoutes.home[language]}
             onClick={() => setOpen(false)}
           >
             <span aria-hidden="true" className="header-brand-mark">
@@ -103,7 +119,10 @@ export function Navbar() {
             </span>
           </Link>
 
-          <nav aria-label="Navigazione principale" className="header-primary">
+          <nav
+            aria-label={english ? "Main navigation" : "Navigazione principale"}
+            className="header-primary"
+          >
             {navigation.map((item) => (
               <NavLink key={item.href} className="header-link" to={item.href}>
                 {item.label}
@@ -112,13 +131,22 @@ export function Navbar() {
           </nav>
 
           <div className="header-actions">
-            <ThemeSwitch className="header-control" />
-            <NavLink
-              className="header-contact"
-              to="/contact"
+            <Link
+              aria-label={languageLabel}
+              className="header-control header-language"
+              hrefLang={otherLanguage}
+              to={(alternates ?? portfolioRoutes.home)[otherLanguage]}
               onClick={() => setOpen(false)}
             >
-              Contatti
+              {otherLanguage.toUpperCase()}
+            </Link>
+            <ThemeSwitch className="header-control" language={language} />
+            <NavLink
+              className="header-contact"
+              to={contact.href}
+              onClick={() => setOpen(false)}
+            >
+              {contact.label}
               <svg
                 aria-hidden="true"
                 fill="none"
@@ -137,7 +165,15 @@ export function Navbar() {
               ref={toggle}
               aria-controls="mobile-navigation"
               aria-expanded={open}
-              aria-label={open ? "Chiudi il menu" : "Apri il menu"}
+              aria-label={
+                open
+                  ? english
+                    ? "Close menu"
+                    : "Chiudi il menu"
+                  : english
+                    ? "Open menu"
+                    : "Apri il menu"
+              }
               className="header-control header-menu-toggle"
               type="button"
               onClick={() => setOpen((current) => !current)}
@@ -162,7 +198,7 @@ export function Navbar() {
 
         <nav
           ref={panel}
-          aria-label="Navigazione mobile"
+          aria-label={english ? "Mobile navigation" : "Navigazione mobile"}
           className="header-panel"
           hidden={!open}
           id="mobile-navigation"

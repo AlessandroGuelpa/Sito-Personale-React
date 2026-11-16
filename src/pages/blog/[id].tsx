@@ -1,6 +1,11 @@
 import type { BlogPost } from "@/data/blogPosts";
 import { effectiveArticleDates } from "@/utils/blog-dates";
 import { blogHubForPost, blogHubPath, getBlogHub } from "@/config/blog-hubs";
+import {
+  blogRoots,
+  portfolioRoutes,
+  type SiteLanguage,
+} from "@/config/locales";
 import type { BlogSummary } from "@/types/blog";
 
 import { useParams, Link } from "react-router-dom";
@@ -20,36 +25,42 @@ import { ArticleCodeBlock } from "@/components/article-code-block";
 import { rehypeArticleNavigation } from "@/utils/article-navigation";
 import "@/styles/reading.css";
 import {
-  SITE_URL,
   DEFAULT_OG_IMAGE,
   AUTHOR_NAME,
   buildExcerpt,
-  blogPostUrl,
   blogPostJsonLd,
   breadcrumbJsonLd,
   readingTimeMinutes,
+  sitePageUrl,
 } from "@/utils/seo";
 
 // Keep lazy component identities stable across initial Suspense retries.
 // Creating them inside the page can leave client navigation loading forever.
 const postPages = Object.fromEntries(
-  Object.entries(blogLoaders).map(([id, load]) => [
-    id,
+  Object.entries(blogLoaders).map(([path, load]) => [
+    path,
     lazy(async () => {
       const { post, relatedPosts } = await load();
 
       return {
-        default: () => <PostContent post={post} relatedPosts={relatedPosts} />,
+        default: () => (
+          <PostContent path={path} post={post} relatedPosts={relatedPosts} />
+        ),
       };
     }),
   ]),
 );
 
-export default function BlogPostPage() {
+export default function BlogPostPage({
+  language = "it",
+}: {
+  language?: SiteLanguage;
+}) {
   const { id } = useParams<{ id: string }>();
+  const path = `${blogRoots[language]}/${id}`;
   const Post =
-    id && Object.prototype.hasOwnProperty.call(postPages, id)
-      ? postPages[id]
+    id && Object.prototype.hasOwnProperty.call(postPages, path)
+      ? postPages[path]
       : null;
 
   if (!Post) return <NotFoundPage />;
@@ -57,31 +68,79 @@ export default function BlogPostPage() {
   return <Post />;
 }
 
+const articleCopy = {
+  it: {
+    back: "← Torna all’archivio",
+    readingTime: "min di lettura",
+    by: "Di",
+    updated: "Aggiornato il",
+    tags: "Argomenti",
+    authorLabel: "Informazioni sull'autore",
+    authorTitle: "Chi scrive",
+    authorBio:
+      "Alessandro Guelpa è uno sviluppatore web specializzato in ecommerce Shopify e integrazioni API. Il blog raccoglie approfondimenti tecnici e interessi personali, con esempi e riferimenti quando pertinenti.",
+    authorLink: "Esperienza, progetti e curriculum dell’autore →",
+  },
+  en: {
+    back: "← Back to the portfolio",
+    readingTime: "min read",
+    by: "By",
+    updated: "Updated on",
+    tags: "Topics",
+    authorLabel: "About the author",
+    authorTitle: "About the author",
+    authorBio:
+      "Alessandro Guelpa develops Shopify storefronts and works on API and ERP integrations. His writing covers the technical problems he encounters in development.",
+    authorLink: "Read about Alessandro’s experience →",
+  },
+};
+
+function formatArticleDate(date: string, language: SiteLanguage) {
+  return new Date(date).toLocaleDateString(
+    language === "en" ? "en-GB" : "it-IT",
+    {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
+    },
+  );
+}
+
 function PostContent({
+  path,
   post,
   relatedPosts,
 }: {
+  path: string;
   post: BlogPost;
   relatedPosts: BlogSummary[];
 }) {
+  const english = path.startsWith(`${blogRoots.en}/`);
+  const language = english ? "en" : "it";
+  const copy = articleCopy[language];
   const minutes = readingTimeMinutes(post.content);
   const { publishedAt, modifiedAt } = effectiveArticleDates(post);
-  const hub = getBlogHub(blogHubForPost(post));
+  const hub = english ? undefined : getBlogHub(blogHubForPost(post));
+  const homePath = portfolioRoutes.home[language];
+  const authorPath = portfolioRoutes.about[language];
+  const breadcrumbs = [
+    { name: "Home", url: sitePageUrl(homePath) },
+    ...(english ? [] : [{ name: "Blog", url: sitePageUrl(blogRoots.it) }]),
+    { name: post.title, url: sitePageUrl(path) },
+  ];
+
   return (
     <DefaultLayout>
       <PageSeo
         description={buildExcerpt(post)}
         image={post.coverImage ?? DEFAULT_OG_IMAGE}
-        path={`/blog/${post.id}`}
+        path={path}
         schema={{
           "@context": "https://schema.org",
           "@graph": [
-            blogPostJsonLd(post),
-            breadcrumbJsonLd([
-              { name: "Home", url: SITE_URL },
-              { name: "Blog", url: `${SITE_URL}/blog` },
-              { name: post.title, url: blogPostUrl(post.id) },
-            ]),
+            blogPostJsonLd(post, path, language),
+            breadcrumbJsonLd(breadcrumbs),
           ],
         }}
         title={post.title}
@@ -98,45 +157,60 @@ function PostContent({
       <article className="mx-auto max-w-3xl py-4 sm:py-8">
         <Link
           className="text-link mb-8 inline-flex min-h-11 items-center"
-          to="/blog"
+          to={english ? homePath : blogRoots.it}
         >
-          ← Torna all’archivio
+          {copy.back}
         </Link>
         <div className="mb-5 flex flex-wrap gap-3 text-sm text-zinc-600 dark:text-zinc-400">
           <time dateTime={post.date}>
-            {new Date(post.date).toLocaleDateString("it-IT", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-              timeZone: "UTC",
-            })}
+            {formatArticleDate(post.date, language)}
           </time>
-          <span>· {minutes} min di lettura</span>
+          <span>
+            · {minutes} {copy.readingTime}
+          </span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-black leading-tight tracking-tight">
           {post.title}
         </h1>
         <p className="mt-5 text-sm text-zinc-600 dark:text-zinc-400">
-          Di <Link className="text-link" to="/about" rel="author">{AUTHOR_NAME}</Link>
+          {copy.by}{" "}
+          <Link className="text-link" to={authorPath} rel="author">
+            {AUTHOR_NAME}
+          </Link>
           {post.updatedAt && post.updatedAt !== post.date ? (
-            <> · Aggiornato il <time dateTime={post.updatedAt}>{new Date(post.updatedAt).toLocaleDateString("it-IT", {day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})}</time></>
+            <>
+              {" "}
+              · {copy.updated}{" "}
+              <time dateTime={post.updatedAt}>
+                {formatArticleDate(post.updatedAt, language)}
+              </time>
+            </>
           ) : null}
         </p>
         {hub && (
           <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
-            Percorso: <Link className="text-link" to={blogHubPath(hub.slug)}>{hub.title}</Link>
+            Percorso:{" "}
+            <Link className="text-link" to={blogHubPath(hub.slug)}>
+              {hub.title}
+            </Link>
           </p>
         )}
         {post.tags?.length ? (
-          <ul aria-label="Argomenti" className="mt-6 flex flex-wrap gap-2">
+          <ul aria-label={copy.tags} className="mt-6 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
               <li key={tag}>
-                <Link
-                  className="tech-tag inline-flex min-h-9 items-center"
-                  to={`/blog?tag=${encodeURIComponent(tag)}`}
-                >
-                  {tag}
-                </Link>
+                {english ? (
+                  <span className="tech-tag inline-flex min-h-9 items-center">
+                    {tag}
+                  </span>
+                ) : (
+                  <Link
+                    className="tech-tag inline-flex min-h-9 items-center"
+                    to={`/blog?tag=${encodeURIComponent(tag)}`}
+                  >
+                    {tag}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
@@ -145,11 +219,14 @@ function PostContent({
           <ReactMarkdown
             components={{
               pre: ({ node: _node, ...props }) => (
-                <ArticleCodeBlock {...props} />
+                <ArticleCodeBlock {...props} language={language} />
               ),
             }}
             rehypePlugins={[
-              [rehypeArticleNavigation, { showOutline: minutes >= 3 }],
+              [
+                rehypeArticleNavigation,
+                { language, showOutline: minutes >= 3 },
+              ],
               rehypeKatex,
             ]}
             remarkPlugins={[remarkGfm, remarkMath]}
@@ -189,19 +266,25 @@ function PostContent({
             </ul>
           </section>
         )}
-        <aside className="mt-10 border-t border-zinc-200 pt-6 dark:border-zinc-800" aria-label="Informazioni sull'autore">
-          <h2 className="text-lg font-bold">Chi scrive</h2>
+        <aside
+          className="mt-10 border-t border-zinc-200 pt-6 dark:border-zinc-800"
+          aria-label={copy.authorLabel}
+        >
+          <h2 className="text-lg font-bold">{copy.authorTitle}</h2>
           <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Alessandro Guelpa è uno sviluppatore web specializzato in ecommerce Shopify e integrazioni API.
-            Il blog raccoglie approfondimenti tecnici e interessi personali, con esempi e riferimenti quando pertinenti.
+            {copy.authorBio}
           </p>
-          <Link className="text-link mt-3 inline-flex" to="/about">Esperienza, progetti e curriculum dell’autore →</Link>
-        </aside>
-        <div className="mt-10 border-t border-zinc-200 pt-6 dark:border-zinc-800">
-          <Link className="text-link" to="/blog">
-            ← Altri articoli dal blog
+          <Link className="text-link mt-3 inline-flex" to={authorPath}>
+            {copy.authorLink}
           </Link>
-        </div>
+        </aside>
+        {!english && (
+          <div className="mt-10 border-t border-zinc-200 pt-6 dark:border-zinc-800">
+            <Link className="text-link" to={blogRoots.it}>
+              ← Altri articoli dal blog
+            </Link>
+          </div>
+        )}
       </article>
     </DefaultLayout>
   );

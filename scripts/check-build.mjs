@@ -3,29 +3,53 @@ import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
 
 const dist = path.resolve("dist");
+const siteUrl = "https://alessandroguelpa.it";
 const routes = JSON.parse(
   await readFile(path.join(dist, "prerender-routes.json"), "utf8"),
 );
+const alternatesByRoute = new Map();
+for (const [it, en] of [
+  ["/", "/en"],
+  ["/project", "/en/projects"],
+  ["/about", "/en/about"],
+  ["/contact", "/en/contact"],
+  ["/blog/shopify-inventario-scritture-concorrenti", "/en/blog/shopify-erp-inventory-sync"],
+]) {
+  const alternates = { it: `${siteUrl}${it === "/" ? "" : it}`, en: `${siteUrl}${en}` };
+  assert(routes.includes(it) && routes.includes(en), `Missing translated routes: ${it} and ${en}`);
+  alternatesByRoute.set(it, alternates);
+  alternatesByRoute.set(en, alternates);
+}
 const titles = new Set();
-let checkedAssets = new Set();
+const checkedAssets = new Set();
 for (const route of [...routes, "/404"]) {
   const file = route === "/" ? "index.html" : `${route.slice(1)}.html`;
   const html = await readFile(path.join(dist, file), "utf8");
-  const title = html.match(/<title[^>]*>([\s\S]*?)<\/title>/)?.[1];
+  const head = html.split("</head>", 1)[0];
+  const title = head.match(/<title[^>]*>([\s\S]*?)<\/title>/)?.[1];
   assert(title, `Missing title: ${route}`);
   assert(!titles.has(title), `Duplicate title: ${route}`);
   titles.add(title);
+  const canonical = head.match(/<link\b[^>]*\brel="canonical"[^>]*>/g) ?? [];
+  assert.equal(canonical.length, 1, `Canonical count: ${route}`);
   assert.equal(
-    (html.match(/rel="canonical"/g) || []).length,
-    1,
-    `Canonical count: ${route}`,
-  );
-  assert(
-    html.includes(
-      `href="https://alessandroguelpa.it${route === "/" ? "" : route}"`,
-    ),
+    canonical[0].match(/\bhref="([^"]+)"/)?.[1],
+    `${siteUrl}${route === "/" ? "" : route}`,
     `Canonical URL: ${route}`,
   );
+  const alternates = [...head.matchAll(/<link\b[^>]*\bhreflang="([^"]+)"[^>]*>/gi)];
+  const expectedAlternates = alternatesByRoute.get(route);
+  assert.equal(alternates.length, expectedAlternates ? 2 : 0, `Language alternate count: ${route}`);
+  if (expectedAlternates) {
+    for (const [tag, language] of alternates) {
+      assert.equal(tag.match(/\brel="([^"]+)"/)?.[1], "alternate");
+      assert.equal(tag.match(/\bhref="([^"]+)"/)?.[1], expectedAlternates[language], `Language alternate URL: ${route} (${language})`);
+    }
+    assert.equal(new Set(alternates.map(([, language]) => language)).size, 2, `Duplicate language alternate: ${route}`);
+    const language = route.startsWith("/en") ? "en" : "it";
+    assert.match(html, new RegExp(`<html\\b[^>]*\\blang="${language}"`), `Document language: ${route}`);
+    assert.match(head, /name="robots"[^>]*content="index, follow|content="index, follow[^>]*name="robots"/, `Indexable route: ${route}`);
+  }
   assert.equal(
     (html.match(/<h1(?:\s|>)/g) || []).length,
     1,
@@ -52,7 +76,8 @@ for (const route of [...routes, "/404"]) {
     /<script[^>]+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
   ))
     JSON.parse(json);
-  if (route.startsWith("/blog/") && !route.startsWith("/blog/temi/") && !route.startsWith("/blog/page/")) {
+  const englishArticle = route.startsWith("/en/blog/");
+  if (englishArticle || (route.startsWith("/blog/") && !route.startsWith("/blog/temi/") && !route.startsWith("/blog/page/"))) {
     const sectionIds = [...html.matchAll(/id="(sezione-[^"]+)"/g)].map((match) => match[1]);
     assert.equal(new Set(sectionIds).size, sectionIds.length, `Duplicate article anchors: ${route}`);
     for (const [, target] of html.matchAll(/href="#(sezione-[^"]+)"/g)) {
@@ -64,13 +89,17 @@ for (const route of [...routes, "/404"]) {
       ),
       `Article metadata: ${route}`,
     );
+    if (englishArticle) {
+      assert(html.includes('"inLanguage":"en"'), `Article schema language: ${route}`);
+      assert(html.includes("changeFromQuantity"), `Translated article body: ${route}`);
+    }
   }
   if (route === "/404")
     assert(html.includes('content="noindex, follow"'), "404 must be noindex");
 }
 const sitemap = await readFile(path.join(dist, "sitemap.xml"), "utf8");
 for (const route of routes) {
-  assert(sitemap.includes(`<loc>https://alessandroguelpa.it${route === "/" ? "" : route}</loc>`), `Sitemap missing route: ${route}`);
+  assert(sitemap.includes(`<loc>${siteUrl}${route === "/" ? "" : route}</loc>`), `Sitemap missing route: ${route}`);
 }
 for (const route of routes.filter(route => route.startsWith("/blog/temi/") || route.startsWith("/blog/page/"))) {
   const html = await readFile(path.join(dist, `${route.slice(1)}.html`), "utf8");

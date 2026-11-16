@@ -9,6 +9,8 @@ try {
   assert(url, "Preview server must announce its URL");
   const cases = [
     ["/", 200], ["/project", 200], ["/about", 200], ["/contact", 200], ["/blog", 200], ["/blog/page/2", 200], ["/blog/temi/shopify-integrazioni", 200], ["/blog/temi/scienza-passioni", 200], ["/sports", 200], ["/vehrt", 200],
+    ["/en", 200], ["/en/projects", 200], ["/en/about", 200], ["/en/contact", 200],
+    ["/en/blog/shopify-erp-inventory-sync", 200], ["/en/blog/not-a-real-post", 404],
     ["/blog/principio-di-archimede-e-i-container-docker", 200], ["/not-a-real-page", 404], ["/blog/not-a-real-post", 404],
     ["/dj-qbit", 308, "/vehrt"], ["/projects", 308, "/project"], ["/compiler", 308, "/"], ["/javascript-compiler", 308, "/"],
     ["/assets/missing.js", 404],

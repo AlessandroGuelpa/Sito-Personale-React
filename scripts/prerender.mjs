@@ -21,9 +21,10 @@ function assetsFor(key, seen = new Set()) {
   return result;
 }
 function pageKey(route) {
-  if (route.startsWith("/blog/page/") || route.startsWith("/blog/temi/")) return "src/pages/blog/index.tsx";
-  if (route.startsWith("/blog/")) return "src/pages/blog/[id].tsx";
-  return ({ "/": "src/pages/index.tsx", "/project": "src/pages/proj.tsx", "/about": "src/pages/about.tsx", "/contact": "src/pages/contact.tsx", "/blog": "src/pages/blog/index.tsx", "/sports": "src/pages/sports.tsx", "/vehrt": "src/pages/vehrt.tsx" })[route] ?? "src/pages/not-found.tsx";
+  const baseRoute = route === "/en" ? "/" : route.replace(/^\/en\//, "/");
+  if (baseRoute.startsWith("/blog/page/") || baseRoute.startsWith("/blog/temi/")) return "src/pages/blog/index.tsx";
+  if (baseRoute.startsWith("/blog/")) return "src/pages/blog/[id].tsx";
+  return ({ "/": "src/pages/index.tsx", "/project": "src/pages/proj.tsx", "/projects": "src/pages/proj.tsx", "/about": "src/pages/about.tsx", "/contact": "src/pages/contact.tsx", "/blog": "src/pages/blog/index.tsx", "/sports": "src/pages/sports.tsx", "/vehrt": "src/pages/vehrt.tsx" })[baseRoute] ?? "src/pages/not-found.tsx";
 }
 // Inline styles used in the prerendered homepage; load the remaining CSS
 // asynchronously without changing how other routes receive their styles.
@@ -47,7 +48,7 @@ for (const route of [...routes, "/404"]) {
   const existingJs = new Set(assetsFor("src/main.tsx").js);
   const preload = [...new Set(assets.js)].filter(file => !existingJs.has(file)).map(file => `<link rel="modulepreload" crossorigin href="/${file}">`).join("\n");
   let document = template.replace('<html lang="it">', `<html ${attributes}>`).replace("<!--app-head-->", () => `${head}\n${css}\n${preload}`).replace("<!--app-html-->", () => html);
-  if (route === "/") {
+  if (route === "/" || route === "/en") {
     document = await homeCriticalCss.process(document);
   }
   const file = route === "/" ? "index.html" : `${route.slice(1)}.html`;

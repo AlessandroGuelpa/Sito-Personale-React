@@ -143,6 +143,11 @@
   color: var(--header-strong);
 }
 
+.header-language {
+  font-size: 13px;
+  font-weight: 700;
+}
+
 .header-contact {
   display: inline-flex;
   align-items: center;

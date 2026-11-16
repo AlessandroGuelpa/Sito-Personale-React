@@ -1,15 +1,33 @@
 import { Link } from "react-router-dom";
 
 import { projects, type Project } from "@/data/projects";
+import { portfolioRoutes, type SiteLanguage } from "@/config/locales";
 import { trackEvent } from "@/utils/analytics";
 
 export function ProjectCard({
   project,
+  language,
   detailed = false,
 }: {
   project: Project;
+  language: SiteLanguage;
   detailed?: boolean;
 }) {
+  const english = language === "en";
+  const copy = english ? project.english : project;
+  const title = (english && project.english.title) || project.title;
+  const detailRows = english
+    ? [
+        ["Goal", copy.problem],
+        ["Approach", copy.approach],
+        ["What’s available", copy.outcome],
+      ]
+    : [
+        ["Obiettivo", copy.problem],
+        ["Il lavoro", copy.approach],
+        ["Cosa puoi vedere", copy.outcome],
+      ];
+
   return (
     <article className="surface-card overflow-hidden" id={project.id}>
       <div
@@ -50,10 +68,14 @@ export function ProjectCard({
         ) : (
           <div className="w-full px-7 sm:px-10">
             <span className="block text-xs font-semibold uppercase tracking-[0.25em] opacity-75">
-              {project.cover === "launch" ? "React + Rails" : "Design + codice"}
+              {project.cover === "launch"
+                ? "React + Rails"
+                : english
+                  ? "Design + code"
+                  : "Design + codice"}
             </span>
             <span className="mt-4 block text-3xl sm:text-4xl font-black tracking-tight leading-tight">
-              {project.title}
+              {title}
             </span>
             <span className="mt-6 block h-1 w-14 rounded-full bg-white/70" />
           </div>
@@ -61,15 +83,16 @@ export function ProjectCard({
       </div>
       <div className="p-6 sm:p-8">
         <p className="text-xs font-semibold uppercase tracking-wider text-violet-700 dark:text-violet-400">
-          {project.kind}
+          {copy.kind}
         </p>
-        <h3 className="mt-3 text-2xl font-bold tracking-tight">
-          {project.title}
-        </h3>
+        <h3 className="mt-3 text-2xl font-bold tracking-tight">{title}</h3>
         <p className="mt-3 leading-relaxed text-zinc-600 dark:text-zinc-300">
-          {project.description}
+          {copy.description}
         </p>
-        <ul aria-label="Tecnologie" className="mt-5 flex flex-wrap gap-2">
+        <ul
+          aria-label={english ? "Technologies" : "Tecnologie"}
+          className="mt-5 flex flex-wrap gap-2"
+        >
           {project.stack.map((tech) => (
             <li key={tech} className="tech-tag">
               {tech}
@@ -79,14 +102,10 @@ export function ProjectCard({
         {detailed && (
           <details className="mt-6 border-t border-zinc-200 pt-5 dark:border-zinc-800">
             <summary className="cursor-pointer font-semibold text-violet-700 dark:text-violet-400">
-              Contesto e soluzione
+              {english ? "Context and solution" : "Contesto e soluzione"}
             </summary>
             <dl className="mt-5 space-y-4 text-sm leading-relaxed">
-              {[
-                ["Obiettivo", project.problem],
-                ["Il lavoro", project.approach],
-                ["Cosa puoi vedere", project.outcome],
-              ].map(([label, text]) => (
+              {detailRows.map(([label, text]) => (
                 <div key={label}>
                   <dt className="font-bold">{label}</dt>
                   <dd className="mt-1 text-zinc-600 dark:text-zinc-300">
@@ -99,6 +118,7 @@ export function ProjectCard({
         )}
         <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
           {project.links.map((link) => {
+            const label = english ? link.englishLabel : link.label;
             const props = {
               className:
                 "inline-flex min-h-11 items-center gap-2 text-sm font-bold text-violet-700 hover:underline dark:text-violet-400",
@@ -111,7 +131,7 @@ export function ProjectCard({
 
             return link.href.startsWith("/") ? (
               <Link key={link.href} {...props} to={link.href}>
-                {link.label} <span aria-hidden="true">→</span>
+                {label} <span aria-hidden="true">→</span>
               </Link>
             ) : (
               <a
@@ -121,8 +141,10 @@ export function ProjectCard({
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                {link.label} <span aria-hidden="true">↗</span>
-                <span className="sr-only"> (nuova scheda)</span>
+                {label} <span aria-hidden="true">↗</span>
+                <span className="sr-only">
+                  {english ? " (opens in a new tab)" : " (nuova scheda)"}
+                </span>
               </a>
             );
           })}
@@ -132,25 +154,33 @@ export function ProjectCard({
   );
 }
 
-export function FeaturedProjects() {
+export function FeaturedProjects({ language }: { language: SiteLanguage }) {
+  const english = language === "en";
+
   return (
     <section aria-labelledby="featured-title" className="section-space">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
         <div>
-          <p className="eyebrow">Dal codice al progetto</p>
+          <p className="eyebrow">
+            {english ? "Portfolio" : "Dal codice al progetto"}
+          </p>
           <h2 className="section-title" id="featured-title">
-            Lavori da esplorare
+            {english ? "Selected projects" : "Lavori da esplorare"}
           </h2>
         </div>
-        <Link className="text-link" to="/project">
-          Tutti i progetti →
+        <Link className="text-link" to={portfolioRoutes.projects[language]}>
+          {english ? "All projects" : "Tutti i progetti"} →
         </Link>
       </div>
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {projects
           .filter((project) => project.featured)
           .map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ProjectCard
+              key={project.id}
+              language={language}
+              project={project}
+            />
           ))}
       </div>
     </section>

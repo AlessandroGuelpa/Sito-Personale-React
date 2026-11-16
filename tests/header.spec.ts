@@ -148,6 +148,39 @@ test("the Blog link stays active while reading an article", async ({
   ).toHaveAttribute("aria-current", "page");
 });
 
+test("language links open the equivalent page and update the document", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 720 });
+  await page.goto("/project", { waitUntil: "networkidle" });
+  const header = page.getByRole("banner");
+  const english = header.getByRole("link", { name: "Leggi in inglese" });
+  await expect(english).toHaveAttribute("href", "/en/projects");
+  await english.click();
+  await expect(page).toHaveURL(/\/en\/projects$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://alessandroguelpa.it/en/projects",
+  );
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Projects and the code behind them.",
+  );
+  await expect(header.getByRole("link", { name: "Contact", exact: true })).toBeVisible();
+
+  await page.getByRole("link", { name: /Read about Shopify–ERP inventory sync/ }).click();
+  await expect(page).toHaveURL(/\/en\/blog\/shopify-erp-inventory-sync$/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "Handling Concurrent Stock Updates",
+  );
+  await header.getByRole("link", { name: "Read in Italian" }).click();
+  await expect(page).toHaveURL(/\/blog\/shopify-inventario-scritture-concorrenti$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "it");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "riconciliazione delle scorte",
+  );
+});
+
 test("light and dark desktop previews and persistent theme", async ({
   page,
 }, testInfo) => {

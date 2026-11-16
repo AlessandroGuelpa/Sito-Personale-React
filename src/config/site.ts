@@ -1,4 +1,13 @@
+import { inventoryArticleRoutes, portfolioRoutes } from "./locales";
+
 export type SiteConfig = typeof siteConfig;
+
+export const englishNavigation = [
+  { href: portfolioRoutes.projects.en, label: "Projects" },
+  { href: portfolioRoutes.about.en, label: "About" },
+  { href: inventoryArticleRoutes.en, label: "Writing" },
+  { href: "/vehrt", label: "VEHRT" },
+];
 
 export const siteConfig = {
   name: "Alessandro Guelpa",

@@ -36,6 +36,7 @@ giornaliero Claude è stato ritirato.
 - Instagram VEHRT: `src/components/instagram-feed.tsx` mostra gli ultimi sei post pubblicati da `@vehrt_audio`. Le copertine sono salvate in `public/vehrt/instagram`, con dimensioni reali nel file `src/data/instagram-feed.json`: nessun ritaglio, deformazione o filtro sulle immagini. I reel e i caroselli si aprono su Instagram; su mobile la galleria scorre orizzontalmente. Nessun SDK social o token viene inviato al browser.
 - Sincronizzazione Instagram: la procedura in `docs/instagram-feed-sync.md` usa il collegamento Metricool autorizzato di Alessandro e una programmazione ChatGPT giornaliera. Il sito conserva l’ultimo feed valido se la fonte è vuota, incompleta o non disponibile. I contenuti nuovi compaiono dopo la sincronizzazione di Metricool e il deploy Vercel; non è un aggiornamento istantaneo né un job ospitato sul sito.
 - Metadati: `PageSeo` per le pagine del portfolio; metadati dedicati per VEHRT. La sitemap viene generata nella build.
+- Versione inglese: `src/config/locales.ts` collega le pagine equivalenti per navigazione e `hreflang`. Le pagine del portfolio e l’articolo in `src/data/blogPosts.en.ts` vengono prerenderizzati e inseriti nella sitemap.
 - Nuove pagine: aggiungere la rotta in `src/App.tsx`, nella lista del plugin di Vite e nella mappa di `scripts/prerender.mjs`.
 
 ## Controlli

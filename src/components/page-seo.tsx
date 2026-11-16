@@ -1,6 +1,11 @@
 import { Helmet } from "react-helmet-async";
 
-import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/utils/seo";
+import {
+  languageAlternates,
+  languageForPath,
+  siteLanguages,
+} from "@/config/locales";
+import { DEFAULT_OG_IMAGE, SITE_NAME, sitePageUrl } from "@/utils/seo";
 
 export function PageSeo({
   title,
@@ -19,12 +24,14 @@ export function PageSeo({
   noindex?: boolean;
   schema?: unknown;
 }) {
-  const url = `${SITE_URL}${path === "/" ? "" : path}`;
+  const url = sitePageUrl(path);
   const pageTitle = `${title} | ${SITE_NAME}`;
+  const language = languageForPath(path);
+  const alternates = noindex ? undefined : languageAlternates(path);
 
   return (
     <Helmet>
-      <html lang="it" />
+      <html lang={language} />
       <title>{pageTitle}</title>
       <meta content={description} name="description" />
       <meta
@@ -34,12 +41,24 @@ export function PageSeo({
         name="robots"
       />
       <link href={url} rel="canonical" />
+      {alternates &&
+        siteLanguages.map((alternateLanguage) => (
+          <link
+            key={alternateLanguage}
+            href={sitePageUrl(alternates[alternateLanguage])}
+            hrefLang={alternateLanguage}
+            rel="alternate"
+          />
+        ))}
       <meta content={SITE_NAME} property="og:site_name" />
       <meta content={pageTitle} property="og:title" />
       <meta content={description} property="og:description" />
       <meta content={url} property="og:url" />
       <meta content={type} property="og:type" />
-      <meta content="it_IT" property="og:locale" />
+      <meta
+        content={language === "en" ? "en_GB" : "it_IT"}
+        property="og:locale"
+      />
       <meta content={image} property="og:image" />
       {image === DEFAULT_OG_IMAGE && (
         <meta content="1200" property="og:image:width" />
