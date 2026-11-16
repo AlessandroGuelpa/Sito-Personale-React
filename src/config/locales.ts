@@ -154,6 +154,39 @@ export const translatedArticleSlugs = {
   "legge-little-code-tempi-attesa": "littles-law-queue-length-and-wait-time",
   "spreco-alimentare-misurare-prima": "measuring-food-waste-at-home",
   "polvere-lunare-progettazione": "lunar-dust-regolith-and-equipment-design",
+  "feedback-controllo-ritardi-oscillazioni":
+    "feedback-control-delay-and-oscillation",
+  "elettricita-intensita-carbonica": "electricity-carbon-intensity-per-kwh",
+  "margine-progetto-budget-capacita":
+    "engineering-design-margin-capacity-budget",
+  "luna-latenza-comunicazioni": "earth-moon-communication-latency",
+  "misure-incertezza-cifre-decimali":
+    "measurement-uncertainty-and-decimal-places",
+  "riparabilita-progetto-prodotti": "product-repairability-design-and-support",
+  "orion-rientro-scudo-termico": "orion-reentry-ablative-heat-shield",
+  "verifica-validazione-requisiti": "verification-and-validation-requirements",
+  "principio-di-archimede-e-i-container-docker":
+    "docker-containers-images-and-dependencies",
+  "principio-di-inerzia-e-la-sindrome-del-non-toccare":
+    "legacy-code-refactoring-without-regressions",
+  "radiazione-di-fondo-e-il-cimitero-dei-console-log":
+    "javascript-structured-logging-and-correlation",
+  "gatto-di-schrodinger-e-allucinazioni-ia":
+    "verify-ai-generated-code-and-suggestions",
+  "principio-di-esclusione-di-pauli-e-i-conflitti-git":
+    "git-merge-conflicts-preserve-both-changes",
+  "legge-di-gravitazione-universale-e-i-legacy-code":
+    "legacy-code-module-coupling",
+  "non-puoi-negoziare-con-la-gravita-space-force-e-le-scadenze-assurde":
+    "software-estimation-deadlines-scope-and-risk",
+  "entropia-del-codice": "technical-debt-and-maintainability",
+  "effetto-osservatore-fisica-quantistica-e-l-arte-del-debugging":
+    "debugging-reproducible-bugs-and-race-conditions",
+  "la-sindrome-del-funzionava-sulla-mia-macchina":
+    "works-locally-fails-production-debug-deploy",
+  "chi-ha-scritto-questa-roba": "documenting-code-to-reduce-technical-debt",
+  "i-messaggi-di-errore-non-ti-stanno-giudicando":
+    "reading-javascript-errors-stack-traces",
 } as const;
 
 export const inventoryArticleRoutes = {

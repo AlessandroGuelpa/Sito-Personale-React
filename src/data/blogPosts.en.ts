@@ -780,4 +780,154 @@ export const englishBlogMetadata: Record<
       "See why abrasive lunar dust sticks to surfaces, affects seals and joints, and changes how equipment is tested and maintained.",
     tags: ["Moon", "Lunar dust", "Regolith", "Engineering"],
   },
+  "feedback-controllo-ritardi-oscillazioni": {
+    title: "Feedback Control, Delay and Oscillation",
+    date: publicationDate,
+    excerpt:
+      "See why delayed feedback can overshoot a target and how to test one adjustment at a time, from a thermostat to a job queue.",
+    tags: ["Engineering", "Feedback", "Control systems", "Latency"],
+  },
+  "elettricita-intensita-carbonica": {
+    title: "Electricity Carbon Intensity per Kilowatt-Hour",
+    date: publicationDate,
+    excerpt:
+      "Convert electricity use to estimated CO₂e and check what the emission factor covers by time, location and generation mix.",
+    tags: ["Electricity", "Carbon intensity", "Emissions", "Energy"],
+  },
+  "margine-progetto-budget-capacita": {
+    title: "Engineering Design Margin and Capacity Budgets",
+    date: publicationDate,
+    excerpt:
+      "Calculate remaining headroom and document the conditions behind it. A memory budget example shows why the denominator and workload matter.",
+    tags: ["Engineering", "Design margin", "Capacity", "Systems engineering"],
+  },
+  "luna-latenza-comunicazioni": {
+    title: "Earth–Moon Communication Latency",
+    date: publicationDate,
+    excerpt:
+      "Estimate the 1.3-second signal delay each way, distinguish latency from bandwidth, and design remote operations around the wait.",
+    tags: ["Moon", "Space communications", "Latency", "Engineering"],
+  },
+  "misure-incertezza-cifre-decimali": {
+    title: "Measurement Uncertainty and Decimal Places",
+    date: publicationDate,
+    excerpt:
+      "Distinguish resolution, repeatability and uncertainty, then report benchmark results with conditions and meaningful precision.",
+    tags: ["Engineering", "Measurement", "Uncertainty", "Benchmarking"],
+  },
+  "riparabilita-progetto-prodotti": {
+    title: "Product Repairability Starts at the Design Stage",
+    date: publicationDate,
+    excerpt:
+      "Compare how products handle a worn connector or battery, including access, parts, tools, instructions and software support.",
+    tags: [
+      "Repairability",
+      "Product design",
+      "Electronics",
+      "Circular economy",
+    ],
+  },
+  "orion-rientro-scudo-termico": {
+    title: "Orion Re-Entry and the Ablative Heat Shield",
+    date: publicationDate,
+    excerpt:
+      "See how return speed, atmospheric compression, an ablative heat shield and the flight path shape Orion's re-entry heating.",
+    tags: ["Orion", "Artemis", "Heat shield", "Re-entry"],
+  },
+  "verifica-validazione-requisiti": {
+    title: "Verification and Validation of Requirements",
+    date: publicationDate,
+    excerpt:
+      "Use a CSV export example to check both specification conformance and whether users can complete the real task in their environment.",
+    tags: ["Engineering", "Verification", "Validation", "Requirements"],
+  },
+  "principio-di-archimede-e-i-container-docker": {
+    title: "Docker Containers, Images and Reproducible Builds",
+    date: publicationDate,
+    excerpt:
+      "Package an application with its runtime and dependencies, then handle configuration, secrets and persistent data at runtime.",
+    tags: ["Docker", "Containers", "Deployment", "CI"],
+  },
+  "principio-di-inerzia-e-la-sindrome-del-non-toccare": {
+    title: "Changing Legacy Code Without Regressions",
+    date: publicationDate,
+    excerpt:
+      "Capture existing behaviour with characterisation tests, make one small change, and decide when a gradual replacement is warranted.",
+    tags: ["Legacy code", "Refactoring", "Testing", "Engineering"],
+  },
+  "radiazione-di-fondo-e-il-cimitero-dei-console-log": {
+    title: "JavaScript Logging with Structured Events",
+    date: publicationDate,
+    excerpt:
+      "Structure logs by event, outcome and correlation ID. Use metrics to spot patterns and keep personal data and credentials out of logs.",
+    tags: ["JavaScript", "Logging", "Observability", "OpenTelemetry"],
+  },
+  "gatto-di-schrodinger-e-allucinazioni-ia": {
+    title: "How to Verify AI-Generated Code and Suggestions",
+    date: publicationDate,
+    excerpt:
+      "Check library versions and edge cases, run tests against the actual requirement, and review generated code before it changes data.",
+    tags: ["AI", "Code review", "Testing", "Software engineering"],
+  },
+  "principio-di-esclusione-di-pauli-e-i-conflitti-git": {
+    title: "Resolving Git Merge Conflicts Without Losing Work",
+    date: publicationDate,
+    excerpt:
+      "Read conflict markers and diffs, combine the intended changes, and test the resulting behaviour before updating a shared branch.",
+    tags: ["Git", "Merge conflicts", "Code review", "Testing"],
+  },
+  "legge-di-gravitazione-universale-e-i-legacy-code": {
+    title: "Reducing Coupling Between Legacy Code Modules",
+    date: publicationDate,
+    excerpt:
+      "Trace a request's dependencies, isolate a remote service behind a clear contract, and verify the behaviour of each small refactor.",
+    tags: ["Legacy code", "Refactoring", "Coupling", "Architecture"],
+  },
+  "non-puoi-negoziare-con-la-gravita-space-force-e-le-scadenze-assurde": {
+    title: "Software Estimation for Deadlines, Scope and Risk",
+    date: publicationDate,
+    excerpt:
+      "Estimate integration and verification work, communicate uncertainty, and decide what an ecommerce release can safely defer.",
+    tags: ["Software engineering", "Estimation", "Risk", "Project planning"],
+  },
+  "entropia-del-codice": {
+    title: "Technical Debt and Software Maintainability",
+    date: publicationDate,
+    excerpt:
+      "Prioritise technical debt by change frequency, dependencies and regressions. Set a testable goal before refactoring a module.",
+    tags: [
+      "Software engineering",
+      "Technical debt",
+      "Refactoring",
+      "Maintainability",
+    ],
+  },
+  "effetto-osservatore-fisica-quantistica-e-l-arte-del-debugging": {
+    title: "Debugging Reproducible Bugs and Race Conditions",
+    date: publicationDate,
+    excerpt:
+      "Reduce a bug to a small case, test one hypothesis at a time, and reproduce out-of-order requests without relying on breakpoints.",
+    tags: ["Debugging", "Race conditions", "Testing", "Observability"],
+  },
+  "la-sindrome-del-funzionava-sulla-mia-macchina": {
+    title: "Debugging a Deployment That Only Fails in Production",
+    date: publicationDate,
+    excerpt:
+      "Compare local, preview and production builds. Check direct routes, generated assets, environment variables and API failures.",
+    tags: ["Deployment", "Vite", "Debugging", "Environment variables"],
+  },
+  "chi-ha-scritto-questa-roba": {
+    title: "Documenting Code to Reduce Technical Debt",
+    date: publicationDate,
+    excerpt:
+      "Preserve the decisions and contracts that maintainers need, using a Rails order import to illustrate inputs, side effects and retries.",
+    tags: ["Technical debt", "Documentation", "Refactoring", "Rails"],
+  },
+  "i-messaggi-di-errore-non-ti-stanno-giudicando": {
+    title: "Reading JavaScript Errors and Stack Traces",
+    date: publicationDate,
+    excerpt:
+      "Trace a React blank screen from a TypeError to the missing data, then reproduce it and test the expected loading or error state.",
+    tags: ["JavaScript", "Errors", "Stack traces", "Debugging"],
+  },
 };
