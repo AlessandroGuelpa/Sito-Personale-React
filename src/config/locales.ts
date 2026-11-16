@@ -187,6 +187,29 @@ export const translatedArticleSlugs = {
   "chi-ha-scritto-questa-roba": "documenting-code-to-reduce-technical-debt",
   "i-messaggi-di-errore-non-ti-stanno-giudicando":
     "reading-javascript-errors-stack-traces",
+  "la-paperella-di-gomma-e-larte-di-sentirsi-stupidi":
+    "rubber-duck-debugging-from-explanation-to-test",
+  "quando-luniverso-ti-cambia-le-variabili-in-produzione":
+    "environment-variables-build-runtime-production",
+  "ruby-tutto-e-un-oggetto": "ruby-objects-methods-classes-and-identity",
+  "ruby-blocchi-proc-lambda": "ruby-blocks-procs-and-lambdas",
+  "ruby-enumerable-map-select-reduce": "ruby-enumerable-map-select-and-reduce",
+  "ruby-symbol-vs-string": "ruby-symbol-vs-string-hash-keys",
+  "ruby-hash-metodi-utili": "ruby-hash-fetch-dig-and-defaults",
+  "ruby-metaprogrammazione-basi":
+    "ruby-metaprogramming-define-method-method-missing",
+  "ruby-pattern-matching": "ruby-pattern-matching-with-case-in",
+  "ruby-duck-typing": "ruby-duck-typing-and-behavioural-contracts",
+  "ruby-moduli-mixin": "ruby-modules-mixins-include-prepend-extend",
+  "ruby-gestione-errori": "ruby-exception-handling-rescue-ensure",
+  "ruby-creare-una-gem": "create-a-ruby-gem-packaging-and-versions",
+  "ruby-rspec-testare": "ruby-rspec-tests-for-public-behaviour",
+  "ruby-ractor-concorrenza": "ruby-ractors-parallelism-and-isolation",
+  "ruby-ampersand-symbol-shorthand": "ruby-symbol-to-proc-ampersand-shorthand",
+  "ruby-comparable-enumerable-custom": "ruby-comparable-spaceship-operator",
+  "ruby-stringhe-gsub-regex": "ruby-string-gsub-regex-edge-cases",
+  "ruby-benchmark-misurare": "ruby-benchmark-reproducible-measurements",
+  "ruby-programmazione-funzionale": "ruby-then-curry-function-composition",
 } as const;
 
 export const inventoryArticleRoutes = {

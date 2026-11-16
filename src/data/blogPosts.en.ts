@@ -930,4 +930,149 @@ export const englishBlogMetadata: Record<
       "Trace a React blank screen from a TypeError to the missing data, then reproduce it and test the expected loading or error state.",
     tags: ["JavaScript", "Errors", "Stack traces", "Debugging"],
   },
+  "la-paperella-di-gomma-e-larte-di-sentirsi-stupidi": {
+    title: "Rubber Duck Debugging from Explanation to Test",
+    date: publicationDate,
+    excerpt:
+      "Explain inputs, expected results and assumptions aloud, then turn the overlooked case into a small test you can reproduce.",
+    tags: [
+      "Debugging",
+      "Rubber duck debugging",
+      "Testing",
+      "Software engineering",
+    ],
+  },
+  "quando-luniverso-ti-cambia-le-variabili-in-produzione": {
+    title: "Environment Variables at Build Time and in Production",
+    date: publicationDate,
+    excerpt:
+      "Separate runtime secrets from public build settings, validate required values and diagnose a deployment that fails on its first API call.",
+    tags: ["Deployment", "Environment variables", "Vite", "Configuration"],
+  },
+  "ruby-tutto-e-un-oggetto": {
+    title: "Ruby Objects, Methods, Classes and Identity",
+    date: publicationDate,
+    excerpt:
+      "See how integers, strings and nil receive methods, then compare value equality and object identity with == and equal?.",
+    tags: ["Ruby", "Objects", "Classes", "Object identity"],
+  },
+  "ruby-blocchi-proc-lambda": {
+    title: "Ruby Blocks, Procs and Lambdas",
+    date: publicationDate,
+    excerpt:
+      "Pass behaviour with blocks and Proc objects. Compare lambda argument checking and what return does in each form.",
+    tags: ["Ruby", "Blocks", "Proc", "Lambda"],
+  },
+  "ruby-enumerable-map-select-reduce": {
+    title: "Ruby Enumerable with map, select and reduce",
+    date: publicationDate,
+    excerpt:
+      "Choose a Ruby collection method by its result, then check empty input, intermediate allocations and when SQL can do the aggregation.",
+    tags: ["Ruby", "Enumerable", "Collections", "Data processing"],
+  },
+  "ruby-symbol-vs-string": {
+    title: "Ruby Symbols, Strings and Hash Keys",
+    date: publicationDate,
+    excerpt:
+      "Choose symbols for program identifiers and strings for text. See why JSON keys and Ruby symbol keys need an explicit convention.",
+    tags: ["Ruby", "Symbol", "String", "Hash"],
+  },
+  "ruby-hash-metodi-utili": {
+    title: "Ruby Hash with fetch, dig and Default Values",
+    date: publicationDate,
+    excerpt:
+      "Read missing and nested keys deliberately, transform values, and avoid sharing a mutable default across several hash keys.",
+    tags: ["Ruby", "Hash", "Collections", "Defaults"],
+  },
+  "ruby-metaprogrammazione-basi": {
+    title: "Ruby Metaprogramming with define_method and method_missing",
+    date: publicationDate,
+    excerpt:
+      "Generate a small set of methods from a stable rule and test introspection, unknown calls and simpler alternatives.",
+    tags: ["Ruby", "Metaprogramming", "Methods", "Modules"],
+  },
+  "ruby-pattern-matching": {
+    title: "Ruby Pattern Matching with case/in",
+    date: publicationDate,
+    excerpt:
+      "Match and unpack Ruby hashes or arrays, then handle missing keys, nil values and unexpected API payloads explicitly.",
+    tags: ["Ruby", "Pattern matching", "Hash", "Data validation"],
+  },
+  "ruby-duck-typing": {
+    title: "Ruby Duck Typing and Behavioural Contracts",
+    date: publicationDate,
+    excerpt:
+      "Accept objects by the methods and behaviour your Ruby code needs. Document and test the contract for each implementation.",
+    tags: ["Ruby", "Duck typing", "Interfaces", "Testing"],
+  },
+  "ruby-moduli-mixin": {
+    title: "Ruby Mixins with include, prepend and extend",
+    date: publicationDate,
+    excerpt:
+      "Share behaviour between Ruby classes and inspect method lookup, ancestors and super when included or prepended modules overlap.",
+    tags: ["Ruby", "Modules", "Mixins", "Method lookup"],
+  },
+  "ruby-gestione-errori": {
+    title: "Ruby Exception Handling with rescue and ensure",
+    date: publicationDate,
+    excerpt:
+      "Recover from specific Ruby exceptions, release resources and preserve the difference between missing data and a failed operation.",
+    tags: ["Ruby", "Exceptions", "Error handling", "Resilience"],
+  },
+  "ruby-creare-una-gem": {
+    title: "Creating a Ruby Gem with Bundler",
+    date: publicationDate,
+    excerpt:
+      "Package a reusable Ruby library, verify its gemspec and files, then test installation before publishing a version.",
+    tags: ["Ruby", "RubyGems", "Bundler", "Packaging"],
+  },
+  "ruby-rspec-testare": {
+    title: "Ruby RSpec Tests for Public Behaviour",
+    date: publicationDate,
+    excerpt:
+      "Write RSpec examples that protect Ruby behaviour through refactors, including boundary values, exceptions, time and API dependencies.",
+    tags: ["Ruby", "RSpec", "Testing", "Test design"],
+  },
+  "ruby-ractor-concorrenza": {
+    title: "Ruby Ractors, Parallelism and Isolation",
+    date: publicationDate,
+    excerpt:
+      "Run CPU-heavy Ruby work in isolated Ractors, collect results on Ruby 3 or 4, and measure the cost of moving data.",
+    tags: ["Ruby", "Ractor", "Concurrency", "Parallelism"],
+  },
+  "ruby-ampersand-symbol-shorthand": {
+    title: "Ruby's &:method Shorthand and Symbol#to_proc",
+    date: publicationDate,
+    excerpt:
+      "Read map(&:upcase) as a simple block, then use an explicit block when the operation needs arguments, conditions or a fallback.",
+    tags: ["Ruby", "Symbol", "Proc", "Enumerable"],
+  },
+  "ruby-comparable-enumerable-custom": {
+    title: "Ruby Comparable and the Spaceship Operator",
+    date: publicationDate,
+    excerpt:
+      "Implement <=> for a Ruby class, use it for sorting, and test equal, missing or incompatible values before relying on the order.",
+    tags: ["Ruby", "Comparable", "Enumerable", "Sorting"],
+  },
+  "ruby-stringhe-gsub-regex": {
+    title: "Ruby String#gsub and Regular Expression Edge Cases",
+    date: publicationDate,
+    excerpt:
+      "Replace or extract matches in Ruby, distinguish literal text from a regular expression, and test punctuation, Unicode and long input.",
+    tags: ["Ruby", "String", "Regular expressions", "gsub"],
+  },
+  "ruby-benchmark-misurare": {
+    title: "Ruby Benchmark for Reproducible Measurements",
+    date: publicationDate,
+    excerpt:
+      "Compare Ruby implementations with the same data, account for warm-up and variance, and verify whether the result helps the full request.",
+    tags: ["Ruby", "Benchmark", "Performance", "Measurement"],
+  },
+  "ruby-programmazione-funzionale": {
+    title: "Ruby then, curry and Function Composition",
+    date: publicationDate,
+    excerpt:
+      "Pass values through readable Ruby transformations and prefill arguments with curry. Test failures and keep side effects visible.",
+    tags: ["Ruby", "Function composition", "Proc", "Functional programming"],
+  },
 };
