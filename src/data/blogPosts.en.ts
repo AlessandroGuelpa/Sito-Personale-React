@@ -500,4 +500,144 @@ export const englishBlogMetadata: Record<
       "Filter the attributes writable through a Rails controller and test the endpoint's input contract alongside authorisation and validation.",
     tags: ["Rails", "Action Controller", "Strong Parameters", "API"],
   },
+  "velocita-della-luce-ping-e-content-delivery-network": {
+    title: "CDN Caching and Network Latency",
+    date: publicationDate,
+    excerpt:
+      "See when an edge cache lowers TTFB, how to treat personalised responses, and what to measure on cache hits and misses.",
+    tags: ["CDN", "HTTP", "Caching", "Web performance"],
+  },
+  "javascript-metodi-array-essenziali": {
+    title: "JavaScript Array Methods from map to reduce",
+    date: publicationDate,
+    excerpt:
+      "Choose map, filter, find, some, every or reduce by the result you need. Handle empty arrays, shared objects and sorting safely.",
+    tags: ["JavaScript", "Arrays", "Immutability", "Collections"],
+  },
+  "javascript-destructuring": {
+    title: "JavaScript Destructuring with Defaults and Aliases",
+    date: publicationDate,
+    excerpt:
+      "Unpack objects and arrays, rename bindings, and see how destructuring defaults handle missing fields, undefined and null.",
+    tags: ["JavaScript", "Destructuring", "Arrays", "Objects"],
+  },
+  "javascript-prototipi-ereditarieta": {
+    title: "JavaScript Prototype Chains and Inheritance",
+    date: publicationDate,
+    excerpt:
+      "Trace own and inherited properties, see how class extends uses prototypes, and use Object.hasOwn to check where a property lives.",
+    tags: ["JavaScript", "Prototypes", "Classes", "Inheritance"],
+  },
+  "javascript-generatori": {
+    title: "JavaScript Generators and Lazy Iteration with yield",
+    date: publicationDate,
+    excerpt:
+      "Produce values on demand with function* and yield, and handle early exits, synchronous work and asynchronous sequences.",
+    tags: ["JavaScript", "Generators", "Iterators", "Async"],
+  },
+  "javascript-proxy-reflect": {
+    title: "JavaScript Proxy and Reflect with Traps and Invariants",
+    date: publicationDate,
+    excerpt:
+      "Observe property operations and validate writes using Proxy traps. Delegate with Reflect and keep the target's property invariants intact.",
+    tags: ["JavaScript", "Proxy", "Reflect", "Objects"],
+  },
+  "javascript-web-workers": {
+    title: "JavaScript Web Workers for Background Computation",
+    date: publicationDate,
+    excerpt:
+      "Run CPU-heavy code in a Web Worker and pass results back to the main thread. Measure startup, structured cloning and buffer transfer.",
+    tags: ["JavaScript", "Web Workers", "Browser performance", "Concurrency"],
+  },
+  "javascript-immutabilita-structuredclone": {
+    title: "JavaScript structuredClone and the Limits of Deep Copying",
+    date: publicationDate,
+    excerpt:
+      "Compare spread and structuredClone on nested objects, then choose between deep copies and targeted immutable updates in React.",
+    tags: ["JavaScript", "structuredClone", "React", "Immutability"],
+  },
+  "rails-mvc-in-tre-minuti": {
+    title: "Rails MVC and the Request Lifecycle",
+    date: publicationDate,
+    excerpt:
+      "Follow a request from a Rails controller to an Active Record model and an HTML view, with a clear place for domain rules and service objects.",
+    tags: ["Rails", "MVC", "Active Record", "Architecture"],
+  },
+  "rails-stimulus-js-leggero": {
+    title: "Rails Stimulus Controllers, Targets and Actions",
+    date: publicationDate,
+    excerpt:
+      "Attach JavaScript to server-rendered HTML with Stimulus and use connect and disconnect to manage behaviour as Turbo replaces elements.",
+    tags: ["Rails", "Stimulus", "Hotwire", "JavaScript"],
+  },
+  "rails-service-objects": {
+    title: "Rails Service Objects with Explicit Contracts",
+    date: publicationDate,
+    excerpt:
+      "Use a plain Ruby class to coordinate a Rails operation and test its results, failures and database or API boundaries.",
+    tags: ["Rails", "Ruby", "Service objects", "Testing"],
+  },
+  "rails-routing-restful": {
+    title: "RESTful Routing in Rails with resources",
+    date: publicationDate,
+    excerpt:
+      "Map HTTP methods and paths to Rails controller actions, limit what you expose, and test routing, permissions and missing records.",
+    tags: ["Rails", "Routing", "REST", "HTTP"],
+  },
+  "rails-active-storage-allegati": {
+    title: "Rails Active Storage for Uploads and Image Variants",
+    date: publicationDate,
+    excerpt:
+      "Attach files to Rails records, generate image variants and verify upload limits, access permissions and how to remove unused files.",
+    tags: ["Rails", "Active Storage", "File uploads", "Images"],
+  },
+  "rails-full-text-search-postgres": {
+    title: "PostgreSQL Full-Text Search with Rails",
+    date: publicationDate,
+    excerpt:
+      "Use pg_search in Rails, tune language and relevance, and check whether a matching GIN index helps your PostgreSQL queries.",
+    tags: ["Rails", "PostgreSQL", "Full-text search", "Active Record"],
+  },
+  "sonic-pi-sample-libreria-integrata": {
+    title: "Sonic Pi Samples with Rate, Pan and Beat Stretch",
+    date: publicationDate,
+    excerpt:
+      "Explore the built-in sample library and compare playback rate, stereo position, level and duration before using a sound in a loop.",
+    tags: ["Sonic Pi", "Samples", "Live coding", "Music"],
+  },
+  "sonic-pi-use-synth-scegliere-sintetizzatori": {
+    title: "Sonic Pi use_synth for Timbre and Envelopes",
+    date: publicationDate,
+    excerpt:
+      "Compare Prophet, TB-303 and detuned saw sounds on the same notes, then adjust attack, release and cutoff where supported.",
+    tags: ["Sonic Pi", "Synthesis", "Live coding", "Timbre"],
+  },
+  "sonic-pi-with-fx-effetti": {
+    title: "Sonic Pi with_fx for Reverb, Echo and Distortion",
+    date: publicationDate,
+    excerpt:
+      "Route notes through effects with with_fx, understand nested effect order, and balance dry and wet signals over a phrase.",
+    tags: ["Sonic Pi", "Audio effects", "Reverb", "Live coding"],
+  },
+  "sonic-pi-scale-accordi": {
+    title: "Sonic Pi Scales, Chords and Arpeggios",
+    date: publicationDate,
+    excerpt:
+      "Build melodies from scale and chord in Sonic Pi, then choose a register, vary the rhythm and check how a loop resolves.",
+    tags: ["Sonic Pi", "Scales", "Chords", "Live coding"],
+  },
+  "web-audio-drum-machine-browser": {
+    title: "Web Audio Drum Machines with Synthesis and Samples",
+    date: publicationDate,
+    excerpt:
+      "Synthesise a kick, reuse decoded sample buffers, and schedule each hit on the audio clock without accumulating timing drift.",
+    tags: ["Web Audio API", "Drum machine", "Synthesis", "Scheduling"],
+  },
+  "web-audio-sequencer-step": {
+    title: "A JavaScript Step Sequencer with Web Audio",
+    date: publicationDate,
+    excerpt:
+      "Turn a pattern grid into timed Web Audio events, derive step duration from BPM, and manage edits to the sequence during playback.",
+    tags: ["JavaScript", "Web Audio API", "Sequencer", "Scheduling"],
+  },
 };
