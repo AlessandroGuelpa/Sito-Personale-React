@@ -72,6 +72,34 @@ export const translatedArticleSlugs = {
   "sonic-pi-sync-cue": "sonic-pi-sync-cue-live-loops",
   "sonic-pi-primo-suono-play-sleep": "sonic-pi-play-sleep-first-notes",
   "web-audio-convolver-riverbero": "web-audio-convolvernode-impulse-response",
+  "http-etag-cache-rivalidazione": "http-etag-cache-revalidation",
+  "forza-di-attrito-e-la-ux-dei-form": "form-ux-reduce-errors-and-abandonment",
+  "dilatazione-temporale-interstellar-e-optimistic-ui":
+    "optimistic-ui-rollback-and-reconciliation",
+  "conservazione-della-massa-e-memory-leaks-in-react":
+    "react-memory-leaks-effect-cleanup",
+  "relativita-del-tempo-e-timezone-nei-database":
+    "database-timestamps-utc-local-time-zones",
+  "il-caffe-luniversita-e-la-magia-del-codice-asincrono":
+    "javascript-async-fetch-await-rendering",
+  "web-audio-primo-oscillatore-audiocontext":
+    "web-audio-api-audiocontext-first-oscillator",
+  "javascript-promise-async-await": "javascript-promises-async-await-errors",
+  "web-audio-oscillatore-forme-onda":
+    "oscillatornode-waveforms-sine-square-sawtooth",
+  "rails-migrazioni-versionare-il-database":
+    "rails-database-migrations-safe-schema-changes",
+  "javascript-event-loop-come-funziona":
+    "javascript-event-loop-tasks-and-microtasks",
+  "web-audio-gainnode-volume-envelope": "gainnode-adsr-amplitude-envelope",
+  "web-audio-grafo-nodi-connect": "web-audio-graph-connect-signal-path",
+  "web-audio-biquadfilter": "biquadfilternode-lowpass-highpass-cutoff",
+  "rails-consumare-api-esterne": "rails-external-api-timeouts-background-sync",
+  "web-audio-metronomo-preciso": "web-audio-metronome-lookahead-scheduling",
+  "rails-background-job-active-job": "rails-active-job-background-jobs-retries",
+  "javascript-this-binding": "javascript-this-call-bind-arrow-functions",
+  "rails-hotwire-turbo": "rails-hotwire-turbo-frames-streams",
+  "rails-strong-parameters": "rails-strong-parameters-mass-assignment",
 } as const;
 
 export const inventoryArticleRoutes = {

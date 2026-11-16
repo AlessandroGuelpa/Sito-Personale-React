@@ -360,4 +360,144 @@ export const englishBlogMetadata: Record<
       "Load an impulse response and build a convolution reverb in Web Audio. Set the dry/wet mix and handle failed audio loads.",
     tags: ["Web Audio", "ConvolverNode", "Reverb", "JavaScript"],
   },
+  "http-etag-cache-rivalidazione": {
+    title: "ETag and HTTP Cache Revalidation",
+    date: publicationDate,
+    excerpt:
+      "See how If-None-Match and 304 Not Modified let a browser reuse a cached response, and when to choose no-cache or no-store.",
+    tags: ["HTTP", "Caching", "Web performance"],
+  },
+  "forza-di-attrito-e-la-ux-dei-form": {
+    title: "Form UX That Reduces Errors and Abandonment",
+    date: publicationDate,
+    excerpt:
+      "Improve form completion with essential fields, persistent labels, accessible error messages and measurements that account for device and traffic.",
+    tags: ["UX", "Forms", "Accessibility", "Frontend"],
+  },
+  "dilatazione-temporale-interstellar-e-optimistic-ui": {
+    title: "Optimistic UI with Rollback and Reconciliation",
+    date: publicationDate,
+    excerpt:
+      "Update the UI while a request is pending, roll back failures, and reconcile responses that arrive out of order.",
+    tags: ["React", "UX", "Frontend", "Latency"],
+  },
+  "conservazione-della-massa-e-memory-leaks-in-react": {
+    title: "React Memory Leaks and useEffect Cleanup",
+    date: publicationDate,
+    excerpt:
+      "Clean up event listeners, timers, connections and fetch requests in React, then verify with Strict Mode and browser memory tools.",
+    tags: ["React", "useEffect", "Memory management", "Frontend"],
+  },
+  "relativita-del-tempo-e-timezone-nei-database": {
+    title: "Database Timestamps, UTC and Local Time Zones",
+    date: publicationDate,
+    excerpt:
+      "Store event timestamps unambiguously and preserve IANA time zones for recurring appointments. Test DST boundaries across the database, API and browser.",
+    tags: ["Databases", "UTC", "Time zones", "JavaScript"],
+  },
+  "il-caffe-luniversita-e-la-magia-del-codice-asincrono": {
+    title: "Asynchronous JavaScript with fetch and await",
+    date: publicationDate,
+    excerpt:
+      "Follow a fetch request from its Promise to the rendered result and handle loading, HTTP failures, JSON parsing and stale responses.",
+    tags: ["JavaScript", "Fetch", "Async", "Frontend"],
+  },
+  "web-audio-primo-oscillatore-audiocontext": {
+    title: "Web Audio API with AudioContext and an Oscillator",
+    date: publicationDate,
+    excerpt:
+      "Play a short tone from a button in the browser with AudioContext, OscillatorNode and a GainNode to control the level.",
+    tags: ["Web Audio API", "AudioContext", "OscillatorNode", "JavaScript"],
+  },
+  "javascript-promise-async-await": {
+    title: "JavaScript Promises and async/await Error Handling",
+    date: publicationDate,
+    excerpt:
+      "Use async/await with fetch, choose between sequential and concurrent work, and decide how to handle rejections and partial results.",
+    tags: ["JavaScript", "Promises", "Async", "Fetch"],
+  },
+  "web-audio-oscillatore-forme-onda": {
+    title: "OscillatorNode Waveforms for Web Audio Synthesis",
+    date: publicationDate,
+    excerpt:
+      "Compare sine, triangle, square and sawtooth at the same pitch and envelope, then hear how a low-pass filter changes the harmonics.",
+    tags: ["Web Audio API", "OscillatorNode", "Synthesis", "Waveforms"],
+  },
+  "rails-migrazioni-versionare-il-database": {
+    title: "Rails Database Migrations for Safe Schema Changes",
+    date: publicationDate,
+    excerpt:
+      "Version database changes in Rails and plan deploy-compatible migrations, backfills and rollbacks when production data is involved.",
+    tags: ["Rails", "Active Record", "Databases", "Migrations"],
+  },
+  "javascript-event-loop-come-funziona": {
+    title: "JavaScript Event Loop with Tasks and Microtasks",
+    date: publicationDate,
+    excerpt:
+      "Predict Promise and timer execution order, understand what delays rendering, and decide when CPU-heavy work belongs in a Web Worker.",
+    tags: ["JavaScript", "Event loop", "Promises", "Browser performance"],
+  },
+  "web-audio-gainnode-volume-envelope": {
+    title: "Web Audio GainNode and ADSR Envelopes",
+    date: publicationDate,
+    excerpt:
+      "Shape attack and release with GainNode and AudioParam, avoid audible clicks, and manage levels when several notes play together.",
+    tags: ["Web Audio API", "GainNode", "ADSR", "Synthesis"],
+  },
+  "web-audio-grafo-nodi-connect": {
+    title: "Web Audio Graphs and the Signal Path",
+    date: publicationDate,
+    excerpt:
+      "Connect sources, filters, gain and output in Web Audio. Trace dry and wet routes and catch duplicate connections when changing presets.",
+    tags: ["Web Audio API", "AudioNode", "Audio graphs", "Effects"],
+  },
+  "web-audio-biquadfilter": {
+    title: "BiquadFilterNode Cutoff, Resonance and Filter Types",
+    date: publicationDate,
+    excerpt:
+      "Shape a Web Audio signal with low-pass, high-pass and band-pass filters. Hear what cutoff and Q do, and automate frequency changes.",
+    tags: ["Web Audio API", "BiquadFilterNode", "Filters", "Synthesis"],
+  },
+  "rails-consumare-api-esterne": {
+    title: "Calling External APIs Reliably from Rails",
+    date: publicationDate,
+    excerpt:
+      "Fetch and normalise launch data in Rails, then handle timeouts, invalid responses and retries without discarding the last good result.",
+    tags: ["Rails", "API", "Faraday", "Background jobs"],
+  },
+  "web-audio-metronomo-preciso": {
+    title: "Web Audio Metronome with Lookahead Scheduling",
+    date: publicationDate,
+    excerpt:
+      "Schedule clicks on the AudioContext clock, use a JavaScript timer to refill the scheduling window, and handle tempo changes and restart.",
+    tags: ["Web Audio API", "Scheduling", "Metronome", "JavaScript"],
+  },
+  "rails-background-job-active-job": {
+    title: "Rails Active Job for Background Work and Retries",
+    date: publicationDate,
+    excerpt:
+      "Move slow work out of Rails requests, then account for queue delays, worker retries and duplicate delivery when updating records.",
+    tags: ["Rails", "Active Job", "Background jobs", "Idempotency"],
+  },
+  "javascript-this-binding": {
+    title: "JavaScript this with call, bind and Arrow Functions",
+    date: publicationDate,
+    excerpt:
+      "See what happens when a method is extracted or passed as a callback, and preserve its receiver with bind, call or a wrapper.",
+    tags: ["JavaScript", "this", "Functions", "Callbacks"],
+  },
+  "rails-hotwire-turbo": {
+    title: "Hotwire and Turbo in Rails with Frames and Streams",
+    date: publicationDate,
+    excerpt:
+      "Update server-rendered Rails views with Turbo Drive, Frames and Streams, and handle JavaScript setup during navigation.",
+    tags: ["Rails", "Hotwire", "Turbo", "HTML"],
+  },
+  "rails-strong-parameters": {
+    title: "Rails Strong Parameters and Mass Assignment",
+    date: publicationDate,
+    excerpt:
+      "Filter the attributes writable through a Rails controller and test the endpoint's input contract alongside authorisation and validation.",
+    tags: ["Rails", "Action Controller", "Strong Parameters", "API"],
+  },
 };
