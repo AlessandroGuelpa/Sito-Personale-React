@@ -4,7 +4,7 @@ import type { BlogPost } from "./blogPosts";
 type EnglishArticleMetadata = Required<
   Pick<BlogPost, "title" | "date" | "excerpt" | "tags">
 > &
-  Pick<BlogPost, "updatedAt">;
+  Pick<BlogPost, "updatedAt" | "seoTitle" | "seoDescription">;
 
 const publicationDate = "2026-11-16";
 
@@ -130,5 +130,94 @@ export const englishBlogMetadata: Record<
     excerpt:
       "Work out how much runoff a roof can generate and see what a rain garden can store, absorb and safely release.",
     tags: ["Environment", "Water", "Rain gardens", "Stormwater"],
+  },
+  "javascript-localstorage-persistenza": {
+    date: publicationDate,
+    title: "Saving Preferences and Drafts with localStorage",
+    seoTitle: "JavaScript localStorage for Persistent Browser Data",
+    seoDescription:
+      "Persist browser preferences and drafts with localStorage. Includes setItem and JSON examples, invalid data, quota errors and limits for sensitive values.",
+    excerpt:
+      "Practical browser storage with localStorage, JSON and safe fallbacks.",
+    tags: ["JavaScript", "localStorage", "Browser storage"],
+  },
+  "teoria-del-caos-effetto-farfalla-e-css-globale": {
+    date: publicationDate,
+    title: "How Global CSS Changes Can Break Other Components",
+    seoTitle: "Global CSS Regressions, Cascade and Specificity",
+    seoDescription:
+      "Trace the winning CSS rule in DevTools, narrow global selectors, and check reused components in hover, focus and dark mode.",
+    excerpt:
+      "Find the rule behind a CSS regression and test its effect across pages.",
+    tags: ["CSS", "Frontend", "Cascade", "Specificity"],
+  },
+  "luna-massa-peso-inerzia": {
+    date: publicationDate,
+    title: "What Changes When You Move a Load on the Moon",
+    seoTitle: "Mass, Weight and Inertia on the Moon",
+    seoDescription:
+      "Compare the weight of a 12 kg object on Earth and the Moon. Use W = mg and F = ma to see what it takes to support or stop a moving load.",
+    excerpt:
+      "A 12 kg example shows the two forces involved in supporting and moving a load on the Moon.",
+    tags: ["Moon", "Physics", "Gravity", "Engineering"],
+  },
+  "javascript-moduli-es-import-export": {
+    date: publicationDate,
+    title: "Organising JavaScript Code with ES Modules",
+    seoTitle: "JavaScript ES Modules with import and export",
+    seoDescription:
+      "See named and default exports in a small example. Use dynamic import and check side effects, code splitting and bundle size.",
+    excerpt:
+      "Split JavaScript into modules and check how static and dynamic imports affect the build.",
+    tags: ["JavaScript", "ES modules", "Frontend", "Bundling"],
+  },
+  "javascript-intl-formattazione": {
+    date: publicationDate,
+    title: "Formatting Values for Different Locales with JavaScript Intl",
+    seoTitle: "JavaScript Intl for Dates, Numbers and Currency",
+    seoDescription:
+      "Format dates, numbers and currencies using JavaScript Intl. Examples cover NumberFormat, DateTimeFormat, relative time and explicit time zones.",
+    excerpt: "Use native Intl APIs to display the same data across locales.",
+    tags: ["JavaScript", "Intl", "Localisation", "Dates"],
+  },
+  "sonic-pi-live-loop-cuore-del-live-coding": {
+    date: publicationDate,
+    title: "Playing a Beat Live with Sonic Pi live_loop",
+    seoTitle: "Sonic Pi live_loop for Live-Coded Beats",
+    seoDescription:
+      "Build a kick and hi-hat with two Sonic Pi live loops. Change a pattern during playback and check how loops of different lengths align.",
+    excerpt:
+      "Use live_loop to update drum patterns without stopping a Sonic Pi set.",
+    tags: ["Sonic Pi", "Live coding", "Music", "Ruby"],
+  },
+  "rails-request-specs-testare-api": {
+    date: publicationDate,
+    title: "Testing a Rails API Contract with RSpec Request Specs",
+    seoTitle: "Rails RSpec Request Specs for API Testing",
+    seoDescription:
+      "Use GET and POST request specs to verify HTTP status, JSON, permissions and database effects. Includes a Rails API example for valid and invalid input.",
+    excerpt:
+      "Check the HTTP contract and persistent effects of a Rails API with RSpec.",
+    tags: ["Rails", "RSpec", "API", "Testing"],
+  },
+  "entanglement-quantistico-e-i-disastri-del-global-state": {
+    date: publicationDate,
+    title: "Choosing Local, Shared and Server State in React",
+    seoTitle: "React State Management and When to Use Context",
+    seoDescription:
+      "Use a cart example to decide which React state stays local, which belongs in Context, and which values you can derive or load from an API.",
+    excerpt:
+      "Make React state ownership explicit before reaching for a global store.",
+    tags: ["React", "Context", "State management", "Frontend"],
+  },
+  "web-audio-delay-feedback": {
+    date: publicationDate,
+    title: "Creating Echoes with DelayNode and Feedback",
+    seoTitle: "Web Audio DelayNode for a Feedback Delay",
+    seoDescription:
+      "Build a Web Audio echo with DelayNode and GainNode. Adjust timing and feedback, separate dry and wet signals, and check output when switching presets.",
+    excerpt:
+      "Route a delay through a feedback gain to create controllable browser audio echoes.",
+    tags: ["Web Audio", "DelayNode", "Audio effects", "JavaScript"],
   },
 };

@@ -34,6 +34,19 @@ export const translatedArticleSlugs = {
     "lunar-south-pole-shadows-solar-power",
   "fatica-metalli-carichi-ciclici": "metal-fatigue-cyclic-loading",
   "giardini-pioggia-deflusso-tetti": "rain-gardens-roof-runoff",
+  "javascript-localstorage-persistenza":
+    "javascript-localstorage-browser-storage",
+  "teoria-del-caos-effetto-farfalla-e-css-globale":
+    "global-css-cascade-specificity-regressions",
+  "luna-massa-peso-inerzia": "mass-weight-inertia-on-the-moon",
+  "javascript-moduli-es-import-export": "javascript-es-modules-import-export",
+  "javascript-intl-formattazione":
+    "javascript-intl-format-dates-numbers-currency",
+  "sonic-pi-live-loop-cuore-del-live-coding": "sonic-pi-live-loop-beat",
+  "rails-request-specs-testare-api": "rails-rspec-request-specs-api-testing",
+  "entanglement-quantistico-e-i-disastri-del-global-state":
+    "react-local-shared-global-state",
+  "web-audio-delay-feedback": "web-audio-delaynode-feedback",
 } as const;
 
 export const inventoryArticleRoutes = {

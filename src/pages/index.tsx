@@ -17,9 +17,9 @@ import {
 
 const homeCopy = {
   it: {
-    title: "Sviluppatore web · Shopify, React e Rails",
+    title: "Sviluppatore Shopify e integrazioni ERP",
     description:
-      "Sono Alessandro Guelpa: 5 anni di sviluppo web, soprattutto su Shopify, con integrazioni API e progetti personali React e Rails. Esplora i miei lavori.",
+      "Sviluppo e-commerce Shopify, personalizzo temi e collego gli store ad API e gestionali. Esplora i miei progetti Shopify, React e Ruby on Rails.",
     role: "Sviluppatore web",
     heading: "E-commerce, interfacce e",
     accent: "integrazioni.",
@@ -57,9 +57,9 @@ const homeCopy = {
     message: "Scrivimi",
   },
   en: {
-    title: "Shopify Developer & ERP Integrations",
+    title: "Shopify Developer for Storefronts and ERP Integrations",
     description:
-      "Alessandro Guelpa, a Shopify developer with five years of web development experience across storefronts, API integrations and Rails backends.",
+      "I build Shopify storefronts, customise themes and connect stores to ERPs. Explore my Shopify tools and projects in React and Ruby on Rails.",
     role: "Web developer",
     heading: "Shopify development and",
     accent: "ERP integrations.",

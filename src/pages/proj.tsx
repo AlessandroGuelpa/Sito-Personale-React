@@ -22,9 +22,9 @@ const filters = [
 
 const projectsCopy = {
   it: {
-    title: "Progetti e codice",
+    title: "Portfolio di progetti Shopify, React e Rails",
     description:
-      "Esplora Shopify Mapper, Launch Tracker, Ballerini & Sapori, il portfolio React e VEHRT. Contesto, tecnologie e collegamenti ai progetti di Alessandro Guelpa.",
+      "Prova Shopify Mapper per preparare CSV e scopri Launch Tracker in React e Rails. Ogni progetto spiega il problema e le scelte tecniche.",
     heading: "Progetti, con il codice dietro.",
     intro:
       "Una selezione di lavori e sperimentazioni. Per ogni progetto trovi il contesto, le scelte tecniche e i link per approfondire.",
@@ -40,9 +40,9 @@ const projectsCopy = {
     contact: "Contattami",
   },
   en: {
-    title: "Shopify and Web Development Projects",
+    title: "Shopify, React and Rails Portfolio Projects",
     description:
-      "Explore Alessandro Guelpa’s work, including a Shopify CSV import tool, a React and Rails launch tracker, and other web development projects.",
+      "Try Shopify Mapper to prepare CSV imports and explore Launch Tracker, built with React and Rails. See how I designed and built each project.",
     heading: "Projects and the code behind them.",
     intro:
       "A selection of tools, websites and experiments. Each project includes the problem, the technical choices and links to explore further.",
