@@ -7,8 +7,14 @@ const englishError = config.routes.find((route) => route.status === 404);
 const englishPath = new RegExp(`^${englishError.src}$`);
 const englishErrorBody = await readFile(new URL(`../dist${englishError.dest}.html`, import.meta.url));
 const options = {
-  public: "dist", cleanUrls: true, trailingSlash: false,
-  redirects: config.redirects.map(rule => ({ source: rule.source, destination: rule.destination, type: 308 })),
+  public: "dist",
+  cleanUrls: config.cleanUrls,
+  trailingSlash: config.trailingSlash,
+  redirects: config.routes.filter((rule) => rule.status === 308).map((rule) => ({
+    source: rule.src,
+    destination: rule.headers.Location,
+    type: rule.status,
+  })),
 };
 const server = http.createServer((request, response) => {
   const pathname = request.url.split("?", 1)[0];
