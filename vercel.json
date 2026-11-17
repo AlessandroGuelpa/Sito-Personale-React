@@ -22,7 +22,7 @@
     }
   ],
   "routes": [
-    { "handle": "filesystem" },
+    { "handle": "error" },
     { "src": "/en(?:/.*)?", "status": 404, "dest": "/en/_404.html" }
   ],
   "cleanUrls": true,
