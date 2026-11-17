@@ -5,7 +5,7 @@ import config from "../vercel.json" with { type: "json" };
 
 const englishError = config.routes.find((route) => route.status === 404);
 const englishPath = new RegExp(`^${englishError.src}$`);
-const englishErrorBody = await readFile(new URL(`../dist${englishError.dest}`, import.meta.url));
+const englishErrorBody = await readFile(new URL(`../dist${englishError.dest}.html`, import.meta.url));
 const options = {
   public: "dist", cleanUrls: true, trailingSlash: false,
   redirects: config.redirects.map(rule => ({ source: rule.source, destination: rule.destination, type: 308 })),

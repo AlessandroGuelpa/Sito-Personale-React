@@ -23,7 +23,7 @@
   ],
   "routes": [
     { "handle": "error" },
-    { "src": "/en(?:/.*)?", "status": 404, "dest": "/en/_404.html" }
+    { "src": "/en(?:/.*)?", "status": 404, "dest": "/en/_404" }
   ],
   "cleanUrls": true,
   "trailingSlash": false,
