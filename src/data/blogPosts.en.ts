@@ -7,6 +7,7 @@ type EnglishArticleMetadata = Required<
   Pick<BlogPost, "updatedAt" | "seoTitle" | "seoDescription">;
 
 const publicationDate = "2026-11-16";
+const audioPublicationDate = "2026-11-17";
 
 export const englishBlogMetadata: Record<
   keyof typeof translatedArticleSlugs,
@@ -1074,5 +1075,150 @@ export const englishBlogMetadata: Record<
     excerpt:
       "Pass values through readable Ruby transformations and prefill arguments with curry. Test failures and keep side effects visible.",
     tags: ["Ruby", "Function composition", "Proc", "Functional programming"],
+  },
+  "sonic-pi-drum-machine": {
+    title: "Sonic Pi Drum Machine with Kick, Snare and Hi-Hat",
+    date: audioPublicationDate,
+    excerpt:
+      "Build a steady four-beat pattern in Sonic Pi, count the subdivisions, and compare sample levels before introducing variation.",
+    tags: ["Sonic Pi", "Drum machine", "Samples", "Live coding"],
+  },
+  "sonic-pi-randomizzazione-controllata": {
+    title: "Sonic Pi Random Seeds for Reproducible Patterns",
+    date: audioPublicationDate,
+    excerpt:
+      "Use use_random_seed to replay a chosen variation, keep a fixed beat, and understand how changing random calls moves later choices.",
+    tags: ["Sonic Pi", "Random seeds", "Generative music", "Live coding"],
+  },
+  "sonic-pi-bassline-tb303": {
+    title: "Sonic Pi TB-303 Acid Basslines and Cutoff",
+    date: audioPublicationDate,
+    excerpt:
+      "Start a short acid bass pattern with the TB-303 synth, then vary cutoff and resonance against a fixed drum groove.",
+    tags: ["Sonic Pi", "Acid techno", "TB-303", "Synthesis"],
+  },
+  "web-audio-web-midi-api": {
+    title: "Web MIDI API for Browser Note Messages",
+    date: audioPublicationDate,
+    excerpt:
+      "Connect a controller to a compatible browser, read note-on and note-off messages, and handle permissions and disconnected ports.",
+    tags: ["Web MIDI API", "MIDI", "Web Audio API", "JavaScript"],
+  },
+  "sonic-pi-slicing-campioni": {
+    title: "Sonic Pi Sample Slicing with start, finish and Stretch",
+    date: audioPublicationDate,
+    excerpt:
+      "Split a break into regions, play or reorder the slices on a steady grid, and check cuts and tails by ear.",
+    tags: ["Sonic Pi", "Samples", "Slicing", "Live coding"],
+  },
+  "web-audio-analyser-visualizzare": {
+    title: "Web Audio AnalyserNode for Spectrum and Waveform Displays",
+    date: audioPublicationDate,
+    excerpt:
+      "Read time-domain and frequency data from an AnalyserNode, select an FFT size and manage the redraw loop for a browser visualiser.",
+    tags: ["Web Audio API", "AnalyserNode", "Spectrum", "Visualisation"],
+  },
+  "sonic-pi-generative-ring-tick": {
+    title: "Sonic Pi ring and tick for Generative Sequences",
+    date: audioPublicationDate,
+    excerpt:
+      "Run cyclic note, rhythm and filter patterns with named counters. See when different ring lengths make a combination repeat.",
+    tags: ["Sonic Pi", "Rings", "Generative music", "Live coding"],
+  },
+  "web-audio-audioworklet": {
+    title: "Web Audio AudioWorklet for Custom DSP",
+    date: audioPublicationDate,
+    excerpt:
+      "Run custom processing in the audio rendering thread, load a processor module and keep each block within its real-time budget.",
+    tags: ["Web Audio API", "AudioWorklet", "DSP", "JavaScript"],
+  },
+  "sonic-pi-midi-controllo": {
+    title: "Sonic Pi MIDI Input and Controller Mapping",
+    date: audioPublicationDate,
+    excerpt:
+      "Read keyboard note events and map a MIDI knob to filter cutoff while keeping the rest of a Sonic Pi set on its own timing grid.",
+    tags: ["Sonic Pi", "MIDI", "Live coding", "Controllers"],
+  },
+  "web-audio-tone-js": {
+    title: "Tone.js Transport and Musical Scheduling",
+    date: audioPublicationDate,
+    excerpt:
+      "Schedule a sequence on the Tone.js transport, use musical durations, and stop and dispose of browser audio resources.",
+    tags: ["Tone.js", "Web Audio API", "Transport", "Scheduling"],
+  },
+  "sonic-pi-use-bpm-tempo": {
+    title: "Sonic Pi use_bpm for Beats and Subdivisions",
+    date: audioPublicationDate,
+    excerpt:
+      "Count sleep in beats, calculate step duration at different tempos, and keep loops and recorded samples aligned after a tempo change.",
+    tags: ["Sonic Pi", "BPM", "Rhythm", "Live coding"],
+  },
+  "web-audio-audiobuffersource-campioni": {
+    title: "AudioBufferSourceNode for Decoding and Playing Samples",
+    date: audioPublicationDate,
+    excerpt:
+      "Fetch and decode an audio file, reuse its buffer, and start a fresh source for each playback or scheduled hit.",
+    tags: ["Web Audio API", "AudioBuffer", "AudioBufferSourceNode", "Samples"],
+  },
+  "sonic-pi-registrare-esportare": {
+    title: "Recording and Exporting a Sonic Pi Set as WAV",
+    date: audioPublicationDate,
+    excerpt:
+      "Record a short sound check, capture a live set, and save the Sonic Pi script and listening notes alongside the WAV.",
+    tags: ["Sonic Pi", "Recording", "WAV", "Live coding"],
+  },
+  "web-audio-chrome-music-lab-lezioni": {
+    title: "Chrome Music Lab and Interactive Audio Design",
+    date: audioPublicationDate,
+    excerpt:
+      "Use Chrome Music Lab as a design reference for browser instruments with audible feedback, readable visuals and accessible controls.",
+    tags: [
+      "Chrome Music Lab",
+      "Web Audio API",
+      "Interaction design",
+      "Music education",
+    ],
+  },
+  "sonic-pi-ambient-pad-riverbero": {
+    title: "Sonic Pi Ambient Pads with Envelopes and Reverb",
+    date: audioPublicationDate,
+    excerpt:
+      "Build an ambient layer with a soft attack, long release and reverb, then listen for space and unwanted overlap between voices.",
+    tags: ["Sonic Pi", "Ambient", "Pads", "Reverb"],
+  },
+  "web-audio-generative-browser": {
+    title: "Generative Music with Web Audio",
+    date: audioPublicationDate,
+    excerpt:
+      "Build a browser music generator with a fixed grid, a limited scale and controlled randomness. Give it an explicit start and stop.",
+    tags: ["Web Audio API", "Generative music", "Scheduling", "JavaScript"],
+  },
+  "sonic-pi-brano-techno-passo-passo": {
+    title: "Arranging a Techno Track in Sonic Pi",
+    date: audioPublicationDate,
+    excerpt:
+      "Build a four-on-the-floor groove with live loops, then arrange sections with bass, offbeat hats and deliberate breaks.",
+    tags: ["Sonic Pi", "Techno", "Live coding", "Arrangement"],
+  },
+  "web-audio-synth-polifonico": {
+    title: "Web Audio Polyphonic Synthesiser Voice Management",
+    date: audioPublicationDate,
+    excerpt:
+      "Track active notes, give each voice an oscillator and envelope, and handle repeated presses, voice limits and device release.",
+    tags: ["Web Audio API", "Polyphony", "Synthesis", "MIDI"],
+  },
+  "sonic-pi-didattica-codice-e-musica": {
+    title: "Learning to Program with Sonic Pi",
+    date: audioPublicationDate,
+    excerpt:
+      "Teach loops, variables and conditions with sound. Ask learners to predict what a pattern will do before pressing Run.",
+    tags: ["Sonic Pi", "Programming education", "Live coding", "Music"],
+  },
+  "sonic-pi-e-web-audio-stessa-idea": {
+    title: "Sonic Pi vs Web Audio for Making Music with Code",
+    date: audioPublicationDate,
+    excerpt:
+      "Compare the same note in Sonic Pi and JavaScript, then choose an environment for live coding or audio inside a browser application.",
+    tags: ["Sonic Pi", "Web Audio API", "Live coding", "Synthesis"],
   },
 };
