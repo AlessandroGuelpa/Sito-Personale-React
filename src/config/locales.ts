@@ -210,6 +210,31 @@ export const translatedArticleSlugs = {
   "ruby-stringhe-gsub-regex": "ruby-string-gsub-regex-edge-cases",
   "ruby-benchmark-misurare": "ruby-benchmark-reproducible-measurements",
   "ruby-programmazione-funzionale": "ruby-then-curry-function-composition",
+  "sonic-pi-drum-machine": "sonic-pi-drum-machine-kick-snare-hi-hat",
+  "sonic-pi-randomizzazione-controllata":
+    "sonic-pi-random-seed-reproducible-patterns",
+  "sonic-pi-bassline-tb303": "sonic-pi-tb303-acid-bassline-cutoff",
+  "web-audio-web-midi-api": "web-midi-api-note-messages-browser",
+  "sonic-pi-slicing-campioni": "sonic-pi-sample-slicing-start-finish-stretch",
+  "web-audio-analyser-visualizzare":
+    "web-audio-analysernode-spectrum-and-waveform",
+  "sonic-pi-generative-ring-tick": "sonic-pi-ring-tick-generative-sequences",
+  "web-audio-audioworklet": "web-audio-audioworklet-custom-dsp",
+  "sonic-pi-midi-controllo": "sonic-pi-midi-input-and-controller-mapping",
+  "web-audio-tone-js": "tonejs-transport-and-sequence-scheduling",
+  "sonic-pi-use-bpm-tempo": "sonic-pi-use-bpm-beats-and-subdivisions",
+  "web-audio-audiobuffersource-campioni":
+    "audiobuffersourcenode-decode-and-play-samples",
+  "sonic-pi-registrare-esportare": "sonic-pi-record-and-export-wav",
+  "web-audio-chrome-music-lab-lezioni":
+    "chrome-music-lab-interactive-audio-design",
+  "sonic-pi-ambient-pad-riverbero": "sonic-pi-ambient-pads-envelopes-reverb",
+  "web-audio-generative-browser": "generative-music-with-web-audio",
+  "sonic-pi-brano-techno-passo-passo": "sonic-pi-techno-track-arrangement",
+  "web-audio-synth-polifonico": "web-audio-polyphonic-synth-voice-management",
+  "sonic-pi-didattica-codice-e-musica": "learn-programming-with-sonic-pi",
+  "sonic-pi-e-web-audio-stessa-idea":
+    "sonic-pi-vs-web-audio-live-coding-browser",
 } as const;
 
 export const inventoryArticleRoutes = {
