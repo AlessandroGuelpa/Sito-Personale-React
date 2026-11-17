@@ -2,30 +2,60 @@ import { Link, useLocation } from "react-router-dom";
 
 import DefaultLayout from "@/layouts/default";
 import { PageSeo } from "@/components/page-seo";
+import {
+  blogRoots,
+  languageForPath,
+  notFoundRoutes,
+  portfolioRoutes,
+} from "@/config/locales";
+
+const notFoundCopy = {
+  it: {
+    title: "Pagina non trovata",
+    description:
+      "Questa pagina non esiste. Riparti dai progetti o dal blog di Alessandro Guelpa.",
+    error: "Errore 404",
+    message: "Il link potrebbe essere cambiato. Scegli da dove ripartire.",
+    home: "Torna alla home",
+    blog: "Vai al blog",
+  },
+  en: {
+    title: "Page not found",
+    description:
+      "This page could not be found. Continue from Alessandro Guelpa’s homepage or blog.",
+    error: "Error 404",
+    message: "The link may have changed. Use the homepage or blog to find what you were looking for.",
+    home: "Back to home",
+    blog: "Go to the blog",
+  },
+};
 
 export default function NotFoundPage() {
   const { pathname } = useLocation();
+  const language = languageForPath(pathname);
+  const copy = notFoundCopy[language];
 
   return (
-    <DefaultLayout>
+    <DefaultLayout language={language}>
       <PageSeo
         noindex
-        description="Questa pagina non esiste. Riparti dai progetti o dal blog di Alessandro Guelpa."
-        path={pathname}
-        title="Pagina non trovata"
+        description={copy.description}
+        language={language}
+        path={notFoundRoutes[language]}
+        title={copy.title}
       />
       <section className="py-24 text-center">
-        <p className="eyebrow">Errore 404</p>
-        <h1 className="page-title mx-auto">Pagina non trovata</h1>
+        <p className="eyebrow">{copy.error}</p>
+        <h1 className="page-title mx-auto">{copy.title}</h1>
         <p className="mt-6 text-zinc-600 dark:text-zinc-300">
-          Il link potrebbe essere cambiato. Scegli da dove ripartire.
+          {copy.message}
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Link className="button-primary" to="/">
-            Torna alla home
+          <Link className="button-primary" to={portfolioRoutes.home[language]}>
+            {copy.home}
           </Link>
-          <Link className="button-secondary" to="/blog">
-            Vai al blog
+          <Link className="button-secondary" to={blogRoots[language]}>
+            {copy.blog}
           </Link>
         </div>
       </section>

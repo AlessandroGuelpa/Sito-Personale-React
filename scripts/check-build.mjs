@@ -7,6 +7,8 @@ const siteUrl = "https://alessandroguelpa.it";
 const routes = JSON.parse(
   await readFile(path.join(dist, "prerender-routes.json"), "utf8"),
 );
+assert.equal(new Set(routes).size, routes.length, "Prerendered routes must be unique");
+const errorFiles = new Map([["/404", "404.html"], ["/en/404", "en/_404.html"]]);
 const canonicalUrls = new Set(routes.map((route) => `${siteUrl}${route === "/" ? "" : route}`));
 const archivePath = "/en/blog";
 const englishArticles = routes.filter((route) => /^\/en\/blog\/[^/]+$/.test(route));
@@ -19,7 +21,13 @@ for (const [it, en] of [
   ["/project", "/en/projects"],
   ["/about", "/en/about"],
   ["/contact", "/en/contact"],
+  ["/sports", "/en/sports"],
   ["/blog", archivePath],
+  ["/blog/temi/shopify-integrazioni", "/en/blog/topics/shopify-integrations"],
+  ["/blog/temi/react-frontend", "/en/blog/topics/react-frontend"],
+  ["/blog/temi/rails-backend", "/en/blog/topics/rails-backend"],
+  ["/blog/temi/rails-backend/page/2", "/en/blog/topics/rails-backend/page/2"],
+  ["/blog/temi/scienza-passioni", "/en/blog/topics/science-engineering"],
   ["/blog/shopify-inventario-scritture-concorrenti", "/en/blog/shopify-erp-inventory-sync"],
 ]) {
   const alternates = { it: `${siteUrl}${it === "/" ? "" : it}`, en: `${siteUrl}${en}` };
@@ -29,12 +37,12 @@ for (const [it, en] of [
 }
 const titles = new Set();
 const checkedAssets = new Set();
-for (const route of [...routes, "/404"]) {
-  const file = route === "/" ? "index.html" : `${route.slice(1)}.html`;
+for (const route of [...routes, ...errorFiles.keys()]) {
+  const file = errorFiles.get(route) ?? (route === "/" ? "index.html" : `${route.slice(1)}.html`);
   const html = await readFile(path.join(dist, file), "utf8");
   const head = html.split("</head>", 1)[0];
   const englishArticle = englishArticles.includes(route);
-  const englishArchive = route === archivePath || route.startsWith(`${archivePath}/page/`);
+  const englishArchive = route === archivePath || route.startsWith(`${archivePath}/page/`) || route.startsWith(`${archivePath}/topics/`);
   const english = route === "/en" || route.startsWith("/en/");
   const title = head.match(/<title[^>]*>([\s\S]*?)<\/title>/)?.[1];
   assert(title, `Missing title: ${route}`);
@@ -49,7 +57,7 @@ for (const route of [...routes, "/404"]) {
   );
   const alternates = [...head.matchAll(/<link\b[^>]*\bhreflang="([^"]+)"[^>]*>/gi)];
   const expectedAlternates = alternatesByRoute.get(route);
-  const translated = expectedAlternates || englishArticle || (route.startsWith("/blog/") && alternates.length > 0);
+  const translated = expectedAlternates || englishArticle || ((route.startsWith("/blog/") || englishArchive) && alternates.length > 0);
   assert.equal(alternates.length, translated ? 2 : 0, `Language alternate count: ${route}`);
   if (translated) {
     const pair = {};
@@ -117,8 +125,10 @@ for (const route of [...routes, "/404"]) {
       assert(routes.includes(href), `Broken blog link on ${route}: ${href}`);
     }
   }
-  if (route === "/404")
-    assert(html.includes('content="noindex, follow"'), "404 must be noindex");
+  if (errorFiles.has(route)) {
+    assert(html.includes('content="noindex, follow"'), `404 must be noindex: ${route}`);
+    assert.match(html, new RegExp(`<html\\b[^>]*\\blang="${english ? "en" : "it"}"`), `Error language: ${route}`);
+  }
 }
 for (const [url, pair] of renderedAlternates) {
   assert.deepEqual(renderedAlternates.get(pair.it), pair, `Italian reciprocal alternate for ${url}`);
@@ -127,6 +137,10 @@ for (const [url, pair] of renderedAlternates) {
 const sitemap = await readFile(path.join(dist, "sitemap.xml"), "utf8");
 for (const route of routes) {
   assert(sitemap.includes(`<loc>${siteUrl}${route === "/" ? "" : route}</loc>`), `Sitemap missing route: ${route}`);
+}
+for (const [route, file] of errorFiles) {
+  assert(!sitemap.includes(`<loc>${siteUrl}${route}</loc>`), `Error page in sitemap: ${route}`);
+  assert(!sitemap.includes(`<loc>${siteUrl}/${file}</loc>`), `Error document in sitemap: ${file}`);
 }
 for (const route of routes.filter(route => route.startsWith("/blog/temi/") || route.startsWith("/blog/page/"))) {
   const html = await readFile(path.join(dist, `${route.slice(1)}.html`), "utf8");
@@ -182,5 +196,5 @@ assert(
   "App screenshot budget",
 );
 console.log(
-  `Verified ${routes.length} prerendered pages + 404, unique SEO, initial content, ${checkedAssets.size} assets, paginated blog and home asset budgets.`,
+  `Verified ${routes.length} prerendered pages and both 404 pages, unique SEO, initial content, ${checkedAssets.size} assets, paginated blog and home asset budgets.`,
 );

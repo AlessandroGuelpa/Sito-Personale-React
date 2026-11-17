@@ -1,37 +1,75 @@
-import { blogRoots, type SiteLanguage } from "./locales";
+import {
+  blogHubPath,
+  blogHubSlugs,
+  blogRoots,
+  translatedTopicSlugs,
+  type BlogHubSlug,
+  type SiteLanguage,
+} from "./locales";
 
-export const BLOG_HUBS = [
-  {
-    slug: "shopify-integrazioni",
-    title: "Shopify, API e integrazioni ERP",
-    description: "Guide su Shopify, GraphQL Admin API, inventario, ordini, webhook e sincronizzazioni affidabili con gestionali.",
-    intro: "Dati di catalogo, ordini e magazzino devono restare coerenti anche in presenza di ritardi, retry e richieste concorrenti. Qui raccolgo gli approfondimenti su Shopify, API e integrazioni ERP.",
-  },
-  {
-    slug: "react-frontend",
-    title: "React, JavaScript e Frontend",
-    description: "Rendering, performance, accessibilità, interfacce e gestione dei dati con React, TypeScript e JavaScript.",
-    intro: "Dal rendering SEO-friendly alle interfacce reattive: note pratiche su React, TypeScript, JavaScript, esperienza utente e prestazioni web.",
-  },
-  {
-    slug: "rails-backend",
-    title: "Ruby on Rails, backend e architetture",
-    description: "Ruby, Rails, database, API, job periodici, affidabilità e progettazione dei servizi backend.",
-    intro: "Un servizio backend è utile quando gestisce bene dati, concorrenza ed errori. Qui raccolgo esempi su Rails, API, database, code di lavoro e scelte architetturali.",
-  },
-  {
-    slug: "scienza-passioni",
-    title: "Scienza, ingegneria, spazio e passioni",
-    description: "Articoli di ingegneria, esplorazione spaziale, ambiente, musica e sperimentazione.",
-    intro: "Uno spazio per curiosità e approfondimenti oltre lo sviluppo software: ingegneria, Luna e spazio, sostenibilità, audio e musica generativa.",
-  },
-] as const;
+export type { BlogHubSlug } from "./locales";
 
-export type BlogHubSlug = (typeof BLOG_HUBS)[number]["slug"];
+export const BLOG_HUBS = {
+  "shopify-integrazioni": {
+    it: {
+      title: "Shopify, API e integrazioni ERP",
+      description: "Guide su Shopify, GraphQL Admin API, inventario, ordini, webhook e sincronizzazioni affidabili con gestionali.",
+      intro: "Dati di catalogo, ordini e magazzino devono restare coerenti anche in presenza di ritardi, retry e richieste concorrenti. Qui raccolgo gli approfondimenti su Shopify, API e integrazioni ERP.",
+    },
+    en: {
+      title: "Shopify API and ERP Integrations",
+      description: "Practical guides to Shopify’s GraphQL Admin API, inventory and order synchronisation, webhooks and reliable ERP integrations.",
+      intro: "Products, orders and inventory have to stay consistent when requests overlap or need to be retried. These guides cover Shopify APIs and the decisions that make an ERP integration reliable.",
+    },
+  },
+  "react-frontend": {
+    it: {
+      title: "React, JavaScript e Frontend",
+      description: "Rendering, performance, accessibilità, interfacce e gestione dei dati con React, TypeScript e JavaScript.",
+      intro: "Dal rendering SEO-friendly alle interfacce reattive: note pratiche su React, TypeScript, JavaScript, esperienza utente e prestazioni web.",
+    },
+    en: {
+      title: "React, JavaScript and Frontend Development",
+      description: "Explore rendering, web performance, accessibility and state management with React, TypeScript and JavaScript.",
+      intro: "Practical notes on building responsive, accessible websites with React, TypeScript and JavaScript, from the first HTML response to the way the interface handles requests.",
+    },
+  },
+  "rails-backend": {
+    it: {
+      title: "Ruby on Rails, backend e architetture",
+      description: "Ruby, Rails, database, API, job periodici, affidabilità e progettazione dei servizi backend.",
+      intro: "Un servizio backend è utile quando gestisce bene dati, concorrenza ed errori. Qui raccolgo esempi su Rails, API, database, code di lavoro e scelte architetturali.",
+    },
+    en: {
+      title: "Ruby on Rails and Backend Architecture",
+      description: "Read about Ruby, Rails, database queries, HTTP APIs, background jobs and the design of reliable backend services.",
+      intro: "Backend design comes down to how a service handles data, concurrent work and failures. These articles use Rails, databases and background jobs to show how those decisions play out.",
+    },
+  },
+  "scienza-passioni": {
+    it: {
+      title: "Scienza, ingegneria, spazio e passioni",
+      description: "Articoli di ingegneria, esplorazione spaziale, ambiente, musica e sperimentazione.",
+      intro: "Uno spazio per curiosità e approfondimenti oltre lo sviluppo software: ingegneria, Luna e spazio, sostenibilità, audio e musica generativa.",
+    },
+    en: {
+      title: "Science, Engineering, Space and Music",
+      description: "Explore engineering, lunar missions, environmental science, synthesis and generative music.",
+      intro: "I use this part of the blog to explore the topics I’m curious about outside software development, from lunar missions and sustainability to audio and generative music.",
+    },
+  },
+} satisfies Record<BlogHubSlug, Record<SiteLanguage, {
+  title: string;
+  description: string;
+  intro: string;
+}>>;
+
 export const BLOG_PAGE_SIZE = 12;
 
-export function getBlogHub(slug: string | undefined) {
-  return BLOG_HUBS.find((hub) => hub.slug === slug);
+export function getBlogHubSlug(segment: string | undefined, language: SiteLanguage) {
+  return blogHubSlugs.find((slug) =>
+    segment === (language === "en" ? translatedTopicSlugs[slug] : slug),
+  );
 }
 
 export function blogHubForPost(post: { hub?: BlogHubSlug; category: string }): BlogHubSlug {
@@ -40,20 +78,22 @@ export function blogHubForPost(post: { hub?: BlogHubSlug; category: string }): B
   return post.category === "sviluppo-software" ? "react-frontend" : "scienza-passioni";
 }
 
-export function blogHubPath(slug: BlogHubSlug) {
-  return `/blog/temi/${slug}`;
+export function blogPageCount(postCount: number) {
+  return Math.max(1, Math.ceil(postCount / BLOG_PAGE_SIZE));
 }
 
 export function blogArchivePath(page: number, slug?: BlogHubSlug, language: SiteLanguage = "it") {
-  const base = slug ? blogHubPath(slug) : blogRoots[language];
+  const base = slug ? blogHubPath(slug, language) : blogRoots[language];
   return page <= 1 ? base : `${base}/page/${page}`;
 }
 
-export const BLOG_HUB_GUIDES: Partial<Record<BlogHubSlug, {
+export type BlogHubGuide = {
   introduction: string;
   sections: { id: string; title: string; paragraphs: string[]; links: { id: string; label: string }[] }[];
   sources: { label: string; url: string }[];
-}>> = {
+};
+
+export const BLOG_HUB_GUIDES: Partial<Record<BlogHubSlug, BlogHubGuide>> = {
   "shopify-integrazioni": {
     introduction: "Integrare Shopify con un gestionale significa coordinare sistemi che non condividono necessariamente lo stesso orologio né la stessa disponibilità. Il problema principale non è fare una richiesta API, ma sapere quale dato è autorevole, cosa succede se una chiamata si ripete e come individuare ciò che non è stato sincronizzato.",
     sections: [

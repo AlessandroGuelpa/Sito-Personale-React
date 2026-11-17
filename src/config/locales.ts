@@ -1,14 +1,37 @@
 export const siteLanguages = ["it", "en"] as const;
 export type SiteLanguage = (typeof siteLanguages)[number];
+export type LocalizedPaths = Record<SiteLanguage, string>;
 
 export const portfolioRoutes = {
   home: { it: "/", en: "/en" },
   projects: { it: "/project", en: "/en/projects" },
   about: { it: "/about", en: "/en/about" },
   contact: { it: "/contact", en: "/en/contact" },
+  sports: { it: "/sports", en: "/en/sports" },
 } as const;
 
 export const blogRoots = { it: "/blog", en: "/en/blog" } as const;
+export const blogTopicRoots = {
+  it: `${blogRoots.it}/temi`,
+  en: `${blogRoots.en}/topics`,
+} as const;
+export const translatedTopicSlugs = {
+  "shopify-integrazioni": "shopify-integrations",
+  "react-frontend": "react-frontend",
+  "rails-backend": "rails-backend",
+  "scienza-passioni": "science-engineering",
+} as const;
+
+export type BlogHubSlug = keyof typeof translatedTopicSlugs;
+export const blogHubSlugs = Object.keys(translatedTopicSlugs) as BlogHubSlug[];
+
+export function blogHubPath(slug: BlogHubSlug, language: SiteLanguage = "it") {
+  const segment = language === "en" ? translatedTopicSlugs[slug] : slug;
+
+  return `${blogTopicRoots[language]}/${segment}`;
+}
+
+export const notFoundRoutes = { it: "/404", en: "/en/404" } as const;
 
 const inventoryArticleId = "shopify-inventario-scritture-concorrenti";
 
@@ -245,6 +268,10 @@ export const inventoryArticleRoutes = {
 const localizedRoutes = [
   ...Object.values(portfolioRoutes),
   blogRoots,
+  ...blogHubSlugs.map((slug) => ({
+    it: blogHubPath(slug, "it"),
+    en: blogHubPath(slug, "en"),
+  })),
   ...Object.entries(translatedArticleSlugs).map(([it, en]) => ({
     it: `${blogRoots.it}/${it}`,
     en: `${blogRoots.en}/${en}`,
@@ -261,7 +288,5 @@ export function languageAlternates(path: string) {
 }
 
 export function languageForPath(path: string): SiteLanguage {
-  return languageAlternates(path) && (path === "/en" || path.startsWith("/en/"))
-    ? "en"
-    : "it";
+  return path === "/en" || path.startsWith("/en/") ? "en" : "it";
 }

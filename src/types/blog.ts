@@ -1,6 +1,8 @@
 import type { BlogCategoryId } from "../config/blog";
 import type { BlogHubSlug } from "../config/blog-hubs";
 
+export type BlogArchivePageCounts = Record<"all" | BlogHubSlug, number>;
+
 export interface BlogSummary {
   id: string;
   title: string;

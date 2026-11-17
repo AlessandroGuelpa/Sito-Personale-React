@@ -21,6 +21,10 @@
       "permanent": true
     }
   ],
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/en(?:/.*)?", "status": 404, "dest": "/en/_404.html" }
+  ],
   "cleanUrls": true,
   "trailingSlash": false,
   "buildCommand": "npm run build",

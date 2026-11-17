@@ -7,6 +7,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import { blogPosts, type BlogPost } from "./src/data/blogPosts";
 import { englishBlogMetadata } from "./src/data/blogPosts.en";
 import {
+  blogHubSlugs,
   blogRoots,
   portfolioRoutes,
   siteLanguages,
@@ -14,11 +15,11 @@ import {
 } from "./src/config/locales";
 import { effectiveArticleDates } from "./src/utils/blog-dates";
 import {
-  BLOG_HUBS,
-  BLOG_PAGE_SIZE,
   blogHubForPost,
   blogArchivePath,
+  blogPageCount,
 } from "./src/config/blog-hubs";
+import type { BlogArchivePageCounts, BlogSummary } from "./src/types/blog";
 import { buildExcerpt, readingTimeMinutes, sitePageUrl } from "./src/utils/seo";
 import { selectRelatedPosts } from "./src/utils/related-posts";
 
@@ -38,6 +39,18 @@ function summarize(posts: BlogPost[]) {
       minutes: readingTimeMinutes(post.content),
       icon: typeof post.icon === "string" ? post.icon : undefined,
     }));
+}
+
+function archivePageCounts(posts: BlogSummary[]): BlogArchivePageCounts {
+  return Object.fromEntries([
+    ["all", blogPageCount(posts.length)],
+    ...blogHubSlugs.map((slug) => [
+      slug,
+      blogPageCount(
+        posts.filter((post) => blogHubForPost(post) === slug).length,
+      ),
+    ]),
+  ]) as BlogArchivePageCounts;
 }
 
 // Keep article bodies out of the home and archive bundles.
@@ -70,6 +83,10 @@ function blogMetadata(): Plugin {
     throw new Error("The English blog contains duplicate slugs");
   }
   const index = { it: summarize(blogPosts), en: summarize(englishPosts) };
+  const pageCounts = {
+    it: archivePageCounts(index.it),
+    en: archivePageCounts(index.en),
+  };
   const postsByPath = new Map<string, BlogPost>([
     ...blogPosts.map((post) => [`${blogRoots.it}/${post.id}`, post] as const),
     ...englishPosts.map(
@@ -97,9 +114,9 @@ function blogMetadata(): Plugin {
     },
     load(id) {
       if (id === "\0virtual:blog-index")
-        return `export const blogIndex = ${JSON.stringify(index.it)};`;
+        return `export const blogIndex = ${JSON.stringify(index.it)}; export const alternatePageCounts = ${JSON.stringify(pageCounts.en)};`;
       if (id === "\0virtual:english-blog-index")
-        return `export const blogIndex = ${JSON.stringify(index.en)};`;
+        return `export const blogIndex = ${JSON.stringify(index.en)}; export const alternatePageCounts = ${JSON.stringify(pageCounts.it)};`;
       if (id === "\0virtual:home-posts")
         return `export const latestPosts = ${JSON.stringify(index.it.slice(0, 3))};`;
       if (id === "\0virtual:blog-loaders")
@@ -121,30 +138,21 @@ function blogMetadata(): Plugin {
     },
     generateBundle() {
       if (ssr) return;
-      const hubRoutes = BLOG_HUBS.flatMap((hub) => {
-        const count = index.it.filter(
-          (post) => blogHubForPost(post) === hub.slug,
-        ).length;
-        const pages = Math.max(1, Math.ceil(count / BLOG_PAGE_SIZE));
-        return Array.from({ length: pages }, (_, i) =>
-          blogArchivePath(i + 1, hub.slug),
-        );
-      });
+      const hubRoutes = siteLanguages.flatMap((language) =>
+        blogHubSlugs.flatMap((slug) =>
+          Array.from({ length: pageCounts[language][slug] }, (_, i) =>
+            blogArchivePath(i + 1, slug, language),
+          ),
+        ),
+      );
       const blogPages = siteLanguages.flatMap((language) =>
-        Array.from(
-          {
-            length: Math.max(
-              0,
-              Math.ceil(index[language].length / BLOG_PAGE_SIZE) - 1,
-            ),
-          },
-          (_, i) => blogArchivePath(i + 2, undefined, language),
+        Array.from({ length: pageCounts[language].all - 1 }, (_, i) =>
+          blogArchivePath(i + 2, undefined, language),
         ),
       );
       const routes = [
         ...Object.values(portfolioRoutes).map(({ it }) => it),
         blogRoots.it,
-        "/sports",
         "/vehrt",
         ...hubRoutes,
         ...blogPages,

@@ -7,8 +7,10 @@ import { FeaturedProjects } from "@/components/project-card";
 import { BlogCard } from "@/components/blog-card";
 import { SITE_URL } from "@/utils/seo";
 import { siteConfig } from "@/config/site";
-import { BLOG_HUBS, blogHubPath } from "@/config/blog-hubs";
+import { BLOG_HUBS } from "@/config/blog-hubs";
 import {
+  blogHubPath,
+  blogHubSlugs,
   blogRoots,
   inventoryArticleRoutes,
   portfolioRoutes,
@@ -251,21 +253,25 @@ function ItalianBlogSections() {
           Percorsi dal blog
         </h2>
         <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {BLOG_HUBS.map((hub) => (
-            <Link
-              key={hub.slug}
-              to={blogHubPath(hub.slug)}
-              className="block border-t border-zinc-200 py-5 dark:border-zinc-800"
-            >
-              <h3 className="text-xl font-bold">{hub.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                {hub.description}
-              </p>
-              <span className="text-link mt-3 inline-flex">
-                Leggi gli articoli →
-              </span>
-            </Link>
-          ))}
+          {blogHubSlugs.map((slug) => {
+            const hub = BLOG_HUBS[slug].it;
+
+            return (
+              <Link
+                key={slug}
+                to={blogHubPath(slug)}
+                className="block border-t border-zinc-200 py-5 dark:border-zinc-800"
+              >
+                <h3 className="text-xl font-bold">{hub.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                  {hub.description}
+                </p>
+                <span className="text-link mt-3 inline-flex">
+                  Leggi gli articoli →
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </section>
       <section aria-labelledby="latest-title" className="section-space">

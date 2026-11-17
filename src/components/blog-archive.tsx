@@ -22,16 +22,20 @@ import {
   BLOG_PAGE_SIZE,
   blogArchivePath,
   blogHubForPost,
-  blogHubPath,
-  getBlogHub,
+  blogPageCount,
+  getBlogHubSlug,
 } from "@/config/blog-hubs";
+import { englishBlogHubGuides } from "@/config/blog-hub-guides.en";
 import {
+  blogHubPath,
+  blogHubSlugs,
   blogRoots,
+  languageAlternates,
   portfolioRoutes,
   type SiteLanguage,
 } from "@/config/locales";
-import type { BlogSummary } from "@/types/blog";
-import { SITE_URL, breadcrumbJsonLd } from "@/utils/seo";
+import type { BlogArchivePageCounts, BlogSummary } from "@/types/blog";
+import { breadcrumbJsonLd, sitePageUrl } from "@/utils/seo";
 
 const archiveCopy = {
   it: {
@@ -57,6 +61,15 @@ const archiveCopy = {
     pagination: "Pagine del blog",
     previous: "← Precedente",
     next: "Successiva →",
+    topics: "Percorsi tematici",
+    guideId: "guida-tematica",
+    readGuide: "Leggi la guida tematica ↓",
+    guideLabel: "Approfondimento",
+    guideTitle: (topic: string) => `Guida a ${topic}`,
+    related: "Approfondimenti collegati",
+    sources: "Documentazione primaria",
+    author: "Articoli di Alessandro Guelpa.",
+    authorLink: "Esperienza professionale e profilo dell’autore",
   },
   en: {
     title: "Blog · Web Development, Engineering and Science",
@@ -65,7 +78,7 @@ const archiveCopy = {
     breadcrumb: "Breadcrumb",
     heading: "Development, engineering and science.",
     intro:
-      "Practical articles on Shopify integrations, Rails and React, plus explorations in engineering and science.",
+      "Practical articles on Shopify integrations, Rails and React, plus explorations in engineering and science. Browse by topic or search the archive.",
     search: "Search the archive",
     placeholder: "Title, topic or keyword",
     category: "Category",
@@ -81,19 +94,30 @@ const archiveCopy = {
     pagination: "Blog pages",
     previous: "← Previous",
     next: "Next →",
+    topics: "Browse by topic",
+    guideId: "topic-guide",
+    readGuide: "Read the topic guide ↓",
+    guideLabel: "In-depth guide",
+    guideTitle: (topic: string) => `Guide to ${topic}`,
+    related: "Related articles",
+    sources: "Primary sources",
+    author: "Articles by Alessandro Guelpa.",
+    authorLink: "About the author and his work",
   },
 };
 
 export function BlogArchive({
   posts,
   language,
+  alternatePageCounts,
 }: {
   posts: BlogSummary[];
   language: SiteLanguage;
+  alternatePageCounts: BlogArchivePageCounts;
 }) {
   const copy = archiveCopy[language];
   const english = language === "en";
-  const { hub: hubSlug, page: pageParam } = useParams<{
+  const { hub: hubParam, page: pageParam } = useParams<{
     hub?: string;
     page?: string;
   }>();
@@ -103,8 +127,11 @@ export function BlogArchive({
   const [hydrated, setHydrated] = useState(false);
   const [draftQuery, setDraftQuery] = useState<string | null>(null);
   const resultsHeading = useRef<HTMLHeadingElement>(null);
-  const hub = getBlogHub(hubSlug);
-  const guide = hub ? BLOG_HUB_GUIDES[hub.slug] : undefined;
+  const hubSlug = getBlogHubSlug(hubParam, language);
+  const hub = hubSlug ? BLOG_HUBS[hubSlug][language] : undefined;
+  const guide = hubSlug
+    ? (english ? englishBlogHubGuides : BLOG_HUB_GUIDES)[hubSlug]
+    : undefined;
   // Static HTML represents the path. Apply query-string filters after hydration.
   useEffect(() => setHydrated(true), []);
   const query = hydrated ? params.get("q") || "" : "";
@@ -117,8 +144,8 @@ export function BlogArchive({
   const requestedCategory = hydrated ? params.get("category") : null;
   const category = isBlogCategory(requestedCategory) ? requestedCategory : "";
   const hasFilters = Boolean(query || tag || category);
-  const allHubPosts = hub
-    ? posts.filter((post) => blogHubForPost(post) === hub.slug)
+  const allHubPosts = hubSlug
+    ? posts.filter((post) => blogHubForPost(post) === hubSlug)
     : posts;
   const normalizedQuery = query.trim().toLocaleLowerCase(language);
   const filtered = allHubPosts.filter(
@@ -129,31 +156,40 @@ export function BlogArchive({
         .toLocaleLowerCase(language)
         .includes(normalizedQuery),
   );
-  const totalPages = Math.max(1, Math.ceil(filtered.length / BLOG_PAGE_SIZE));
-  const requestedPage = hasFilters
-    ? Number(params.get("page")) || 1
-    : pageParam
-      ? Number(pageParam)
-      : 1;
-  const page = Math.floor(requestedPage);
-  const basePath = blogArchivePath(1, hub?.slug, language);
-  const canonicalPath = hasFilters
-    ? basePath
-    : blogArchivePath(page, hub?.slug, language);
+  const totalPages = blogPageCount(filtered.length);
+  const pathPage = pageParam ? Number(pageParam) : 1;
+  const page = hasFilters
+    ? Math.floor(Number(params.get("page")) || 1)
+    : pathPage;
+
+  if (
+    (hubParam && !hubSlug) ||
+    (pageParam &&
+      (!Number.isSafeInteger(pathPage) ||
+        String(pathPage) !== pageParam ||
+        pathPage < 2 ||
+        pathPage > blogPageCount(allHubPosts.length))) ||
+    !Number.isInteger(page) ||
+    page < 1 ||
+    page > totalPages
+  ) {
+    return <NotFoundPage />;
+  }
+
+  const canonicalPage = hasFilters ? 1 : page;
+  const basePath = blogArchivePath(1, hubSlug, language);
+  const canonicalPath = blogArchivePath(canonicalPage, hubSlug, language);
+  const alternatePaths =
+    canonicalPage <= alternatePageCounts[hubSlug ?? "all"]
+      ? {
+          it: blogArchivePath(canonicalPage, hubSlug, "it"),
+          en: blogArchivePath(canonicalPage, hubSlug, "en"),
+        }
+      : undefined;
   const visible = filtered.slice(
     (page - 1) * BLOG_PAGE_SIZE,
     page * BLOG_PAGE_SIZE,
   );
-
-  if (
-    (hubSlug && !hub) ||
-    !Number.isInteger(page) ||
-    page < 1 ||
-    page > totalPages ||
-    (!hasFilters && page === 1 && Boolean(pageParam))
-  ) {
-    return <NotFoundPage />;
-  }
 
   function change(key: string, value: string) {
     const next = new URLSearchParams(params);
@@ -183,8 +219,12 @@ export function BlogArchive({
   const title = `${hub?.title ?? copy.title}${page > 1 ? ` · ${copy.page} ${page}` : ""}`;
 
   return (
-    <DefaultLayout language={language}>
+    <DefaultLayout
+      alternatePaths={alternatePaths ?? languageAlternates(basePath)}
+      language={language}
+    >
       <PageSeo
+        alternatePaths={alternatePaths}
         description={hub?.description ?? copy.description}
         language={language}
         path={canonicalPath}
@@ -194,15 +234,19 @@ export function BlogArchive({
                 "@context": "https://schema.org",
                 "@graph": [
                   breadcrumbJsonLd([
-                    { name: "Home", url: SITE_URL },
-                    { name: "Blog", url: `${SITE_URL}/blog` },
-                    { name: hub.title, url: `${SITE_URL}${basePath}` },
+                    {
+                      name: "Home",
+                      url: sitePageUrl(portfolioRoutes.home[language]),
+                    },
+                    { name: "Blog", url: sitePageUrl(blogRoots[language]) },
+                    { name: hub.title, url: sitePageUrl(basePath) },
                   ]),
                   {
                     "@type": "CollectionPage",
                     name: hub.title,
-                    url: `${SITE_URL}${canonicalPath}`,
+                    url: sitePageUrl(canonicalPath),
                     description: hub.description,
+                    inLanguage: language,
                   },
                 ],
               }
@@ -239,27 +283,33 @@ export function BlogArchive({
         <h1 className="page-title">{hub?.title ?? copy.heading}</h1>
         <p className="page-intro">{hub?.intro ?? copy.intro}</p>
         {guide && page === 1 && (
-          <a className="text-link mt-4 inline-flex" href="#guida-tematica">
-            Leggi la guida tematica ↓
+          <a className="text-link mt-4 inline-flex" href={`#${copy.guideId}`}>
+            {copy.readGuide}
           </a>
         )}
       </header>
-      {!hub && !english && (
-        <section aria-label="Percorsi tematici" className="mt-9">
-          <h2 className="text-xl font-bold mb-4">Percorsi tematici</h2>
+      {!hub && (
+        <section aria-labelledby="archive-topics" className="mt-9">
+          <h2 className="text-xl font-bold mb-4" id="archive-topics">
+            {copy.topics}
+          </h2>
           <div className="grid gap-3 sm:grid-cols-2">
-            {BLOG_HUBS.map((item) => (
-              <Link
-                key={item.slug}
-                to={blogHubPath(item.slug)}
-                className="block border border-zinc-200 rounded-xl p-5 hover:border-violet-500 dark:border-zinc-800 dark:hover:border-violet-500"
-              >
-                <h3 className="font-bold">{item.title}</h3>
-                <p className="text-sm leading-relaxed mt-2 text-zinc-600 dark:text-zinc-400">
-                  {item.description}
-                </p>
-              </Link>
-            ))}
+            {blogHubSlugs.map((slug) => {
+              const item = BLOG_HUBS[slug][language];
+
+              return (
+                <Link
+                  key={slug}
+                  to={blogHubPath(slug, language)}
+                  className="block border border-zinc-200 rounded-xl p-5 hover:border-violet-500 dark:border-zinc-800 dark:hover:border-violet-500"
+                >
+                  <h3 className="font-bold">{item.title}</h3>
+                  <p className="text-sm leading-relaxed mt-2 text-zinc-600 dark:text-zinc-400">
+                    {item.description}
+                  </p>
+                </Link>
+              );
+            })}
           </div>
         </section>
       )}
@@ -359,7 +409,7 @@ export function BlogArchive({
             ) : page > 1 ? (
               <Link
                 className="button-secondary"
-                to={blogArchivePath(page - 1, hub?.slug, language)}
+                to={blogArchivePath(page - 1, hubSlug, language)}
               >
                 {copy.previous}
               </Link>
@@ -381,7 +431,7 @@ export function BlogArchive({
             ) : page < totalPages ? (
               <Link
                 className="button-secondary"
-                to={blogArchivePath(page + 1, hub?.slug, language)}
+                to={blogArchivePath(page + 1, hubSlug, language)}
               >
                 {copy.next}
               </Link>
@@ -393,16 +443,16 @@ export function BlogArchive({
       </section>
       {guide && page === 1 && hub && (
         <section
-          id="guida-tematica"
-          aria-labelledby="guida-tematica-title"
+          id={copy.guideId}
+          aria-labelledby={`${copy.guideId}-title`}
           className="mt-14 border-t border-zinc-200 pt-10 dark:border-zinc-800"
         >
-          <p className="eyebrow">Approfondimento</p>
+          <p className="eyebrow">{copy.guideLabel}</p>
           <h2
-            id="guida-tematica-title"
+            id={`${copy.guideId}-title`}
             className="text-2xl font-bold tracking-tight"
           >
-            Guida a {hub.title}
+            {copy.guideTitle(hub.title)}
           </h2>
           <p className="mt-4 max-w-3xl leading-relaxed text-zinc-700 dark:text-zinc-300">
             {guide.introduction}
@@ -425,22 +475,31 @@ export function BlogArchive({
                     {paragraph}
                   </p>
                 ))}
-                <p className="mt-4 text-sm font-semibold">
-                  Approfondimenti collegati
-                </p>
+                <p className="mt-4 text-sm font-semibold">{copy.related}</p>
                 <ul className="mt-2 list-disc space-y-2 pl-5">
-                  {section.links.map((item) => (
-                    <li key={item.id}>
-                      <Link className="text-link" to={`/blog/${item.id}`}>
-                        {item.label}
-                      </Link>
-                    </li>
-                  ))}
+                  {section.links.map((item) => {
+                    const italianPath = `${blogRoots.it}/${item.id}`;
+                    const translatedPath =
+                      languageAlternates(italianPath)?.[language];
+
+                    return (
+                      <li key={item.id}>
+                        <Link
+                          className="text-link"
+                          hrefLang={translatedPath ? language : "it"}
+                          to={translatedPath ?? italianPath}
+                        >
+                          {item.label}
+                          {english && !translatedPath && " (in Italian)"}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </section>
             ))}
           </div>
-          <p className="mt-9 text-sm font-semibold">Documentazione primaria</p>
+          <p className="mt-9 text-sm font-semibold">{copy.sources}</p>
           <ul className="mt-2 list-disc space-y-2 pl-5 text-sm">
             {guide.sources.map((source) => (
               <li key={source.url}>
@@ -459,9 +518,9 @@ export function BlogArchive({
       )}
       {hub && (
         <p className="mt-10 text-sm text-zinc-600 dark:text-zinc-400">
-          Articoli di Alessandro Guelpa.{" "}
-          <Link className="text-link" to="/about">
-            Esperienza professionale e profilo dell’autore
+          {copy.author}{" "}
+          <Link className="text-link" to={portfolioRoutes.about[language]}>
+            {copy.authorLink}
           </Link>
           .
         </p>

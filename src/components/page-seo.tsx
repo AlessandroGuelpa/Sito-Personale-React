@@ -4,6 +4,7 @@ import {
   languageAlternates,
   languageForPath,
   siteLanguages,
+  type LocalizedPaths,
   type SiteLanguage,
 } from "@/config/locales";
 import { DEFAULT_OG_IMAGE, SITE_NAME, sitePageUrl } from "@/utils/seo";
@@ -16,6 +17,7 @@ export function PageSeo({
   image = DEFAULT_OG_IMAGE,
   type = "website",
   noindex = false,
+  alternatePaths,
   schema,
 }: {
   title: string;
@@ -25,11 +27,14 @@ export function PageSeo({
   image?: string;
   type?: string;
   noindex?: boolean;
+  alternatePaths?: LocalizedPaths;
   schema?: unknown;
 }) {
   const url = sitePageUrl(path);
   const pageTitle = `${title} | ${SITE_NAME}`;
-  const alternates = noindex ? undefined : languageAlternates(path);
+  const alternates = noindex
+    ? undefined
+    : (alternatePaths ?? languageAlternates(path));
 
   return (
     <Helmet>
