@@ -1,7 +1,8 @@
 import type { BlogPost } from "@/data/blogPosts";
 import { effectiveArticleDates } from "@/utils/blog-dates";
-import { blogHubForPost, blogHubPath, getBlogHub } from "@/config/blog-hubs";
+import { BLOG_HUBS, blogHubForPost } from "@/config/blog-hubs";
 import {
+  blogHubPath,
   blogRoots,
   languageAlternates,
   portfolioRoutes,
@@ -76,6 +77,7 @@ const articleCopy = {
     by: "Di",
     updated: "Aggiornato il",
     tags: "Argomenti",
+    topic: "Percorso",
     relatedLabel: "Dal blog",
     relatedTitle: "Continua a leggere",
     more: "← Altri articoli dal blog",
@@ -91,6 +93,7 @@ const articleCopy = {
     by: "By",
     updated: "Updated on",
     tags: "Topics",
+    topic: "Topic",
     relatedLabel: "From the blog",
     relatedTitle: "Related articles",
     more: "← All articles",
@@ -128,7 +131,8 @@ function PostContent({
   const copy = articleCopy[language];
   const minutes = readingTimeMinutes(post.content);
   const { publishedAt, modifiedAt } = effectiveArticleDates(post);
-  const hub = english ? undefined : getBlogHub(blogHubForPost(post));
+  const hubSlug = blogHubForPost(post);
+  const hub = BLOG_HUBS[hubSlug][language];
   const homePath = portfolioRoutes.home[language];
   const authorPath = portfolioRoutes.about[language];
   const blogPath = blogRoots[language];
@@ -195,14 +199,12 @@ function PostContent({
             </>
           ) : null}
         </p>
-        {hub && (
-          <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
-            Percorso:{" "}
-            <Link className="text-link" to={blogHubPath(hub.slug)}>
-              {hub.title}
-            </Link>
-          </p>
-        )}
+        <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
+          {copy.topic}{": "}
+          <Link className="text-link" to={blogHubPath(hubSlug, language)}>
+            {hub.title}
+          </Link>
+        </p>
         {post.tags?.length ? (
           <ul aria-label={copy.tags} className="mt-6 flex flex-wrap gap-2">
             {post.tags.map((tag) => (

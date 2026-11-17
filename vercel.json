@@ -21,6 +21,10 @@
       "permanent": true
     }
   ],
+  "routes": [
+    { "handle": "error" },
+    { "src": "/en(?:/.*)?", "status": 404, "dest": "/en/_404" }
+  ],
   "cleanUrls": true,
   "trailingSlash": false,
   "buildCommand": "npm run build",

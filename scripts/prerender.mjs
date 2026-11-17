@@ -21,7 +21,7 @@ function assetsFor(key, seen = new Set()) {
   return result;
 }
 function pageKey(route) {
-  if (route === "/en/blog" || route.startsWith("/en/blog/page/")) return "src/pages/blog/en.tsx";
+  if (route === "/en/blog" || route.startsWith("/en/blog/page/") || route.startsWith("/en/blog/topics/")) return "src/pages/blog/en.tsx";
   const baseRoute = route === "/en" ? "/" : route.replace(/^\/en\//, "/");
   if (baseRoute.startsWith("/blog/page/") || baseRoute.startsWith("/blog/temi/")) return "src/pages/blog/index.tsx";
   if (baseRoute.startsWith("/blog/")) return "src/pages/blog/[id].tsx";
@@ -40,7 +40,7 @@ const homeCriticalCss = new Beasties({
   logLevel: "warn",
 });
 let homeBytes = 0;
-for (const route of [...routes, "/404"]) {
+for (const route of [...routes, "/404", "/en/404"]) {
   const { html, head, attributes } = await render(route);
   const assets = assetsFor(pageKey(route));
   const existingCss = new Set(entry.css ?? []);
@@ -52,7 +52,7 @@ for (const route of [...routes, "/404"]) {
   if (route === "/" || route === "/en") {
     document = await homeCriticalCss.process(document);
   }
-  const file = route === "/" ? "index.html" : `${route.slice(1)}.html`;
+  const file = route === "/" ? "index.html" : route === "/en/404" ? "en/_404.html" : `${route.slice(1)}.html`;
   await mkdir(path.dirname(path.join(output, file)), { recursive: true });
   await writeFile(path.join(output, file), document);
   if (route === "/") {
@@ -62,4 +62,4 @@ for (const route of [...routes, "/404"]) {
     await writeFile(path.join(output, "bundle-report.json"), JSON.stringify({ homeJavaScriptBytes: homeBytes, files: Object.fromEntries(sizes) }, null, 2));
   }
 }
-console.log(`Prerendered ${routes.length} pages + 404. Home JavaScript: ${(homeBytes / 1000).toFixed(1)} kB (uncompressed).`);
+console.log(`Prerendered ${routes.length} pages and 2 error pages. Home JavaScript: ${(homeBytes / 1000).toFixed(1)} kB (uncompressed).`);

@@ -7,6 +7,7 @@ import {
   blogRoots,
   languageAlternates,
   portfolioRoutes,
+  type LocalizedPaths,
   type SiteLanguage,
 } from "@/config/locales";
 import { englishNavigation } from "@/config/site";
@@ -20,7 +21,13 @@ const italianNavigation = [
   { href: "/sports", label: "Sport" },
   { href: "/vehrt", label: "VEHRT" },
 ];
-export function Navbar({ language }: { language: SiteLanguage }) {
+export function Navbar({
+  language,
+  alternatePaths,
+}: {
+  language: SiteLanguage;
+  alternatePaths?: LocalizedPaths;
+}) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const english = language === "en";
@@ -30,7 +37,7 @@ export function Navbar({ language }: { language: SiteLanguage }) {
     label: english ? "Contact" : "Contatti",
   };
   const mobileNavigation = [...navigation, contact];
-  const alternates = languageAlternates(location.pathname);
+  const alternates = alternatePaths ?? languageAlternates(location.pathname);
   const otherLanguage = english ? "it" : "en";
   const languageDestination =
     alternates ?? (english ? blogRoots : portfolioRoutes.home);

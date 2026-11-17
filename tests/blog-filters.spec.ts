@@ -81,3 +81,23 @@ test("the English archive paginates, searches and links to the equivalent Italia
   await expect(page).toHaveURL(/\/blog\/fatica-metalli-carichi-ciclici$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "it");
 });
+
+test("English topic guides lead to English articles and have reciprocal language links", async ({ page }) => {
+  await page.goto("/en/blog");
+  await page.getByRole("region", { name: "Browse by topic" })
+    .getByRole("link", { name: /^Shopify API and ERP Integrations/ }).click();
+  await expect(page).toHaveURL(/\/en\/blog\/topics\/shopify-integrations$/);
+  await expect(page.getByRole("heading", { name: "Webhooks, idempotency and reconciliation" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Manage the GraphQL query budget" })).toHaveAttribute("href", "/en/blog/shopify-graphql-query-cost-rate-limits");
+  await page.getByRole("link", { name: "Read in Italian" }).click();
+  await expect(page).toHaveURL(/\/blog\/temi\/shopify-integrazioni$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "it");
+  await expect(page.getByRole("link", { name: "Leggi in inglese" })).toHaveAttribute("href", "/en/blog/topics/shopify-integrations");
+
+  await page.goto("/en/blog/topics/rails-backend");
+  await page.getByRole("link", { name: "Next →", exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/blog\/topics\/rails-backend\/page\/2$/);
+  await expect(page.locator('link[rel="alternate"][hreflang="it"]')).toHaveAttribute("href", "https://alessandroguelpa.it/blog/temi/rails-backend/page/2");
+  await page.getByRole("link", { name: "Read in Italian" }).click();
+  await expect(page).toHaveURL(/\/blog\/temi\/rails-backend\/page\/2$/);
+});

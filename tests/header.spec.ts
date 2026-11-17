@@ -148,6 +148,25 @@ test("the Blog link stays active while reading an article", async ({
   ).toHaveAttribute("aria-current", "page");
 });
 
+test("Sports has a localised page and invalid English addresses keep their language", async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 800 });
+  await page.goto("/sports");
+  await page.getByRole("link", { name: "Leggi in inglese" }).click();
+  await expect(page).toHaveURL(/\/en\/sports$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sports and interests.");
+  await expect(page.getByRole("navigation", { name: "Main navigation" })
+    .getByRole("link", { name: "Sports", exact: true })).toHaveAttribute("aria-current", "page");
+  await expect(page.getByRole("img", { name: "MMA cage training" })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(1024);
+
+  const response = await page.goto("/en/blog/topics/rails-backend/page/02?q=Ruby");
+  expect(response?.status()).toBe(404);
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Page not found");
+  await page.getByRole("link", { name: "Go to the blog" }).click();
+  await expect(page).toHaveURL(/\/en\/blog$/);
+});
+
 test("language links open the equivalent page and update the document", async ({
   page,
 }) => {

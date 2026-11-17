@@ -6,6 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import { ScrollProgress } from "@/components/scroll-progress";
 import {
   blogRoots,
+  blogTopicRoots,
   languageForPath,
   portfolioRoutes,
   siteLanguages,
@@ -61,23 +62,37 @@ export default function App() {
                 element={<AboutPage language={language} />}
                 path={portfolioRoutes.about[language]}
               />
+              <Route
+                element={<SportPage language={language} />}
+                path={portfolioRoutes.sports[language]}
+              />
             </Fragment>
           ))}
           <Route element={<BlogPage />} path="/blog" />
           <Route element={<BlogPage />} path="/blog/page/:page" />
-          <Route element={<BlogPage />} path="/blog/temi/:hub" />
-          <Route element={<BlogPage />} path="/blog/temi/:hub/page/:page" />
+          <Route element={<BlogPage />} path={`${blogTopicRoots.it}/:hub`} />
+          <Route
+            element={<BlogPage />}
+            path={`${blogTopicRoots.it}/:hub/page/:page`}
+          />
           <Route element={<EnglishBlogPage />} path={blogRoots.en} />
           <Route
             element={<EnglishBlogPage />}
             path={`${blogRoots.en}/page/:page`}
+          />
+          <Route
+            element={<EnglishBlogPage />}
+            path={`${blogTopicRoots.en}/:hub`}
+          />
+          <Route
+            element={<EnglishBlogPage />}
+            path={`${blogTopicRoots.en}/:hub/page/:page`}
           />
           <Route element={<BlogPostPage />} path={`${blogRoots.it}/:id`} />
           <Route
             element={<BlogPostPage language="en" />}
             path={`${blogRoots.en}/:id`}
           />
-          <Route element={<SportPage />} path="/sports" />
           <Route element={<VehrtPage />} path="/vehrt" />
           <Route
             element={

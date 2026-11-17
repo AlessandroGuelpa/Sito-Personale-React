@@ -8,6 +8,7 @@ import { Logo } from "@/components/logo";
 import {
   languageForPath,
   portfolioRoutes,
+  type LocalizedPaths,
   type SiteLanguage,
 } from "@/config/locales";
 import { englishNavigation, siteConfig } from "@/config/site";
@@ -38,9 +39,11 @@ const socialLinks = [
 export default function DefaultLayout({
   children,
   language: pageLanguage,
+  alternatePaths,
 }: {
   children: React.ReactNode;
   language?: SiteLanguage;
+  alternatePaths?: LocalizedPaths;
 }) {
   const { pathname } = useLocation();
   const language = pageLanguage ?? languageForPath(pathname);
@@ -61,7 +64,7 @@ export default function DefaultLayout({
       >
         {english ? "Skip to content" : "Salta al contenuto"}
       </a>
-      <Navbar language={language} />
+      <Navbar alternatePaths={alternatePaths} language={language} />
       <main
         className="mx-auto w-full max-w-6xl px-5 sm:px-8 flex-grow outline-none"
         id="main-content"

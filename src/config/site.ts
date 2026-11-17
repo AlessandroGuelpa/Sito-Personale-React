@@ -6,6 +6,7 @@ export const englishNavigation = [
   { href: portfolioRoutes.projects.en, label: "Projects" },
   { href: portfolioRoutes.about.en, label: "About" },
   { href: blogRoots.en, label: "Blog" },
+  { href: portfolioRoutes.sports.en, label: "Sports" },
   { href: "/vehrt", label: "VEHRT" },
 ];
 
