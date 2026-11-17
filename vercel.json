@@ -1,27 +1,25 @@
 {
-  "redirects": [
-    {
-      "source": "/dj-qbit",
-      "destination": "/vehrt",
-      "permanent": true
-    },
-    {
-      "source": "/compiler",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/javascript-compiler",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/projects",
-      "destination": "/project",
-      "permanent": true
-    }
-  ],
   "routes": [
+    {
+      "src": "/dj-qbit",
+      "headers": { "Location": "/vehrt" },
+      "status": 308
+    },
+    {
+      "src": "/compiler",
+      "headers": { "Location": "/" },
+      "status": 308
+    },
+    {
+      "src": "/javascript-compiler",
+      "headers": { "Location": "/" },
+      "status": 308
+    },
+    {
+      "src": "/projects",
+      "headers": { "Location": "/project" },
+      "status": 308
+    },
     { "handle": "error" },
     { "src": "/en(?:/.*)?", "status": 404, "dest": "/en/_404" }
   ],
