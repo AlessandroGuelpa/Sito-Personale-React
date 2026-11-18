@@ -13,6 +13,14 @@ export const englishBlogMetadata: Record<
   keyof typeof translatedArticleSlugs,
   EnglishArticleMetadata
 > = {
+  "illuminazione-esterna-lumen-lux": {
+    title: "Outdoor Lighting: How Much Light Reaches the Path?",
+    seoTitle: "Outdoor Lighting: Lumens, Lux and Light Pollution",
+    date: "2026-11-18",
+    excerpt:
+      "Two 800-lumen fixtures can light the same path differently. Compare the lux on the path and see how to reduce unwanted light spill.",
+    tags: ["Outdoor lighting", "Light pollution", "Biodiversity", "Energy efficiency"],
+  },
   "shopify-inventario-scritture-concorrenti": {
     title: "Shopify–ERP Inventory Sync: Handling Concurrent Stock Updates",
     date: "2026-11-16",
