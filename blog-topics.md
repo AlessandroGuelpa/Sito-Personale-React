@@ -15,7 +15,7 @@ Per la procedura completa leggere [docs/blog-publishing.md](docs/blog-publishing
 
 ## Stato
 
-Prossimo tema: 4
+Prossimo tema: 1
 
 ## Storico
 
@@ -77,6 +77,7 @@ La rotazione parte dal tema 1 già indicato nel registro precedente.
 | 2026-11-11 | 2026-11-11 | 1 — Ingegneria generale | fatica-metalli-carichi-ciclici | Perché una staffa può cedere dopo migliaia di cicli | programmata |
 | 2026-11-13 | 2026-11-13 | 2 — Coding | react-key-liste-indice-stato | React key nelle liste: perché l’indice sposta lo stato tra le righe | programmata |
 | 2026-11-16 | 2026-11-16 | 3 — Spazio e Artemis | polo-sud-lunare-ombre-energia-solare | Polo sud lunare: come le ombre cambiano l’autonomia delle batterie | programmata |
+| 2026-11-18 | 2026-11-18 | 4 — Salvaguardia del pianeta | illuminazione-esterna-lumen-lux | Illuminazione esterna: quanti lumen arrivano sul vialetto? | programmata |
 
 Le nuove esecuzioni aggiungono una riga con origine `programmata` e uscita
 odierna. Una riga programmata già presente per la data locale impedisce un

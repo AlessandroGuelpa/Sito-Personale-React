@@ -21,6 +21,51 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "illuminazione-esterna-lumen-lux",
+    title: "Illuminazione esterna: quanti lumen arrivano sul vialetto?",
+    seoTitle: "Illuminazione esterna: lumen, lux e inquinamento luminoso",
+    date: "2026-11-18",
+    category: "ambiente",
+    hub: "scienza-passioni",
+    icon: "💡",
+    excerpt: "Due lampade da 800 lumen possono illuminare lo stesso vialetto in modo diverso. Come confrontare i lux sul percorso e limitare la luce dispersa.",
+    tags: ["Illuminazione esterna", "Inquinamento luminoso", "Biodiversità", "Efficienza energetica"],
+    content: `
+Vuoi vedere il gradino fra il cancello e la porta di casa. Monti un faretto più potente, ma dal cancello vedi prima la sorgente luminosa e solo dopo il bordo del gradino. Intanto si illumina anche la siepe. Prima di scegliere più lumen, vale la pena capire dove finiscono quelli che hai già.
+
+## Lumen alla lampada, lux sul percorso
+
+I **lumen** misurano il flusso luminoso. Se il dato è riferito all’apparecchio completo, indica quanta luce esce dall’apparecchio nel complesso. I **lux** misurano l’illuminamento su una superficie. Un lumen distribuito su un metro quadrato dà un lux. La forma del fascio, l’altezza e l’orientamento cambiano quanta luce arriva sul gradino.
+
+Una schermatura verso l’alto e un fascio orientato sul percorso aiutano a limitare la luce che esce dalla zona utile. Conta anche dove finisce la luce dopo aver colpito il terreno. Una pavimentazione chiara può rifletterne una parte verso l’alto, quindi conviene verificare anche il livello di illuminazione, oltre alla direzione del fascio.
+
+## Due apparecchi da 800 lumen, due risultati
+
+Immaginiamo un tratto di vialetto da 10 m² e due apparecchi che emettono entrambi 800 lumen. Nel primo assetto, a fascio largo, supponiamo che arrivino direttamente sul vialetto 200 lumen. Nel secondo, con un fascio più mirato, ne arrivano 400.
+
+- **Fascio largo.** 200 lm ÷ 10 m² = **20 lux medi** di illuminamento diretto.
+- **Fascio mirato.** 400 lm ÷ 10 m² = **40 lux medi** di illuminamento diretto.
+
+Sono numeri ipotetici per mostrare il calcolo. Se il secondo apparecchio può dimezzare il flusso mantenendo la stessa distribuzione, torna a 20 lux medi sul vialetto. Prima di abbassarlo, controllerei anche i punti meno illuminati. Un fascio stretto può dare una media alta pur lasciando il gradino in ombra.
+
+## Quanto a lungo resta accesa la luce fuori dal vialetto?
+
+Nelle Prealpi bernesi, un esperimento con lampade installate su alcuni prati ha rilevato il **62% di visite notturne ai fiori in meno** rispetto ai prati lasciati al buio. Il dato riguarda le condizioni di quello studio. Per capire perché conta ciò che succede anche ai margini di un percorso, vale la pena guardare [come gli habitat sostengono le reti di impollinatori](/blog/biodiversita-impollinatori-reti).
+
+Un timer o un sensore può ridurre il tempo di accensione dove l’illuminazione continua non serve. Una lampada da 8 W accesa per dieci ore consuma 80 Wh. Se resta accesa per due ore complessive, ne consuma 16, senza contare l’eventuale assorbimento del controllo a lampada spenta. È un’applicazione diretta della [differenza fra potenza ed energia](/blog/kw-kwh-potenza-energia).
+
+## Una verifica da fare dopo il tramonto
+
+Percorri il vialetto in entrambe le direzioni. Controlla il bordo del gradino, guarda se la sorgente ti abbaglia all’ingresso e osserva quanta luce raggiunge la siepe dal lato del percorso. Se puoi intervenire sull’orientamento, prova prima a puntare il fascio verso la zona utile. Regola poi intensità e durata, e ripeti il giro. Con un sensore, verifica che la luce si accenda **prima** che tu debba affrontare il gradino e che resti accesa per il tempo necessario a raggiungere la porta.
+
+**Fonti**
+
+- [CIE — definizione di flusso luminoso](https://cie.co.at/eilvterm/17-21-039) e [definizione di lux](https://cie.co.at/eilvterm/17-21-085)
+- [DarkSky International e Illuminating Engineering Society — principi per l’illuminazione esterna](https://darksky.org/resources/guides-and-how-tos/lighting-principles/)
+- [Università di Berna — esperimento di Knop e colleghi su luce artificiale e impollinazione notturna](https://mediarelations.unibe.ch/media_releases/2017_e/media_releases_2017/light_pollution_as_a_new_threat_to_pollination/index_eng.html)
+`,
+  },
+  {
     id: "polo-sud-lunare-ombre-energia-solare",
     title: "Polo sud lunare: come le ombre cambiano l’autonomia delle batterie",
     date: "2026-11-16",
