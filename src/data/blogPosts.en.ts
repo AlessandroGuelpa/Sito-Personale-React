@@ -13,6 +13,14 @@ export const englishBlogMetadata: Record<
   keyof typeof translatedArticleSlugs,
   EnglishArticleMetadata
 > = {
+  "risonanza-meccanica-rigidita-supporto": {
+    title: "Mechanical Resonance: When a Stiffer Support Vibrates More",
+    seoTitle: "Mechanical Resonance: Stiffness and Natural Frequency",
+    date: "2026-11-20",
+    excerpt:
+      "Stiffening a support can move it closer to resonance. A spring-mass model shows why displacement at 5 Hz can rise from 0.17 to 1.10 mm.",
+    tags: ["Mechanical resonance", "Vibration", "Dynamics", "Damping"],
+  },
   "illuminazione-esterna-lumen-lux": {
     title: "Outdoor Lighting: How Much Light Reaches the Path?",
     seoTitle: "Outdoor Lighting: Lumens, Lux and Light Pollution",
