@@ -21,6 +21,63 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "risonanza-meccanica-rigidita-supporto",
+    title: "Risonanza meccanica: quando un supporto più rigido vibra di più",
+    seoTitle: "Risonanza meccanica: rigidità, frequenza propria e vibrazioni",
+    date: "2026-11-20",
+    category: "ingegneria",
+    hub: "scienza-passioni",
+    icon: "⚙️",
+    excerpt: "Un supporto irrigidito può avvicinarsi alla risonanza. Un modello massa-molla mostra perché a 5 Hz lo spostamento può crescere da 0,17 a 1,10 mm.",
+    tags: ["Risonanza meccanica", "Vibrazioni", "Dinamica", "Smorzamento"],
+    content: `
+Un piccolo gruppo meccanico vibra sul proprio supporto. Aggiungi un rinforzo e, a macchina ferma, la struttura cede meno quando la spingi. Durante il funzionamento, però, in un certo intervallo di velocità il movimento aumenta. Il rinforzo ha modificato anche la frequenza propria del sistema e può averla avvicinata a una delle frequenze che lo sollecitano.
+
+## La frequenza propria dipende da massa e rigidità
+
+Per capire il meccanismo, immaginiamo una massa che si muove lungo una sola direzione, collegata a una base fissa attraverso una molla lineare e uno smorzatore viscoso. La molla rappresenta la rigidità equivalente del supporto. Lo smorzatore dissipa energia con una forza proporzionale alla velocità.
+
+La frequenza propria del modello senza smorzamento è **fₙ = √(k/m) ÷ (2π)**, con massa m in kg e rigidità k in N/m. A parità di massa, una rigidità maggiore alza questa frequenza. Con smorzamento debole, una forza periodica vicina alla frequenza propria può produrre una risposta molto amplificata.
+
+## Un rinforzo che avvicina la risonanza
+
+Prendiamo un esempio ipotetico con massa di **10 kg**, coefficiente di smorzamento c di **8 N·s/m** e una forza sinusoidale di ampiezza **1 N a 5 Hz**. Il rinforzo porta la rigidità da 4.000 a 9.000 N/m. Manteniamo uguali massa, smorzamento e forza, così da isolare l’effetto della rigidità.
+
+| Configurazione | Frequenza propria | Spostamento con 1 N costante | Ampiezza dello spostamento a 5 Hz |
+| --- | --- | --- | --- |
+| k = 4.000 N/m | 3,18 Hz | 0,25 mm | 0,17 mm |
+| k = 9.000 N/m | 4,77 Hz | 0,11 mm | 1,10 mm |
+
+Sotto la forza costante il supporto rinforzato si deforma meno. A 5 Hz, invece, l’ampiezza cresce di circa sei volte e mezzo. La frequenza propria si è spostata da 3,18 a 4,77 Hz, molto più vicina all’eccitazione. La tabella riporta ampiezze di picco dopo l’esaurimento del transitorio.
+
+## Come verificare il calcolo e le sue ipotesi
+
+Nel modello lineare, l’ampiezza a regime X si calcola con questa relazione, ponendo ω = 2πf.
+
+$$
+X = \\frac{F_0}{\\sqrt{(k-m\\omega^2)^2+(c\\omega)^2}}
+$$
+
+Inserendo i valori in unità SI ottieni X in metri. Lo spostamento statico della tabella è invece F₀/k. In una macchina reale un rinforzo può modificare anche massa e smorzamento, e la struttura può avere più modi di vibrare. Servono quindi misure per verificare quanto il modello descriva il movimento osservato.
+
+Anche la forza può cambiare con la velocità. Nel caso di uno squilibrio rotante, la sua ampiezza cresce con il quadrato della velocità angolare. Per interpretare una prova in cui vari i giri occorre tenere conto anche di questo effetto.
+
+## Confrontare le modifiche sullo stesso banco
+
+In una prova da banco registrerei ampiezza e frequenza del movimento lungo l’intervallo operativo previsto, mantenendo posizione del sensore e condizioni di fissaggio documentate. Se acquisisci un segnale, la [scelta del campionamento e il rischio di aliasing](/blog/campionamento-aliasing-segnali) incidono sulle frequenze che riesci a riconoscere.
+
+Ripeterei la misura dopo la modifica, cercando sia la riduzione del picco precedente sia l’eventuale comparsa di altri picchi. Le vibrazioni possono inoltre produrre [sollecitazioni cicliche rilevanti per la fatica dei metalli](/blog/fatica-metalli-carichi-ciclici).
+
+Prima della prova fisserei il limite di spostamento accettabile e i punti da misurare. Il confronto finale deve coprire anche avviamento e arresto, se attraversano frequenze critiche, oltre alla velocità di lavoro abituale.
+
+**Fonti**
+
+- [University of Alberta — sistema massa-molla e frequenza propria](https://engcourses-uofa.ca/books/vibrations-and-sound/forced-vibrations-of-undamped-single-degree-of-freedom-systems/9155-2/)
+- [University of Alberta — risposta armonica smorzata e squilibrio rotante](https://engcourses-uofa.ca/books/vibrations-and-sound/forced-vibrations-of-damped-single-degree-of-freedom-systems/damped-spring-mass-system/)
+- [MIT OpenCourseWare — isolamento delle vibrazioni e sistemi con più gradi di libertà](https://ocw.mit.edu/courses/2-003sc-engineering-dynamics-fall-2011/pages/reducing-problem-vibration-and-intro-to-multi-dof-vibration/)
+`,
+  },
+  {
     id: "illuminazione-esterna-lumen-lux",
     title: "Illuminazione esterna: quanti lumen arrivano sul vialetto?",
     seoTitle: "Illuminazione esterna: lumen, lux e inquinamento luminoso",
