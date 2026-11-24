@@ -36,6 +36,7 @@ export const notFoundRoutes = { it: "/404", en: "/en/404" } as const;
 const inventoryArticleId = "shopify-inventario-scritture-concorrenti";
 
 export const translatedArticleSlugs = {
+  "react-localstorage-sincronizzare-schede": "react-localstorage-sync-browser-tabs",
   "risonanza-meccanica-rigidita-supporto": "mechanical-resonance-support-stiffness",
   "illuminazione-esterna-lumen-lux": "outdoor-lighting-lumens-lux",
   [inventoryArticleId]: "shopify-erp-inventory-sync",

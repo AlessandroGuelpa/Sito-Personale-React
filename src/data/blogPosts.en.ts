@@ -13,6 +13,13 @@ export const englishBlogMetadata: Record<
   keyof typeof translatedArticleSlugs,
   EnglishArticleMetadata
 > = {
+  "react-localstorage-sincronizzare-schede": {
+    title: "React and localStorage: Keeping Two Tabs in Sync",
+    date: "2026-11-24",
+    excerpt:
+      "Keep a preference in sync across React tabs with useSyncExternalStore. Handle local writes, storage events and the initial snapshot during hydration.",
+    tags: ["React", "localStorage", "useSyncExternalStore", "Web Storage"],
+  },
   "risonanza-meccanica-rigidita-supporto": {
     title: "Mechanical Resonance: When a Stiffer Support Vibrates More",
     seoTitle: "Mechanical Resonance: Stiffness and Natural Frequency",

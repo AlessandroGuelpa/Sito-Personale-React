@@ -28,7 +28,7 @@ precedente non è una fonte aggiornata né un prerequisito del processo.
    evitare ripetizioni. La rotazione è ingegneria, coding, spazio/Artemis,
    salvaguardia del pianeta, poi di nuovo ingegneria.
 2. Controllare il registro per la data odierna in `Europe/Rome`: se esiste già
-   una voce `programmata`, verificare il relativo articolo e terminare senza
+   una voce `programmata`, verificare entrambe le versioni del relativo articolo e terminare senza
    duplicare il contenuto o avanzare il prossimo tema.
 3. Scrivere indicativamente 350–750 parole in italiano (senza riempitivi), con un problema concreto, un
    esempio e una conseguenza pratica. Usare paragrafi brevi e sezioni leggibili.
@@ -60,7 +60,13 @@ precedente non è una fonte aggiornata né un prerequisito del processo.
    materiali ed effetti audio restano tag specifici. Il filtro mostra soltanto
    le cinque categorie; i tag sono cercabili e i loro link continuano a filtrare
    l'archivio tramite `?tag=`.
-6. Nella stessa modifica avanzare il prossimo tema e aggiungere una riga al
+6. Pubblicare la traduzione integrale su una pagina distinta sotto `/en/blog/`.
+   Aggiungere la coppia di slug in `src/config/locales.ts`, i metadati inglesi
+   in `src/data/blogPosts.en.ts` e il testo in `src/data/blog-en/<slug-italiano>.md`.
+   Applicare la soglia editoriale e il requisito del link interno a entrambe
+   le versioni. Mantenere nei sorgenti i link interni `/blog/<slug>`, che il
+   sito localizza quando la destinazione ha una versione inglese.
+7. Nella stessa modifica avanzare il prossimo tema e aggiungere una riga al
    registro con data locale, tema, slug, titolo e origine `programmata`.
    Per i 45 articoli del recupero conservare le date editoriali distribuite
    dal 22 luglio al 2 novembre 2026, su lunedì/mercoledì/venerdì, come richiesto
@@ -79,14 +85,17 @@ npm run check:build
 npm run check:routing
 ```
 
-La build deve includere HTML, metadati e sitemap del nuovo articolo.
+Verificare HTML, canonical, hreflang reciproci, selettore lingua, archivi
+e sitemap per entrambe le pagine.
 `check:build` esegue anche `check-blog-content.mjs` e fallisce se un articolo
 non ha il tema esplicito, scende sotto 251 parole o contiene link interni rotti. Verificare
 slug univoco, correttezza degli esempi, link alle fonti e conservazione dei post
 esistenti. Per soli contenuti non occorre modificare componenti o configurazioni
 di hosting. Correggere gli errori introdotti prima di pubblicare.
 
-Creare un commit atomico dei soli `src/data/blogPosts.ts` e `blog-topics.md`.
+Creare un commit atomico con `src/data/blogPosts.ts`, `blog-topics.md`,
+`src/config/locales.ts`, `src/data/blogPosts.en.ts` e
+`src/data/blog-en/<slug-italiano>.md`.
 Con Git preparare esplicitamente quei due percorsi; non usare `git add .`.
 Con il plugin GitHub si possono creare blob, tree e commit sullo stesso head,
 poi spostare `main` con `expected_sha` e senza forzare la storia.
@@ -94,7 +103,7 @@ Se il branch avanza, rileggere, ricontrollare l'idempotenza e integrare prima di
 ritentare. Non sovrascrivere modifiche concorrenti.
 
 Confermare l'esito della scrittura, poi leggere lo stato Vercel del commit e,
-quando accessibile, il link diretto dell'articolo. Distinguere fra commit
+quando accessibile, entrambi i link diretti dell'articolo. Distinguere fra commit
 inviato, deploy in corso, deploy riuscito e pubblicazione verificata.
 Un testo generato o una build locale riuscita non provano che sia online.
 In caso di blocco conservare la bozza in modo persistente e riferire il motivo
