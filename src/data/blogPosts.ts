@@ -68,10 +68,49 @@ Aggiungi temporaneamente \`console.count("clock render")\` dentro render. Apri u
 
 Distingui infine due casi. Se reinserisci lo stesso nodo DOM dopo che Stimulus ha osservato la rimozione, la stessa istanza può riconnettersi. Se il server invia nuovo HTML per un [Turbo Frame](/blog/rails-hotwire-turbo), il nuovo nodo può avere lo stesso id e ricevere un’altra istanza. Conserva nelle proprietà del controller soltanto lo stato che puoi ricostruire quando appare il nuovo elemento.
 
+## Un messaggio ricompare quando premi Indietro
+
+Dopo aver aggiornato un indirizzo, Rails mostra una conferma. Apri un’altra pagina e premi Indietro. Se Turbo ripristina una copia della pagina precedente, puoi rivedere «Indirizzo salvato» anche se durante il ritorno non hai inviato alcun modulo. In questo caso cancellare il timer in disconnect risolve un problema diverso. Il messaggio visibile era già presente nell’HTML che Turbo ha copiato.
+
+Per un avviso interamente temporaneo, aggiungi \`data-turbo-temporary\` al contenitore. Turbo lo rimuove prima di memorizzare la pagina. Se invece vuoi conservare il contenitore per mostrare altri messaggi, nascondi il testo al momento della copia. Il controller seguente ascolta turbo:before-cache sul documento, dove il suo elemento può ricevere la notifica prima che la pagina venga salvata.
+
+\`\`\`html
+<div data-controller="notice"
+     data-action="turbo:before-cache@document->notice#dismiss">
+  <p data-notice-target="message">Indirizzo salvato</p>
+</div>
+\`\`\`
+
+\`\`\`javascript
+// app/javascript/controllers/notice_controller.js
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["message"]
+
+  dismiss() {
+    this.messageTarget.hidden = true
+  }
+}
+\`\`\`
+
+Per verificare il risultato, segui un link interno e torna con il pulsante Indietro del browser. Una ricarica completa farebbe una nuova richiesta e proverebbe un percorso diverso. Controlla che il testo iniziale sia visibile dopo il salvataggio, che scompaia al ritorno e che una nuova modifica dell’indirizzo possa ancora produrre un nuovo messaggio.
+
+## Diagnostica un clic che esegue due volte lo stesso metodo
+
+Apri la console e metti un contatore all’inizio del metodo invocato dal pulsante. Se il primo clic vale già due chiamate subito dopo una ricarica completa, ispeziona il pulsante e i suoi antenati. Lo stesso evento può risalire nel DOM e incontrare due action. Controlla anche se connect registra manualmente un listener per un clic che il markup collega già allo stesso metodo.
+
+Se invece il contatore cresce di uno al primo ingresso, di due al secondo e di tre al terzo, ispeziona i listener aggiunti a window o document. Una funzione creata con bind a ogni chiamata è un oggetto nuovo. Passare una seconda chiamata a bind durante la rimozione lascia installato il primo callback. Quando devi registrare un listener manualmente, crea il callback una volta in initialize, aggiungilo in connect e passa lo stesso riferimento a removeEventListener in disconnect. Ripeti tre visite partendo da una ricarica pulita. A ogni clic il contatore deve avanzare di una sola unità.
+
+## Scegli dove conservare lo stato
+
+Per un filtro di catalogo chiediti quale URL dovrebbe poter condividere il cliente. Se riaprendo il link deve ritrovare la taglia selezionata, salva la taglia nei parametri della richiesta e lascia che Rails ricostruisca il filtro. Se serve soltanto ricordare quale pulsante ha aperto un menu per restituirgli il focus, basta una proprietà dell’istanza finché il componente è montato. Questa scelta rende esplicito che cosa aspettarsi quando una navigazione ricrea il controller.
+
 ## Fonti
 
 - [Stimulus — lifecycle callbacks](https://stimulus.hotwired.dev/reference/lifecycle-callbacks)
 - [Stimulus — actions](https://stimulus.hotwired.dev/reference/actions)
+- [Turbo Handbook — Building Your Turbo Application](https://turbo.hotwired.dev/handbook/building)
 `,
   },
   {
@@ -6105,11 +6144,62 @@ Aggiungi temporaneamente \`connect() { console.debug("disclosure connected") }\`
 
 Quando il pannello viene sostituito da un [Turbo Frame](/blog/rails-hotwire-turbo), il ciclo di vita entra di nuovo in gioco. La [guida alle buone pratiche Stimulus](/blog/rails-stimulus-buone-pratiche) mostra come verificare cosa succede a timer e listener durante la navigazione.
 
+## Riusa il pannello in una lista di prodotti
+
+Immagina che il catalogo mostri due prodotti con tempi di consegna diversi. Se il metodo toggle cerca il paragrafo con document.querySelector, il primo pannello della pagina può aprirsi anche quando premi il secondo pulsante. Mantieni la ricerca entro il controller con this.panelTarget e passa il prodotto alla partial Rails. Nell’esempio il prodotto è un record salvato e shipping_estimate restituisce il testo da mostrare.
+
+\`\`\`erb
+<% panel_id = dom_id(product, :shipping) %>
+<section data-controller="disclosure">
+  <button type="button" aria-expanded="false"
+          aria-controls="<%= panel_id %>"
+          data-action="click->disclosure#toggle">Dettagli spedizione</button>
+  <p id="<%= panel_id %>" hidden data-disclosure-target="panel">
+    <%= product.shipping_estimate %>
+  </p>
+</section>
+\`\`\`
+
+Ci sono due collegamenti distinti. Stimulus trova il paragrafo tramite il target. Il pulsante usa aria-controls per identificare lo stesso paragrafo attraverso il suo id. Se copi un id fisso in tutte le schede, il clic può continuare a funzionare mentre il riferimento accessibile diventa ambiguo. dom_id genera un identificatore diverso per ciascun record. Se visualizzi lo stesso prodotto due volte, aggiungi anche un prefisso che distingua le due posizioni.
+
+## Trasforma il secondo clic in un test di sistema
+
+Salva questo test in test/system/shipping_details_test.rb. L’esempio presume che products_path renda almeno due schede tramite la partial precedente. Prepara due prodotti nei dati di test e usa il driver con JavaScript configurato in ApplicationSystemTestCase. Avvia il singolo file con \`bin/rails test test/system/shipping_details_test.rb\`.
+
+\`\`\`ruby
+require "application_system_test_case"
+
+class ShippingDetailsTest < ApplicationSystemTestCase
+  test "aprire la seconda scheda lascia chiusa la prima" do
+    visit products_path
+    first_card, second_card = all('[data-controller="disclosure"]', minimum: 2).first(2)
+
+    within(second_card) do
+      click_button "Dettagli spedizione"
+      assert_selector 'button[aria-expanded="true"]'
+      assert_selector '[data-disclosure-target="panel"]', visible: true
+    end
+
+    within(first_card) do
+      assert_selector 'button[aria-expanded="false"]'
+      assert_no_selector '[data-disclosure-target="panel"]', visible: true
+    end
+  end
+end
+\`\`\`
+
+Perché premere il secondo pulsante? Una selezione globale sbagliata potrebbe superare un test sulla prima scheda. Qui il test osserva sia il prodotto selezionato sia quello vicino. Inoltre controlla separatamente lo stato esposto dal pulsante e la visibilità del contenuto. Se dimentichi di aggiornare aria-expanded, un controllo puramente visivo continuerebbe a passare.
+
+## Decidi cosa deve succedere senza JavaScript
+
+Con il markup di questo esercizio il testo parte nascosto. Se il bundle tarda a caricarsi, il cliente può premere un pulsante ancora inattivo. Quando i tempi di consegna sono essenziali per la scelta, valuta un elemento HTML details con summary per il caso di sola apertura e chiusura. Se invece il progetto richiede quel controller, puoi renderizzare la stima visibile e mostrare il pulsante solo quando Stimulus si collega. Prova la pagina con JavaScript disattivato: il cliente dovrebbe comunque poter leggere quando riceverà il prodotto.
+
 ## Fonti
 
 - [Stimulus — installing](https://stimulus.hotwired.dev/handbook/installing)
 - [Stimulus — targets](https://stimulus.hotwired.dev/reference/targets)
 - [Stimulus — actions](https://stimulus.hotwired.dev/reference/actions)
+- [Rails Guides — System Testing](https://guides.rubyonrails.org/testing.html#system-testing)
 `,
   },
   {

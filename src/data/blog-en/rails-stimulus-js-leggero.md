@@ -43,8 +43,59 @@ Temporarily add `connect() { console.debug("disclosure connected") }` to the cla
 
 When a [Turbo Frame](/blog/rails-hotwire-turbo) replaces the panel, its lifecycle matters again. The [Stimulus best practices guide](/blog/rails-stimulus-buone-pratiche) shows how to check what happens to timers and listeners across visits.
 
+## Reuse the panel in a product list
+
+Suppose a catalogue shows two products with different delivery estimates. If toggle looks up the paragraph with document.querySelector, clicking the second button can open the first panel on the page. Keep the lookup inside the controller with this.panelTarget and pass the product into the Rails partial. This example assumes a persisted product record whose shipping_estimate returns display text.
+
+```erb
+<% panel_id = dom_id(product, :shipping) %>
+<section data-controller="disclosure">
+  <button type="button" aria-expanded="false"
+          aria-controls="<%= panel_id %>"
+          data-action="click->disclosure#toggle">Shipping details</button>
+  <p id="<%= panel_id %>" hidden data-disclosure-target="panel">
+    <%= product.shipping_estimate %>
+  </p>
+</section>
+```
+
+There are two connections here. Stimulus finds the paragraph through its target. The button uses aria-controls to identify the same paragraph by its id. If you copy a fixed id into every card, clicking can still work while the accessibility reference becomes ambiguous. dom_id gives each record a distinct identifier. If the same product appears twice on the page, include a prefix that distinguishes those placements too.
+
+## Turn the second click into a system test
+
+Save this test in test/system/shipping_details_test.rb. It assumes products_path renders at least two cards using the partial above. Provide two products in your test data and use a JavaScript-capable driver in ApplicationSystemTestCase. Run the individual file with `bin/rails test test/system/shipping_details_test.rb`.
+
+```ruby
+require "application_system_test_case"
+
+class ShippingDetailsTest < ApplicationSystemTestCase
+  test "opening the second card leaves the first one closed" do
+    visit products_path
+    first_card, second_card = all('[data-controller="disclosure"]', minimum: 2).first(2)
+
+    within(second_card) do
+      click_button "Shipping details"
+      assert_selector 'button[aria-expanded="true"]'
+      assert_selector '[data-disclosure-target="panel"]', visible: true
+    end
+
+    within(first_card) do
+      assert_selector 'button[aria-expanded="false"]'
+      assert_no_selector '[data-disclosure-target="panel"]', visible: true
+    end
+  end
+end
+```
+
+Why press the second button? A broken global selector could still pass a test that clicks the first card. This test observes both the selected product and its neighbour. It also checks the button’s exposed state separately from the visibility of the paragraph. If you forget to update aria-expanded, a check that only looks for visible text will still pass.
+
+## Decide what happens before JavaScript loads
+
+The exercise starts with hidden content. If the bundle is slow to load, a shopper can press a button that does nothing yet. When the estimate matters to a purchasing decision, consider a native details element with a summary for a simple disclosure. If the project needs this controller, another option is to render the estimate visible and only reveal the button when Stimulus connects. Disable JavaScript and reload the page. A shopper should still be able to find out when the product will arrive.
+
 ## Sources
 
 - [Stimulus — installing](https://stimulus.hotwired.dev/handbook/installing)
 - [Stimulus — targets](https://stimulus.hotwired.dev/reference/targets)
 - [Stimulus — actions](https://stimulus.hotwired.dev/reference/actions)
+- [Rails Guides — System Testing](https://guides.rubyonrails.org/testing.html#system-testing)
