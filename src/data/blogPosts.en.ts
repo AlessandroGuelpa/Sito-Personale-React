@@ -13,6 +13,12 @@ export const englishBlogMetadata: Record<
   keyof typeof translatedArticleSlugs,
   EnglishArticleMetadata
 > = {
+  "rails-stimulus-buone-pratiche": {
+    title: "Stimulus Best Practices in Rails for Timers, Events and Turbo",
+    date: "2026-11-25",
+    excerpt: "Find out why a timer keeps running after a Turbo visit. Pair connect with disconnect, scope Escape handlers and verify cleanup in the browser console.",
+    tags: ["Rails", "Stimulus", "Hotwire", "JavaScript"],
+  },
   "luna-distanza-laser-retroriflettori": {
     title: "How Lunar Laser Ranging Measures the Distance to the Moon",
     date: "2026-11-25",
@@ -595,10 +601,10 @@ export const englishBlogMetadata: Record<
     tags: ["Rails", "MVC", "Active Record", "Architecture"],
   },
   "rails-stimulus-js-leggero": {
-    title: "Rails Stimulus Controllers, Targets and Actions",
-    date: publicationDate,
-    excerpt:
-      "Attach JavaScript to server-rendered HTML with Stimulus and use connect and disconnect to manage behaviour as Turbo replaces elements.",
+    title: "How to Use Stimulus in Rails: A Step-by-Step Tutorial",
+    date: "2026-11-16",
+    updatedAt: "2026-11-25",
+    excerpt: "Build an expandable panel in Rails with a Stimulus controller. Wire actions and targets, test two instances and debug a button that does nothing.",
     tags: ["Rails", "Stimulus", "Hotwire", "JavaScript"],
   },
   "rails-service-objects": {

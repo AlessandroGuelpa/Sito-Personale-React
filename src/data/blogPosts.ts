@@ -21,6 +21,60 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "rails-stimulus-buone-pratiche",
+    title: "Buone pratiche Stimulus in Rails per timer, eventi e Turbo",
+    date: "2026-11-25",
+    category: "sviluppo-software",
+    hub: "rails-backend",
+    icon: "🛤️",
+    excerpt: "Scopri perché un timer continua dopo una visita Turbo. Gestisci connect e disconnect, scegli dove ascoltare Escape e verifica la pulizia in console.",
+    tags: ["Rails", "Stimulus", "Hotwire", "JavaScript"],
+    content: `
+Un orologio nella testata sembra funzionare anche quando perde risorse. Dopo una visita Turbo la nuova testata mostra l’ora corretta, mentre il timer precedente continua ad aggiornare un elemento che nessuno vede. Per accorgersene serve osservare il comportamento anche dopo essere usciti dalla pagina. Per il primo collegamento tra HTML e JavaScript trovi un esempio completo nel [tutorial Stimulus per Rails](/blog/rails-stimulus-js-leggero).
+
+## Abbina ogni timer alla durata del suo elemento
+
+Genera il controller con \`bin/rails generate stimulus clock\` in un progetto Rails già configurato con Stimulus. Inserisci \`<span data-controller="clock"></span>\` nella vista. Il primo aggiornamento deve avvenire appena compare l’elemento, anche se il prossimo intervallo scatterà solo fra un secondo.
+
+\`\`\`javascript
+// app/javascript/controllers/clock_controller.js
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  connect() {
+    this.render()
+    this.timer = window.setInterval(() => this.render(), 1000)
+  }
+
+  disconnect() {
+    window.clearInterval(this.timer)
+  }
+
+  render() {
+    this.element.textContent = new Date().toLocaleTimeString()
+  }
+}
+\`\`\`
+
+Conserva l’identificatore del timer sull’istanza. Se due orologi convivono in pagina, ogni controller può così fermare il proprio. Una variabile condivisa a livello di modulo verrebbe sovrascritta dal secondo orologio e rimuovere il primo potrebbe fermare quello ancora visibile.
+
+## Lascia che Stimulus gestisca gli eventi dichiarati nel markup
+
+Per chiudere un pannello con Escape puoi aggiungere \`data-action="keydown.esc@window->panel#close"\` all’elemento del controller panel che implementa close. Stimulus gestisce l’associazione quando l’elemento entra o esce dal documento. La scelta di window è significativa. Con due pannelli aperti entrambi ricevono Escape. Se vuoi chiudere solo quello che contiene il focus, usa una action locale e prova il comportamento navigando con la tastiera.
+
+## Riproduci il problema durante una visita Turbo
+
+Aggiungi temporaneamente \`console.count("clock render")\` dentro render. Apri una pagina con un solo orologio, lascia passare qualche secondo e segui un link Turbo verso una vista senza orologi. Il conteggio deve fermarsi. Torna indietro e verifica che riparta al ritmo di un aggiornamento al secondo. Ripeti con due orologi e rimuovine uno dagli strumenti di sviluppo. Quello rimasto deve continuare ad aggiornarsi.
+
+Distingui infine due casi. Se reinserisci lo stesso nodo DOM dopo che Stimulus ha osservato la rimozione, la stessa istanza può riconnettersi. Se il server invia nuovo HTML per un [Turbo Frame](/blog/rails-hotwire-turbo), il nuovo nodo può avere lo stesso id e ricevere un’altra istanza. Conserva nelle proprietà del controller soltanto lo stato che puoi ricostruire quando appare il nuovo elemento.
+
+## Fonti
+
+- [Stimulus — lifecycle callbacks](https://stimulus.hotwired.dev/reference/lifecycle-callbacks)
+- [Stimulus — actions](https://stimulus.hotwired.dev/reference/actions)
+`,
+  },
+  {
     id: "luna-distanza-laser-retroriflettori",
     title: "Come si misura la distanza della Luna con un laser",
     date: "2026-11-25",
@@ -5997,54 +6051,66 @@ Una chiamata HTTP può fallire per timeout, autorizzazione o dati non validi. Me
   },
   {
     id: "rails-stimulus-js-leggero",
-    title: "Stimulus Rails: comportamento associato all'HTML",
+    title: "Come usare Stimulus in Rails passo dopo passo",
     date: "2026-06-08",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-25",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "🛤️",
-    excerpt: "Stimulus collega comportamenti JS all'HTML tramite data-attribute. Niente framework pesanti per piccole interazioni.",
-    tags: ["Ruby on Rails", "JavaScript", "Hotwire"],
+    excerpt: "Crea un pannello espandibile in Rails con un controller Stimulus. Collega pulsante e target, prova due istanze e individua gli errori di collegamento.",
+    tags: ["Rails", "Stimulus", "Hotwire", "JavaScript"],
     content: `
-Per le piccole interazioni (un menu, un contatore, un toggle) non serve React. **Stimulus**, parte di Hotwire, collega comportamenti JavaScript all'HTML tramite \`data-attribute\`.
+In una pagina prodotto vogliamo mostrare i tempi di spedizione quando qualcuno preme un pulsante. Rails ha già inviato il testo nella pagina. Stimulus deve soltanto aprire e chiudere il pannello e comunicare lo stato del pulsante a chi usa un lettore di schermo.
 
-Un controller Stimulus deve liberare listener e timer quando Turbo cambia la pagina: [Hotwire e Turbo](/blog/rails-hotwire-turbo) spiega il contesto di navigazione. Se un componente legge dati remoti, la [cache Rails](/blog/rails-caching-basi) riguarda la coerenza dei contenuti, non la gestione del DOM.
+## 1. Genera il controller nella tua app Rails
 
-\`\`\`html
-<div data-controller="clipboard">
-  <input data-clipboard-target="source" value="ciao">
-  <button data-action="click->clipboard#copy">Copia</button>
-</div>
-\`\`\`
+Parti da una pagina ERB funzionante in un progetto con stimulus-rails già configurato. Dalla radice del progetto esegui \`bin/rails generate stimulus disclosure\`. Apri il file generato e sostituisci il contenuto con questo controller.
 
 \`\`\`javascript
-// clipboard_controller.js
-import { Controller } from "@hotwired/stimulus";
+// app/javascript/controllers/disclosure_controller.js
+import { Controller } from "@hotwired/stimulus"
+
 export default class extends Controller {
-  static targets = ["source"];
-  copy() {
-    navigator.clipboard.writeText(this.sourceTarget.value);
+  static targets = ["panel"]
+
+  toggle(event) {
+    const panel = this.panelTarget
+    panel.hidden = !panel.hidden
+    event.currentTarget.setAttribute("aria-expanded", String(!panel.hidden))
   }
 }
 \`\`\`
 
-L'HTML dichiara *cosa* fa (il controller, i target, le action); il JavaScript dice *come*. Stimulus non genera l'HTML, si aggancia a quello che c'è già, anche a quello arrivato via Turbo.
+## 2. Collega il pulsante al pannello
 
-Filosofia opposta a React: l'HTML resta il protagonista, il JavaScript è un condimento leggero. Per un'app Rails, spesso è tutto ciò che serve.
+Inserisci questo blocco nella vista, apri la pagina nel browser e premi due volte il pulsante. Al primo clic deve apparire il tempo di consegna. Al secondo deve sparire. Con la tastiera puoi raggiungere il pulsante con Tab e attivarlo con Invio o Spazio.
 
+\`\`\`html
+<section data-controller="disclosure">
+  <button type="button" aria-expanded="false"
+          data-action="click->disclosure#toggle">Dettagli spedizione</button>
+  <p hidden data-disclosure-target="panel">Consegna in due giorni.</p>
+</section>
+\`\`\`
 
-## Da verificare nella pratica
+## 3. Segui il percorso di un clic
 
-Stimulus collega comportamento JavaScript agli elementi tramite controller e attributi data. È adatto a interazioni locali, come un menu o la gestione di un campo, senza replicare uno store applicativo completo. Controlla il ciclo di vita connect e disconnect, soprattutto quando Turbo sostituisce parti della pagina. Evita di distribuire la logica di dominio tra controller JavaScript e backend.
+L’attributo \`data-controller\` associa il nome disclosure alla sezione. La action sul pulsante indica l’evento da ascoltare e il metodo da chiamare. Dentro quel metodo, \`this.panelTarget\` individua il paragrafo contrassegnato come panel. Il browser aggiorna la visibilità e il pulsante espone il nuovo stato attraverso aria-expanded.
 
+Duplica l’intera sezione e apri il secondo pannello. Il primo deve restare chiuso perché ciascuna sezione ha la propria istanza del controller. È una prova utile prima di riutilizzare il componente in una lista di prodotti.
 
-## Controller piccoli e ciclo di vita prevedibile
+## Se il pulsante resta fermo
 
-Un controller Stimulus può gestire l'apertura di un pannello o il conteggio dei caratteri di un campo. Se però contiene regole che dovrebbero essere validate dal server, l'interfaccia rischia di funzionare in modo diverso rispetto all'API. Lascia sul client i comportamenti di presentazione e verifica sul backend i vincoli di business. Quando un elemento viene rimosso da Turbo, disconnect è il punto appropriato per pulire timer, eventi globali o connessioni create dal controller. Prepara una prova navigando avanti e indietro più volte: se un click scatena due handler, probabilmente una risorsa non è stata rilasciata o è stata registrata due volte.
+Aggiungi temporaneamente \`connect() { console.debug("disclosure connected") }\` alla classe e ricarica. Se manca il messaggio, verifica il caricamento del bundle e la corrispondenza tra nome del file e identificatore HTML. Se compare il messaggio ma il clic produce un errore sul target, ispeziona il paragrafo nella pagina renderizzata. Deve trovarsi dentro la sezione e avere lo stesso nome dichiarato in targets.
 
-**Documentazione**
+Quando il pannello viene sostituito da un [Turbo Frame](/blog/rails-hotwire-turbo), il ciclo di vita entra di nuovo in gioco. La [guida alle buone pratiche Stimulus](/blog/rails-stimulus-buone-pratiche) mostra come verificare cosa succede a timer e listener durante la navigazione.
 
-- [Documentazione tecnica — Introduction](https://stimulus.hotwired.dev/handbook/introduction)`,
+## Fonti
+
+- [Stimulus — installing](https://stimulus.hotwired.dev/handbook/installing)
+- [Stimulus — targets](https://stimulus.hotwired.dev/reference/targets)
+- [Stimulus — actions](https://stimulus.hotwired.dev/reference/actions)
+`,
   },
   {
     id: "javascript-debounce-throttle",

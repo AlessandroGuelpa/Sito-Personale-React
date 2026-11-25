@@ -1,38 +1,50 @@
-Stimulus connects JavaScript to existing HTML through data attributes. It suits local interactions such as an expandable menu, a text counter or copying a value to the clipboard. The HTML declares the controller, its targets and the actions to invoke. The JavaScript implements the behaviour.
+On a product page, a shopper should be able to reveal shipping times with a button. Rails has already sent the delivery estimate in the HTML. Stimulus handles the interaction and keeps the button’s expanded state available to screen readers.
 
-```html
-<div data-controller="clipboard">
-  <label>
-    Text to copy
-    <input data-clipboard-target="source" value="Hello">
-  </label>
-  <button type="button" data-action="click->clipboard#copy">Copy</button>
-</div>
-```
+## 1. Generate a controller in Rails
+
+Start with a working ERB page in a Rails app that already has stimulus-rails configured. From the project root, run `bin/rails generate stimulus disclosure`. Open the generated file and replace its contents with this controller.
 
 ```javascript
-// clipboard_controller.js
-import { Controller } from "@hotwired/stimulus";
+// app/javascript/controllers/disclosure_controller.js
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["source"];
+  static targets = ["panel"]
 
-  copy() {
-    return navigator.clipboard.writeText(this.sourceTarget.value);
+  toggle(event) {
+    const panel = this.panelTarget
+    panel.hidden = !panel.hidden
+    event.currentTarget.setAttribute("aria-expanded", String(!panel.hidden))
   }
 }
 ```
 
-The `clipboard` controller receives the click and reads its `source` target. The example assumes the page has clipboard access in a secure context. In an actual form, use the outcome of the Promise to tell the user whether copying succeeded. A second instance of the same controller can work with a different target on the same page.
+## 2. Connect the button to the panel
 
-## Account for changes to the page
+Paste this markup into your view, open the page in a browser and press the button twice. The first click reveals the delivery estimate. The second hides it again. You can also Tab to the button and activate it with Enter or Space.
 
-Stimulus controllers can connect to markup added later by [Hotwire and Turbo](/blog/rails-hotwire-turbo). Use `connect` to initialise resources tied to an element and `disconnect` to release timers, global listeners or other subscriptions the controller created. A controller instance can connect again, so keep setup and cleanup safe to repeat. Try visiting a Turbo page, leaving it and coming back several times. If one click then causes several responses, inspect resources added on earlier visits.
+```html
+<section data-controller="disclosure">
+  <button type="button" aria-expanded="false"
+          data-action="click->disclosure#toggle">Shipping details</button>
+  <p hidden data-disclosure-target="panel">Delivery in two days.</p>
+</section>
+```
 
-## Keep business rules in the backend
+## 3. Trace a click through the controller
 
-A Stimulus controller can count characters or show errors near a field. The server should still enforce the rule when handling the submitted data. This keeps the behaviour consistent for users who submit the same operation through another client. If the controller also loads remote data, [Rails caching](/blog/rails-caching-basi) addresses the freshness of that content, while the Stimulus lifecycle controls what happens to the requests and DOM when the element disappears.
+The data-controller attribute attaches disclosure to the section. The action on the button names the event to listen for and the method to call. Inside that method, `this.panelTarget` finds the paragraph marked as panel. The browser updates its visibility and the button exposes the new state through aria-expanded.
+
+Duplicate the entire section and open the second panel. The first should stay closed because each section gets its own controller instance. This is a quick check before using the component in a list of products.
+
+## If the button does nothing
+
+Temporarily add `connect() { console.debug("disclosure connected") }` to the class and reload. If the message is missing, check that the JavaScript loaded and that the filename matches the identifier in the HTML. If the message appears but clicking produces a missing target error, inspect the rendered paragraph. It should sit inside the section and carry the same target name as the controller declaration.
+
+When a [Turbo Frame](/blog/rails-hotwire-turbo) replaces the panel, its lifecycle matters again. The [Stimulus best practices guide](/blog/rails-stimulus-buone-pratiche) shows how to check what happens to timers and listeners across visits.
 
 ## Sources
 
-- [Stimulus Handbook — Introduction](https://stimulus.hotwired.dev/handbook/introduction)
+- [Stimulus — installing](https://stimulus.hotwired.dev/handbook/installing)
+- [Stimulus — targets](https://stimulus.hotwired.dev/reference/targets)
+- [Stimulus — actions](https://stimulus.hotwired.dev/reference/actions)

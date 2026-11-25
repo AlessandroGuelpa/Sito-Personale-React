@@ -141,6 +141,7 @@ export const translatedArticleSlugs = {
   "javascript-immutabilita-structuredclone":
     "javascript-structuredclone-deep-copy-limits",
   "rails-mvc-in-tre-minuti": "rails-mvc-model-view-controller",
+  "rails-stimulus-buone-pratiche": "rails-stimulus-best-practices",
   "rails-stimulus-js-leggero": "rails-stimulus-controllers-targets-actions",
   "rails-service-objects": "rails-service-objects-contracts-and-testing",
   "rails-routing-restful": "rails-restful-routing-with-resources",

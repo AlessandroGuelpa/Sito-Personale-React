@@ -81,6 +81,7 @@ La rotazione parte dal tema 1 già indicato nel registro precedente.
 | 2026-11-20 | 2026-11-20 | 1 — Ingegneria generale | risonanza-meccanica-rigidita-supporto | Risonanza meccanica: quando un supporto più rigido vibra di più | programmata |
 | 2026-11-24 | 2026-11-24 | 2 — Coding | react-localstorage-sincronizzare-schede | React e localStorage: come sincronizzare due schede | programmata |
 | 2026-11-25 | 2026-11-25 | 3 — Spazio e Artemis | luna-distanza-laser-retroriflettori | Come si misura la distanza della Luna con un laser | programmata |
+| 2026-11-25 | 2026-11-25 | 2 — Coding | rails-stimulus-buone-pratiche | Buone pratiche Stimulus in Rails per timer, eventi e Turbo | extra |
 
 Le nuove esecuzioni aggiungono una riga con origine `programmata` e uscita
 odierna. Una riga programmata già presente per la data locale impedisce un
