@@ -15,7 +15,7 @@ Per la procedura completa leggere [docs/blog-publishing.md](docs/blog-publishing
 
 ## Stato
 
-Prossimo tema: 3
+Prossimo tema: 4
 
 ## Storico
 
@@ -80,6 +80,7 @@ La rotazione parte dal tema 1 già indicato nel registro precedente.
 | 2026-11-18 | 2026-11-18 | 4 — Salvaguardia del pianeta | illuminazione-esterna-lumen-lux | Illuminazione esterna: quanti lumen arrivano sul vialetto? | programmata |
 | 2026-11-20 | 2026-11-20 | 1 — Ingegneria generale | risonanza-meccanica-rigidita-supporto | Risonanza meccanica: quando un supporto più rigido vibra di più | programmata |
 | 2026-11-24 | 2026-11-24 | 2 — Coding | react-localstorage-sincronizzare-schede | React e localStorage: come sincronizzare due schede | programmata |
+| 2026-11-25 | 2026-11-25 | 3 — Spazio e Artemis | luna-distanza-laser-retroriflettori | Come si misura la distanza della Luna con un laser | programmata |
 
 Le nuove esecuzioni aggiungono una riga con origine `programmata` e uscita
 odierna. Una riga programmata già presente per la data locale impedisce un

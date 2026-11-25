@@ -36,6 +36,7 @@ export const notFoundRoutes = { it: "/404", en: "/en/404" } as const;
 const inventoryArticleId = "shopify-inventario-scritture-concorrenti";
 
 export const translatedArticleSlugs = {
+  "luna-distanza-laser-retroriflettori": "lunar-laser-ranging-retroreflectors",
   "react-localstorage-sincronizzare-schede": "react-localstorage-sync-browser-tabs",
   "risonanza-meccanica-rigidita-supporto": "mechanical-resonance-support-stiffness",
   "illuminazione-esterna-lumen-lux": "outdoor-lighting-lumens-lux",

@@ -13,6 +13,13 @@ export const englishBlogMetadata: Record<
   keyof typeof translatedArticleSlugs,
   EnglishArticleMetadata
 > = {
+  "luna-distanza-laser-retroriflettori": {
+    title: "How Lunar Laser Ranging Measures the Distance to the Moon",
+    date: "2026-11-25",
+    excerpt:
+      "A laser pulse, a few returning photons and a calibrated timer. See how lunar laser ranging works and how much error a nanosecond can introduce.",
+    tags: ["Moon", "Laser ranging", "Retroreflectors", "Apollo", "CLPS"],
+  },
   "react-localstorage-sincronizzare-schede": {
     title: "React and localStorage: Keeping Two Tabs in Sync",
     date: "2026-11-24",

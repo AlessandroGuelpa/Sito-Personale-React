@@ -21,6 +21,45 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "luna-distanza-laser-retroriflettori",
+    title: "Come si misura la distanza della Luna con un laser",
+    date: "2026-11-25",
+    category: "spazio",
+    hub: "scienza-passioni",
+    icon: "🌕",
+    excerpt: "Un impulso laser, pochi fotoni di ritorno e un cronometro calibrato. Come si ricava la distanza della Luna e quanto incide un nanosecondo di errore.",
+    tags: ["Luna", "Telemetria laser", "Retroriflettori", "Apollo", "CLPS"],
+    content: `
+Un osservatorio invia un impulso laser verso la Luna. Dopo circa due secondi e mezzo, il telescopio può raccogliere appena qualche fotone di ritorno. Cronometrando il viaggio, gli astronomi ricavano una distanza. Il risultato dipende da due cose molto concrete: riconoscere il segnale nel rumore e sapere quanto ritardo introduce lo strumento.
+
+## Che cosa rimanda la luce verso Terra
+
+Le missioni Apollo 11, 14 e 15 hanno lasciato sulla Luna gruppi di retroriflettori. Ognuno usa tre superfici perpendicolari, come l’angolo interno di una scatola. Entro il suo campo di accettazione, il raggio emerge nella direzione da cui è arrivato anche se colpisce il dispositivo un po’ di sbieco. Un normale specchio piano richiederebbe un allineamento molto più preciso. Il retroriflettore è passivo e può essere osservato anche quando il resto dell’equipaggiamento è spento.
+
+Il [tempo di propagazione nelle comunicazioni tra Terra e Luna](/blog/luna-latenza-comunicazioni) si calcola conoscendo la distanza. Nel *lunar laser ranging* il ragionamento procede al contrario. L’osservatorio misura il tempo e lo usa per stimare la distanza fra il telescopio e il retroriflettore.
+
+## Quanto pesa un nanosecondo
+
+Prendiamo un esempio ipotetico: un tempo di andata e ritorno di 2,56 secondi. Usando la velocità della luce nel vuoto, circa 299.792 km/s, e supponendo che i due tratti abbiano la stessa lunghezza, la distanza su una tratta è 299.792 × 2,56 ÷ 2, cioè circa 383.734 km.
+
+Con la stessa formula, un nanosecondo di ritardo nell’elettronica vale circa 15 centimetri di errore sulla distanza. Oltre alla calibrazione di quel ritardo, per una misura reale occorre tenere conto del passaggio della luce nell’atmosfera e del movimento della stazione e del bersaglio durante il viaggio. La geometria da ricostruire parte da una stazione precisa sulla Terra e finisce in un punto preciso sulla superficie lunare.
+
+## Come si riconosce un ritorno così debole
+
+L’osservatorio di Apache Point apre il rivelatore in una breve finestra attorno all’istante di arrivo previsto. Così riduce il numero di fotoni di fondo registrati. Un singolo segnale nella finestra può comunque essere rumore. Ripetendo gli impulsi, i ritorni lunari si concentrano attorno a un ritardo coerente con il modello. Il gruppo di ricerca calibra i tempi e aggrega i rilevamenti in osservazioni sintetiche chiamate *normal points*.
+
+La tecnica continua anche oltre Apollo. Nel 2025 il lander Blue Ghost ha portato sulla Luna il retroriflettore di nuova generazione NGLR-1, nell’ambito delle consegne commerciali CLPS della NASA. Quando leggo una precisione espressa in millimetri, la prima verifica che farei è capire a quale dato si riferisce. Un tempo rilevato per un singolo fotone e un’osservazione ottenuta aggregando più ritorni, dopo la calibrazione, hanno incertezze diverse.
+
+## Fonti
+
+- [International Laser Ranging Service — misure laser lunari e retroriflettori](https://ilrs.cddis.eosdis.nasa.gov/science/scienceContributions/lunar.html)
+- [NASA — NGLR-1 e il programma CLPS](https://www.nasa.gov/missions/artemis/nasa-anticipates-lunar-findings-from-next-generation-retroreflector/)
+- [NASA Technical Reports Server — elaborazione e calibrazione dei dati di Apache Point](https://ntrs.nasa.gov/citations/20230015735)
+- [UC San Diego — descrizione dello strumento e del modello di misura APOLLO](https://physics.ucsd.edu/~tmurphy/apollo/0710.0890v2.pdf)
+- [NIST — valore CODATA della velocità della luce nel vuoto](https://physics.nist.gov/cuu/Constants/Value/c.html)
+`,
+  },
+  {
     id: "react-localstorage-sincronizzare-schede",
     title: "React e localStorage: come sincronizzare due schede",
     date: "2026-11-24",
