@@ -44,6 +44,8 @@ Prepare a valid first response and a timeout on the second page. Publishing afte
 
 Record the time of the last successful refresh and the page or cursor where the run stopped. Repeat the test with both pages succeeding. The new list should replace the previous one exactly once without duplicating records already encountered. For temporary failures, the guide to [backoff with jitter](/blog/retry-backoff-jitter-integrazioni) explains how to space out retries.
 
+If you import a Shopify catalogue, decide which additional attributes to ingest after checking [how Shopify custom fields are managed](/blog/shopify-custom-fields-app-vs-codice-nativo).
+
 ## Sources
 
 - [Rails Guides — Active Job basics](https://guides.rubyonrails.org/active_job_basics.html)

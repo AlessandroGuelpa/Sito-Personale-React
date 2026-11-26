@@ -22,6 +22,8 @@ If a request starts a process involving several models or external calls, a [ser
 
 Use an HTTP test to assert the status, permissions and representation. Test domain rules independently if they also apply when a job or another controller runs the same operation. If changing a display format breaks a business-rule test, or changing a domain rule requires building an HTTP request, inspect where responsibilities have become intertwined.
 
+If you need to rank results by textual relevance, see [PostgreSQL full-text search](/blog/rails-full-text-search-postgres).
+
 ## Sources
 
 - [Rails Guides — Getting started](https://guides.rubyonrails.org/getting_started.html)

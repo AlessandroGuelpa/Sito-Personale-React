@@ -14,6 +14,8 @@ When a job queue grows, starting more workers may help. If the database is the b
 
 In a controlled experiment I would record when the change was applied, which setting moved and which measurements I expect it to affect. Then I would watch for a period that matches the process. If concurrency, queries and memory limits all move together, the final result gives little evidence about which change mattered. A clear link between adjustment and observed response helps you decide whether to wait, reverse the change or try the next one.
 
+If the oscillation is mechanical, the [resonance example for a stiff support](/blog/risonanza-meccanica-rigidita-supporto) shows how stiffness can amplify displacement.
+
 ## Sources
 
 - [University of Exeter — Feedback and temperature control](https://newton.ex.ac.uk/teaching/CDHW/Feedback/PracticalMatters.html)

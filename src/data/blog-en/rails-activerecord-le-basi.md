@@ -40,8 +40,6 @@ Using the ID as a tiebreaker gives predictable ordering when several launches sh
 
 Open a list with ten launches and count the database calls that look up the provider, assuming it is an association in your model. If doubling the list doubles those calls, measure the [N+1 pattern](/blog/rails-problema-n-piu-1). Targeted eager loading can help. Repeat the check using the screen’s real filters and sort order. Compare both query count and rows returned, since a single join that produces many duplicate rows can still be expensive.
 
-If you need to rank results by textual relevance, see [PostgreSQL full-text search](/blog/rails-full-text-search-postgres).
-
 ## Source
 
 - [Rails Guide to Active Record Querying](https://guides.rubyonrails.org/active_record_querying.html)

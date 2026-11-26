@@ -452,8 +452,6 @@ Sul banco monterei la staffa con i fissaggi previsti e riprodurrei il carico min
 
 Per confrontare due geometrie, per esempio due raggi di raccordo in un cambio di sezione, terrei uguali materiale, lavorazione, montaggio e ciclo di carico. A ogni ispezione annoterei il numero di cicli e il punto in cui è comparsa un’eventuale cricca.
 
-Se il carico ciclico nasce da una vibrazione, il caso di [risonanza di un supporto rigido](/blog/risonanza-meccanica-rigidita-supporto) mostra come un cambio di rigidezza possa amplificare lo spostamento.
-
 **Fonti**
 
 - [MIT OpenCourseWare — fatica dei materiali e curve S–N](https://ocw.mit.edu/courses/3-11-mechanics-of-materials-fall-1999/f678e01017186c53d45845ad93c07938_MIT3_11F99_fatigue.pdf)
@@ -1246,8 +1244,6 @@ Nelle integrazioni con il magazzino, un budget disponibile non dimostra che una 
 
 - [Shopify — API limits](https://shopify.dev/docs/api/usage/limits)
 - [Shopify — GraphQL Admin reference](https://shopify.dev/docs/api/admin-graphql/latest)
-
-Se l’integrazione deve leggere campi personalizzati, prima valuta [quando definire campi nativi Shopify e quando ricorrere a un’app](/blog/shopify-custom-fields-app-vs-codice-nativo).
 
 ## Fonti
 
@@ -2298,6 +2294,8 @@ In un esperimento controllato annoterei istante dell'intervento, variabile modif
 Se cambio insieme concorrenza, query e limiti di memoria, un miglioramento finale mi dice poco su cosa abbia funzionato. Il feedback richiede una relazione leggibile fra azione e risposta.
 
 Correggere rapidamente è utile quando la rapidità è compatibile con ciò che stiamo controllando. Altrimenti rischia di diventare soltanto un modo più veloce di inseguire le oscillazioni.
+
+Se l’oscillazione osservata è meccanica, il caso di [risonanza di un supporto rigido](/blog/risonanza-meccanica-rigidita-supporto) mostra come la rigidezza possa amplificare lo spostamento.
 
 ## Fonti
 
@@ -4145,6 +4143,8 @@ Il controller riceve una richiesta HTTP, coordina le operazioni e seleziona una 
 
 Immagina una pagina che mostra gli ordini di un utente. Il controller identifica la risorsa richiesta e verifica l'accesso; il model incapsula query e regole legate ai dati; la view produce il markup. Se il controller comincia a orchestrare decine di chiamate a servizi esterni, non è più chiaro chi sia responsabile degli errori. Un punto di partenza è descrivere quali dati entrano e quali effetti osservabili vengono prodotti dalla request. Testa il comportamento HTTP e, separatamente, le regole che devono funzionare anche fuori dal controller. Il pattern MVC è utile proprio quando impedisce che il codice dipenda dal punto in cui viene chiamato.
 
+Se devi ordinare risultati per pertinenza testuale, approfondisci la [ricerca full-text in PostgreSQL](/blog/rails-full-text-search-postgres).
+
 **Documentazione**
 
 - [Rails Guides — Getting Started](https://guides.rubyonrails.org/getting_started.html)`,
@@ -4388,8 +4388,6 @@ L’id come secondo criterio rende prevedibile l’ordine quando più lanci hann
 ## Controlla quante query produce la pagina
 
 Apri una lista con dieci lanci e conta nel log le query che recuperano il provider, se nel tuo modello è un’associazione. Se con venti lanci raddoppiano anche quelle query, misura il caso [N+1](/blog/rails-problema-n-piu-1). Un caricamento anticipato mirato può aiutare. Ripeti la prova includendo i filtri e l’ordinamento effettivi. Confronta sia il numero di query sia le righe restituite, perché un’unica query che produce molte righe duplicate può comunque essere costosa.
-
-Se devi ordinare risultati per pertinenza testuale, approfondisci la [ricerca full-text in PostgreSQL](/blog/rails-full-text-search-postgres).
 
 **Documentazione**
 
@@ -5615,6 +5613,8 @@ Interrogare un provider esterno può funzionare durante una demo e produrre dati
 Prepara una risposta valida per la prima pagina e un timeout per la seconda. Se pubblichi l’elenco dopo ogni pagina, il lettore potrebbe vedere per qualche minuto soltanto una parte dei dati. Quando l’interfaccia richiede un aggiornamento coerente, prepara la nuova versione e rendila visibile solo a importazione completata. Mantieni disponibile l’ultima versione completa se il prelievo fallisce.
 
 Registra l’ora dell’ultimo aggiornamento riuscito e la pagina o il cursore su cui si è fermata l’esecuzione. Ripeti la prova facendo rispondere entrambe le pagine. Il nuovo elenco deve sostituire il precedente una volta sola, senza duplicare i record già incontrati. Per i guasti temporanei, la guida al [backoff con jitter](/blog/retry-backoff-jitter-integrazioni) mostra come distanziare i tentativi.
+
+Se importi un catalogo Shopify, decidi quali attributi aggiuntivi importare dopo aver valutato [come sono gestiti i campi personalizzati in Shopify](/blog/shopify-custom-fields-app-vs-codice-nativo).
 
 **Documentazione**
 
