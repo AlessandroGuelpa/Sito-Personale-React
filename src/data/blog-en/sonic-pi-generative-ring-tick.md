@@ -22,6 +22,12 @@ If two reads of `.tick` use the same unnamed counter inside one loop, the second
 
 Start with a ring of pitches and a fixed rhythmic grid. Record a short cycle, then change only the dynamics or one length. When pitches, gaps and filter settings all change on every step, the ear can lose the point of reference. A recurring rhythm or register lets the difference between the ring lengths create movement while keeping the phrase recognisable.
 
+## Calculate when the pattern reaches beat one again
+
+The example repeats every 15 sixteenth notes. A bar of 4/4 contains 16. At the first bar line the sequences have completed a full cycle and one more step, so their restart moves relative to the grid. To line up the beginning of the pattern and the bar again, take the least common multiple of 15 and 16. That is 240 steps, or 15 bars.
+
+Record four bars with a kick on beat one and listen for the shift. To contain the effect within a shorter section, choose ring lengths that divide 16 or reset at the section boundary using a [drum cue](/blog/sonic-pi-sync-cue). Check that the reset happens in the loop that owns the counters. Listen to the section boundary, where a sudden pitch or level change may become audible.
+
 ## Sources
 
 - [Sonic Pi — Tutorial](https://sonic-pi.net/tutorial.html)

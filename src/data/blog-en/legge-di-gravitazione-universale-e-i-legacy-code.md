@@ -14,6 +14,8 @@ Suppose a function stores an order and immediately tells a remote system about i
 
 Start by capturing the current behaviour in a test. Move the remote call behind the adapter and compare observable results before making a further change. If the overall responsibilities can stay clear in one application, a structured monolith can keep the interfaces easier to operate. Moving the same coupling across network boundaries brings additional contracts and possible partial failures.
 
+When a decision seems inexplicable, try [recovering the context behind inherited code](/blog/chi-ha-scritto-questa-roba) before changing it.
+
 ## Sources
 
 - [Martin Fowler — Refactoring](https://martinfowler.com/books/refactoring.html)

@@ -28,6 +28,8 @@ On the test bench, I would mount the bracket with the specified fasteners and ap
 
 To compare designs, for example two fillet radii at a change in cross-section, keep the material, machining, mounting and load cycle the same. At each inspection, record the cycle count and the position of any crack.
 
+If vibration drives the repeated load, the [resonance example for a stiff support](/blog/risonanza-meccanica-rigidita-supporto) shows how a change in stiffness can amplify displacement.
+
 ## Sources
 
 - [MIT OpenCourseWare on fatigue and S–N curves](https://ocw.mit.edu/courses/3-11-mechanics-of-materials-fall-1999/f678e01017186c53d45845ad93c07938_MIT3_11F99_fatigue.pdf)

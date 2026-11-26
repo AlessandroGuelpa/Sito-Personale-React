@@ -24,6 +24,12 @@ An equal fraction of the file can start between transients or in the middle of a
 
 Try four distinct slices at a fixed tempo before setting up more variations. Hear the source, the cut version and the stretched version in succession. Check which part of the change came from the slice boundaries and which came from the playback rate. A small number of well-placed cuts can give a break a new rhythm while keeping the original transients recognisable.
 
+## Recognise a click caused by a cut
+
+Take a segment that starts while the signal is still strong. Repeat it dry and listen to the attack. A hard cut can begin far from zero and produce a click. Move the start slightly or try a very short attack. If this removes the kick or snare transient too, the slice can lose the rhythmic role you wanted.
+
+Check the end of the segment the same way. A truncated tail can click even when the onset is clean. Record three versions at the same level and listen in the beat. Keep the cut that fits the grid and leaves the hit recognisable.
+
 ## Sources
 
 - [Sonic Pi — Tutorial](https://sonic-pi.net/tutorial.html)

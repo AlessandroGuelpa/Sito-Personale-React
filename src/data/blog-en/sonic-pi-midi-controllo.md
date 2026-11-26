@@ -24,6 +24,8 @@ Use [cue and sync](/blog/sonic-pi-sync-cue) to coordinate musical sections and a
 
 Move the knob through its full range and check that the filter changes within useful limits. A jumpy controller may need a narrower range or smoothing where the synth supports it. Try the track without the device, then connect it and test a short phrase. Observe whether the change affects newly triggered notes or a voice already playing. Add more controls once one mapping responds predictably and the rhythm keeps playing during connection changes.
 
+To read keyboard events directly in a page, see [how to receive messages with the Web MIDI API](/blog/web-audio-web-midi-api).
+
 ## Sources
 
 - [Sonic Pi — Tutorial](https://sonic-pi.net/tutorial.html)

@@ -22,6 +22,18 @@ If a person supplies text to find, pass it as a literal string when appropriate.
 
 Test an empty string, no match, multiple occurrences, multiline text and accented characters. When the input is long or untrusted, assess how the pattern behaves on repetitive data, including a case that fails near the end. Use [Ruby Benchmark](/blog/ruby-benchmark-misurare) with representative input if replacing or simplifying a pattern is intended to improve performance.
 
+## Separate literal replacement from capture expansion
+
+Suppose you need to replace A+B in a label. Passing the string directly to gsub looks for those three characters. In a regular expression the plus has a meaning of its own and can match different strings. Try “A+B / AAB” and check that the second term remains after replacement.
+
+~~~ruby
+label = "A+B / AAB"
+label.gsub("A+B") { "Offer" }                # "Offer / AAB"
+label.gsub(/#{Regexp.escape("A+B")}/) { "Offer" }
+~~~
+
+Use the second form when literal text must sit inside a larger expression. A block is also handy when replacement text comes from a file and contains sequences such as a backslash followed by 1. The block returns the replacement text directly. If you want to reuse parts of the match, capture them explicitly and check that they are present for the input forms you support.
+
 ## Sources
 
 - [Ruby Core — String](https://docs.ruby-lang.org/en/master/String.html)

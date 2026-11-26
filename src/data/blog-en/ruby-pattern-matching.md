@@ -23,6 +23,12 @@ A matched key can still hold `nil` or the wrong type if the pattern only binds i
 
 A matching branch can hand its bound values to a named function or to a transformation you reuse with [blocks and lambdas](/blog/ruby-blocchi-proc-lambda). That keeps it visible which shapes are accepted and what each branch does with them. Decide how an unsupported shape should be reported, especially if the caller needs to distinguish it from a legitimate error response supplied by the provider.
 
+## Decide whether to accept extra payload keys
+
+The pattern { status: "paid" } can match a Ruby event that also contains extra keys. That is useful when reading one field from an evolving payload. For a closed shape, try { status: "paid", **nil }. It accepts the required key and rejects additional ones.
+
+Write three cases with paid status, paid status plus source, and pending status. The second case distinguishes the two contracts. Before moving on to domain code, also check whether keys arrive as symbols or strings. A hash returned directly by JSON.parse uses strings by default, so decide where to normalise that shape.
+
 ## Sources
 
 - [Ruby Core — Pattern matching](https://docs.ruby-lang.org/en/master/syntax/pattern_matching_rdoc.html)

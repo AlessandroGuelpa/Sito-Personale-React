@@ -24,6 +24,12 @@ prices.sum { |_, price| price } # 3
 
 Review how `merge` handles a repeated key and how `transform_values` returns an updated hash. For configuration, try merging two hashes that both specify a timeout and confirm which value the application is meant to use. The best choice is the one that makes the expected behaviour of the data explicit.
 
+## Tell missing data from a value that is not known yet
+
+Suppose an import can contain a tracking key with nil for orders awaiting a code. In that case fetch(:tracking, "pending") returns nil. It returns pending when the key is absent. If the key is required, use fetch without a fallback so a row outside the contract is visible. If a report must preserve both cases, use key? to check presence and handle nil according to the domain rule.
+
+Try an empty hash, one with nil tracking and one with a real code. Before serialising, check that all three cases remain distinguishable when the API needs them to be. Test the value visible to the caller as well as whether the lookup completes.
+
 ## Sources
 
 - [Ruby Core — Hash](https://docs.ruby-lang.org/en/master/Hash.html)

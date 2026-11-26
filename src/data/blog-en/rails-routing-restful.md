@@ -27,6 +27,18 @@ Use a member route for an operation tied to one record and a collection route fo
 
 A route chooses how to reach a controller. Access rules still determine who may use that action, and [Strong Parameters](/blog/rails-strong-parameters) controls which input fields the controller assigns. [Rails request specs](/blog/rails-request-specs-testare-api) can distinguish the wrong method, a recognised route with a missing record, and a caller without permission. Include a successful example so the expected status and representation remain clear.
 
+## Check for a collision with the show route
+
+A general show route for a launch accepts a dynamic segment after /launches. Adding a separate /launches/upcoming route late in the file can make a GET request match show with upcoming as the ID. Look for the selected action beside the request in the Rails log.
+
+~~~ruby
+resources :launches, only: %i[index show] do
+  get :upcoming, on: :collection
+end
+~~~
+
+Run bin/rails routes -g upcoming and use the helper name Rails reports. Then add two requests to the test, one for the upcoming list and one for a single launch. The first should reach the collection action, and the second should still look up the correct ID. If identifiers can contain arbitrary words, reserve the upcoming segment so a record cannot use it as its slug.
+
 ## Sources
 
 - [Rails Guides — Routing](https://guides.rubyonrails.org/routing.html)

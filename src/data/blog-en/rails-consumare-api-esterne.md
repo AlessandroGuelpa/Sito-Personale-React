@@ -38,6 +38,12 @@ A background job can validate the result and persist it before the site serves i
 
 Exercise a valid list, a valid empty list and a `429` response as distinct cases. A timeout or malformed payload should leave the previous schedule intact. Retry transient failures with a bounded delay and respect rate limits. Configuration errors or an invalid response contract usually need investigation before another attempt will help.
 
+## Test a sync that stops halfway through
+
+Prepare a valid first response and a timeout on the second page. Publishing after each page can leave readers with a partial list for several minutes. If the interface requires a consistent refresh, prepare the new version and expose it only after the import completes. Keep the last complete version available when fetching fails.
+
+Record the time of the last successful refresh and the page or cursor where the run stopped. Repeat the test with both pages succeeding. The new list should replace the previous one exactly once without duplicating records already encountered. For temporary failures, the guide to [backoff with jitter](/blog/retry-backoff-jitter-integrazioni) explains how to space out retries.
+
 ## Sources
 
 - [Rails Guides — Active Job basics](https://guides.rubyonrails.org/active_job_basics.html)

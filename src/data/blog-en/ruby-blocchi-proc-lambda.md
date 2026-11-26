@@ -20,6 +20,8 @@ A `return` in a lambda exits that lambda. In a non-lambda Proc it attempts to re
 
 An inline block can express a rule used in one place. For a transformation you will reuse with [Enumerable](/blog/ruby-enumerable-map-select-reduce), capture it in a Proc or lambda and make its expected input explicit. Ruby's [ampersand and symbol shorthand](/blog/ruby-ampersand-symbol-shorthand) is convenient when the whole operation is a simple method call on each item. Test a required and optional block separately when publishing an API that accepts them. For an optional block, `block_given?` lets a method check before invoking `yield`.
 
+When you start combining transformations, the [Ruby functional programming examples](/blog/ruby-programmazione-funzionale) show where to keep external effects.
+
 ## Sources
 
 - [Ruby Core — Proc](https://docs.ruby-lang.org/en/master/Proc.html)

@@ -21,6 +21,8 @@ Store a note or a duration in a variable. Ask what changes if you assign a diffe
 
 A wrong note or a misplaced beat gives immediate evidence that the result differs from the plan. Have the learner describe the difference in words and change one instruction before running it again. Writing down the expected count, timing or accent turns an enjoyable sound experiment into a way to test a programming idea.
 
+For an early exercise where students can observe sound in a browser, try [a lesson with Chrome Music Lab](/blog/web-audio-chrome-music-lab-lezioni).
+
 ## Sources
 
 - [Sonic Pi — Tutorial](https://sonic-pi.net/tutorial.html)

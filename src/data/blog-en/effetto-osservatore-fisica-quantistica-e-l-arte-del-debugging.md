@@ -16,6 +16,8 @@ Build a test that starts two requests and controls which completes first. If the
 
 Save the failing case as a regression test and exercise neighbouring cases. Repeat the test with representative load or network timing if the issue appeared there. A useful fix has evidence both that the old version fails under the chosen conditions and that the corrected version produces the expected result under the same conditions.
 
+If the problem occurs in only one environment, compare [the differences behind a typical works-on-my-machine bug](/blog/la-sindrome-del-funzionava-sulla-mia-macchina).
+
 ## Sources
 
 - [Chrome DevTools — Debug JavaScript](https://developer.chrome.com/docs/devtools/javascript/)

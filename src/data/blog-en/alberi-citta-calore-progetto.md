@@ -14,6 +14,8 @@ A planted tree needs enough soil volume, space for roots and a water and mainten
 
 Compare shaded and exposed points at relevant times, recording the conditions and what the measurements represent. Include who can reach the shaded places and when they need them. The European Environment Agency considers urban vegetation and nature-based solutions alongside building measures for cooling. For a local project, I would define the intended shade hours and users first, then check that the tree and its maintenance can deliver them.
 
+For a public space used after dark, measuring [how many lux reach the path](/blog/illuminazione-esterna-lumen-lux) helps compare illumination along the route.
+
 ## Sources
 
 - [EEA — Sustainable cooling in buildings and cities](https://www.eea.europa.eu/en/analysis/publications/cooling-buildings-sustainably-in-europe-exploring-the-links-between-climate-change-mitigation-and-adaptation-and-their-social-impacts)

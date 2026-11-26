@@ -29,6 +29,12 @@ Try a phrase with three widely spaced notes. Compare a light reverb with a large
 
 Try shifting the register or moving a filter gradually over several bars. Record two minutes with the same sounds and only a few deliberate changes. Listen for which transitions remain audible after the layers overlap. Adjust the note spacing and envelope to fit the part's role before adding more density.
 
+## Rehearse a transition that lets a chord decay
+
+Play four notes from one chord, one every four beats as in the example. With a four-beat attack and eight-beat release, a voice that begins on beat 12 can continue until beat 24 even before the reverb tail. Bring in the new chord on beat 16 and the two harmonies share several beats. A couple of prominent notes can be enough to blur the change.
+
+Record a second version that skips the outgoing chord’s last trigger. Keep the next entrance at the same point and compare how clearly you hear the change. The guide to [Sonic Pi effect order](/blog/sonic-pi-with-fx-effetti) shows how to listen to a tail within a processing chain.
+
 ## Sources
 
 - [Sonic Pi — Tutorial](https://sonic-pi.net/tutorial.html)

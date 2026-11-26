@@ -23,6 +23,8 @@ A short chain such as `users.filter(isActive).map(getName)` can make an intentio
 
 Test empty input, duplicate values and a collection of shared objects. Include a case where several items match to see whether the function should keep all of them or stop at the first. If the input comes from an API, check that it has the array shape your code expects before calling these methods.
 
+When elements arrive one at a time or the caller can stop early, see [how JavaScript generators yield values](/blog/javascript-generatori).
+
 ## Sources
 
 - [MDN — Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)

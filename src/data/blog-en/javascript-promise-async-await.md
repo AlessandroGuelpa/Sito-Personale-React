@@ -20,6 +20,8 @@ A product and an independent list of categories can be requested together. Invok
 
 `Promise.all` rejects as soon as one of its inputs rejects, while other work may continue. If the page can display a product without its category list, `Promise.allSettled` gives the caller each outcome. Simulate a network failure and a slow response to check what the interface does during the wait and when only part of the data is available.
 
+When the log order surprises you, the [JavaScript event loop guide](/blog/javascript-event-loop-come-funziona) follows tasks and microtasks separately.
+
 ## Sources
 
 - [MDN — Async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)

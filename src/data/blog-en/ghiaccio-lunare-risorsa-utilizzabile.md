@@ -16,6 +16,8 @@ I would ask how much usable water comes back per unit of material handled and pe
 
 A discovery identifies a resource. A usable supply depends on a system that can recover and store enough water during the operations it is meant to support.
 
+Powering equipment near a shadowed deposit also calls for an estimate of [shadow duration and energy availability at the lunar south pole](/blog/polo-sud-lunare-ombre-energia-solare).
+
 ## Sources
 
 - [NASA Moon facts and lunar water](https://science.nasa.gov/moon/facts/)

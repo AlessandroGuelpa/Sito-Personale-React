@@ -14,6 +14,8 @@ Imagine transferring a photograph. A higher bit rate reduces the time required t
 
 In a hypothetical remote system, I would use commands that group related work and give the remote side clear procedures for expected events. I would attach timestamps to status updates so operators can see how old the displayed state is. An interface that waits for a confirmation from Earth after each small action would spend much of its time idle. The expected delay helps decide which operations can continue locally and what information people need while a reply is on its way.
 
+[Lunar laser ranging](/blog/luna-distanza-laser-retroriflettori) applies the calculation in reverse, using measured travel time to infer distance.
+
 ## Sources
 
 - [ESA — Communication beyond low Earth orbit](https://nebula.esa.int/4000136202)

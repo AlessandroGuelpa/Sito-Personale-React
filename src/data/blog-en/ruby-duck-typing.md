@@ -22,6 +22,8 @@ Use [RSpec](/blog/ruby-rspec-testare) or another test framework to apply the sam
 
 [Ruby mixins](/blog/ruby-moduli-mixin) give classes a way to share implementation. Duck typing also works when their code has no common superclass or mixin. This makes it easy to introduce a new collection or a test double when it obeys the same documented protocol. Keep the protocol as small as the operation allows.
 
+For what happens to a value passed between methods, start with [Ruby objects, references and identity](/blog/ruby-tutto-e-un-oggetto).
+
 ## Sources
 
 - [Ruby — Language documentation](https://www.ruby-lang.org/en/documentation/)

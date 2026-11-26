@@ -28,6 +28,12 @@ Keep the notes fixed and try lengthening one note or leaving one step silent. Th
 
 Try a fixed cutoff first, then slowly move the upper end of the range across a few repeats. You can also experiment with a small random range once the baseline is easy to recognise. Record the same groove with and without distortion. Listen for whether the added harmonics help the bass cut through or mask the kick.
 
+## Hear the accents while keeping the notes fixed
+
+Keep the starting pattern and add a ring of eight levels, such as 0.45, 0.25, 0.27, 0.38, 0.25, 0.42, 0.26 and 0.24. Read it once per step with its own counter and pass the value to amp. Start with a fixed cutoff and record two bars at your usual listening level. Restore the cutoff movement and compare the same position in the bar.
+
+To add a rest, advance the [rings and their counters](/blog/sonic-pi-generative-ring-tick) before deciding whether to call play. Keep sleep 0.25 outside the branch. Skipping tick with the note can shift the filter and pitch relative to the original pattern. Skipping sleep brings the following events forward. Mute the fourth step and check that the fifth still aligns with the kick.
+
 ## Sources
 
 - [Sonic Pi — Tutorial](https://sonic-pi.net/tutorial.html)

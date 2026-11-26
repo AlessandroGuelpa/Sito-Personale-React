@@ -38,6 +38,12 @@ If a user switches on a cell while its sound is already scheduled, decide whethe
 
 Cancel the scheduling timer and handle notes already queued when stopping. Verify whether the transport resumes from the current step or restarts at the first one. Try slowing the browser and editing a step near the loop boundary. One iteration should still produce each enabled hit at most once.
 
+## Calculate the boundary between events
+
+At 120 BPM a beat lasts half a second and a sixteenth note lasts 0.125 seconds. If the bar starts at currentTime 5.000, schedule the second sixteenth at 5.125. A callback that wakes at 5.090 can still queue it on time. Triggering the note directly when the callback wakes makes that early start part of the rhythm.
+
+To check the scheduler, record each step’s intended time and the time it is queued. In a working lookahead window the latter precedes the former. If events are queued after their intended times, trace the interruption on the thread and decide whether to skip expired steps. Queuing every overdue hit at the same instant can create a sudden cluster.
+
 ## Sources
 
 - [MDN — Advanced techniques for Web Audio](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Advanced_techniques)

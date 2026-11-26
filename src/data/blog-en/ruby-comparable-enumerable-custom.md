@@ -32,6 +32,12 @@ The example expects objects whose `net` values make sense to compare together. T
 
 Check that if A is before B and B is before C, A stays before C. Make sure comparisons in both directions are consistent. An incompatible value can be excluded or ordered according to a rule defined for a particular view. If the domain has several valid orders depending on context, use an explicit sort key for that context. Reserve the general comparison for an order callers can reasonably rely on across the application.
 
+## Check when two separate records compare as equal
+
+Two launches can share a time. In the example, comparing two instances created with Launch.new(1) using == returns true because Comparable receives zero from <=>. If you do this on models with their own identifiers, check whether callers expect equality to mean a shared timestamp. A list view can specify a sort key and keep the model’s existing equality semantics.
+
+Try sorting three elements by [time, id], for example [3, 9], [1, 8] and [1, 2]. The expected order starts with ID 2 and ends with ID 9. The second key only matters when the scheduled times match. In a single Ruby view, use sort_by with an array of keys. Check unscheduled launches separately and decide whether to exclude them or display them last.
+
 ## Sources
 
 - [Ruby Core — Comparable](https://docs.ruby-lang.org/en/master/Comparable.html)

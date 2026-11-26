@@ -18,6 +18,8 @@ When a search processes thousands of results on the main thread, the user can se
 
 Check DevTools for long tasks while reproducing the slow interaction. Try processing a smaller amount of data per task so the browser has more chances to render and handle input. If most of the work is a computation that can run with an independent copy or transfer of the input, move it to a worker and return the result to the main thread. Test while typing or scrolling, since a computation can finish quickly in isolation and still make the page feel slow.
 
+For an introductory example built around a pending request, see [how to reason about asynchronous code](/blog/il-caffe-luniversita-e-la-magia-del-codice-asincrono).
+
 ## Sources
 
 - [MDN — JavaScript execution model](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)

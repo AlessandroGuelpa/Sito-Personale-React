@@ -24,6 +24,12 @@ Start with one note and a single effect. Set the mix and level before introducin
 
 Try four bars dry and four with the effect while keeping the rhythm and notes fixed. On a rhythmic part, listen for reverb masking the attack of the next hit. With a progression made from [scales and chords](/blog/sonic-pi-scale-accordi), check whether the previous harmony lingers into the next one. A tail can still be audible after the last trigger. Leave space for it or reduce its level if the next section needs a clear entrance.
 
+## Compare both chains with the same source
+
+Start from a single short hit and leave two bars between triggers. Use moderate levels so loudness does not dominate the comparison. Apply a short echo, then wrap its block in reverb. Listen to the repeats feeding the reverb. Swap the two effects and listen again after the dry hit has finished.
+
+Once you pick an order, raise the mix gradually and bring back the kick. If the next hit disappears only when the tails enter, lower mix or decay while keeping tempo fixed. The transition from a fill back into the main groove is often the best place to listen. Record both attempts and compare the first kick after the fill.
+
 ## Sources
 
 - [Sonic Pi — Tutorial](https://sonic-pi.net/tutorial.html)

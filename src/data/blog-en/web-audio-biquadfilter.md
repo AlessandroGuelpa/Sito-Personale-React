@@ -24,6 +24,12 @@ Play a harmonically rich source at a fixed pitch. Switch between low-pass and hi
 
 When combining several filters, listen to the full chain as well as each filter on its own. An `AnalyserNode` can show which regions of the signal change while you automate the cutoff. Its display represents the digital signal at that point in the graph. The sound in the room also depends on your speakers, their settings and the room itself.
 
+## Compare the cutoff with two known tones
+
+Mix two oscillators of equal amplitude, one at 250 Hz and another at 4 kHz. Connect a low-pass filter at 1 kHz and compare the signals before and after it. With moderate resonance the 4 kHz tone should become much less prominent while the 250 Hz tone remains. Repeat with a high-pass filter and observe which tone loses energy.
+
+Place a [spectrum analyser](/blog/web-audio-analyser-visualizzare) after the filter to follow both bands without relying solely on perceived level. Keep the input level and chart scale fixed across both experiments. Repeat with a single tone near the cutoff to hear how much the result changes as you raise resonance.
+
 ## Sources
 
 - [MDN — BiquadFilterNode](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode)

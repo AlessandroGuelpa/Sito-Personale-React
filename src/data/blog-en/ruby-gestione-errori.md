@@ -26,6 +26,12 @@ Use a bounded retry for a transient failure when repeating the operation is safe
 
 An `ensure` block runs when control exits the protected code, including when it raises. Use it to release something the method acquired, or prefer a block-based API that already manages the resource. Add [RSpec examples](/blog/ruby-rspec-testare) for success, the recoverable failure and at least one unexpected exception. Verify that cleanup happens and the cause remains available to the caller.
 
+## Check that a failure keeps the information callers need
+
+Imagine an import that opens a file and parses each row. Make the open fail in one trial. In another, let it open and add a value that fails conversion. The exceptions call for different actions. In the first case callers need the inaccessible path, and in the second they need the row to correct. Returning an empty value for both can make the caller interpret a failure as a successful import with no records.
+
+If you record context inside rescue and want to propagate the original error, use raise without arguments. Test that the unexpected error reaches the caller and the file still closes. [Observing external calls](/blog/osservabilita-log-metriche-tracce) can then show where failures and wait times accumulate.
+
 ## Sources
 
 - [Ruby Core — Exceptions](https://docs.ruby-lang.org/en/master/syntax/exceptions_rdoc.html)

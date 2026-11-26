@@ -26,6 +26,20 @@ Destructuring a property from a null or undefined object throws. In a parameter 
 
 Use aliases when two objects provide a property with the same name, such as a member's and an organisation's `name`. When you extract a collection, [array methods](/blog/javascript-metodi-array-essenziali) can then transform or filter it. Check the input shape before relying on those methods, since a destructuring pattern alone does not validate the collection.
 
+## Extract a preference without losing zero
+
+An API might return an object with saved preferences or omit the entire section. This example treats a missing or null value as absent and preserves a volume set to zero. If the input comes from outside the application, validate the root value’s expected shape before extracting its fields.
+
+~~~javascript
+function readVolume(settings) {
+  const { audio } = settings ?? {}
+  const { volume } = audio ?? {}
+  return volume ?? 0.5
+}
+~~~
+
+Call readVolume with null, an empty object, an explicit null audio field and a volume of zero. The first three return 0.5 and the last returns zero. Change the fallback to a logical OR and zero also triggers it. If the function only accepts numbers from zero to one, validate the extracted value before using it.
+
 ## Sources
 
 - [MDN — Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring)

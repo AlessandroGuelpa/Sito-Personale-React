@@ -19,6 +19,8 @@ Parsed JSON commonly supplies string keys. Decide what type your application acc
 
 A symbol can name a method, which Ruby uses in the [`&:method` shorthand](/blog/ruby-ampersand-symbol-shorthand) to create a callback. That usage is about invoking known behaviour. A string is a natural choice for content you need to edit, build or display. For a real data flow, test both spellings of a representative key and document which one each API supplies and expects. Choose based on semantics instead of assuming that a wholesale conversion will make the process faster.
 
+When a value represents text you need to match or transform, use the [String and Regexp replacement examples](/blog/ruby-stringhe-gsub-regex).
+
 ## Sources
 
 - [Ruby Core — Symbol](https://docs.ruby-lang.org/en/master/Symbol.html)

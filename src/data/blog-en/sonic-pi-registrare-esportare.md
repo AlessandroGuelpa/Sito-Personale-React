@@ -29,6 +29,12 @@ Record 30 seconds that include the fullest part and one transition. Listen at a 
 
 Keep the WAV with the starting script and notes on the BPM and changes made during the set. Name the files so you can match revisions and dates. An audio recording lets you hear what happened, while the code and notes help reconstruct the performance. Use an audio editor or DAW for further editing and mastering when the arrangement is ready.
 
+## Listen to the boundaries of the exported file
+
+For a track with reverb, mark where the script stops triggering events and keep recording until the tail fades. Import the file into an editor and listen to the last two seconds. If the level cuts off abruptly, leave more room in the next take or make a fade in the edit. For a loop intended to repeat, check the join between end and start in looped playback.
+
+Check the start at a moderate level too. If you pressed Record after the kick attack, the missing transient may be easy to miss during the set and obvious in the file. Start recording ahead of the first bar and trim only the leading silence you can spare.
+
 ## Sources
 
 - [Sonic Pi — Tutorial](https://sonic-pi.net/tutorial.html)

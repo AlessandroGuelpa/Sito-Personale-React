@@ -452,6 +452,8 @@ Sul banco monterei la staffa con i fissaggi previsti e riprodurrei il carico min
 
 Per confrontare due geometrie, per esempio due raggi di raccordo in un cambio di sezione, terrei uguali materiale, lavorazione, montaggio e ciclo di carico. A ogni ispezione annoterei il numero di cicli e il punto in cui è comparsa un’eventuale cricca.
 
+Se il carico ciclico nasce da una vibrazione, il caso di [risonanza di un supporto rigido](/blog/risonanza-meccanica-rigidita-supporto) mostra come un cambio di rigidezza possa amplificare lo spostamento.
+
 **Fonti**
 
 - [MIT OpenCourseWare — fatica dei materiali e curve S–N](https://ocw.mit.edu/courses/3-11-mechanics-of-materials-fall-1999/f678e01017186c53d45845ad93c07938_MIT3_11F99_fatigue.pdf)
@@ -637,6 +639,8 @@ Una traccia distribuita rappresenta l'operazione attraverso span, con relazioni 
 OpenTelemetry definisce questi segnali e strumenti per raccoglierli ed esportarli. Non è però il sistema che, da solo, decide la causa del guasto o risolve il problema.
 
 Per l'ordine lento vorrei quindi partire dal cambiamento aggregato, raggiungere la singola operazione e ricostruirne i passaggi. Se gli identificativi non collegano quei livelli, tre strumenti separati possono lasciarmi con lo stesso dubbio iniziale. L'osservabilità utile è quella che accorcia una domanda concreta, non quella che riempie più schermate.
+
+Se i log sono tanti ma il guasto rimane difficile da seguire, parti da [quali messaggi di console vale la pena conservare](/blog/radiazione-di-fondo-e-il-cimitero-dei-console-log).
 
 ## Fonti
 
@@ -1243,6 +1247,8 @@ Nelle integrazioni con il magazzino, un budget disponibile non dimostra che una 
 - [Shopify — API limits](https://shopify.dev/docs/api/usage/limits)
 - [Shopify — GraphQL Admin reference](https://shopify.dev/docs/api/admin-graphql/latest)
 
+Se l’integrazione deve leggere campi personalizzati, prima valuta [quando definire campi nativi Shopify e quando ricorrere a un’app](/blog/shopify-custom-fields-app-vs-codice-nativo).
+
 ## Fonti
 
 - [Shopify — limiti GraphQL Admin API](https://shopify.dev/docs/apps/build/apis/graphql-admin/rate-limits)
@@ -1434,6 +1440,8 @@ Il totale visualizzato è utile per l'interfaccia. Non autorizza il browser a de
 
 La domanda che mi faccio quando aggiungo state è quindi: sto memorizzando una scelta indipendente oppure una copia di qualcosa che posso già derivare? Eliminare la copia riduce i percorsi che possono divergere e rende il componente più semplice da ragionare.
 
+Se ogni riga del carrello ha anche uno stato locale, verifica [come le chiavi React preservano l’identità quando cambia l’ordine](/blog/react-key-liste-indice-stato).
+
 ## Fonti
 
 - [React — quando un Effect non serve](https://react.dev/learn/you-might-not-need-an-effect)
@@ -1522,6 +1530,8 @@ In un confronto ipotetico annoterei orario, condizioni meteo e posizione delle m
 L'EEA include verde e soluzioni basate sulla natura fra gli strumenti per affrontare il raffrescamento urbano insieme alle caratteristiche degli edifici.
 
 La domanda progettuale è quindi più concreta di «quanti alberi?»: quale ombra, per quali persone, in quali ore e con quali risorse per mantenerla? È così che un intervento decorativo può diventare un servizio durevole.
+
+Per uno spazio pubblico utilizzato anche la sera, misurare i [lux effettivi sul percorso](/blog/illuminazione-esterna-lumen-lux) aiuta a confrontare la luce ricevuta nei punti di passaggio.
 
 ## Fonti
 
@@ -2390,6 +2400,8 @@ Non sto attribuendo prestazioni a un impianto esistente: è il tipo di verifica 
 
 La scoperta apre una possibilità. Il progetto deve poi mostrare come mantenerla disponibile nel tempo. È lì che una risorsa naturale comincia a diventare un'infrastruttura.
 
+Per alimentare un impianto vicino a un deposito in ombra, bisogna conoscere anche [durata dell’ombra e disponibilità di energia al polo sud](/blog/polo-sud-lunare-ombre-energia-solare).
+
 ## Fonti
 
 - [NASA — fatti e acqua lunare](https://science.nasa.gov/moon/facts/)
@@ -2621,6 +2633,8 @@ In uno scenario ipotetico di controllo remoto eviterei un'interfaccia che richie
 È una conseguenza progettuale del ritardo, non una descrizione delle procedure di una missione specifica. Per capire quelle servono i documenti del relativo sistema.
 
 Il limite fisico resta. Il buon progetto decide cosa fare durante l'attesa, quali informazioni rendere visibili e quali operazioni possono procedere senza un dialogo continuo con chi è dall'altra parte.
+
+Il percorso inverso del calcolo, dal tempo misurato alla distanza, è l’oggetto della [telemetria laser lunare](/blog/luna-distanza-laser-retroriflettori).
 
 ## Fonti
 
@@ -2994,6 +3008,8 @@ Non serve organizzare una simulazione enorme per ogni modifica. Serve scegliere 
 
 Quando dico «funziona», voglio sapere quale delle due cose ho dimostrato: che ho costruito ciò che era scritto, oppure che qualcuno riesce a raggiungere il proprio obiettivo. Per consegnare bene, mi servono entrambe.
 
+Un testo generato richiede a sua volta un controllo delle evidenze. Il pezzo sulle [allucinazioni dei modelli linguistici](/blog/gatto-di-schrodinger-e-allucinazioni-ia) sviluppa questo caso.
+
 ## Fonti
 
 - [NASA — verifica e validazione](https://www.nasa.gov/reference/2-4-distinctions-between-product-verification-and-product-validation/)
@@ -3066,7 +3082,7 @@ Docker è utile per uniformare sviluppo, test e deploy, ma introduce un livello 
     id: "forza-di-attrito-e-la-ux-dei-form",
     title: "Form UX: ridurre l'abbandono e gli errori",
     date: "2026-04-15",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "react-frontend",
     icon: "🛹",
@@ -3090,6 +3106,12 @@ Un messaggio generico come «Dati non validi» costringe a indovinare. Meglio in
 ## Come misurare il risultato
 
 Definisci un evento di avvio, uno di invio e uno di errore. Confronta completamenti ed errori prima e dopo la modifica, tenendo conto di dispositivo, traffico e intenzione dell'utente. Una modifica esteticamente gradevole non è automaticamente un miglioramento: servono osservazioni e test.
+
+## Prova un invio con due errori e la tastiera
+
+Compila il modulo con una via valida, un CAP non ammesso e un indirizzo email incompleto. Invia usando soltanto la tastiera. La pagina dovrebbe conservare la via, spiegare entrambi gli errori e permetterti di raggiungere ciascun campo. In un modulo lungo, un riepilogo con collegamenti ai controlli interessati evita di cercare a vista il primo campo evidenziato. Vicino al controllo, collega il testo dell’errore con aria-describedby e aggiorna lo stato con aria-invalid quando il problema è presente.
+
+Fai un secondo tentativo in cui correggi soltanto il CAP. Il suo errore deve sparire, mentre quello dell’email deve restare e il valore corretto va preservato. La guida ai [messaggi d’errore utili](/blog/i-messaggi-di-errore-non-ti-stanno-giudicando) approfondisce come spiegare il prossimo passo a chi deve correggere un dato.
 
 **Fonti**
 
@@ -3506,6 +3528,8 @@ Verifica le transizioni dell'ora legale, gli utenti in zone differenti e i round
 
 Un evento ricorrente alle 09:00 Europe/Rome non può essere rappresentato per sempre da un singolo offset UTC: l'offset cambia quando entra o termina l'ora legale. Per una ricorrenza conserva la zona IANA e la regola in orario civile, calcolando gli istanti effettivi quando generi le occorrenze. Per un log di un evento già accaduto, conserva invece un istante non ambiguo, generalmente in UTC, e formatta soltanto in fase di visualizzazione. Prova le date vicine ai cambi d'ora, compresi gli orari locali che non esistono o si ripetono. Evita di aggiungere sempre 24 ore a un timestamp quando il requisito è «domani alla stessa ora locale»: sono operazioni differenti.
 
+Dopo aver scelto come salvare l’istante, puoi [formattarlo in JavaScript con locale e fuso espliciti](/blog/javascript-intl-formattazione).
+
 **Fonti**
 
 - [MDN — Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
@@ -3583,6 +3607,8 @@ Prima di intervenire, proteggi il comportamento con un test. Scegli una modifica
 ## Un confine concreto per isolare una dipendenza
 
 Immagina una funzione che salva un ordine e invia immediatamente un messaggio a un sistema remoto. Se la chiamata fallisce, potresti non sapere quale parte è stata completata. Separare l'accesso alla rete da quello al database rende più chiari i test, ma il confine deve avere un contratto preciso: quali dati riceve, quali errori restituisce e che cosa può essere ripetuto? Inizia da un test di caratterizzazione che copra il comportamento attuale. Introduci un adapter per il sistema remoto e verifica che il risultato visibile non cambi. Solo dopo valuta refactoring ulteriori. L'obiettivo non è moltiplicare classi o layer, ma ridurre il numero di ragioni per cui una modifica in un modulo richiede di toccarne molti altri.
+
+Quando il motivo di una scelta resta oscuro, prova a [ricostruire il contesto del codice ereditato](/blog/chi-ha-scritto-questa-roba) prima di cambiarla.
 
 **Fonti**
 
@@ -3735,6 +3761,8 @@ Inserisci un test di regressione, controlla scenari vicini e conserva le informa
 ## Riprodurre una race condition
 
 Una race condition può sparire quando inserisci un breakpoint: fermando il programma modifichi l'ordine temporale delle operazioni. Per indagarla registra identificativi, timestamp e sequenza degli eventi invece di usare soltanto console.log senza struttura. Costruisci un test che avvii due richieste concorrenti e verifichi quale stato deve prevalere, includendo il caso in cui la seconda termini prima della prima. Se modifichi contemporaneamente retry, timeout e logica di salvataggio, non saprai quale intervento ha eliminato il difetto. Cambia una variabile per volta e conserva la versione che riproduce l'errore. La correzione va confermata anche in un ambiente simile alla produzione, dove rete e carico possono produrre tempi molto diversi da localhost.
+
+Se il problema compare in un solo ambiente, confronta [le differenze che causano il classico «sulla mia macchina funziona»](/blog/la-sindrome-del-funzionava-sulla-mia-macchina).
 
 **Fonti**
 
@@ -4034,7 +4062,7 @@ Imposta un BPM costante e crea una sequenza di due note separate da sleep. Prima
     id: "ruby-tutto-e-un-oggetto",
     title: "Ruby: oggetti, metodi e classi",
     date: "2026-04-23",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "💎",
@@ -4067,6 +4095,12 @@ In Ruby numeri, stringhe e simboli sono oggetti che rispondono a metodi. Non sig
 ## Oggetti e identità
 
 Un numero intero risponde a metodi come next, mentre una stringa supporta trasformazioni che non sono disponibili sugli stessi tipi. Questo non significa che tutti gli oggetti debbano essere trattati allo stesso modo. Considera due istanze con valori uguali: il loro confronto tramite == non è necessariamente una verifica dell'identità dell'oggetto. Il metodo equal? serve a un obiettivo diverso. Comprendere la distinzione aiuta quando si condividono riferimenti tra funzioni e quando si mutano strutture dati. Un piccolo esercizio consiste nel creare due stringhe con lo stesso testo, modificarne una e confrontare nuovamente contenuto e identità. Evita di fondare la logica applicativa sulla rappresentazione interna di un oggetto.
+
+## Misura l’effetto di una modifica attraverso due riferimenti
+
+Assegna la stessa stringa mutabile a due variabili. Aggiungi un carattere tramite la prima con << e osserva la seconda. Poi riparti e usa + per costruire una nuova stringa, assegnandola soltanto alla prima variabile. Nel primo caso entrambe vedono il testo aggiornato, nel secondo la variabile che conserva il vecchio riferimento vede ancora il testo iniziale.
+
+Questo controllo è utile quando una funzione riceve un nome da una configurazione condivisa. Se la funzione usa strip! sul valore, può cambiare anche ciò che leggeranno gli altri chiamanti. Definisci se la funzione possiede il valore e può mutarlo, quindi scrivi un test che controlli l’argomento dopo la chiamata oltre al risultato.
 
 **Documentazione**
 
@@ -4290,6 +4324,8 @@ Un blocco è una porzione di codice passata a un metodo. Proc permette di conser
 
 Immagina un'operazione che filtra numeri e riutilizza la regola in due punti. Un blocco inline è sufficiente se viene eseguito una sola volta; un Proc può rendere quella regola un valore passabile tra metodi. Una lambda, invece, segue controlli sugli argomenti e sul return differenti rispetto a un Proc creato con Proc.new. Queste differenze si notano soprattutto in metodi che restituiscono valori anticipatamente. Per verificarle, crea due callable con gli stessi argomenti, usa call e osserva il comportamento con un argomento mancante. Scegli la forma più chiara per chi leggerà il codice, non quella con meno caratteri.
 
+Quando inizi a combinare più trasformazioni, gli [esempi di programmazione funzionale in Ruby](/blog/ruby-programmazione-funzionale) mostrano dove tenere gli effetti esterni.
+
 **Documentazione**
 
 - [Ruby Core — Proc](https://docs.ruby-lang.org/en/master/Proc.html)`,
@@ -4353,6 +4389,8 @@ L’id come secondo criterio rende prevedibile l’ordine quando più lanci hann
 
 Apri una lista con dieci lanci e conta nel log le query che recuperano il provider, se nel tuo modello è un’associazione. Se con venti lanci raddoppiano anche quelle query, misura il caso [N+1](/blog/rails-problema-n-piu-1). Un caricamento anticipato mirato può aiutare. Ripeti la prova includendo i filtri e l’ordinamento effettivi. Confronta sia il numero di query sia le righe restituite, perché un’unica query che produce molte righe duplicate può comunque essere costosa.
 
+Se devi ordinare risultati per pertinenza testuale, approfondisci la [ricerca full-text in PostgreSQL](/blog/rails-full-text-search-postgres).
+
 **Documentazione**
 
 - [Rails Guides — Active Record Querying](https://guides.rubyonrails.org/active_record_querying.html)`,
@@ -4398,6 +4436,8 @@ async/await rende più leggibile il codice basato su Promise, ma non trasforma a
 
 Supponi di richiedere in parallelo informazioni su un prodotto e un elenco di categorie, perché le due risposte non dipendono l'una dall'altra. Due await consecutivi possono introdurre un'attesa inutile, mentre Promise.all avvia entrambe le operazioni e raccoglie i risultati quando sono pronti. Se una richiesta dipende dall'ID restituito dall'altra, l'esecuzione sequenziale è invece corretta. In caso di errore, decidi se una risposta parziale è utilizzabile: Promise.all fallisce quando uno degli elementi rifiuta, mentre allSettled permette di esaminare gli esiti indipendentemente. Prova artificialmente timeout e fallimenti per verificare cosa vede l'utente.
 
+Quando l’ordine dei log sorprende, la guida all’[event loop di JavaScript](/blog/javascript-event-loop-come-funziona) segue separatamente task e microtask.
+
 **Documentazione**
 
 - [MDN — Async Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)`,
@@ -4437,6 +4477,8 @@ Un oscillatore genera onde periodiche. Le forme sine, square, sawtooth e triangl
 ## Ascoltare un confronto corretto
 
 Prepara quattro pulsanti che usano la stessa nota e lo stesso inviluppo, cambiando soltanto type dell'OscillatorNode fra sine, triangle, square e sawtooth. Tieni basso il livello e confronta a volume percepito simile: una forma ricca di armoniche può sembrare più forte anche se il gain numerico non cambia. Collega poi un filtro lowpass e ascolta come cambiano le armoniche superiori. Una forma d'onda non è una melodia e un oscillatore continuo non definisce da solo un'articolazione musicale. Per ottenere note distinte, usa un GainNode che applichi un breve attacco e rilascio. Verifica che ogni sorgente venga terminata dopo il suono, così più click non accumulano oscillatori attivi.
+
+Per usare lo stesso oscillatore come elemento di uno strumento che suona più note, vedi [come gestire le voci di un synth polifonico](/blog/web-audio-synth-polifonico).
 
 **Documentazione**
 
@@ -4488,7 +4530,7 @@ Scegli un campione di cassa dalla libreria e riproducilo prima senza effetti, po
     id: "ruby-enumerable-map-select-reduce",
     title: "Ruby Enumerable: map, select e reduce",
     date: "2026-05-03",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "💎",
@@ -4524,6 +4566,20 @@ Prendi un elenco di importi. Con map puoi convertire ciascun importo in centesim
 
 
 Quando il risultato deve essere restituito da una API, verifica anche la semantica dell'array vuoto: una collezione senza elementi non corrisponde necessariamente a un errore di elaborazione.
+
+## Ferma una sequenza quando hai abbastanza risultati
+
+Supponi di voler vedere soltanto i primi tre numeri pari di una sequenza molto lunga. Con select su un array, Ruby prepara l’intero risultato prima di prendere i primi tre elementi. Una pipeline lazy può invece fermarsi quando li ha trovati.
+
+~~~ruby
+matches = (1..1_000_000).lazy.select(&:even?).take(3).force
+# [2, 4, 6]
+~~~
+
+Metti temporaneamente una stampa dentro il blocco di select e ripeti con un intervallo da 1 a 20. Nella versione lazy i controlli si fermano a 6. Se lo schema di filtro rende impossibile trovare abbastanza risultati, un intervallo finito si esaurisce comunque. Con un generatore senza fine, stabilisci un limite esplicito sugli elementi che accetti di esaminare.
+
+Per ordinare istanze che definiscono un proprio confronto, approfondisci [come funziona Comparable in Ruby](/blog/ruby-comparable-enumerable-custom).
+
 **Documentazione**
 
 - [Ruby Core — Enumerable](https://docs.ruby-lang.org/en/master/Enumerable.html)`,
@@ -4611,6 +4667,8 @@ L'event loop non impedisce che il main thread venga bloccato: una funzione sincr
 ## Priorità dei task e fluidità della UI
 
 Un setTimeout a zero millisecondi non interrompe il codice sincrono che sta già eseguendo. Allo stesso modo, un lungo ciclo di microtask può ritardare il rendering se continua ad aggiungere lavoro senza lasciare spazio al browser. Un esempio concreto è una ricerca che elabora migliaia di risultati mentre l'utente prova a digitare: il problema non è soltanto la rete, ma il lavoro sul main thread. Misura i long task con DevTools e valuta chunk di lavoro più piccoli o Web Worker per calcoli pesanti. Lo scheduler non garantisce che una callback venga eseguita a un istante preciso, perciò evita di usarlo come orologio rigoroso.
+
+Per un esempio introduttivo che parte da una richiesta in attesa, leggi [come ragionare sul codice asincrono](/blog/il-caffe-luniversita-e-la-magia-del-codice-asincrono).
 
 **Documentazione**
 
@@ -4742,6 +4800,8 @@ Una String è una sequenza di caratteri modificabile, salvo congelamento; un Sym
 
 Un Hash di configurazione può usare simboli come :timeout o :host perché rappresentano nomi stabili controllati dal programma. Un valore inserito da una persona, invece, non diventa automaticamente un identificatore valido solo perché lo si converte in simbolo. Se ricevi JSON da un'API, chiarisci se le chiavi sono stringhe e applica una normalizzazione in un solo punto. Il test più semplice verifica cosa accade quando accedi allo stesso Hash tramite "name" e :name: in Ruby sono chiavi distinte. Preferire una convenzione coerente è più importante di una presunta differenza di prestazioni non misurata.
 
+Quando il valore serve come testo da riconoscere o trasformare, usa gli [esempi di sostituzione con String e Regexp](/blog/ruby-stringhe-gsub-regex).
+
 **Documentazione**
 
 - [Ruby Core — Symbol](https://docs.ruby-lang.org/en/master/Symbol.html)`,
@@ -4834,6 +4894,8 @@ map crea un nuovo array, filter seleziona elementi e find restituisce il primo c
 
 Per trovare il primo elemento che soddisfa una condizione usa find, non filter seguito dall'accesso alla prima posizione, se non ti serve l'intera lista. Per sapere se esiste almeno una corrispondenza, some descrive meglio l'intenzione. Ricorda che map produce un nuovo array ma non clona automaticamente gli oggetti contenuti: se il callback modifica un oggetto esistente, altre parti del programma possono osservare il cambiamento. Un test utile verifica input vuoto, duplicati e oggetti condivisi. Se l'elenco proviene da una chiamata API, controlla anche che il tipo atteso sia effettivamente un array prima di invocare questi metodi.
 
+Se gli elementi arrivano uno alla volta o il chiamante può fermarsi presto, vedi [come produrre valori con i generatori JavaScript](/blog/javascript-generatori).
+
 **Documentazione**
 
 - [MDN — Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`,
@@ -4882,7 +4944,7 @@ Un effetto collegato in parallelo alla sorgente può creare due percorsi, uno di
     id: "sonic-pi-with-fx-effetti",
     title: "Sonic Pi with_fx: riverbero e delay",
     date: "2026-05-12",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "🌫️",
@@ -4921,6 +4983,11 @@ with_fx applica un effetto al codice eseguito nel blocco. Puoi annidare più eff
 
 Inserire un delay prima del riverbero può produrre una coda diversa dall'ordine inverso, perché ogni ripetizione viene elaborata in modo differente. Inizia con una singola nota e un effetto alla volta; regola mix e livello prima di aggiungerne un secondo. Su una parte ritmica, un riverbero eccessivo può coprire gli attacchi dei colpi successivi e ridurre la definizione del groove. Per studiare l'effetto, alterna quattro battute dry e quattro wet mantenendo gli stessi eventi musicali. Quando annidi più with_fx, considera il consumo di risorse e le code che restano udibili dopo l'ultimo trigger. Evita l'idea che ogni brano debba avere più effetti: spesso una semplice gestione dei volumi rende il mix più comprensibile.
 
+## Confronta le due catene con la stessa sorgente
+
+Per rendere udibile la differenza, parti da un solo colpo corto e lascia due battute tra i trigger. Usa risonanza e livelli moderati per evitare che la differenza di volume domini il confronto. Prima applica un’eco breve e poi aggiungi il riverbero all’esterno del blocco. Ascolta le ripetizioni che entrano nel riverbero. Scambia l’ordine delle due chiamate e riascolta quando il colpo secco è già finito.
+
+Una volta scelto l’ordine, alza il mix gradualmente e reinserisci la cassa. Se il colpo successivo si perde soltanto quando entrano le code, prova a ridurre mix o decay tenendo fisso il tempo. Nella pratica il passaggio più rivelatore è spesso quello dal fill alla ripartenza: registra due tentativi e confronta la prima cassa dopo il fill.
 
 **Documentazione ufficiale**
 
@@ -4930,7 +4997,7 @@ Inserire un delay prima del riverbero può produrre una coda diversa dall'ordine
     id: "ruby-hash-metodi-utili",
     title: "Ruby Hash: chiavi, default e trasformazioni",
     date: "2026-05-13",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "💎",
@@ -4966,6 +5033,12 @@ Un Hash associa chiavi a valori e conserva l'ordine d'inserimento. fetch è util
 ## Default mutabili e chiavi mancanti
 
 Se scrivi Hash.new([]), più chiavi mancanti possono restituire lo stesso array predefinito. Modificarlo può creare risultati sorprendenti, senza aver inserito davvero la chiave nel contenitore. Per costruire gruppi indipendenti è più sicuro usare un blocco che inizializzi un array per ogni nuova chiave. Distinguere fetch da un accesso con [] aiuta anche a non trattare un campo assente come un valore nil intenzionale. Prova una struttura annidata in cui un campo manca: dig può restituire nil, mentre un controllo più rigoroso potrebbe richiedere un errore esplicito. L'API scelta deve riflettere il contratto dei dati.
+
+## Distingui un dato mancante da un dato non ancora noto
+
+Supponi che un import possa contenere la chiave tracking con valore nil per un ordine che non ha ancora un codice. In quel caso fetch(:tracking, "pending") restituisce nil. Restituisce pending quando la chiave è assente. Se un record deve includere sempre quella chiave, usa fetch senza valore predefinito per rendere visibile una riga fuori contratto. Se devi conservare entrambi i casi in un report, usa key? per riconoscere la presenza e tratta nil secondo la regola di dominio.
+
+Prova un hash vuoto, uno con tracking uguale a nil e uno con un valore reale. Prima di serializzare il record verifica che i tre casi restino distinguibili quando l’API ne ha bisogno. Il test deve controllare il valore esposto al chiamante, non soltanto che la lettura termini.
 
 **Documentazione**
 
@@ -5024,7 +5097,7 @@ Prima di introdurre un indice univoco su una tabella già popolata, cerca eventu
     id: "javascript-destructuring",
     title: "JavaScript destructuring: default e valori undefined",
     date: "2026-05-15",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "react-frontend",
     icon: "🟨",
@@ -5064,6 +5137,20 @@ Il destructuring estrae valori da oggetti e array con una sintassi compatta. Un 
 
 Considera la risposta di un endpoint che dovrebbe restituire un oggetto con settings. Se il campo esiste ma vale null, il destructuring con un default impostato su {} non sostituisce quel null: il default viene usato soltanto in presenza di undefined. Una funzione che destruttura parametri direttamente nella firma dovrebbe quindi gestire esplicitamente il caso dell'argomento assente o nullo, se previsto. Un piccolo test confronta {}, {theme: undefined}, {theme: null} e {theme: "dark"}. Il destructuring rende il codice breve, ma non è un meccanismo di validazione: quando arrivano dati non attendibili serve un controllo del contratto prima dell'uso.
 
+## Estrai una preferenza senza perdere lo zero
+
+Un’API può restituire un oggetto con le preferenze già salvate oppure omettere tutta la sezione. Questo esempio tratta un valore mancante o nullo come assenza e conserva un volume impostato a zero. Prima dell’estrazione, controlla che il valore alla radice abbia la forma prevista se proviene da input esterno.
+
+~~~javascript
+function readVolume(settings) {
+  const { audio } = settings ?? {}
+  const { volume } = audio ?? {}
+  return volume ?? 0.5
+}
+~~~
+
+Prova readVolume con null, con un oggetto vuoto, con audio impostato a null e con volume uguale a zero. I primi tre casi restituiscono 0,5, l’ultimo restituisce zero. Se sostituisci il valore predefinito con un’espressione basata su OR, anche zero attiva il fallback. Se la funzione accetta solo numeri tra zero e uno, aggiungi la validazione del valore estratto prima di usarlo.
+
 **Documentazione**
 
 - [MDN — Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring)`,
@@ -5072,7 +5159,7 @@ Considera la risposta di un endpoint che dovrebbe restituire un oggetto con sett
     id: "web-audio-biquadfilter",
     title: "BiquadFilterNode: lowpass, highpass e cutoff",
     date: "2026-05-16",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "🎛️",
@@ -5110,6 +5197,12 @@ BiquadFilterNode offre filtri comuni e parametri di frequenza, Q e guadagno. Non
 
 Per confrontare lowpass e highpass, usa una sorgente ricca di armoniche e mantieni costanti frequenza fondamentale e volume. Muovi cutoff gradualmente: spostamenti bruschi possono creare artefatti che non dipendono dal timbro della sorgente. Il parametro Q influisce sulla risposta intorno alla frequenza di taglio; un valore elevato può produrre picchi, perciò abbassa il livello durante le prove. Non tutti i tipi di BiquadFilterNode interpretano Q e gain nello stesso modo. Se colleghi più filtri in serie, la risposta complessiva dipende da tutta la catena. Verifica con un AnalyserNode come cambiano le frequenze, ma non considerare quella rappresentazione una misura calibrata del suono.
 
+## Confronta il taglio con due toni noti
+
+Somma due oscillatori della stessa ampiezza, uno a 250 Hz e uno a 4 kHz. Collega un passa-basso con cutoff a 1 kHz e confronta il segnale a monte con quello a valle. Con un’impostazione di risonanza moderata, il tono a 4 kHz dovrebbe diventare molto meno evidente, mentre il tono a 250 Hz resta presente. Ripeti scambiando il passa-basso con un passa-alto e osserva quale tono perde energia.
+
+Metti un [analizzatore di spettro](/blog/web-audio-analyser-visualizzare) dopo il filtro per seguire entrambe le bande senza affidarti soltanto alla percezione del volume. Tieni uguali il livello di ingresso e la scala del grafico nei due esperimenti. Puoi ripetere il confronto con un solo tono vicino al cutoff per ascoltare quanto cambia il risultato quando aumenti la risonanza.
+
 **Documentazione**
 
 - [MDN — BiquadFilterNode](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode)`,
@@ -5118,7 +5211,7 @@ Per confrontare lowpass e highpass, usa una sorgente ricca di armoniche e mantie
     id: "sonic-pi-scale-accordi",
     title: "Sonic Pi scale e chord: costruire melodie",
     date: "2026-05-17",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "🎼",
@@ -5159,6 +5252,9 @@ scale genera note appartenenti a una scala, chord note di un accordo. Il fatto c
 
 Parti da una scala semplice e scegli un registro di note che rimanga udibile senza sovrapporsi completamente alla cassa. Usa chord per costruire un accordo, ma non suonare tutte le note simultaneamente per forza: prova un arpeggio, distribuendole nel tempo. Registra un ciclo di quattro battute e ascolta se la prima nota della ripetizione si collega in modo chiaro all'ultima. Il fatto che tutte le note appartengano alla stessa scala non garantisce automaticamente tensione o risoluzione musicale. Per migliorare la struttura limita inizialmente il numero di note e varia ritmo e durata. Confronta due versioni cambiando un solo grado della progressione, in modo da capire quale scelta ha modificato davvero il risultato.
 
+## Cambia rivolto e ascolta la nota in cima
+
+Suona E3, G3 e B3 insieme, poi G3, B3 ed E4. Le due sonorità contengono le stesse classi di altezza, ma la seconda ha il Sol al basso e il Mi in cima. Usa la stessa durata e lo stesso synth. Sovrapponi una linea di basso in Mi e riascolta quale nota del pad spicca. Se la melodia è bilanciata in un rivolto ma diventa difficile da distinguere nell’altro, prova ad alzare solo la melodia di un’ottava. Conserva il ritmo durante il confronto per isolare l’effetto del registro.
 
 **Documentazione ufficiale**
 
@@ -5257,6 +5353,8 @@ La modalità API-only parte da una configurazione più leggera per servizi che e
 ## Definire un contratto HTTP verificabile
 
 Un'API che restituisce JSON deve offrire più della serializzazione di un model. Specifica quali campi sono pubblici, quali sono obbligatori in input e quali status HTTP corrispondono a creazione, validazione fallita o risorsa mancante. Evita di esporre indiscriminatamente colonne del database: aggiungerne una in futuro potrebbe modificare la risposta senza intenzione. Per endpoint paginati definisci cursor o pagina, ordinamento stabile e limiti ragionevoli. Prepara request spec per una richiesta autorizzata, una senza permessi e una con un parametro inatteso. Se il client dipende da una struttura particolare, mantieni il contratto documentato e valuta l'impatto delle modifiche prima di rilasciare.
+
+Se la risorsa accetta anche file, la guida ad [Active Storage per upload e allegati](/blog/rails-active-storage-allegati) mostra come collegarli ai modelli.
 
 **Documentazione**
 
@@ -5418,7 +5516,7 @@ Definisci una battuta suddivisa in sedicesimi e inserisci i colpi di cassa sugli
     id: "ruby-pattern-matching",
     title: "Ruby pattern matching: case/in",
     date: "2026-05-23",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "💎",
@@ -5456,6 +5554,12 @@ Il pattern matching permette di verificare struttura e contenuto di array e hash
 
 Un payload API potrebbe contenere un hash con status e data. Un pattern può verificare entrambi i campi e assegnare nomi locali, ma l'assenza di una chiave o un valore di tipo imprevisto deve essere gestita. Non confondere un match riuscito con una validazione completa del documento: il payload potrebbe avere altri campi malformati. Un test utile passa un hash valido, uno senza status e uno con status nullo. Prevedi un ramo else che produca un risultato comprensibile, soprattutto quando i dati arrivano da servizi esterni. È preferibile rifiutare esplicitamente i casi non supportati anziché farli procedere per errore.
 
+## Decidi se ammettere le chiavi aggiuntive di un payload
+
+Con il pattern { status: "paid" } un evento Ruby può fare match anche se contiene altre chiavi. È comodo per leggere il campo che ti interessa da un payload evolutivo. Se invece stai verificando una forma chiusa, prova { status: "paid", **nil }. Quel pattern accetta la chiave richiesta e rifiuta chiavi ulteriori.
+
+Scrivi tre prove con status paid, con status paid più source, e con status pending. Il secondo caso distingue i due contratti. Prima di passare al codice di dominio, controlla anche se le chiavi arrivano come simboli o come stringhe. Un hash ottenuto direttamente da JSON.parse usa stringhe per impostazione predefinita e richiede che tu decida dove rendere coerente la forma.
+
 **Documentazione**
 
 - [Ruby Core — Pattern Matching](https://docs.ruby-lang.org/en/master/syntax/pattern_matching_rdoc.html)`,
@@ -5464,7 +5568,7 @@ Un payload API potrebbe contenere un hash con status e data. Un pattern può ver
     id: "rails-consumare-api-esterne",
     title: "Rails: chiamare API esterne senza perdere affidabilità",
     date: "2026-05-24",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "🛤️",
@@ -5505,6 +5609,12 @@ Un esempio che scarica e normalizza JSON è utile per capire il flusso, ma in pr
 ## Gestire i fallimenti di un servizio remoto
 
 Interrogare un provider esterno può funzionare durante una demo e produrre dati incompleti in presenza di timeout o risposte parziali. Prima del parsing controlla lo status HTTP e il formato dichiarato, applica limiti di tempo ragionevoli e distingui errori permanenti da quelli temporanei. Un retry senza backoff può peggiorare un servizio già sovraccarico. Quando salvi record ricavati da quell'API, usa identificativi stabili e stabilisci che cosa succede ai campi assenti o nulli. Un controllo utile simula una risposta valida, una vuota e una 429. La logica deve impedire che un singolo fallimento venga scambiato per un catalogo definitivamente privo di dati.
+
+## Controlla una sincronizzazione interrotta a metà
+
+Prepara una risposta valida per la prima pagina e un timeout per la seconda. Se pubblichi l’elenco dopo ogni pagina, il lettore potrebbe vedere per qualche minuto soltanto una parte dei dati. Quando l’interfaccia richiede un aggiornamento coerente, prepara la nuova versione e rendila visibile solo a importazione completata. Mantieni disponibile l’ultima versione completa se il prelievo fallisce.
+
+Registra l’ora dell’ultimo aggiornamento riuscito e la pagina o il cursore su cui si è fermata l’esecuzione. Ripeti la prova facendo rispondere entrambe le pagine. Il nuovo elenco deve sostituire il precedente una volta sola, senza duplicare i record già incontrati. Per i guasti temporanei, la guida al [backoff con jitter](/blog/retry-backoff-jitter-integrazioni) mostra come distanziare i tentativi.
 
 **Documentazione**
 
@@ -5613,7 +5723,7 @@ Un timer JavaScript non è una sorgente temporale perfetta: il main thread può 
     id: "sonic-pi-randomizzazione-controllata",
     title: "Sonic Pi use_random_seed: pattern riproducibili",
     date: "2026-05-27",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "🎲",
@@ -5649,6 +5759,11 @@ use_random_seed inizializza una sequenza pseudocasuale riproducibile, utile quan
 
 Se una scelta casuale produce un pattern interessante, annota il seed usato per renderlo ripetibile durante le prove successive. Il seed da solo non basta se cambi l'ordine delle chiamate random: aggiungere una nuova estrazione può spostare tutta la sequenza. Per un groove stabile imposta il seed nel punto coerente della struttura e limita le variazioni a un sottoinsieme di note o durate. Puoi lasciare fissi kick e basso e variare soltanto alcuni hi-hat, evitando che la casualità disgreghi il tempo principale. Registra più versioni con seed differenti e confronta densità, ripetizione e dinamica. L'obiettivo è usare la randomizzazione per produrre alternative controllabili, non per sostituire ogni decisione musicale.
 
+## Proteggi la sequenza da una nuova estrazione
+
+Registra otto battute con il seed impostato prima della frase. Aggiungi una scelta casuale del pan subito prima della scelta della nota e ripeti con lo stesso seed. Se le due decisioni consumano valori dallo stesso generatore, la linea melodica può cambiare anche se il seed è identico.
+
+Per variare soltanto il pan, prova a salvare prima l’intera frase melodica e poi aggiungi il movimento stereo come passaggio distinto. Ascolta che gli stessi attacchi cadano sugli stessi battiti. Quando vuoi ritrovare una take, annota seed, versione dello script e struttura dei loop. Il numero da solo descrive il punto di partenza, mentre il codice decide quando estrarre i valori.
 
 **Documentazione ufficiale**
 
@@ -5692,6 +5807,8 @@ Il duck typing si basa sui metodi supportati da un oggetto più che sull'apparte
 ## Definire un contratto senza ereditarietà
 
 Due oggetti possono esporre entrambi un metodo calculate e comportarsi diversamente. Il duck typing facilita la sostituzione di implementazioni, ma funziona bene soltanto quando i chiamanti conoscono il significato degli argomenti e dell'output. Per esempio, una classe potrebbe restituire un numero e un'altra un hash: la semplice presenza del metodo non evita un errore successivo. Prepara un set di test condiviso che eserciti entrambe le implementazioni sugli stessi input. Il contratto deve includere anche gli errori che i chiamanti possono gestire. Non è necessario introdurre una superclasse per documentare aspettative chiare.
+
+Per seguire cosa succede al valore passato tra due metodi, parti da [oggetti, riferimenti e identità in Ruby](/blog/ruby-tutto-e-un-oggetto).
 
 **Documentazione**
 
@@ -5797,7 +5914,7 @@ Un oggetto può esporre un metodo increment che usa this.value. Se passi diretta
     id: "web-audio-drum-machine-browser",
     title: "Web Audio drum machine: sample e timing",
     date: "2026-05-31",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "🥁",
@@ -5837,6 +5954,12 @@ Una drum machine può usare AudioBufferSourceNode distinti per ogni colpo, progr
 ## Riutilizzare buffer, non sorgenti
 
 Per la cassa di una drum machine puoi caricare e decodificare il sample una volta, quindi conservarne l'AudioBuffer. A ogni colpo devi creare una nuova istanza AudioBufferSourceNode: un nodo già avviato non può essere riavviato. Programma gli eventi su una griglia di tempo audio, non facendo affidamento esclusivamente sulla precisione del rendering React. Quando l'utente modifica uno step, stabilisci se il cambiamento interessa i colpi già schedulati o solo i successivi. Prepara uno stop che non lasci campioni suonare all'infinito e gestisci lo stato del caricamento dei file. Il livello sommato di kick, snare e hi-hat può superare quello di ogni singolo sample: verifica il bus finale.
+
+## Programma due colpi dello stesso campione
+
+Una volta decodificato un campione della cassa, tieni il buffer e crea una nuova sorgente per ogni colpo. Per provare, programma i due start alla stessa distanza temporale usata dal pattern, usando come riferimento currentTime del contesto. Se chiami start due volte sulla stessa sorgente ottieni un errore. Se ricrei anche il buffer, ripeti un lavoro che potevi svolgere una sola volta. La guida su [AudioBufferSourceNode](/blog/web-audio-audiobuffersource-campioni) mostra come separare i dati audio dalla singola riproduzione.
+
+Premi Stop quando il secondo colpo è già programmato ma deve ancora suonare. Decidi se il pulsante deve interrompere subito la sequenza. In quel caso, conserva i riferimenti alle sorgenti future per poterle fermare insieme al ciclo di scheduling.
 
 **Documentazione**
 
@@ -5893,7 +6016,7 @@ Immagina due live_loop, uno dedicato alla cassa e uno al basso. Se entrambi part
     id: "ruby-moduli-mixin",
     title: "Ruby module e mixin: include, prepend, extend",
     date: "2026-06-02",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "💎",
@@ -5935,6 +6058,14 @@ I moduli permettono di condividere comportamento senza costruire una lunga caten
 ## Capire l'ordine di risoluzione dei metodi
 
 Una classe può includere due moduli che definiscono metodi con lo stesso nome. Quale implementazione viene usata dipende dalla catena degli antenati; prepend modifica ulteriormente il percorso. Prima di inserire un modulo in una libreria esistente, stampa la lista ancestors e controlla le chiamate a super. Un test utile crea una classe minima con include e prepend, poi osserva l'ordine delle chiamate. Questo esercizio evita di attribuire i risultati a una precedenza intuitiva che non corrisponde al linguaggio. I moduli sono più facili da mantenere quando espongono poche responsabilità e non modificano silenziosamente comportamento non correlato.
+
+## Controlla quale implementazione risponde a un metodo
+
+Se due moduli definiscono label per lo stesso oggetto, osserva l’ordine restituito da ancestors e usa object.method(:label).owner per capire quale implementazione risponde. Cambia temporaneamente l’ordine delle due inclusioni e riesegui la chiamata. Se il risultato cambia, la composizione dipende da un dettaglio che chi legge la classe deve poter trovare facilmente.
+
+Un caso diverso è uno strato che aggiunge un prefisso e poi delega con super. Provalo assieme a una classe il cui label restituisce un valore noto. Il risultato atteso deve contenere sia il prefisso sia il valore della classe. Se il modulo serve solo a trasformare un valore e non ha bisogno dell’istanza, una funzione richiamata esplicitamente evita di introdurre un secondo metodo label nella stessa catena.
+
+Se il modulo deve creare metodi in base a una configurazione, i [casi di metaprogrammazione Ruby](/blog/ruby-metaprogrammazione-basi) aiutano a valutarne l’impatto sul debug.
 
 **Documentazione**
 
@@ -6050,7 +6181,7 @@ Se un oggetto eredita una proprietà dal prototipo e poi definisce una propriet�
     id: "web-audio-sequencer-step",
     title: "Step sequencer JavaScript: tempo e note",
     date: "2026-06-05",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "🎚️",
@@ -6092,6 +6223,12 @@ Uno step sequencer rappresenta una griglia temporale di eventi. Per convertirla 
 
 Un sequencer a sedici step può rappresentare una battuta suddivisa in sedicesimi oppure un'altra lunghezza: non esiste una corrispondenza obbligatoria fra step e secondi. Conserva tempo, griglia e pattern come dati separati, così un cambio di BPM modifica la durata degli eventi senza alterare la struttura musicale. Usa l'orologio audio per programmare il suono e un'animazione leggera per mostrare la posizione corrente. Se un utente modifica uno step mentre il sequencer suona, definisci una regola chiara per applicare la modifica. Verifica che il trasporto riparta dallo step atteso e che i loop non producano trigger doppi. Confronta il comportamento con una rete o CPU rallentata, senza confondere fluidità grafica e precisione audio.
 
+## Calcola il confine tra due eventi
+
+A 120 BPM ogni battito dura mezzo secondo e un sedicesimo dura 0,125 secondi. Se la misura parte a currentTime 5,000, il secondo sedicesimo va programmato a 5,125. Un callback che si sveglia a 5,090 può ancora accodarlo al momento giusto. Se esegui direttamente la nota quando si sveglia il callback, l’anticipo diventa parte del ritmo.
+
+Per verificare lo scheduler, registra per ogni passo il tempo previsto e quello in cui lo accodi. In una finestra di anticipo corretta il secondo valore precede il primo. Se alcuni eventi vengono accodati dopo l’istante previsto, traccia l’interruzione del thread e decidi se saltare il passo scaduto. Accumulare tutti i colpi arretrati nello stesso istante può produrre un raddoppio improvviso.
+
 **Documentazione**
 
 - [MDN — Advanced Techniques](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Advanced_techniques)`,
@@ -6100,7 +6237,7 @@ Un sequencer a sedici step può rappresentare una battuta suddivisa in sedicesim
     id: "sonic-pi-bassline-tb303",
     title: "Sonic Pi TB-303: bassline acid e cutoff",
     date: "2026-06-06",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "🎚️",
@@ -6139,6 +6276,11 @@ Il synth tb303 richiama un carattere acid attraverso risonanza, cutoff, invilupp
 
 Una linea acid efficace può utilizzare poche note in ottave vicine, ripetute con durata e accenti differenti. Inizia senza effetti esterni, poi controlla cutoff e risonanza del synth tb303 per riconoscere il carattere del filtro. Un'elevata risonanza può rendere certe frequenze molto prominenti, quindi lavora con volumi prudenti. Confronta un pattern di otto step con una variante che cambia soltanto il ritmo di una nota: spesso la differenza musicale è maggiore che aggiungere altre armonie. Inserisci poi un filtro che evolve lentamente su più battute e registra l'automazione. Evita cambiamenti casuali a ogni colpo finché non riesci a riprodurre consapevolmente un groove stabile.
 
+## Fai sentire l’accento senza cambiare le note
+
+Mantieni il pattern iniziale e aggiungi un ring di otto livelli, per esempio 0,45, 0,25, 0,27, 0,38, 0,25, 0,42, 0,26 e 0,24. Leggilo una volta per passo con un contatore dedicato e passa il valore ad amp. Parti con cutoff costante e registra due battute al livello di ascolto abituale. Riattiva poi il movimento del cutoff e confronta la stessa posizione nella battuta.
+
+Per inserire una pausa, avanza tutti i [ring e i loro contatori](/blog/sonic-pi-generative-ring-tick) prima di decidere se chiamare play. Lascia comunque sleep 0.25 fuori dal ramo. Se salti tick insieme alla nota, il filtro e l’intonazione possono spostarsi rispetto al pattern iniziale. Se salti anche sleep, gli eventi successivi si stringono. Prova a tacere al quarto passo e controlla che il quinto rimanga allineato alla cassa.
 
 **Documentazione ufficiale**
 
@@ -6148,7 +6290,7 @@ Una linea acid efficace può utilizzare poche note in ottave vicine, ripetute co
     id: "ruby-gestione-errori",
     title: "Ruby begin/rescue/ensure: gestione degli errori",
     date: "2026-06-07",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "💎",
@@ -6185,6 +6327,12 @@ rescue dovrebbe intercettare gli errori che il codice sa realmente gestire. Catt
 ## Non intercettare ciò che non sai correggere
 
 Una chiamata HTTP può fallire per timeout, autorizzazione o dati non validi. Mettere ogni operazione dentro rescue StandardError e restituire sempre un array vuoto nasconde questi casi e rende impossibile distinguere assenza di dati e guasto. Identifica prima le eccezioni recuperabili, definisci un risultato per chi chiama e lascia propagare quelle inattese. Se apri un file o una risorsa, ensure può essere necessario per la chiusura; quando esiste un blocco di gestione automatica della risorsa, valutane l'utilizzo. Prova che cosa accade con errori diversi e verifica che i log non contengano token o payload sensibili.
+
+## Verifica che il guasto conservi le informazioni necessarie
+
+Immagina un import che apre un file e interpreta ogni riga. In una prova fai fallire l’apertura. In un’altra lascia aprire il file e inserisci un valore che fallisce durante la conversione. Le due eccezioni richiedono azioni diverse: nel primo caso serve sapere quale percorso non era accessibile, nel secondo quale riga correggere. Se entrambe diventano un valore vuoto, chi chiama rischia di interpretarle come un import riuscito senza record.
+
+Se registri il contesto dentro rescue e poi vuoi propagare l’errore originale, usa raise senza argomenti. Verifica nel test che l’errore inatteso arrivi al chiamante e che il file venga comunque chiuso. La [misura delle chiamate esterne](/blog/osservabilita-log-metriche-tracce) aiuta poi a individuare dove si accumulano errori e attese.
 
 **Documentazione**
 
@@ -6400,7 +6548,7 @@ L'accesso ai dispositivi MIDI dipende dal supporto del browser, dal contesto sic
     id: "sonic-pi-slicing-campioni",
     title: "Sonic Pi sample slicing: start, finish e stretch",
     date: "2026-06-11",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "✂️",
@@ -6438,6 +6586,11 @@ Puoi isolare sezioni di un sample con parametri di inizio e fine e adattare la d
 
 Tagliare un campione al 25 o al 50 per cento della durata non garantisce che il taglio coincida con un evento ritmico. Ascolta prima il materiale originale, individua gli attacchi interessanti e prova start e finish su una regione breve. Un frammento che inizia nel mezzo di una forma d'onda può produrre un click: un inviluppo breve può ridurre il problema. Valuta anche se la coda del frammento termina prima della nota successiva. Se usi beat_stretch insieme al slicing, confronta il risultato con il campione originale per individuare artefatti. Una sequenza di quattro frammenti diversi può generare un nuovo ritmo anche senza sintetizzatori aggiuntivi, purché gli eventi rispettino una griglia chiara.
 
+## Riconosci il clic prodotto da un taglio
+
+Prendi una porzione che inizi mentre il segnale è ancora forte. Ripetila più volte senza effetti e ascolta l’attacco. Un taglio netto può partire da un valore lontano dallo zero e produrre un clic. Sposta l’inizio leggermente oppure prova un attacco molto breve. Se rimuovi insieme anche il transiente della cassa o del rullante, la slice può perdere la funzione ritmica che ti serviva.
+
+Fai la stessa prova alla fine del segmento. Una coda troncata può cliccare anche quando l’attacco è pulito. Registra tre prove con lo stesso volume e ascoltale nel pattern: il taglio da conservare è quello che si incastra nella griglia e lascia riconoscibile il colpo.
 
 **Documentazione ufficiale**
 
@@ -6447,7 +6600,7 @@ Tagliare un campione al 25 o al 50 per cento della durata non garantisce che il 
     id: "ruby-creare-una-gem",
     title: "Ruby gem: packaging, dipendenze e versioni",
     date: "2026-06-12",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "💎",
@@ -6493,6 +6646,12 @@ Una gem distribuisce codice Ruby e metadati di dipendenza. Prima della pubblicaz
 ## Versioni e distribuzione affidabile
 
 Quando una gem espone una classe pubblica, altre applicazioni iniziano a dipendere dal suo comportamento. Una modifica incompatibile può rompere progetti anche se i test locali passano. Prima della prima release definisci gli entry point, la dipendenza minima da Ruby e la struttura dei file inclusi nel pacchetto. Controlla il contenuto effettivo dell'archivio costruito e prova l'installazione in un progetto separato. Un piccolo CHANGELOG aiuta a spiegare cosa è cambiato fra versioni. Se la libreria legge configurazioni o segreti, non includere file di sviluppo personali nell'artefatto pubblicato.
+
+## Installa il pacchetto in un ambiente pulito
+
+Esegui gem build sul file gemspec e copia il file generato fuori dal repository. Installa quel file in un ambiente Ruby di prova e verifica require da una directory vuota. Se i test funzionano dalla radice del progetto ma require fallisce dopo l’installazione, controlla il nome del file sotto lib e l’elenco dei file incluso nel pacchetto.
+
+Fai poi funzionare la più piccola chiamata pubblica mostrata nel README. Quella prova intercetta anche dipendenze disponibili nell’ambiente di sviluppo ma assenti nei metadati di runtime. Se la libreria offre un comando, avvialo dall’esterno del checkout con gli stessi argomenti che mostri all’utente.
 
 **Documentazione**
 
@@ -6601,7 +6760,7 @@ Un generator può attraversare una sequenza di grandi dimensioni restituendo un 
     id: "web-audio-analyser-visualizzare",
     title: "AnalyserNode: spettro e waveform nel browser",
     date: "2026-06-15",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "📊",
@@ -6642,6 +6801,12 @@ AnalyserNode espone dati nel dominio del tempo e della frequenza senza modificar
 
 AnalyserNode permette di leggere valori di frequenza o campioni nel dominio temporale, ma i numeri restituiti non equivalgono automaticamente a decibel acustici calibrati. Imposta fftSize secondo il compromesso fra dettaglio spettrale e aggiornamento visivo; una FFT molto grande può essere inutile per una semplice animazione. Limita il redraw con requestAnimationFrame e sospendi il lavoro quando la visualizzazione non è visibile. Confronta una sinusoide a frequenza nota con un segnale ricco di armoniche e osserva come cambia la rappresentazione. Se aggiungi smoothing, ricorda che una transizione più fluida può nascondere variazioni rapide. La visualizzazione serve a comprendere il segnale, non a dimostrare che il mix è sicuro per l'ascolto.
 
+## Trasforma l’indice di un bin in una frequenza
+
+Leggi sampleRate dal contesto per calcolare la distanza tra i bin con sampleRate diviso fftSize. Per esempio, a 48 kHz con una FFT da 2.048 punti la distanza è 23,4375 Hz. Il bin 32 è centrato a 750 Hz. Se il contesto usa 44,1 kHz, lo stesso indice corrisponde a circa 689 Hz. Calcola quindi le etichette a partire dalla configurazione effettiva.
+
+Per verificare il grafico, collega un oscillatore a 750 Hz e leggi la barra più evidente nella configurazione a 48 kHz. Puoi osservare energia anche nelle barre circostanti. Sposta poi l’analizzatore dopo un [filtro passa-basso](/blog/web-audio-biquadfilter) e abbassa il cutoff ben sotto i 750 Hz. La stessa barra dovrebbe calare. Se il filtro cambia il suono ma il grafico resta identico, ricostruisci il [percorso dei nodi](/blog/web-audio-grafo-nodi-connect) e controlla quale punto stai misurando.
+
 **Documentazione**
 
 - [MDN — AnalyserNode](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode)`,
@@ -6650,7 +6815,7 @@ AnalyserNode permette di leggere valori di frequenza o campioni nel dominio temp
     id: "sonic-pi-generative-ring-tick",
     title: "Sonic Pi ring e tick: sequenze generative",
     date: "2026-06-16",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "🌱",
@@ -6691,6 +6856,11 @@ ring crea una sequenza ciclica, mentre tick avanza lungo i valori nel contesto d
 
 Un ring può contenere quattro note e un altro ring quattro durate. Se i due pattern avanzano usando lo stesso tick, il risultato dipende dall'ordine in cui i valori vengono letti: aggiungere un'istruzione può cambiare la sequenza. Per ridurre questa dipendenza, separa i contatori per la melodia e per il ritmo quando il codice lo richiede. Prova a costruire una frase di otto step con tre valori di cutoff e ascolta dopo quanti cicli torna la stessa combinazione. La generazione può essere deterministica anche quando il risultato sembra variabile. Scrivi prima una versione senza casualità, registrala, poi introduci cambiamenti controllati. Se tutto cambia a ogni beat, il risultato può perdere un punto di riferimento musicale.
 
+## Calcola quando il motivo torna sul primo battito
+
+Il motivo di esempio si ripete ogni 15 sedicesimi. Una battuta in 4/4 ne contiene 16. Alla fine della prima battuta le due sequenze hanno completato un ciclo e percorso ancora un passo, quindi il loro punto di ritorno scorre rispetto alla griglia. Per ritrovare insieme inizio del motivo e inizio battuta serve il minimo comune multiplo di 15 e 16, cioè 240 passi o 15 battute.
+
+Registra quattro battute con una cassa sul primo battito per sentire lo spostamento. Se vuoi mantenere l’effetto dentro una sezione breve, puoi scegliere ring le cui lunghezze dividono 16 o impostare un reset all’inizio della sezione, agganciato a un [cue della batteria](/blog/sonic-pi-sync-cue). Controlla che il reset avvenga nel loop che usa i contatori. Ascolta il confine della sezione, dove un salto di nota o di dinamica può diventare udibile.
 
 **Documentazione ufficiale**
 
@@ -6946,6 +7116,7 @@ Sonic Pi può ricevere eventi MIDI, ma i nomi delle porte e dei dispositivi dipe
 
 Un controller MIDI può inviare valori da trasformare in intervalli appropriati per cutoff, ampiezza o altri parametri. Prima di collegarlo al live set verifica nella console il nome del dispositivo, il canale e il tipo dei messaggi ricevuti. Un knob potrebbe inviare salti o dati non continui; smussa le variazioni quando il parametro audio produce artefatti evidenti. Prevedi il caso in cui il dispositivo venga scollegato e non lasciare la traccia dipendere completamente da un evento che non arriverà più. Per una prima prova collega una sola manopola a un filtro, controlla il range e confronta valori minimo e massimo. Solo dopo aggiungi più controller per la performance.
 
+Per leggere eventi di una tastiera direttamente da una pagina, vedi [come ricevere messaggi con la Web MIDI API](/blog/web-audio-web-midi-api).
 
 **Documentazione ufficiale**
 
@@ -7141,7 +7312,7 @@ Per mostrare la valuta in uno stile diverso, usa formatToParts per identificare 
     id: "web-audio-tone-js",
     title: "Tone.js: transport e scheduling musicale",
     date: "2026-06-25",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "🎵",
@@ -7180,6 +7351,12 @@ Tone.js fornisce strumenti musicali ad alto livello sopra Web Audio, come sintet
 ## Il transport è condiviso, le risorse no
 
 Tone.js fornisce una struttura musicale utile per sincronizzare pattern, synth e automazioni, ma non elimina le restrizioni del browser sull'avvio dell'audio. La prima interazione dell'utente deve gestire l'attivazione del contesto. Se un componente React crea uno strumento a ogni render senza liberare il precedente, possono accumularsi risorse e callback. Prepara un test che monti e smonti la sezione musicale più volte, verificando che gli strumenti vengano dismessi quando non servono. Mantieni il transport coordinato quando più componenti partecipano allo stesso brano: avviarne diversi senza una gerarchia chiara può generare ritmi fuori fase. Per una semplice riproduzione di un file, considera se l'API browser base sarebbe sufficiente.
+
+## Usa il tempo della callback per l’attacco
+
+Nel pattern, la callback può partire prima dell’istante previsto per la nota. Passa il parametro time alla chiamata che suona lo strumento. Se lasci che il sintetizzatore usi l’istante della callback, il tempo effettivo degli attacchi può seguire il lavoro del thread JavaScript. Per ascoltare l’effetto, prova la stessa figura con una nota breve e aggiungi una cassa sullo stesso battito. Le due sorgenti dovrebbero restare allineate.
+
+Verifica anche il passaggio tra schermate. Avvia il pattern, lascia la pagina e torna due volte. Se al terzo avvio senti note sovrapposte, controlla quali oggetti della sequenza sono stati rimossi. Lo stop della timeline, la cancellazione delle callback e il rilascio dello strumento sono operazioni con responsabilità distinte.
 
 **Documentazione**
 
@@ -7423,7 +7600,7 @@ Un AudioBuffer è un insieme di dati audio già decodificati, quindi occupa memo
     id: "sonic-pi-registrare-esportare",
     title: "Sonic Pi recording: registrare e controllare il livello",
     date: "2026-07-01",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "💾",
@@ -7466,6 +7643,11 @@ La registrazione del set permette di riascoltare transizioni, livelli e durata e
 
 Prima di registrare un brano lungo, cattura trenta secondi e riascoltali su cuffie e diffusori diversi a volume moderato. Controlla che nessuna parte saturi, che gli effetti non coprano il kick e che il silenzio iniziale non sia eccessivo. Se modifichi live_loop durante il set, salva una versione dello script che descriva il punto di partenza e annota le variazioni principali: la registrazione audio da sola non rende riproducibile la performance. Per un'uscita destinata alla distribuzione, una DAW può essere utile per editing e mastering, ma la qualità della sorgente resta fondamentale. Mantieni copie dei file registrati e assegna nomi che permettano di identificare versione, BPM e data.
 
+## Ascolta i confini del file esportato
+
+Per una traccia con riverbero, indica nello script il punto in cui cessano i nuovi eventi e lascia correre la registrazione finché la coda si è abbassata. Importa il file in un editor e ascolta gli ultimi due secondi. Se il volume si interrompe bruscamente, ripeti la take con più spazio in chiusura o prepara una dissolvenza nel montaggio. Per un loop da ripetere, verifica invece il punto di giunzione fra fine e inizio in una riproduzione ciclica.
+
+Controlla anche l’inizio a volume moderato. Se hai premuto Record dopo l’attacco della cassa, il transiente mancante può essere poco evidente durante il set e diventare evidente nel file. Fai partire la registrazione prima della prima battuta e rimuovi in seguito soltanto il silenzio iniziale di cui puoi fare a meno.
 
 **Documentazione ufficiale**
 
@@ -7475,7 +7657,7 @@ Prima di registrare un brano lungo, cattura trenta secondi e riascoltali su cuff
     id: "ruby-comparable-enumerable-custom",
     title: "Ruby Comparable: implementare <=>",
     date: "2026-07-02",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "💎",
@@ -7520,6 +7702,12 @@ Comparable usa il risultato dell'operatore <=> per offrire confronti come < e >=
 
 Se confronti prodotti per prezzo, devi decidere cosa accade quando uno dei due prezzi non è disponibile. Un operatore <=> che restituisce risultati incompatibili tra confronti diversi rende l'ordinamento imprevedibile. Non sostituire i valori mancanti con zero senza un requisito: potrebbe cambiare il significato del confronto. Scrivi test con valori uguali, crescenti e nulli e verifica la transitività. Quando il dominio ammette solo ordinamenti parziali, può essere più sicuro usare una funzione di ordinamento esplicita per la singola vista, anziché dichiarare che tutti gli oggetti sono universalmente comparabili.
 
+## Verifica che due record distinti possano risultare uguali
+
+Due lanci diversi possono avere la stessa ora. Nell’esempio, confrontare due istanze create con Launch.new(1) usando == restituisce true perché Comparable trova zero tramite <=>. Se usi una regola simile per modelli con un proprio identificatore, verifica che i chiamanti intendano davvero l’uguaglianza in quel senso. In una lista ordinata può essere sufficiente esplicitare una chiave di ordinamento, mantenendo la semantica di uguaglianza già prevista dal modello.
+
+Prova a ordinare tre elementi con chiavi [ora, id], per esempio [3, 9], [1, 8] e [1, 2]. L’ordine atteso termina con l’id 9 e inizia con l’id 2. La seconda chiave interviene solo quando coincidono le ore. Per ottenere questo comportamento in una singola vista Ruby usa sort_by con un array di chiavi. Controlla separatamente i lanci senza orario, decidendo se escluderli o mostrarli in fondo.
+
 **Documentazione**
 
 - [Ruby Core — Comparable](https://docs.ruby-lang.org/en/master/Comparable.html)`,
@@ -7528,7 +7716,7 @@ Se confronti prodotti per prezzo, devi decidere cosa accade quando uno dei due p
     id: "rails-routing-restful",
     title: "Routing RESTful in Rails con resources",
     date: "2026-07-03",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "🛤️",
@@ -7569,6 +7757,18 @@ La dichiarazione resources genera una serie convenzionale di route per elenco, c
 ## Metodi HTTP e risorse, non solo URL
 
 Una route per aggiornare una risorsa usa convenzioni diverse da quella destinata a leggerla. Prima di aggiungere una route custom, verifica se un'azione standard di resources descrive già il comportamento. Esporre create, update e destroy quando non servono aumenta la superficie da proteggere; usa only oppure except dove opportuno. Le nested routes possono chiarire la relazione fra risorse, ma livelli eccessivi rendono gli URL difficili da gestire. Prepara test che distinguano metodo HTTP errato, id assente e permessi insufficienti. Il file di routing definisce come raggiungere un controller; non è una policy di autorizzazione e non valida automaticamente l'input.
+
+## Controlla una collisione con la rotta show
+
+Una dichiarazione generica per mostrare un lancio accetta un segmento dinamico dopo /launches. Se aggiungi una rotta separata per /launches/upcoming in fondo al file, una richiesta GET può essere riconosciuta come show con id uguale a upcoming. Puoi osservare l’azione selezionata nel log Rails accanto alla richiesta.
+
+~~~ruby
+resources :launches, only: %i[index show] do
+  get :upcoming, on: :collection
+end
+~~~
+
+Verifica il risultato con bin/rails routes -g upcoming e usa il nome riportato da Rails per generare il percorso. Poi aggiungi due richieste al test: una per l’elenco dei prossimi lanci e una per un singolo lancio. Il primo caso deve raggiungere l’azione di collezione, il secondo deve ancora cercare l’id corretto. Se gli identificatori possono includere parole arbitrarie, riserva il segmento upcoming per evitare che diventi uno slug di un record.
 
 **Documentazione**
 
@@ -7653,6 +7853,8 @@ Gli esperimenti di Chrome Music Lab mostrano relazioni tra ritmo, frequenza, int
 
 Un esperimento musicale visivo è utile quando collega un gesto a una conseguenza udibile in modo immediato. Se vuoi riprodurre questo approccio nel browser, separa le regole musicali dalla rappresentazione grafica: le note e le durate sono dati, mentre animazione e colore aiutano a comprenderli. Definisci un controllo di avvio e arresto accessibile anche da tastiera e comunica il risultato senza affidarti solo al colore. Un piccolo esempio può avere una griglia di quattro colpi e un cursore che evidenzia la posizione, ma la temporizzazione del suono deve restare indipendente dagli aggiornamenti del DOM. Verifica il comportamento su mobile, dove gesture e policy di autoplay differiscono spesso dall'ambiente desktop.
 
+Dopo l’esercizio visuale, la guida alla [didattica musicale con Sonic Pi](/blog/sonic-pi-didattica-codice-e-musica) propone un passaggio a pattern scritti in codice.
+
 **Documentazione**
 
 - [Documentazione tecnica — Guide](https://musiclab.chromeexperiments.com/)`,
@@ -7661,7 +7863,7 @@ Un esperimento musicale visivo è utile quando collega un gesto a una conseguenz
     id: "sonic-pi-ambient-pad-riverbero",
     title: "Sonic Pi ambient pad: inviluppo e spazio",
     date: "2026-07-06",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "🌌",
@@ -7704,6 +7906,11 @@ Un pad ambient nasce spesso da note lunghe con attacco graduale, filtri dolci e 
 
 Un pad ambient usa spesso attacchi lenti, note sostenute e riverbero. Quando il release è lungo, più note rimangono attive contemporaneamente e aumentano la densità del mix: non sempre è desiderabile. Prova una progressione di tre note distanti e confronta un riverbero leggero con uno più ampio senza cambiare le note. Controlla che il basso non diventi confuso a causa delle code degli effetti. Se vuoi creare movimento, automatizza lentamente il cutoff o varia il registro, invece di aggiungere continuamente nuove voci. Un esercizio utile consiste nel registrare due minuti con gli stessi suoni e soltanto tre cambiamenti graduali: puoi valutare se ogni intervento è udibile e musicalmente giustificato.
 
+## Prova una transizione che lascia decadere l’accordo
+
+Suona quattro note di un accordo, una ogni quattro battiti come nell’esempio. Con attacco di quattro battiti e release di otto, una voce iniziata al dodicesimo battito può continuare fino al ventiquattresimo già prima della coda del riverbero. Se fai entrare il nuovo accordo al sedicesimo, le due armonie avranno diversi battiti in comune. Bastano anche due note distanti che restano in primo piano per rendere ambiguo il cambio.
+
+Registra una seconda versione lasciando vuoto l’ultimo trigger dell’accordo. Mantieni l’ingresso del prossimo allo stesso punto e confronta quanto chiaramente si sente il cambio. La guida all’[ordine degli effetti Sonic Pi](/blog/sonic-pi-with-fx-effetti) approfondisce come separare la coda dagli altri processi della catena.
 
 **Documentazione ufficiale**
 
@@ -7713,7 +7920,7 @@ Un pad ambient usa spesso attacchi lenti, note sostenute e riverbero. Quando il 
     id: "ruby-stringhe-gsub-regex",
     title: "Ruby String gsub e regex: casi limite",
     date: "2026-07-07",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "💎",
@@ -7753,6 +7960,18 @@ gsub sostituisce tutte le occorrenze che corrispondono a una regex o stringa. Pr
 ## Espressioni regolari e input reale
 
 Una sostituzione gsub può sembrare corretta su una stringa semplice e fallire con caratteri accentati, punteggiatura o testo multilinea. Se il pattern contiene contenuto proveniente dall'utente, verifica che venga trattato come testo quando questo è il requisito, evitando di interpretarlo involontariamente come sintassi regex. Gli esempi di test dovrebbero includere un testo senza corrispondenze, uno con più occorrenze e uno con caratteri non ASCII. Per elaborazioni ripetute su input molto lunghi misura il costo del pattern e valuta se una trasformazione più semplice potrebbe essere sufficiente.
+
+## Distingui la sostituzione letterale dalle catture
+
+Supponi di dover sostituire la sigla A+B in un’etichetta. La stringa passata direttamente a gsub cerca quei tre caratteri. In una regex, il più ha invece un significato proprio e può far corrispondere stringhe diverse. Prova con «A+B / AAB» e verifica che resti AAB dopo la sostituzione del primo termine.
+
+~~~ruby
+label = "A+B / AAB"
+label.gsub("A+B") { "Promo" }                # "Promo / AAB"
+label.gsub(/#{Regexp.escape("A+B")}/) { "Promo" }
+~~~
+
+Usa la seconda forma quando il testo letterale deve essere integrato in un’espressione più ampia. La forma a blocco torna utile anche quando il testo sostitutivo arriva da un file e contiene sequenze come barra inversa seguita da 1. Il blocco restituisce direttamente il nuovo testo. Se invece vuoi riutilizzare parti del match, conserva esplicitamente le catture e verifica che siano presenti nelle forme di input supportate.
 
 **Documentazione**
 
@@ -7856,7 +8075,7 @@ Due oggetti JavaScript distinti con lo stesso campo id non vengono trattati da S
     id: "web-audio-generative-browser",
     title: "Web Audio generativo: vincoli e casualità",
     date: "2026-07-10",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "🌀",
@@ -7903,6 +8122,12 @@ Un sistema generativo produce variazioni secondo regole: scale, intervalli, prob
 
 Un generatore che sceglie note completamente a caso può produrre intervalli poco coerenti, troppi eventi simultanei e picchi di volume. Definisci una scala, una densità massima, un registro e una politica per la durata delle voci. Un seed riproducibile permette di confrontare modifiche all'algoritmo senza cambiare ogni volta il materiale musicale. Se il generatore può funzionare a lungo, inserisci un limite alle sorgenti attive e una procedura di stop. Per valutare il risultato registra alcune iterazioni e verifica se le variazioni rispettano il carattere desiderato. Un sistema generativo è utile quando crea differenze controllate, non quando nasconde la struttura dietro valori casuali non verificati.
 
+## Salva le decisioni che producono la frase
+
+Per ricreare otto battute, annota per ogni passo il numero di battuta, il MIDI note number, il livello e l’eventuale pausa. Riproduci quella lista attraverso lo stesso scheduler, con lo stesso synth. Se il ritmo cambia, puoi controllare gli istanti programmati senza dover attribuire la differenza al caso.
+
+Per un confronto controllato, tieni fisse note e orari e rigenera solo gli accenti. Da una registrazione all’altra la frase deve mantenere la stessa posizione rispetto al metronomo. Se utilizzi un seed, conserva anche l’ordine con cui il generatore viene chiamato. Una nuova estrazione all’inizio della battuta può cambiare la sequenza di valori usati per tutte le battute successive.
+
 **Documentazione**
 
 - [MDN — Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)`,
@@ -7911,7 +8136,7 @@ Un generatore che sceglie note completamente a caso può produrre intervalli poc
     id: "sonic-pi-brano-techno-passo-passo",
     title: "Sonic Pi techno: struttura di un brano",
     date: "2026-07-11",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "musica-audio",
     hub: "scienza-passioni",
     icon: "🎚️",
@@ -7963,6 +8188,11 @@ Una traccia techno leggibile può essere costruita per livelli: kick, hi-hat, ba
 
 Un loop di quattro battute è un punto di partenza, non un brano finito. Scrivi una sezione iniziale con kick e pochi elementi, una seconda in cui entra il basso e una fase di sottrazione prima del ritorno del groove completo. La durata delle sezioni può essere espressa in battute, così il set resta coerente anche quando cambia BPM. Per una traccia veloce, evita che ogni elemento abbia sempre la stessa densità: alterna pause, transienti e automazioni brevi. Registra la progressione completa e riascolta senza guardare il codice. Se non percepisci differenze fra le sezioni, riduci il numero di suoni o cambia davvero un parametro strutturale invece di introdurre decorazioni continue.
 
+## Scrivi un rientro che si senta anche a volume fisso
+
+In una frase di otto battute lascia la cassa per le prime sette, poi togli quella dell’ultimo battito. Fai entrare il bass pattern sul primo battito della frase successiva. Registra le stesse battute due volte: nella seconda lascia la cassa sempre attiva. Mantieni costanti suoni e volumi. Se il rientro si distingue solo con il vuoto prima del cambio, la transizione sta funzionando grazie alla struttura ritmica.
+
+Ripeti con una coda di delay sul fill e ascolta il primo colpo della frase nuova. Se la coda rende la ripartenza meno netta, programma l’ultimo trigger prima o riduci il decay dell’effetto. Controlla il punto esatto in cui il nuovo loop si aggancia al [cue della batteria](/blog/sonic-pi-sync-cue).
 
 **Documentazione ufficiale**
 
@@ -8220,6 +8450,7 @@ Sonic Pi rende osservabili cicli, condizioni, variabili e temporizzazione attrav
 
 Per imparare i cicli con Sonic Pi, prepara un pattern di quattro note e chiedi di descrivere quante volte verrà riprodotto prima di premere Run. Modifica poi un valore di sleep e verifica se il cambiamento riguarda numero di note o distanza temporale. Questo separa la sintassi dal comportamento osservabile. Le condizioni possono controllare l'inserimento di un colpo ogni quarto giro; le variabili possono conservare note o durate. Non è necessario partire da un brano complesso: esercizi piccoli rendono più semplice capire gli errori. Dopo ogni modifica annota previsione e risultato, così la pratica musicale diventa anche un metodo per verificare un'ipotesi di programmazione.
 
+Per un primo esercizio in cui gli studenti possano osservare il suono nel browser, prova [una lezione con Chrome Music Lab](/blog/web-audio-chrome-music-lab-lezioni).
 
 **Documentazione ufficiale**
 

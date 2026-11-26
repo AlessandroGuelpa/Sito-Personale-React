@@ -39,6 +39,12 @@ Start with a few bars of kick and hats. Bring in the bass at a bar boundary. In 
 
 Record the whole progression and listen without watching the code. If two sections sound almost identical, change something audible such as the bass rhythm, the number of hats or how long the kick is absent. Keep filter moves and occasional stabs sparse enough for the transitions to remain clear. At a faster tempo, check that long tails and busy patterns still leave space for the next attack.
 
+## Write a return you can hear at a fixed volume
+
+In an eight-bar phrase keep the kick for the first seven bars, then mute it on the last beat. Bring in the bass pattern on beat one of the next phrase. Record the same bars twice, leaving the kick on throughout the second take. Keep sounds and levels fixed. If the return stands out with the gap before the change, the rhythmic structure is carrying the transition.
+
+Repeat with a delay tail on the fill and listen to the first hit of the new phrase. If the tail softens the return, schedule the last trigger earlier or reduce the effect’s decay. Check precisely where the new loop follows the [drum cue](/blog/sonic-pi-sync-cue).
+
 ## Sources
 
 - [Sonic Pi — Tutorial](https://sonic-pi.net/tutorial.html)

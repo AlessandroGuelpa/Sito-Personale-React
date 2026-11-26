@@ -25,6 +25,10 @@ Start with a small range of notes. If the line overlaps a kick or bass so much t
 
 Make a four-bar loop with a few notes. Listen to how the last note leads back to the first when it repeats. Then vary a single pitch, its duration or its place in the rhythm. Notes from one scale provide a common set of choices, while emphasis and the relationship to the active chord create much of the tension and resolution. Try arpeggiating one chord instead of playing all its notes together, and listen to how that changes the space available for the next part.
 
+## Change the inversion and listen to the top note
+
+Play E3, G3 and B3 together, then G3, B3 and E4. The two voicings contain the same pitch classes, but the second puts G at the bottom and E at the top. Use the same duration and synth. Add an E bass line and listen for which pad note stands out. If the melody is clear with one voicing and hard to hear with the other, try moving only the melody up an octave. Keep the rhythm fixed during the comparison so you can hear what the register changes.
+
 ## Sources
 
 - [Sonic Pi — Tutorial](https://sonic-pi.net/tutorial.html)

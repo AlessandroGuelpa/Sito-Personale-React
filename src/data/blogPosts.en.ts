@@ -410,6 +410,7 @@ export const englishBlogMetadata: Record<
   "forza-di-attrito-e-la-ux-dei-form": {
     title: "Form UX That Reduces Errors and Abandonment",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Improve form completion with essential fields, persistent labels, accessible error messages and measurements that account for device and traffic.",
     tags: ["UX", "Forms", "Accessibility", "Frontend"],
@@ -494,6 +495,7 @@ export const englishBlogMetadata: Record<
   "web-audio-biquadfilter": {
     title: "BiquadFilterNode Cutoff, Resonance and Filter Types",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Shape a Web Audio signal with low-pass, high-pass and band-pass filters. Hear what cutoff and Q do, and automate frequency changes.",
     tags: ["Web Audio API", "BiquadFilterNode", "Filters", "Synthesis"],
@@ -501,6 +503,7 @@ export const englishBlogMetadata: Record<
   "rails-consumare-api-esterne": {
     title: "Calling External APIs Reliably from Rails",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Fetch and normalise launch data in Rails, then handle timeouts, invalid responses and retries without discarding the last good result.",
     tags: ["Rails", "API", "Faraday", "Background jobs"],
@@ -559,6 +562,7 @@ export const englishBlogMetadata: Record<
   "javascript-destructuring": {
     title: "JavaScript Destructuring with Defaults and Aliases",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Unpack objects and arrays, rename bindings, and see how destructuring defaults handle missing fields, undefined and null.",
     tags: ["JavaScript", "Destructuring", "Arrays", "Objects"],
@@ -622,6 +626,7 @@ export const englishBlogMetadata: Record<
   "rails-routing-restful": {
     title: "RESTful Routing in Rails with resources",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Map HTTP methods and paths to Rails controller actions, limit what you expose, and test routing, permissions and missing records.",
     tags: ["Rails", "Routing", "REST", "HTTP"],
@@ -657,6 +662,7 @@ export const englishBlogMetadata: Record<
   "sonic-pi-with-fx-effetti": {
     title: "Sonic Pi with_fx for Reverb, Echo and Distortion",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Route notes through effects with with_fx, understand nested effect order, and balance dry and wet signals over a phrase.",
     tags: ["Sonic Pi", "Audio effects", "Reverb", "Live coding"],
@@ -664,6 +670,7 @@ export const englishBlogMetadata: Record<
   "sonic-pi-scale-accordi": {
     title: "Sonic Pi Scales, Chords and Arpeggios",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Build melodies from scale and chord in Sonic Pi, then choose a register, vary the rhythm and check how a loop resolves.",
     tags: ["Sonic Pi", "Scales", "Chords", "Live coding"],
@@ -671,6 +678,7 @@ export const englishBlogMetadata: Record<
   "web-audio-drum-machine-browser": {
     title: "Web Audio Drum Machines with Synthesis and Samples",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Synthesise a kick, reuse decoded sample buffers, and schedule each hit on the audio clock without accumulating timing drift.",
     tags: ["Web Audio API", "Drum machine", "Synthesis", "Scheduling"],
@@ -678,6 +686,7 @@ export const englishBlogMetadata: Record<
   "web-audio-sequencer-step": {
     title: "A JavaScript Step Sequencer with Web Audio",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Turn a pattern grid into timed Web Audio events, derive step duration from BPM, and manage edits to the sequence during playback.",
     tags: ["JavaScript", "Web Audio API", "Sequencer", "Scheduling"],
@@ -1000,6 +1009,7 @@ export const englishBlogMetadata: Record<
   "ruby-tutto-e-un-oggetto": {
     title: "Ruby Objects, Methods, Classes and Identity",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "See how integers, strings and nil receive methods, then compare value equality and object identity with == and equal?.",
     tags: ["Ruby", "Objects", "Classes", "Object identity"],
@@ -1014,6 +1024,7 @@ export const englishBlogMetadata: Record<
   "ruby-enumerable-map-select-reduce": {
     title: "Ruby Enumerable with map, select and reduce",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Choose a Ruby collection method by its result, then check empty input, intermediate allocations and when SQL can do the aggregation.",
     tags: ["Ruby", "Enumerable", "Collections", "Data processing"],
@@ -1028,6 +1039,7 @@ export const englishBlogMetadata: Record<
   "ruby-hash-metodi-utili": {
     title: "Ruby Hash with fetch, dig and Default Values",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Read missing and nested keys deliberately, transform values, and avoid sharing a mutable default across several hash keys.",
     tags: ["Ruby", "Hash", "Collections", "Defaults"],
@@ -1042,6 +1054,7 @@ export const englishBlogMetadata: Record<
   "ruby-pattern-matching": {
     title: "Ruby Pattern Matching with case/in",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Match and unpack Ruby hashes or arrays, then handle missing keys, nil values and unexpected API payloads explicitly.",
     tags: ["Ruby", "Pattern matching", "Hash", "Data validation"],
@@ -1056,6 +1069,7 @@ export const englishBlogMetadata: Record<
   "ruby-moduli-mixin": {
     title: "Ruby Mixins with include, prepend and extend",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Share behaviour between Ruby classes and inspect method lookup, ancestors and super when included or prepended modules overlap.",
     tags: ["Ruby", "Modules", "Mixins", "Method lookup"],
@@ -1063,6 +1077,7 @@ export const englishBlogMetadata: Record<
   "ruby-gestione-errori": {
     title: "Ruby Exception Handling with rescue and ensure",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Recover from specific Ruby exceptions, release resources and preserve the difference between missing data and a failed operation.",
     tags: ["Ruby", "Exceptions", "Error handling", "Resilience"],
@@ -1070,6 +1085,7 @@ export const englishBlogMetadata: Record<
   "ruby-creare-una-gem": {
     title: "Creating a Ruby Gem with Bundler",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Package a reusable Ruby library, verify its gemspec and files, then test installation before publishing a version.",
     tags: ["Ruby", "RubyGems", "Bundler", "Packaging"],
@@ -1098,6 +1114,7 @@ export const englishBlogMetadata: Record<
   "ruby-comparable-enumerable-custom": {
     title: "Ruby Comparable and the Spaceship Operator",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Implement <=> for a Ruby class, use it for sorting, and test equal, missing or incompatible values before relying on the order.",
     tags: ["Ruby", "Comparable", "Enumerable", "Sorting"],
@@ -1105,6 +1122,7 @@ export const englishBlogMetadata: Record<
   "ruby-stringhe-gsub-regex": {
     title: "Ruby String#gsub and Regular Expression Edge Cases",
     date: publicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Replace or extract matches in Ruby, distinguish literal text from a regular expression, and test punctuation, Unicode and long input.",
     tags: ["Ruby", "String", "Regular expressions", "gsub"],
@@ -1135,6 +1153,7 @@ export const englishBlogMetadata: Record<
   "sonic-pi-randomizzazione-controllata": {
     title: "Sonic Pi Random Seeds for Reproducible Patterns",
     date: audioPublicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Use use_random_seed to replay a chosen variation, keep a fixed beat, and understand how changing random calls moves later choices.",
     tags: ["Sonic Pi", "Random seeds", "Generative music", "Live coding"],
@@ -1142,6 +1161,7 @@ export const englishBlogMetadata: Record<
   "sonic-pi-bassline-tb303": {
     title: "Sonic Pi TB-303 Acid Basslines and Cutoff",
     date: audioPublicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Start a short acid bass pattern with the TB-303 synth, then vary cutoff and resonance against a fixed drum groove.",
     tags: ["Sonic Pi", "Acid techno", "TB-303", "Synthesis"],
@@ -1156,6 +1176,7 @@ export const englishBlogMetadata: Record<
   "sonic-pi-slicing-campioni": {
     title: "Sonic Pi Sample Slicing with start, finish and Stretch",
     date: audioPublicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Split a break into regions, play or reorder the slices on a steady grid, and check cuts and tails by ear.",
     tags: ["Sonic Pi", "Samples", "Slicing", "Live coding"],
@@ -1163,6 +1184,7 @@ export const englishBlogMetadata: Record<
   "web-audio-analyser-visualizzare": {
     title: "Web Audio AnalyserNode for Spectrum and Waveform Displays",
     date: audioPublicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Read time-domain and frequency data from an AnalyserNode, select an FFT size and manage the redraw loop for a browser visualiser.",
     tags: ["Web Audio API", "AnalyserNode", "Spectrum", "Visualisation"],
@@ -1170,6 +1192,7 @@ export const englishBlogMetadata: Record<
   "sonic-pi-generative-ring-tick": {
     title: "Sonic Pi ring and tick for Generative Sequences",
     date: audioPublicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Run cyclic note, rhythm and filter patterns with named counters. See when different ring lengths make a combination repeat.",
     tags: ["Sonic Pi", "Rings", "Generative music", "Live coding"],
@@ -1191,6 +1214,7 @@ export const englishBlogMetadata: Record<
   "web-audio-tone-js": {
     title: "Tone.js Transport and Musical Scheduling",
     date: audioPublicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Schedule a sequence on the Tone.js transport, use musical durations, and stop and dispose of browser audio resources.",
     tags: ["Tone.js", "Web Audio API", "Transport", "Scheduling"],
@@ -1212,6 +1236,7 @@ export const englishBlogMetadata: Record<
   "sonic-pi-registrare-esportare": {
     title: "Recording and Exporting a Sonic Pi Set as WAV",
     date: audioPublicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Record a short sound check, capture a live set, and save the Sonic Pi script and listening notes alongside the WAV.",
     tags: ["Sonic Pi", "Recording", "WAV", "Live coding"],
@@ -1231,6 +1256,7 @@ export const englishBlogMetadata: Record<
   "sonic-pi-ambient-pad-riverbero": {
     title: "Sonic Pi Ambient Pads with Envelopes and Reverb",
     date: audioPublicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Build an ambient layer with a soft attack, long release and reverb, then listen for space and unwanted overlap between voices.",
     tags: ["Sonic Pi", "Ambient", "Pads", "Reverb"],
@@ -1238,6 +1264,7 @@ export const englishBlogMetadata: Record<
   "web-audio-generative-browser": {
     title: "Generative Music with Web Audio",
     date: audioPublicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Build a browser music generator with a fixed grid, a limited scale and controlled randomness. Give it an explicit start and stop.",
     tags: ["Web Audio API", "Generative music", "Scheduling", "JavaScript"],
@@ -1245,6 +1272,7 @@ export const englishBlogMetadata: Record<
   "sonic-pi-brano-techno-passo-passo": {
     title: "Arranging a Techno Track in Sonic Pi",
     date: audioPublicationDate,
+    updatedAt: "2026-11-26",
     excerpt:
       "Build a four-on-the-floor groove with live loops, then arrange sections with bass, offbeat hats and deliberate breaks.",
     tags: ["Sonic Pi", "Techno", "Live coding", "Arrangement"],

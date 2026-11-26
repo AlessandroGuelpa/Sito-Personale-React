@@ -30,6 +30,12 @@ Load and decode a sample once, and keep the resulting `AudioBuffer`. Create a ne
 
 Confirm that samples are ready before starting a pattern and that stop handles sounds already scheduled as well as the timer. Play the kick, snare and hi-hat together and watch the level at the final output. Several individually quiet sounds can add up to a stronger peak. Make the final balance with the whole pattern playing.
 
+## Schedule two hits from the same sample
+
+Once a kick sample is decoded, keep the buffer and create a new source for each hit. Schedule two starts with the same spacing the pattern uses, relative to the context’s currentTime. Calling start twice on the same source gives an error. Creating a new buffer each time repeats work that could have happened once. The [AudioBufferSourceNode guide](/blog/web-audio-audiobuffersource-campioni) explains how to keep audio data separate from a single playback.
+
+Press Stop after the second hit is scheduled but before it sounds. Decide whether the button should stop immediately. If so, keep references to future sources so you can stop them along with the scheduling loop.
+
 ## Sources
 
 - [MDN — AudioBufferSourceNode](https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode)

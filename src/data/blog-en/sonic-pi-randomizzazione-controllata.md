@@ -25,6 +25,12 @@ To replay a phrase exactly, initialise its seed at the same point each time. To 
 
 Keep the kick and bass fixed and vary a subset of the hats or melody. Compare two seeds over the same number of bars at the same tempo. Listen for gaps, density and accents the result creates. Select a variation that works with the fixed parts, then restart from the saved settings to check that you can reproduce it.
 
+## Protect the sequence from an extra random draw
+
+Record eight bars with the seed set before the phrase. Add a random pan choice just before the note choice and repeat with the same seed. If both decisions draw from the same generator, the melody can change even though the seed stayed the same.
+
+To vary only the pan, try saving the whole melody first and add stereo movement as a separate pass. Listen for identical attacks on the same beats. To recover a take later, note the seed, script version and loop structure. The number supplies the starting point, while the code determines when to draw values.
+
 ## Sources
 
 - [Sonic Pi — Tutorial](https://sonic-pi.net/tutorial.html)

@@ -29,6 +29,8 @@ An Effect that calculates the total and writes it to another state field can pro
 
 The displayed total helps the person using the cart. The server that completes the order still verifies prices and the rules that apply to the payment. In the UI, change a quantity and remove an item. Check the resulting total in both cases. If the lines are updated optimistically, also verify the total after the server rejects a change and the UI restores the previous cart.
 
+If each cart row also keeps local state, check [how React keys preserve identity when rows move](/blog/react-key-liste-indice-stato).
+
 ## Source
 
 - [React on calculating derived values during render](https://react.dev/learn/you-might-not-need-an-effect)

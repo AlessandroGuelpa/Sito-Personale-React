@@ -37,6 +37,12 @@ Several parts can follow the same transport. One part can dispose of its sequenc
 
 Play, stop and start again, checking that only one sequence and instrument are active at a time. In a component-based interface, also mount and unmount the audio section to detect callbacks that outlive it. A basic audio file player may already have all the controls it needs. A composition that coordinates several patterns can benefit from Tone.js's musical timing and explicit transport.
 
+## Use the callback time to trigger the note
+
+A pattern callback can run before the note’s intended start. Pass its time parameter to the call that plays the instrument. If the synth uses the callback’s execution time, note onsets can follow the workload on the JavaScript thread. To listen for the difference, use a short note and place a kick on the same beat. The two sources should stay aligned.
+
+Also test moving between screens. Start the pattern, leave and come back twice. If you hear layered notes on the third start, check which sequence objects were cleaned up. Stopping the timeline, cancelling callbacks and disposing of the instrument are distinct operations.
+
 ## Sources
 
 - [Tone.js — Getting started and scheduling](https://tonejs.github.io/)

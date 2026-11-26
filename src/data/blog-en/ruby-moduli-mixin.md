@@ -29,6 +29,14 @@ If two modules define the same method, inspect `ancestors` and check what `super
 
 Use a small public surface so maintainers can see what the mixin contributes. [Duck typing](/blog/ruby-duck-typing) describes the behaviour callers rely on, independent of whether a module supplies it. [RSpec examples](/blog/ruby-rspec-testare) can verify that including or prepending a mixin preserves that contract. When a method wraps another implementation, test both the method's result and the order of significant effects.
 
+## Check which implementation answers a method call
+
+If two modules define label for the same object, inspect ancestors and use object.method(:label).owner to see which implementation answers. Temporarily swap the two include statements and repeat the call. If the output changes, composition depends on a detail a reader of the class needs to find easily.
+
+A different case is a wrapper that adds a prefix and delegates with super. Try it with a class whose label returns a known value. The expected result includes both the prefix and the class’s value. If the module only transforms a value and needs no instance state, an explicit function call avoids putting a second label into the same lookup chain.
+
+If a module must define methods from configuration, the [Ruby metaprogramming examples](/blog/ruby-metaprogrammazione-basi) help assess the effect on debugging.
+
 ## Sources
 
 - [Ruby Core — Module](https://docs.ruby-lang.org/en/master/Module.html)

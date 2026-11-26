@@ -16,6 +16,8 @@ Adding 24 hours moves a timestamp by a fixed duration. Advancing to tomorrow at 
 
 Some local times occur twice when clocks go back, and some are skipped when clocks go forward. Test the application's handling of each case as well as users viewing the same event in different zones. For a query such as “orders placed on Monday in Rome,” derive the start and end instants from the local dates rather than assuming that Monday is a fixed UTC interval.
 
+After choosing how to store the instant, [format it in JavaScript using an explicit locale and time zone](/blog/javascript-intl-formattazione).
+
 ## Sources
 
 - [MDN — Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)

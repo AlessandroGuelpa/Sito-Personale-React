@@ -40,6 +40,12 @@ The five notes form A minor pentatonic across the selected register. The timer l
 
 Change one rule, such as which register can play or how often to leave a rest. Record several cycles and listen for whether the character survives the changes. Pass a seeded random function when you need to compare the same choices across experiments. The example defaults to the browser's random generator, which does not give you a repeatable sequence. Add another layer only after checking density and output level with the first one alone.
 
+## Save the decisions that produce the phrase
+
+To recreate eight bars, record the bar number, MIDI note number, level and any rest for each step. Play that list through the same scheduler with the same synth. If the rhythm changes, you can inspect scheduled times without attributing the difference to chance.
+
+For a controlled comparison, keep notes and times fixed and regenerate only the accents. The phrase should stay in the same place relative to the metronome across recordings. If you use a seed, record the order in which you call the generator. An extra draw at the first bar can shift every subsequent random choice.
+
 ## Sources
 
 - [MDN — Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)

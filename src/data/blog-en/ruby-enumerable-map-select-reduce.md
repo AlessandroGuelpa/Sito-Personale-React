@@ -21,6 +21,19 @@ Given a list of amounts, `map` can convert every amount to its representation in
 
 Test an empty list, negative values and decimals. Pick an initial value for `reduce` that gives a meaningful result when there are no elements. For amounts of money, define how precision and rounding are handled before applying the transformation. For example, check whether the application rounds each line before totalling or rounds only the total, since the two rules can give different results. An API may legitimately return an empty collection. Decide how that result differs from a failure to obtain the records.
 
+## Stop a sequence once you have enough results
+
+Suppose you need only the first three even numbers in a long sequence. With select on an array, Ruby builds the full result before taking the first three elements. A lazy pipeline can stop when it finds them.
+
+~~~ruby
+matches = (1..1_000_000).lazy.select(&:even?).take(3).force
+# [2, 4, 6]
+~~~
+
+Temporarily print each examined value inside select and repeat with a range from 1 to 20. The lazy version stops testing at 6. A finite range still terminates if the filter finds fewer than three results. With an endless generator, set an explicit limit on how many inputs you are willing to examine.
+
+To sort instances that define their own comparison, see [how Comparable works in Ruby](/blog/ruby-comparable-enumerable-custom).
+
 ## Sources
 
 - [Ruby Core — Enumerable](https://docs.ruby-lang.org/en/master/Enumerable.html)

@@ -14,6 +14,8 @@ For the export, I would write one check for the agreed rows and fields and anoth
 
 Start with an example that includes realistic data and define what you expect the operator to accomplish. Compare the results with the named requirements and with the task itself. If the file passes its conformance checks but the operator still has to reconcile records manually, that evidence can feed back into the requirements. A complete handover needs evidence for both questions.
 
+Generated text also needs an evidence check. The article on [language model hallucinations](/blog/gatto-di-schrodinger-e-allucinazioni-ia) develops that case.
+
 ## Sources
 
 - [NASA — Product verification and product validation](https://www.nasa.gov/reference/2-4-distinctions-between-product-verification-and-product-validation/)

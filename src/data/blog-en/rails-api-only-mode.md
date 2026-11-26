@@ -33,6 +33,8 @@ Use [RSpec request specs](/blog/rails-request-specs-testare-api) to exercise rou
 
 Keep the response shape documented where the client can refer to it. Before changing a field or status, check how the frontend uses it and how existing clients will behave when they see the new response.
 
+If a resource also accepts files, the guide to [Active Storage uploads and attachments](/blog/rails-active-storage-allegati) shows how to associate them with models.
+
 ## Source
 
 - [Rails Guide to API-only applications](https://guides.rubyonrails.org/api_app.html)

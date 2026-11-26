@@ -26,6 +26,8 @@ HTTP 200 tells you that the server sent a response. Inspect top-level `errors`, 
 
 When the API asks you to wait, keep enough state to resume later without replaying the entire import. That is particularly helpful after an [inventory write conflict](/blog/shopify-inventario-scritture-concorrenti), where both the updated quantity and the retry decision depend on a fresh read.
 
+If an integration needs custom fields, first decide [when to use native Shopify fields and when to use an app](/blog/shopify-custom-fields-app-vs-codice-nativo).
+
 ## Sources
 
 - [Shopify API rate limits](https://shopify.dev/docs/api/usage/limits)

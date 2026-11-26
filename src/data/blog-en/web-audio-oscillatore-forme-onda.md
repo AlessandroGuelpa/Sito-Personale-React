@@ -19,6 +19,8 @@ Make four buttons that start the same pitch with the same short envelope. Give e
 
 An oscillator generates a continuous signal between its scheduled start and stop. Use a `GainNode` to ramp the amplitude up and down so the notes have recognisable beginnings and endings. Schedule the source to stop after its release. If repeated clicks make your demo steadily louder, check whether previous oscillators are still active. A fair comparison needs each test note to play by itself.
 
+To use the same oscillator design in an instrument that plays multiple notes, see [how to manage voices in a polyphonic synth](/blog/web-audio-synth-polifonico).
+
 ## Sources
 
 - [MDN — OscillatorNode](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode)

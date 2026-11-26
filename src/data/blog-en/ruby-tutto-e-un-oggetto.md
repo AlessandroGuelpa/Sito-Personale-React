@@ -21,6 +21,12 @@ The distinction matters when methods share objects. An operation may return a ne
 
 The block after `3.times` supplies behaviour for each repetition. Ruby's [blocks, procs and lambdas](/blog/ruby-blocchi-proc-lambda) describe different ways of passing it. The [Enumerable guide](/blog/ruby-enumerable-map-select-reduce) applies the same pattern to transforming or filtering values in a collection.
 
+## Observe a mutation through two references
+
+Assign the same mutable string to two variables. Append a character through the first using << and inspect the second. Then start over and use + to build a new string, assigning it only to the first variable. In the first case both references see the changed text. In the second the variable retaining the old reference still sees the original text.
+
+This matters when a function receives a name from shared configuration. Using strip! can change what other callers read later. Decide whether the function owns the value and may mutate it, then write a test that checks the argument after the call as well as the returned result.
+
 ## Sources
 
 - [Ruby — Language documentation](https://www.ruby-lang.org/en/documentation/)

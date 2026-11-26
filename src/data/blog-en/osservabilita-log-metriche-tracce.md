@@ -20,6 +20,8 @@ A distributed trace represents the operation with spans and their timing relatio
 
 OpenTelemetry defines these signals and tools for collecting and exporting them. For the slow order, I would start with the aggregate change, find a representative trace and use the correlation ID to locate the corresponding events. That makes it possible to answer which stage slowed down and what it was doing.
 
+When a failure is still hard to trace through abundant logs, start by checking [which console messages are worth keeping](/blog/radiazione-di-fondo-e-il-cimitero-dei-console-log).
+
 ## Sources
 
 - [OpenTelemetry signals](https://opentelemetry.io/docs/concepts/signals/)

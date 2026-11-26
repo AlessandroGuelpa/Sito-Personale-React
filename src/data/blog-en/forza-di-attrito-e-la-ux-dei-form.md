@@ -16,6 +16,12 @@ Use visible labels associated with each control. A placeholder disappears as soo
 
 Track when a form is started, submitted successfully or returns an error. Compare completion and errors before and after the change, accounting for device, traffic source and intent. If one field accounts for most corrections on mobile, inspect its instructions and keyboard type before redesigning the whole form.
 
+## Try a submission with two errors using the keyboard
+
+Fill in a valid street, an unsupported postal code and an incomplete email address. Submit with the keyboard. The page should preserve the street, explain both errors and let you reach each field. On a long form an error summary with links to the affected fields saves a visual search. At each field, associate the error text with aria-describedby and use aria-invalid while the error is present.
+
+On the second attempt fix only the postal code. Its error should disappear, while the email error and the corrected value should remain. The guide to [actionable error messages](/blog/i-messaggi-di-errore-non-ti-stanno-giudicando) covers how to explain what the person can do next.
+
 ## Sources
 
 - [W3C WAI — Form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/)
