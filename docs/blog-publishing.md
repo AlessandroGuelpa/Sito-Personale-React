@@ -30,8 +30,12 @@ precedente non è una fonte aggiornata né un prerequisito del processo.
 2. Controllare il registro per la data odierna in `Europe/Rome`: se esiste già
    una voce `programmata`, verificare entrambe le versioni del relativo articolo e terminare senza
    duplicare il contenuto o avanzare il prossimo tema.
-3. Scrivere indicativamente 350–750 parole in italiano (senza riempitivi), con un problema concreto, un
-   esempio e una conseguenza pratica. Usare paragrafi brevi e sezioni leggibili.
+3. Per guide e approfondimenti, puntare a 500–800 parole di testo editoriale,
+   esclusi codice e fonti. Rispondere presto alla domanda principale e sviluppare
+   un esempio completo con dati o input, passaggi e risultato atteso. Quando
+   pertinente, aggiungere un caso limite e una verifica ripetibile. Adeguare la
+   lunghezza alla sostanza del tema e offrire la stessa profondità in inglese.
+   Usare paragrafi brevi e sezioni leggibili.
    La prima persona può esprimere un ragionamento; non attribuire all'autore
    clienti, esperienze, risultati professionali o personali non documentati.
 4. Verificare i fatti con fonti primarie ufficiali correnti. Inserire link alle

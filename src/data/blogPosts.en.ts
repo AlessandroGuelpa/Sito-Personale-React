@@ -169,6 +169,7 @@ export const englishBlogMetadata: Record<
     tags: ["Environment", "Water", "Rain gardens", "Stormwater"],
   },
   "javascript-localstorage-persistenza": {
+    updatedAt: "2026-11-26",
     date: publicationDate,
     title: "Saving Preferences and Drafts with localStorage",
     seoTitle: "JavaScript localStorage for Persistent Browser Data",
@@ -189,32 +190,30 @@ export const englishBlogMetadata: Record<
     tags: ["CSS", "Frontend", "Cascade", "Specificity"],
   },
   "luna-massa-peso-inerzia": {
+    updatedAt: "2026-11-26",
     date: publicationDate,
-    title: "What Changes When You Move a Load on the Moon",
-    seoTitle: "Mass, Weight and Inertia on the Moon",
-    seoDescription:
-      "Compare the weight of a 12 kg object on Earth and the Moon. Use W = mg and F = ma to see what it takes to support or stop a moving load.",
-    excerpt:
-      "A 12 kg example shows the two forces involved in supporting and moving a load on the Moon.",
+    title: "Mass, Weight and Inertia on the Moon Explained",
+    seoTitle: "Mass, Weight and Inertia on the Moon Explained",
+    seoDescription: "Calculate how much an object weighs on the Moon, why its mass stays the same and how much force it takes to stop it.",
+    excerpt: "Calculate how much an object weighs on the Moon, why its mass stays the same and how much force it takes to stop it.",
     tags: ["Moon", "Physics", "Gravity", "Engineering"],
   },
   "javascript-moduli-es-import-export": {
+    updatedAt: "2026-11-26",
     date: publicationDate,
-    title: "Organising JavaScript Code with ES Modules",
+    title: "JavaScript ES Modules with import and export",
     seoTitle: "JavaScript ES Modules with import and export",
-    seoDescription:
-      "See named and default exports in a small example. Use dynamic import and check side effects, code splitting and bundle size.",
-    excerpt:
-      "Split JavaScript into modules and check how static and dynamic imports affect the build.",
+    seoDescription: "Run import and export in two JavaScript files, diagnose module loading errors and inspect requests in the Network panel.",
+    excerpt: "Run import and export in two JavaScript files, diagnose module loading errors and inspect requests in the Network panel.",
     tags: ["JavaScript", "ES modules", "Frontend", "Bundling"],
   },
   "javascript-intl-formattazione": {
+    updatedAt: "2026-11-26",
     date: publicationDate,
-    title: "Formatting Values for Different Locales with JavaScript Intl",
-    seoTitle: "JavaScript Intl for Dates, Numbers and Currency",
-    seoDescription:
-      "Format dates, numbers and currencies using JavaScript Intl. Examples cover NumberFormat, DateTimeFormat, relative time and explicit time zones.",
-    excerpt: "Use native Intl APIs to display the same data across locales.",
+    title: "JavaScript Intl for Dates, Numbers and Currencies",
+    seoTitle: "JavaScript Intl for Dates, Numbers and Currencies",
+    seoDescription: "Format dates and money with JavaScript Intl, set the time zone explicitly and test individual fields with formatToParts.",
+    excerpt: "Format dates and money with JavaScript Intl, set the time zone explicitly and test individual fields with formatToParts.",
     tags: ["JavaScript", "Intl", "Localisation", "Dates"],
   },
   "sonic-pi-live-loop-cuore-del-live-coding": {
@@ -314,10 +313,12 @@ export const englishBlogMetadata: Record<
     tags: ["JavaScript", "Performance", "Code splitting", "SEO"],
   },
   "rails-activerecord-le-basi": {
+    updatedAt: "2026-11-26",
+    seoTitle: "Active Record in Rails with Models and Query Examples",
+    seoDescription: "Learn how Rails Active Record queries use where, find, pluck and limit. Inspect generated SQL and handle lookups with no matching rows.",
     date: publicationDate,
-    title: "Rails Active Record Models, Queries and SQL",
-    excerpt:
-      "Create and update records in Rails, compose lazy relations and inspect the SQL and query plans behind Active Record calls.",
+    title: "Active Record in Rails with Models and Query Examples",
+    excerpt: "Learn how Rails Active Record queries use where, find, pluck and limit. Inspect generated SQL and handle lookups with no matching rows.",
     tags: ["Rails", "Active Record", "SQL", "Databases"],
   },
   "rails-associazioni-has-many-belongs-to": {
@@ -363,10 +364,12 @@ export const englishBlogMetadata: Record<
     tags: ["Moon", "Lunar ice", "Space", "Engineering"],
   },
   "kw-kwh-potenza-energia": {
+    updatedAt: "2026-11-26",
+    seoTitle: "kW vs kWh with Electricity Usage Examples",
+    seoDescription: "Convert kW and hours into kWh, estimate the energy charge and compare appliances whose power varies during a cycle.",
     date: publicationDate,
-    title: "kW vs kWh in Power and Energy Calculations",
-    excerpt:
-      "Calculate how much energy an 800 W device uses in three hours. Learn when to read power, energy or battery capacity.",
+    title: "kW vs kWh with Electricity Usage Examples",
+    excerpt: "Convert kW and hours into kWh, estimate the energy charge and compare appliances whose power varies during a cycle.",
     tags: ["Energy", "Power", "Electricity", "Engineering"],
   },
   "allunaggio-paracadute-propulsione": {
@@ -524,10 +527,12 @@ export const englishBlogMetadata: Record<
     tags: ["JavaScript", "this", "Functions", "Callbacks"],
   },
   "rails-hotwire-turbo": {
-    title: "Hotwire and Turbo in Rails with Frames and Streams",
+    title: "Hotwire in Rails with Turbo Frames, Streams and Stimulus",
+    updatedAt: "2026-11-26",
+    seoTitle: "Hotwire in Rails with Turbo Frames, Streams and Stimulus",
+    seoDescription: "Compare Stimulus, Turbo and Ruby on Rails through a single feature that combines local interaction and server-rendered HTML.",
     date: publicationDate,
-    excerpt:
-      "Update server-rendered Rails views with Turbo Drive, Frames and Streams, and handle JavaScript setup during navigation.",
+    excerpt: "Compare Stimulus, Turbo and Ruby on Rails through a single feature that combines local interaction and server-rendered HTML.",
     tags: ["Rails", "Hotwire", "Turbo", "HTML"],
   },
   "rails-strong-parameters": {
@@ -720,10 +725,12 @@ export const englishBlogMetadata: Record<
     tags: ["Engineering", "Architecture", "ADR", "Documentation"],
   },
   "rete-elettrica-flessibilita-domanda": {
-    title: "Electricity Grid Flexibility with Storage and Demand Response",
+    title: "What Is Electricity Demand Flexibility?",
+    updatedAt: "2026-11-26",
+    seoTitle: "What Is Electricity Demand Flexibility?",
+    seoDescription: "Learn what demand flexibility is, how to calculate shiftable electricity use and how to check whether a peak simply moves to a later hour.",
     date: publicationDate,
-    excerpt:
-      "See why annual energy totals hide grid constraints, how to read a battery's MW and MWh ratings, and when shifting demand can help.",
+    excerpt: "Learn what demand flexibility is, how to calculate shiftable electricity use and how to check whether a peak simply moves to a later hour.",
     tags: ["Electricity grid", "Energy storage", "Demand response", "Energy"],
   },
   "deep-space-network-collegamento": {
@@ -825,10 +832,12 @@ export const englishBlogMetadata: Record<
     tags: ["Engineering", "Feedback", "Control systems", "Latency"],
   },
   "elettricita-intensita-carbonica": {
-    title: "Electricity Carbon Intensity per Kilowatt-Hour",
+    title: "Electricity Carbon Intensity per kWh Explained",
+    updatedAt: "2026-11-26",
+    seoTitle: "Electricity Carbon Intensity per kWh Explained",
+    seoDescription: "Learn what electricity carbon intensity measures in g CO₂e/kWh, how to calculate emissions and when to use hourly or annual factors.",
     date: publicationDate,
-    excerpt:
-      "Convert electricity use to estimated CO₂e and check what the emission factor covers by time, location and generation mix.",
+    excerpt: "Learn what electricity carbon intensity measures in g CO₂e/kWh, how to calculate emissions and when to use hourly or annual factors.",
     tags: ["Electricity", "Carbon intensity", "Emissions", "Energy"],
   },
   "margine-progetto-budget-capacita": {
@@ -968,10 +977,12 @@ export const englishBlogMetadata: Record<
     tags: ["JavaScript", "Errors", "Stack traces", "Debugging"],
   },
   "la-paperella-di-gomma-e-larte-di-sentirsi-stupidi": {
-    title: "Rubber Duck Debugging from Explanation to Test",
+    title: "Rubber Duck Debugging with an Example and Regression Test",
+    updatedAt: "2026-11-26",
+    seoTitle: "Rubber Duck Debugging with an Example and Regression Test",
+    seoDescription: "Explain a bug step by step, find the mistaken assumption and turn a boundary case into a regression test.",
     date: publicationDate,
-    excerpt:
-      "Explain inputs, expected results and assumptions aloud, then turn the overlooked case into a small test you can reproduce.",
+    excerpt: "Explain a bug step by step, find the mistaken assumption and turn a boundary case into a regression test.",
     tags: [
       "Debugging",
       "Rubber duck debugging",
@@ -1100,9 +1111,11 @@ export const englishBlogMetadata: Record<
   },
   "ruby-benchmark-misurare": {
     title: "Ruby Benchmark for Reproducible Measurements",
+    updatedAt: "2026-11-26",
+    seoTitle: "Ruby Benchmark for Reproducible Measurements",
+    seoDescription: "Compare Ruby implementations, repeat measurements and separate warm-up, timing variation and full request costs.",
     date: publicationDate,
-    excerpt:
-      "Compare Ruby implementations with the same data, account for warm-up and variance, and verify whether the result helps the full request.",
+    excerpt: "Compare Ruby implementations, repeat measurements and separate warm-up, timing variation and full request costs.",
     tags: ["Ruby", "Benchmark", "Performance", "Measurement"],
   },
   "ruby-programmazione-funzionale": {

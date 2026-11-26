@@ -24,6 +24,22 @@ If a list is slow, inspect its SQL and use `explain` or the database’s query p
 
 Comparing a single-record lookup with a paginated list makes the difference in query timing and volume concrete. Record the SQL and the number of rows read for each case before optimising the Ruby code.
 
+## Query the same model for two different screens
+
+A detail page knows the launch ID. It can use find and let Rails handle RecordNotFound as a 404 when the record is missing. An optional lookup can use find_by and handle nil by showing an empty state. A summary page might need only the names of the ten most recent launches. Build the selection as a relation and use pluck when the output needs only values.
+
+~~~ruby
+recent = Launch.where(provider: "SpaceX").order(date: :desc, id: :desc).limit(10)
+puts recent.to_sql
+names = recent.pluck(:name)
+~~~
+
+Using the ID as a tiebreaker gives predictable ordering when several launches share the same date. to_sql shows the SQL for the relation. Inspect the log of the pluck call to see the actual columns selected. If the view needs model methods or associations, keep the relation and load records when they are needed.
+
+## Count the queries produced by the page
+
+Open a list with ten launches and count the database calls that look up the provider, assuming it is an association in your model. If doubling the list doubles those calls, measure the [N+1 pattern](/blog/rails-problema-n-piu-1). Targeted eager loading can help. Repeat the check using the screen’s real filters and sort order. Compare both query count and rows returned, since a single join that produces many duplicate rows can still be expensive.
+
 ## Source
 
 - [Rails Guide to Active Record Querying](https://guides.rubyonrails.org/active_record_querying.html)

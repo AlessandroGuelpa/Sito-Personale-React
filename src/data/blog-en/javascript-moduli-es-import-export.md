@@ -24,6 +24,14 @@ Top-level code can run when a module is imported. Starting a connection, registe
 
 Use `import()` when a feature such as an editor needs to load only on demand. Give the visitor a loading state and a way to recover if the request fails. After the change, inspect the [initial JavaScript bundle](/blog/equazione-del-razzo-e-il-problema-del-bundle-da-830kb), check whether shared dependencies are duplicated and open secondary routes directly to ensure their chunks still load.
 
+## Run the example in a browser
+
+Save math.js and app.js in the same directory and add `<script type="module" src="./app.js"></script>` to index.html. If Python is installed, run `python3 -m http.server 8000 --bind 127.0.0.1` from that directory and open http://127.0.0.1:8000/. Add console.log(area(2)) to the application file. Expect a value close to 12.57. The example uses native loading over HTTP, so you can see each resource request without a bundler.
+
+## Diagnose three import errors
+
+Look for app.js and math.js in the Network panel. If math.js returns 404, check its path relative to app.js, including the extension and letter case. If the status is 200 but the response is HTML, see whether the server supplied a fallback page instead of the module. If both files arrive and the browser reports a missing export, compare the braces in the import with the declaration. A default import uses no braces, while a named import refers to the exported name. Finally, try removing type="module". The browser now parses import in a classic script context and reports a syntax error.
+
 ## Source
 
 - [MDN JavaScript modules guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)

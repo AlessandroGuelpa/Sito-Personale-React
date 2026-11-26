@@ -26,6 +26,30 @@ A format change matters when a value can stay around for months. For a recoverab
 
 Scripts running on the page can read these values. Use storage for information such as preferences and drafts that suit that access model. Keep passwords and sensitive session tokens out of it. An `HttpOnly` session cookie, set by the server, keeps the cookie value out of JavaScript.
 
+## Recover a preference from an older format
+
+Suppose the theme was originally stored as plain text and you now need an object for several preferences. Make the reader accept the original format and the new object before migrating every value. An old preference may still exist when someone opens a tab that has been sitting idle for weeks.
+
+~~~javascript
+function loadTheme() {
+  try {
+    const raw = localStorage.getItem("site.preferences")
+    if (raw === "dark" || raw === "light") return raw
+
+    const saved = JSON.parse(raw ?? "null")
+    return saved?.theme === "dark" ? "dark" : "light"
+  } catch {
+    return "light"
+  }
+}
+~~~
+
+Use the Storage panel in developer tools for your site. Set the key to dark, then to a JSON object with a dark theme, and finally to incomplete JSON. Reload after each change and check which theme appears. The third case should show the default. Keep writes separate from reads so the first visit after an upgrade can validate what is stored without immediately overwriting the previous value.
+
+## Check what happens across two tabs
+
+Open two tabs on the same site and change the theme in the first one. Updating in-memory state changes that tab immediately. The other tab can respond to a storage event if it listens and filters for the relevant key. Also try removing the key and reloading. If the site uses React, the guide to [synchronising two tabs](/blog/react-localstorage-sincronizzare-schede) walks through coordinating local writes and remote notifications.
+
 ## Source
 
 - [MDN localStorage reference](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)

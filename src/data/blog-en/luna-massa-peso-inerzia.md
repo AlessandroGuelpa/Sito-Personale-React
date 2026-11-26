@@ -21,6 +21,16 @@ The surface and equipment matter too. Available friction, contact with the groun
 
 Imagine a moving cart. One part of the design supports its load against gravity. Another has to bring the whole cart to rest within the available distance. For a first comparison, calculate the change in weight, then analyse the moving mass with the relevant contact and braking conditions. That gives a more useful starting point than the description “six times lighter” on its own.
 
+## What would a scale read on the Moon?
+
+A spring scale responds to force. If its display is calibrated in kilograms on Earth and the calibration stays unchanged, a 12 kg load on the Moon would read about 2 kg equivalent. Its mass is still 12 kg. A balance instead compares the load with reference masses. Local gravity multiplies the weights on both sides and cancels when the balance is level. Ask what the instrument measures before interpreting its reading.
+
+## How much room does a moving cart need to stop?
+
+Suppose the total moving mass is 12 kg and the initial speed is 2 m/s. Stopping over 4 m with constant deceleration takes 0.5 m/s², so the net horizontal force must be 6 N. With the same mass, speed and stopping distance, that requirement is identical on Earth and on the Moon. If braking relies on the wheels transmitting force on level ground, available grip depends on the normal force.
+
+With a hypothetical grip coefficient of 0.25, the simplified model gives about 4.9 N of available braking force on the Moon and 29.4 N on Earth. The required 6 N exceeds the lunar limit in that example. Lowering the initial speed or increasing the stopping distance reduces the force required. Real grip depends on the wheels and terrain, so the figures illustrate the mechanism rather than characterise an actual lunar vehicle.
+
 ## Source
 
 - [NASA Glenn on lunar gravity](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/moon/)

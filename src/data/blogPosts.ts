@@ -693,15 +693,16 @@ La scelta utile è rendere esplicito lo stato: ancora usabile, riparabile oppure
   },
   {
     id: "luna-massa-peso-inerzia",
-    seoTitle: "Massa e peso sulla Luna: calcolo e inerzia",
-    seoDescription: "Quanto pesa un oggetto da 12 kg sulla Luna? Calcola il peso in newton e scopri cosa comporta l’inerzia quando devi accelerarlo o fermarlo.",
-    title: "Sulla Luna pesi meno. La tua massa non è diventata più piccola",
+    seoTitle: "Massa, peso e inerzia sulla Luna",
+    seoDescription: "Scopri quanto pesa un oggetto sulla Luna, perché la sua massa resta uguale e quanta forza serve per fermarlo.",
+    title: "Massa, peso e inerzia sulla Luna",
+    updatedAt: "2026-11-26",
     date: "2026-10-28",
     firstPublishedAt: "2026-11-03",
     category: "spazio",
     hub: "scienza-passioni",
     icon: "⚖️",
-    excerpt: "Un oggetto che sulla Terra è pesante diventa molto più facile da sostenere sulla Luna. È tentante concludere che sia anche facile da spostare, accelerare o fermare in…",
+    excerpt: "Scopri quanto pesa un oggetto sulla Luna, perché la sua massa resta uguale e quanta forza serve per fermarlo.",
     tags: ["Spazio", "Fisica", "Luna"],
     content: `
 Un oggetto che sulla Terra è pesante diventa molto più facile da sostenere sulla Luna. È tentante concludere che sia anche facile da spostare, accelerare o fermare in qualunque situazione. Ma stiamo mettendo insieme due effetti differenti.
@@ -729,6 +730,16 @@ Immagina un carrello: sostenerne il carico e arrestarne il moto sono requisiti d
 Non è un dimensionamento di un mezzo lunare, ma una distinzione utile prima di farlo. Quando leggiamo «sei volte più leggero», dobbiamo sapere quale grandezza è stata confrontata.
 
 Separare massa, peso e condizioni di contatto evita una scorciatoia intuitiva che funziona nella conversazione e smette di funzionare appena dobbiamo progettare un movimento controllato.
+
+## Cosa segnerebbe una bilancia sulla Luna?
+
+Una bilancia a molla misura una forza. Se il display è tarato in chilogrammi sulla Terra e la taratura resta identica, un carico da 12 kg sulla Luna darebbe una lettura di circa 2 kg equivalenti. La massa del carico è sempre 12 kg. Una bilancia a due piatti confronta invece il carico con masse campione. Il fattore di gravità locale moltiplica entrambi i pesi e si semplifica all’equilibrio. Prima di interpretare la lettura, chiediti quale grandezza misura lo strumento.
+
+## Quanto spazio serve per fermare un carrello?
+
+Supponi che la massa totale in movimento sia 12 kg e che la velocità iniziale sia 2 m/s. Per fermarsi in 4 m con decelerazione costante servono 0,5 m/s², quindi una forza netta orizzontale di 6 N. A parità di massa, velocità e spazio questa richiesta è identica sulla Terra e sulla Luna. Se il carrello frena trasmettendo tutta la forza attraverso ruote su un piano, l’aderenza disponibile dipende però dalla forza normale.
+
+Con un coefficiente di aderenza ipotetico pari a 0,25, il modello semplificato dà circa 4,9 N disponibili sulla Luna e 29,4 N sulla Terra. Nel primo caso i 6 N richiesti superano il limite del modello. Ridurre la velocità iniziale o aumentare la distanza di arresto riduce la forza necessaria. Nella pratica il coefficiente dipende dalle ruote e dal terreno, quindi questi numeri illustrano il meccanismo e non descrivono un veicolo lunare reale.
 
 ## Fonti
 
@@ -1068,13 +1079,16 @@ Io scriverei un ADR quando il prossimo manutentore potrebbe altrimenti scambiare
   },
   {
     id: "rete-elettrica-flessibilita-domanda",
-    title: "La rete elettrica deve funzionare anche quando il sole cambia",
+    title: "Flessibilità della domanda elettrica con esempi",
+    updatedAt: "2026-11-26",
+    seoTitle: "Flessibilità della domanda elettrica con esempi",
+    seoDescription: "Scopri come spostare consumi tra fasce orarie, calcolare i kWh differibili e verificare che il picco non si sposti soltanto.",
     date: "2026-10-12",
     firstPublishedAt: "2026-11-03",
     category: "ambiente",
     hub: "scienza-passioni",
     icon: "🔋",
-    excerpt: "Produrre abbastanza energia nell'arco di un anno non dimostra che un sistema elettrico possa soddisfare la domanda in ogni momento e in ogni luogo. La disponibilità nel…",
+    excerpt: "Scopri come spostare consumi tra fasce orarie, calcolare i kWh differibili e verificare che il picco non si sposti soltanto.",
     tags: ["Ambiente", "Energia", "Infrastrutture"],
     content: `
 Produrre abbastanza energia nell'arco di un anno non dimostra che un sistema elettrico possa soddisfare la domanda in ogni momento e in ogni luogo. La disponibilità nel tempo e la capacità di trasporto fanno parte del problema.
@@ -1082,6 +1096,10 @@ Produrre abbastanza energia nell'arco di un anno non dimostra che un sistema ele
 Prima di parlare di flessibilità conviene distinguere [kW e kWh, potenza ed energia](/blog/kw-kwh-potenza-energia): la domanda istantanea non equivale al consumo complessivo. L'[intensità carbonica dell'elettricità](/blog/elettricita-intensita-carbonica) aggiunge la dimensione temporale delle emissioni.
 
 È per questo che, parlando di transizione energetica, mi interessa anche la flessibilità del sistema.
+
+## Che cos’è la flessibilità della domanda?
+
+È la capacità di cambiare quando o quanto si preleva elettricità rispettando i vincoli del servizio. Una pompa che riempie un serbatoio può anticipare il proprio ciclo se rimane volume disponibile. Una ricarica può partire più tardi se eroga l’energia necessaria entro l’ora di partenza. Per stabilire quanta domanda è flessibile, servono kW spostabili, durata, finestra disponibile e potenza massima durante il recupero.
 
 ## Il totale nasconde il profilo
 
@@ -1103,10 +1121,17 @@ Reti, accumulo, generazione e gestione della domanda contribuiscono su scale tem
 
 Quando vedo una proposta energetica cerco quindi il profilo, non soltanto il totale. «Quanta energia?» è la prima domanda. «Quando arriva, dove serve e per quanto tempo?» rende il confronto finalmente operativo.
 
+## Calcola lo spostamento con un profilo orario
+
+Una flotta deve ricaricare 24 kWh al punto di prelievo entro le 7. Con 6 kW costanti servono quattro ore. Passare dalle 18–22 alle 2–6 sposta tutti i 24 kWh e riduce di 6 kW la domanda della flotta nella fascia iniziale. Nella seconda fascia aggiunge gli stessi 6 kW. Se molte flotte partono insieme alle 2, il nuovo picco può diventare il collo di bottiglia. Verifica il carico totale del sito e scagliona le partenze quando necessario.
+
+Per valutare l’effetto, confronta il profilo misurato con un riferimento per giorni comparabili. Controlla il picco nella finestra richiesta e quello nelle ore successive, poi verifica che alle 7 le batterie abbiano ricevuto l’energia prevista. Ripeti il confronto separando il beneficio di rete dal costo tariffario e dall’[intensità carbonica dell’elettricità](/blog/elettricita-intensita-carbonica), perché le tre misure dipendono da condizioni diverse.
+
 ## Fonti
 
 - [IEA — flessibilità nel sistema elettrico](https://www.iea.org/reports/electricity-2026/flexibility)
 - [IEA — glossario di potenza ed energia](https://www.iea.org/glossary)
+- [IEA — Scaling Up Demand Flexibility](https://www.iea.org/reports/scaling-up-demand-flexibility/executive-summary)
 
 *Recupero editoriale luglio–novembre 2026.*
 `,
@@ -2273,13 +2298,16 @@ Correggere rapidamente è utile quando la rapidità è compatibile con ciò che 
   },
   {
     id: "elettricita-intensita-carbonica",
-    title: "Un kWh è sempre un kWh. Le emissioni associate cambiano",
+    title: "Intensità carbonica dell’elettricità per kWh",
+    updatedAt: "2026-11-26",
+    seoTitle: "Intensità carbonica dell’elettricità per kWh",
+    seoDescription: "Calcola le emissioni da kWh e g CO₂e/kWh. Scegli un fattore coerente con luogo, orario e tipo di consumo.",
     date: "2026-08-17",
     firstPublishedAt: "2026-11-03",
     category: "ambiente",
     hub: "scienza-passioni",
     icon: "🌍",
-    excerpt: "Consumo e intensità delle emissioni sono indicatori distinti. Per confrontarli servono confini e dati coerenti.",
+    excerpt: "Calcola le emissioni da kWh e g CO₂e/kWh. Scegli un fattore coerente con luogo, orario e tipo di consumo.",
     tags: ["Ambiente", "Energia", "Misure"],
     content: `
 Due elaborazioni consumano la stessa energia elettrica. Possiamo concludere che abbiano anche le stesse emissioni associate? Non senza sapere con quali dati stiamo facendo il conto.
@@ -2287,6 +2315,10 @@ Due elaborazioni consumano la stessa energia elettrica. Possiamo concludere che 
 Le emissioni associate a un kWh possono cambiare in funzione del momento e del mix di produzione. Per interpretare correttamente il calcolo bisogna prima distinguere [potenza ed energia](/blog/kw-kwh-potenza-energia) e considerare la [flessibilità della domanda](/blog/rete-elettrica-flessibilita-domanda).
 
 Il consumo in kWh descrive una quantità di energia. L'intensità delle emissioni associa a ogni unità di elettricità una quantità di gas serra, espressa per esempio in grammi di CO₂ equivalente per kWh.
+
+## Che cos’è l’intensità carbonica dell’energia elettrica?
+
+È la quantità di emissioni di gas serra associata a un’unità di elettricità entro un perimetro definito. Un valore di 250 g CO₂e/kWh significa che a ogni kWh il fattore attribuisce 250 grammi di CO₂ equivalente. Per stimare le emissioni, moltiplica i kWh misurati per il fattore e dividi per 1.000 per ottenere chilogrammi. Se la fonte pubblica g CO₂ invece di g CO₂e, conserva quella dicitura e verifica quali gas rientrano nella misura.
 
 ## Il prodotto è semplice, il dato meno
 
@@ -2305,6 +2337,14 @@ E una stima delle emissioni operative non coincide automaticamente con una valut
 Quando incontro una stima controllo energia misurata, origine del fattore e anno di riferimento. Poi cerco le esclusioni: cosa è stato contato e cosa è rimasto fuori?
 
 Non serve trasformare ogni attività quotidiana in un modello complesso. Serve evitare che una cifra molto precisa nasconda ipotesi vaghe. Il conto diventa utile quando posso ripeterlo con gli stessi dati e capire quali condizioni lo farebbero cambiare.
+
+## Calcola le emissioni con letture orarie
+
+Supponi che una ricarica consumi 2 kWh in un’ora a 150 g CO₂e/kWh e 6 kWh nell’ora successiva a 450 g CO₂e/kWh. Somma 300 e 2.700 grammi. Le emissioni attribuite sono 3 kg e l’intensità ponderata è 375 g CO₂e/kWh. La media aritmetica dei due fattori darebbe 300, ignorando che la seconda ora pesa tre volte tanto. In un foglio di calcolo tieni una riga per intervallo e somma i prodotti tra energia e fattore.
+
+## Scegli il fattore in base alla domanda
+
+Per una stima annua con la sola bolletta puoi partire da un fattore medio annuo coerente con quel consumo. Per confrontare due orari di ricarica servono invece kWh e fattori allineati sullo stesso intervallo e sulla stessa area. Se vuoi stimare quanto cambiano le emissioni del sistema spostando il carico, ti serve un’analisi marginale o uno scenario che modelli quali impianti cambiano produzione. Una media oraria può servire per attribuire emissioni al consumo, ma da sola non identifica la centrale che risponde al carico aggiuntivo.
 
 ## Fonti
 
@@ -2490,13 +2530,16 @@ La domanda utile non è «abbiamo ancora spazio?», ma «quanto spazio resta nel
   },
   {
     id: "kw-kwh-potenza-energia",
-    title: "kW e kWh: la differenza che cambia i conti",
+    title: "kW e kWh a confronto con esempi di consumo",
+    updatedAt: "2026-11-26",
+    seoTitle: "kW e kWh a confronto con esempi di consumo",
+    seoDescription: "Calcola il consumo in kWh partendo da kW e ore. Leggi la bolletta e confronta apparecchi che cambiano potenza durante il ciclo.",
     date: "2026-08-07",
     firstPublishedAt: "2026-11-03",
     category: "ambiente",
     hub: "scienza-passioni",
     icon: "⚡",
-    excerpt: "«Questo apparecchio consuma 800 watt all'ora». È una frase che si sente spesso, ma mescola grandezze diverse. Per capire un consumo non basta leggere una potenza: serve…",
+    excerpt: "Calcola il consumo in kWh partendo da kW e ore. Leggi la bolletta e confronta apparecchi che cambiano potenza durante il ciclo.",
     tags: ["Ambiente", "Energia"],
     content: `
 «Questo apparecchio consuma 800 watt all'ora». È una frase che si sente spesso, ma mescola grandezze diverse. Per capire un consumo non basta leggere una potenza: serve sapere anche per quanto tempo viene assorbita.
@@ -2524,6 +2567,16 @@ Se due computer hanno potenze diverse, non deduco il consumo di un'elaborazione 
 Lo stesso vale per una batteria: la capacità energetica in Wh e la potenza erogabile rispondono a domande diverse. Una indica quanta energia può fornire nelle condizioni specificate, l'altra quanto rapidamente.
 
 Prima di fare qualunque confronto controllo quindi tre cose: unità, durata e lavoro svolto. È meno spettacolare di uno slogan sul risparmio, ma rende il numero finalmente utilizzabile.
+
+## Leggi potenza e consumo nella stessa bolletta
+
+Se trovi 3 kW di potenza impegnata e 240 kWh di consumo, il primo dato riguarda la potenza contrattuale e il secondo l’energia registrata nel periodo. Per ottenere la potenza media, dividi l’energia per le ore. In 30 giorni, 240 kWh divisi per 720 ore danno circa 0,33 kW. Quella media comprende la notte e i momenti in cui gli apparecchi sono spenti. Una punta mentre forno e lavatrice sono attivi può quindi risultare molto più alta.
+
+## Calcola il consumo di un ciclo a due fasi
+
+Un apparecchio ipotetico assorbe 2 kW per 15 minuti e poi 0,4 kW per 45 minuti. Converti i minuti in ore e moltiplica fase per fase. Ottieni 0,5 kWh nel primo tratto e 0,3 nel secondo. In totale sono 0,8 kWh. Se la quota variabile ipotetica è 0,25 € per kWh, quel ciclo vale 0,20 € per la componente considerata. Per una stima ripetibile, annota quali voci tariffarie hai incluso e usa il prezzo della fascia in cui hai consumato, quando varia.
+
+Puoi verificare il calcolo confrontando due letture cumulative di un misuratore prima e dopo lo stesso ciclo. Per un apparecchio che parte da freddo, confronta prove con temperatura iniziale e programma paragonabili. Una schermata del misuratore con un valore in watt descrive solo la potenza di quell’istante.
 
 ## Fonti
 
@@ -3802,16 +3855,17 @@ Aggiungi un test per il caso che falliva e verifica anche l'interfaccia dopo una
   },
   {
     id: "la-paperella-di-gomma-e-larte-di-sentirsi-stupidi",
-    title: "Rubber duck debugging: capire i bug spiegandoli",
+    title: "Rubber duck debugging con un esempio e un test",
     icon: "🦆",
-    excerpt: "Quando un bug resiste a molti tentativi, descriverlo ad alta voce può aiutare a individuare assunzioni nascoste. Nel rubber duck debugging la paperella è un ascoltatore…",
+    excerpt: "Spiega un bug passo per passo, trova l’ipotesi sbagliata e scrivi un test di regressione a partire da un caso limite.",
     tags: ["Debugging","Problem solving","Rubber duck debugging","Testing"],
+    seoTitle: "Rubber duck debugging con un esempio e un test",
+    seoDescription: "Spiega un bug passo per passo, trova l’ipotesi sbagliata e scrivi un test di regressione a partire da un caso limite.",
     date: "2026-04-03",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "react-frontend",
-    content: 
-`
+    content: `
 Quando un bug resiste a molti tentativi, descriverlo ad alta voce può aiutare a individuare assunzioni nascoste. Nel rubber duck debugging la paperella è un ascoltatore simbolico, non uno strumento tecnico.
 
 Descrivere il bug ad alta voce è utile quando produce un caso riproducibile. Il [debugging basato su ipotesi](/blog/effetto-osservatore-fisica-quantistica-e-l-arte-del-debugging) struttura quella prova; i [test su codice legacy](/blog/principio-di-inerzia-e-la-sindrome-del-non-toccare) impediscono di rompere comportamenti già esistenti.
@@ -3833,10 +3887,20 @@ La tecnica aiuta a formulare ipotesi, non sostituisce log, test o profiler. Dopo
 
 Quando descrivi una funzione alla paperella, non limitarti a raccontare il codice nell'ordine in cui appare. Comincia dal contratto: quale input è valido e quale risultato deve essere restituito? Poi indica le trasformazioni e gli effetti esterni. Se il bug compare soltanto con una lista vuota, spiega perché quel caso è stato considerato oppure escluso. Questa tecnica aiuta a individuare ipotesi nascoste, ma non offre da sola una prova della correzione. Dopo la spiegazione prepara un test con input minimo che riproduca l'errore e verifica che la modifica non rompa il comportamento normale. Se il guasto dipende da concorrenza o rete, aggiungi osservabilità e simulazioni specifiche: una spiegazione orale non sostituisce il controllo degli eventi reali.
 
+## Prova con una soglia al centesimo
+
+Supponi che la spedizione sia gratuita a partire da 50 € di imponibile merce prima dello sconto. Con un subtotale di 50 € e 5 € di sconto, il cliente paga 45 € di merce e ha ancora diritto alla spedizione gratuita. Spiegando il flusso ad alta voce puoi isolare il passaggio dubbio: quale dei due importi arriva al confronto con la soglia? Metti un breakpoint esattamente lì e leggi il valore osservato.
+
+Scrivi i dati del test in centesimi. Con 5.000 centesimi di subtotale e 500 di sconto ti aspetti spedizione gratuita. Con 4.999 centesimi e lo stesso sconto ti aspetti che la spedizione sia a pagamento. Il primo caso cattura l’ordine sbagliato e il secondo impedisce che una correzione allarghi la soglia per errore.
+
+## Fermati sulla prima frase che non puoi dimostrare
+
+Se dici «qui arriva sempre un prezzo valido», prova a risalire al punto in cui viene validato o convertito. Se dici «questo callback viene eseguito una volta», aggiungi un contatore e prova a ripetere l’azione. Quando l’osservazione smentisce la frase, riduci l’esempio finché riesci a riprodurlo con il minor numero di elementi. Conserva i valori attesi e quelli osservati nel report del bug. Chi rilegge può così ripetere la verifica senza ricostruire tutta la conversazione con la paperella.
+
 **Approfondimenti**
 
 - [Chrome DevTools — debugging JavaScript](https://developer.chrome.com/docs/devtools/javascript/)
-` 
+`,
   },
   {
     id: "quando-luniverso-ti-cambia-le-variabili-in-produzione",
@@ -4232,13 +4296,15 @@ Immagina un'operazione che filtra numeri e riutilizza la regola in due punti. Un
   },
   {
     id: "rails-activerecord-le-basi",
-    title: "Rails Active Record: modelli, query e SQL",
+    title: "Active Record in Rails con modelli e query",
+    seoTitle: "Active Record in Rails con modelli e query",
+    seoDescription: "Impara a costruire query Active Record con where, find, pluck e limit. Controlla SQL, righe caricate e casi senza risultati.",
     date: "2026-04-29",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "🛤️",
-    excerpt: "Una classe Ruby diventa una tabella. ActiveRecord traduce i tuoi metodi in query SQL.",
+    excerpt: "Impara a costruire query Active Record con where, find, pluck e limit. Controlla SQL, righe caricate e casi senza risultati.",
     tags: ["Ruby on Rails", "ActiveRecord", "Database"],
     content: `
 ActiveRecord è l'ORM di Rails: mappa una classe Ruby su una tabella del database e ti fa lavorare con oggetti invece che con stringhe SQL.
@@ -4270,6 +4336,22 @@ Active Record non elimina SQL: costruisce query SQL e le invia al database. Una 
 ## Capire quando una relazione interroga il database
 
 Scrivere where non significa necessariamente che una query sia già stata eseguita. Una relazione può essere ulteriormente filtrata e materializzata soltanto quando serve leggerne i record. In un elenco paginato verifica quali condizioni vengono realmente inviate a SQL e quali operazioni vengono fatte in memoria. Una chiamata a all o limit non equivale a una query immediata in ogni contesto; controlla il log per vedere cosa accade. Anche la scelta degli indici dipende dalle condizioni e dall'ordinamento utilizzati. Prima di ottimizzare una chiamata Ruby, usa explain o strumenti equivalenti per individuare il costo della query che il database sta eseguendo.
+
+## Interroga lo stesso modello per due schermate diverse
+
+Una pagina di dettaglio conosce l’id del lancio. Può usare find e lasciare che Rails gestisca RecordNotFound come pagina 404 quando il record manca. Un filtro facoltativo può usare find_by e gestire nil per mostrare uno stato vuoto. Una pagina di riepilogo invece potrebbe aver bisogno solo dei nomi degli ultimi dieci lanci. Costruisci la selezione con una relazione e usa pluck quando ti servono solo valori.
+
+~~~ruby
+recent = Launch.where(provider: "SpaceX").order(date: :desc, id: :desc).limit(10)
+puts recent.to_sql
+names = recent.pluck(:name)
+~~~
+
+L’id come secondo criterio rende prevedibile l’ordine quando più lanci hanno la stessa data. to_sql mostra la query della relazione, mentre per vedere le colonne realmente selezionate da pluck consulta il log della chiamata. Se poi la vista deve invocare metodi del modello o leggere associazioni, tieni la relazione e carica i record quando servono.
+
+## Controlla quante query produce la pagina
+
+Apri una lista con dieci lanci e conta nel log le query che recuperano il provider, se nel tuo modello è un’associazione. Se con venti lanci raddoppiano anche quelle query, misura il caso [N+1](/blog/rails-problema-n-piu-1). Un caricamento anticipato mirato può aiutare. Ripeti la prova includendo i filtri e l’ordinamento effettivi. Confronta sia il numero di query sia le righe restituite, perché un’unica query che produce molte righe duplicate può comunque essere costosa.
 
 **Documentazione**
 
@@ -5182,15 +5264,15 @@ Un'API che restituisce JSON deve offrire più della serializzazione di un model.
   },
   {
     id: "javascript-moduli-es-import-export",
-    seoTitle: "Moduli ES in JavaScript con import ed export",
-    seoDescription: "Esempi di export nominati e default, import dinamici e tree shaking. Controlla gli effetti all’importazione e il peso dei bundle generati.",
-    title: "JavaScript ES modules: import, export e bundle",
+    seoTitle: "Moduli JavaScript ES con import ed export",
+    seoDescription: "Prova import ed export in due file JavaScript. Risolvi gli errori di caricamento e verifica i moduli dalla scheda Network.",
+    title: "Moduli JavaScript ES con import ed export",
     date: "2026-05-20",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "react-frontend",
     icon: "🟨",
-    excerpt: "Dividere il codice in file con import/export. named vs default, e perché conta per il bundle.",
+    excerpt: "Prova import ed export in due file JavaScript. Risolvi gli errori di caricamento e verifica i moduli dalla scheda Network.",
     tags: ["JavaScript", "Moduli"],
     content: `
 I **moduli ES** dividono il codice in file, ognuno con la sua interfaccia pubblica dichiarata con \`export\` e \`import\`.
@@ -5220,6 +5302,14 @@ Gli ES modules definiscono dipendenze esplicite, ma non ogni import è gratuito:
 ## Dipendenze e codice che parte all'import
 
 Importare un modulo può eseguire il codice presente al suo livello superiore. Se una libreria inizializza connessioni, listener o configurazioni al momento dell'import, lo stato dell'applicazione può dipendere dall'ordine di inizializzazione. Preferisci funzioni esplicite quando l'avvio ha effetti collaterali importanti. Un import dinamico è utile per caricare un editor o una funzionalità pesante soltanto quando l'utente la richiede, ma l'utente deve ricevere un indicatore di caricamento e un percorso di errore. Dopo aver introdotto code splitting controlla che i bundle risultanti non duplicano inutilmente librerie e che le navigazioni dirette alle pagine secondarie funzionino.
+
+## Avvia l’esempio nel browser
+
+Salva math.js e app.js nella stessa cartella e aggiungi a index.html il tag \`<script type="module" src="./app.js"></script>\`. Se hai Python, esegui \`python3 -m http.server 8000 --bind 127.0.0.1\` da quella cartella e apri http://127.0.0.1:8000/. Aggiungi console.log(area(2)) al file applicativo. Dovresti vedere un valore vicino a 12,57. L’esperimento usa il caricamento nativo via HTTP, quindi puoi osservare ogni richiesta senza un bundler.
+
+## Diagnostica tre errori di import
+
+Nella scheda Network cerca app.js e math.js. Se math.js risponde 404, controlla il percorso rispetto ad app.js, comprese estensione e maiuscole. Se vedi stato 200 ma la risposta è HTML, controlla se il server ha restituito una pagina di fallback al posto del modulo. Se i due file arrivano ma il browser segnala un export mancante, confronta le parentesi graffe nell’import con la dichiarazione effettiva. Un default si importa senza graffe, un export con nome richiede il nome esposto. Infine prova a rimuovere type="module". La sintassi import ora viene interpretata nel contesto di uno script classico e genera un errore.
 
 **Documentazione**
 
@@ -5852,13 +5942,15 @@ Una classe può includere due moduli che definiscono metodi con lo stesso nome. 
   },
   {
     id: "rails-hotwire-turbo",
-    title: "Hotwire e Turbo: navigazione HTML reattiva",
+    title: "Hotwire in Rails con Turbo Frames, Streams e Stimulus",
+    seoTitle: "Hotwire in Rails con Turbo Frames, Streams e Stimulus",
+    seoDescription: "Scopri la differenza tra Stimulus, Turbo e Ruby on Rails con un esempio che combina interazione locale e HTML dal server.",
     date: "2026-06-03",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "🛤️",
-    excerpt: "Turbo aggiorna porzioni di pagina inviando HTML dal server. Interattività moderna, quasi zero JavaScript.",
+    excerpt: "Scopri la differenza tra Stimulus, Turbo e Ruby on Rails con un esempio che combina interazione locale e HTML dal server.",
     tags: ["Ruby on Rails", "Hotwire"],
     content: `
 **Hotwire** è la scommessa di Rails: interfacce reattive inviando HTML invece di JSON, con pochissimo JavaScript. Il pezzo centrale è **Turbo**.
@@ -5893,6 +5985,16 @@ Turbo permette aggiornamenti e navigazione efficienti sfruttando HTML inviato da
 ## Navigazione e lifecycle degli elementi
 
 Quando Turbo sostituisce il contenuto della pagina, gli script che erano legati a un nodo precedente possono non funzionare più come previsto. Per un menu espandibile o un campo con validazione dinamica, verifica inizializzazione e cleanup a ogni navigazione. Stimulus consente di descrivere quel ciclo di vita tramite controller collegati al markup, senza costruire necessariamente una SPA. Controlla i link che richiedono una navigazione completa e i form con risposte di validazione. Prima di adottare Turbo per un'interfaccia complessa, prova i componenti di terze parti che modificano direttamente il DOM, perché potrebbero richiedere un'integrazione specifica.
+
+## Stimulus vs Turbo in una lista ordini
+
+Immagina un archivio in cui il cliente filtra gli ordini per stato. Il controller Ruby riceve la richiesta, applica il filtro agli ordini visibili per quell’utente e renderizza la lista. Turbo Frames può inserire nella pagina il frammento con i risultati. Stimulus può aprire i filtri avanzati oppure inviare il modulo dopo una pausa mentre il cliente digita. Il filtro può funzionare con un normale pulsante di invio anche se togli l’invio automatico.
+
+Per scegliere come aggiornare l’interfaccia, guarda quante aree cambiano. Una ricerca che sostituisce soltanto la lista è un buon candidato per un frame. Quando il salvataggio deve aggiungere una riga e aggiornare anche un contatore esterno, una risposta Turbo Stream può contenere più operazioni con target distinti. Se il cliente apre un pannello il cui contenuto è già presente in pagina, è sufficiente una piccola interazione locale come nel [tutorial Stimulus](/blog/rails-stimulus-js-leggero).
+
+## Segui la richiesta quando manca il contenuto
+
+Apri la scheda Network e invia il filtro. Verifica quale frame lo ha richiesto e cerca nella risposta un turbo-frame con lo stesso id. Se invece ottieni una pagina di accesso, controlla l’autenticazione e il comportamento desiderato in caso di sessione scaduta. Poi ripeti con un link che deve uscire dal frame, per esempio verso il dettaglio completo. Dopo più visite, verifica che un clic invochi una sola volta il metodo associato. La guida alle [best practice Stimulus](/blog/rails-stimulus-buone-pratiche) mostra come diagnosticare listener duplicati.
 
 **Documentazione**
 
@@ -6968,15 +7070,15 @@ Distingui i problemi di query da quelli della [cache Rails](/blog/rails-caching-
   },
   {
     id: "javascript-intl-formattazione",
-    seoTitle: "Intl in JavaScript per formattare date, numeri e valute",
-    seoDescription: "Formatta euro, numeri e date con Intl.NumberFormat, DateTimeFormat e locale. Gli esempi mostrano anche tempi relativi e gestione del fuso orario.",
-    title: "JavaScript Intl: date, numeri e valute locali",
+    seoTitle: "JavaScript Intl per date, numeri e valute",
+    seoDescription: "Formatta date e valute con Intl. Scegli il fuso orario e testa i componenti del valore con formatToParts.",
+    title: "JavaScript Intl per date, numeri e valute",
     date: "2026-06-24",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "react-frontend",
     icon: "🟨",
-    excerpt: "Niente librerie per formattare date, numeri e valute: Intl è nativo e conosce ogni lingua.",
+    excerpt: "Formatta date e valute con Intl. Scegli il fuso orario e testa i componenti del valore con formatToParts.",
     tags: ["JavaScript", "i18n"],
     content: `
 Per formattare date, numeri e valute non serve una libreria: il browser ha l'oggetto nativo **Intl**, che conosce le convenzioni di ogni lingua.
@@ -7009,6 +7111,27 @@ Intl formatta dati secondo locale e opzioni esplicite. La stessa cifra può usar
 ## Separare dati numerici e presentazione
 
 Un importo archiviato come 1234.50 non dovrebbe essere inviato al database nella forma "1.234,50 €" soltanto perché la UI usa il locale italiano. La rappresentazione dipende dalla lingua e dalla valuta, mentre il dato deve mantenere una semantica coerente. Intl.NumberFormat è utile per visualizzare un valore, ma un parser di input deve stabilire regole esplicite per separatori e precisione. Per le date, imposta timeZone quando la visualizzazione deve riferirsi a una zona specifica. Prova la stessa cifra e lo stesso istante in it-IT ed en-US e verifica che cambino soltanto le etichette mostrate, non il valore logico.
+
+## Verifica il cambio di data con lo stesso istante
+
+Un ordine registrato alle 23:30 UTC il 5 gennaio è già del 6 gennaio a Roma. Se il server renderizza in UTC e il browser usa il fuso locale, la data mostrata può cambiare tra la risposta HTML e l’avvio dell’app. Decidi il fuso in base alla schermata e passalo a entrambi gli ambienti.
+
+~~~javascript
+const orderTime = new Date("2026-01-05T23:30:00Z")
+const formatIn = (timeZone) =>
+  new Intl.DateTimeFormat("it-IT", {
+    timeZone, year: "numeric", month: "2-digit", day: "2-digit"
+  })
+
+console.log(formatIn("UTC").format(orderTime)) // 05/01/2026
+console.log(formatIn("Europe/Rome").format(orderTime)) // 06/01/2026
+~~~
+
+Se il dato è una data di calendario, come una scadenza fissata per un giorno intero, conserva anno, mese e giorno come tali. Convertirlo subito in un istante a mezzanotte UTC può mostrare la data precedente per chi legge da un fuso più a ovest.
+
+## Controlla i campi che contano per l’interfaccia
+
+Per mostrare la valuta in uno stile diverso, usa formatToParts per identificare la parte con type uguale a currency. Conserva l’ordine delle parti e gli spazi restituiti dal formatter. Questo evita di dover dividere per un separatore che può cambiare con la lingua. Per un test portabile, verifica il giorno o la parte della valuta che ti interessa. Spazi e segni tipografici possono differire tra ambienti. Verifica inoltre che dopo la formattazione il carrello continui a sommare gli importi originali, tenendo separate le valute.
 
 **Documentazione**
 
@@ -7847,13 +7970,15 @@ Un loop di quattro battute è un punto di partenza, non un brano finito. Scrivi 
   },
   {
     id: "ruby-benchmark-misurare",
-    title: "Ruby Benchmark: evitare confronti falsati",
+    title: "Ruby Benchmark con prove ripetibili",
+    seoTitle: "Ruby Benchmark con prove ripetibili",
+    seoDescription: "Confronta due implementazioni Ruby, ripeti le misure e separa warm-up, variabilità e costi della richiesta completa.",
     date: "2026-07-12",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "rails-backend",
     icon: "💎",
-    excerpt: "Le intuizioni sulle performance ingannano. Benchmark ti dà i numeri veri prima di riscrivere il codice.",
+    excerpt: "Confronta due implementazioni Ruby, ripeti le misure e separa warm-up, variabilità e costi della richiesta completa.",
     tags: ["Ruby", "Performance"],
     content: `
 La regola d'oro dell'ottimizzazione: **misura, non indovinare**. Ruby ha il modulo \`Benchmark\` integrato per confrontare approcci diversi con dati reali.
@@ -7889,6 +8014,16 @@ Una misurazione va ripetuta su dati rappresentativi e in condizioni comparabili.
 ## Misure ripetibili e variabili esterne
 
 Per confrontare due implementazioni devi usare lo stesso input e ridurre il rumore dovuto a inizializzazione, garbage collector e processi concorrenti. Una singola misura isolata non dimostra che una soluzione sia più veloce. Ripeti le prove, osserva distribuzione e differenze relative, poi verifica che l'ottimizzazione abbia effetto nel percorso reale dell'applicazione. Un metodo Ruby più rapido di qualche microsecondo non migliora una request dominata da una query lenta. Formula prima l'ipotesi e scegli una misura pertinente al requisito, come tempo totale o memoria allocata.
+
+## Ripeti il confronto e alterna l’ordine
+
+Prendi i due blocchi di esempio e trasformali in due callable che accettano lo stesso array. Verifica prima che producano lo stesso risultato per un array vuoto e uno rappresentativo. Poi esegui qualche chiamata fuori misura per rispondere alla domanda sulle prestazioni a regime. In una prova successiva misura separatamente la prima chiamata, se per il tuo caso è quella che interessa.
+
+Esegui, per esempio, nove round con lo stesso numero di chiamate per blocco. Misura il tempo trascorso con Benchmark.realtime e alterna chi parte per primo. Salva la mediana e gli estremi per ciascun blocco. Se le mediane sono vicine e le misure si sovrappongono ampiamente, raccogli altri dati o considera il risultato inconcludente. Conserva anche la dimensione dell’input e la versione Ruby, così un collega può eseguire la stessa prova.
+
+## Distingui preparazione e lavoro misurato
+
+Se vuoi confrontare soltanto la trasformazione, prepara l’array prima di iniziare il cronometro. Se vuoi misurare il costo complessivo di una richiesta che costruisce sempre l’array, includi anche quella fase. Quando un’implementazione modifica l’input, ricrealo per entrambe le prove con una procedura coerente. In caso contrario, il secondo blocco potrebbe ricevere dati già trasformati e il confronto perderebbe significato.
 
 **Documentazione**
 
@@ -8203,7 +8338,7 @@ Un endpoint POST può restituire 201 senza avere scritto correttamente tutti i d
     seoDescription: "Salva preferenze e bozze con localStorage, setItem e JSON. Gestisci valori mancanti o corrotti, limiti di spazio e dati sensibili.",
     title: "localStorage: persistenza e sicurezza nel browser",
     date: "2026-07-19",
-    updatedAt: "2026-11-11",
+    updatedAt: "2026-11-26",
     category: "sviluppo-software",
     hub: "react-frontend",
     icon: "🟨",
@@ -8241,6 +8376,30 @@ localStorage conserva stringhe per origine e offre un'API sincrona. Non usarlo p
 ## Gestire versioni e dati corrotti
 
 Un valore scritto in localStorage mesi prima può avere una struttura diversa da quella che l'applicazione si aspetta oggi. Non basta JSON.parse: devi validare il tipo e stabilire un comportamento di fallback quando il formato è obsoleto o malformato. Se una preferenza può essere ripristinata, potresti eliminarla e usare il default; se si tratta di dati importanti serve una strategia di migrazione più prudente. localStorage è sincrono e accessibile agli script della stessa origine, perciò non è adatto a credenziali segrete. Prova l'assenza della chiave, JSON invalido, un valore vecchio e un ambiente dove la scrittura fallisce per quota o restrizioni.
+
+## Recupera una preferenza da un formato precedente
+
+Immagina di aver salvato il tema come stringa semplice e di voler aggiungere altre preferenze. Prima di aggiornare tutti i dati, fai in modo che il lettore accetti sia il formato iniziale sia il nuovo oggetto. Una preferenza salvata da una versione precedente può ancora comparire aprendo il sito da una scheda rimasta inattiva per settimane.
+
+~~~javascript
+function loadTheme() {
+  try {
+    const raw = localStorage.getItem("site.preferences")
+    if (raw === "dark" || raw === "light") return raw
+
+    const saved = JSON.parse(raw ?? "null")
+    return saved?.theme === "dark" ? "dark" : "light"
+  } catch {
+    return "light"
+  }
+}
+~~~
+
+Per provare i casi, usa la sezione Storage degli strumenti di sviluppo del tuo sito. Imposta la chiave prima a dark, poi a un oggetto JSON con theme uguale a dark, infine a un JSON incompleto. Dopo ogni modifica ricarica e controlla il tema applicato. Il terzo caso deve mostrare il valore predefinito. Mantieni la scrittura separata dalla lettura: la prima visita dopo un aggiornamento può verificare il nuovo formato senza sovrascrivere subito il valore precedente.
+
+## Verifica cosa accade tra due schede
+
+Apri due schede dello stesso sito e cambia il tema dalla prima. La modifica in memoria aggiorna subito la prima scheda. La seconda può reagire all’evento storage, se lo ascolta e se filtra la chiave giusta. Prova anche a rimuovere la chiave e a ricaricare. Se il sito usa React, l’esempio di [sincronizzazione tra due schede](/blog/react-localstorage-sincronizzare-schede) mostra come coordinare aggiornamenti locali e notifiche esterne.
 
 **Documentazione**
 
