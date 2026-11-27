@@ -21,6 +21,44 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "perdite-acqua-contatore",
+    title: "Come trovare una perdita d’acqua con il contatore",
+    date: "2026-11-27",
+    category: "ambiente",
+    hub: "scienza-passioni",
+    icon: "💧",
+    excerpt: "Due letture a distanza di due ore bastano per misurare un flusso sospetto. Converti i metri cubi in litri e verifica se la perdita viene dal WC.",
+    tags: ["Acqua", "Contatore idrico", "Perdite domestiche", "Risparmio idrico"],
+    content: `
+Se il contatore dell’acqua avanza mentre ogni utenza a valle è ferma, vale la pena cercare una perdita. Il test più semplice richiede due letture a distanza di due ore, senza usare acqua nell’intervallo. La differenza dice quanto volume è passato. Per capire dove sia andato, serve una seconda prova.
+
+## Come preparare le due letture
+
+Individua il contatore che serve l’abitazione. Se vivi in condominio e leggi il contatore generale, il consumo di un vicino entra nella misura. Per questa prova ti serve un contatore dedicato. Controlla poi come lo strumento indica i decimali del metro cubo. Un millesimo di metro cubo corrisponde a un litro. Usa tutte le cifre leggibili, anche quelle che il gestore può chiederti di omettere nell’autolettura per la bolletta.
+
+Chiudi i rubinetti, aspetta che le cassette del WC finiscano di riempirsi e scegli una finestra in cui lavatrice e lavastoviglie siano ferme. Considera anche le utenze che possono partire da sole, come l’irrigazione e il ciclo di rigenerazione di un addolcitore. Fotografa il contatore all’inizio, annota l’orario e ripeti a distanza di due ore. Durante la prova lascia aperta la normale alimentazione dell’impianto, così un’eventuale perdita a valle continua a ricevere acqua.
+
+## Da tre litri in due ore a un volume mensile
+
+Supponi di leggere 128,436 m³ alle 14:00 e 128,439 m³ alle 16:00. La differenza è 0,003 m³, cioè 3 litri. Dividi per le due ore di prova e ottieni una portata media di 1,5 litri all’ora. Se quel ritmo rimanesse costante, sarebbero 36 litri al giorno e 1.080 litri in 30 giorni, pari a 1,08 m³.
+
+L’unico volume osservato qui è quello della finestra di prova. Il dato mensile è una stima condizionata alla continuità del flusso. Per esempio, una cassetta che si riempie per pochi secondi a intervalli può produrre lo stesso totale di un piccolo flusso continuo. Due letture mostrano quanto è passato durante la prova. Una terza lettura a metà intervallo può aiutare a capire quando è avvenuto il consumo.
+
+## Come verificare il sospetto sulla cassetta
+
+Se hai accesso all’acqua nella cassetta, aspetta che si riempia e versa qualche goccia di colorante alimentare. Attendi circa dieci minuti senza scaricare. Se compare colore nella tazza, c’è un passaggio d’acqua dalla cassetta. Scarica subito dopo la verifica per evitare macchie. Se individui e puoi usare normalmente il rubinetto dedicato al WC, ripeti la misura del contatore con la sua alimentazione chiusa. A parità di condizioni, un calo del volume misurato indica che quel ramo contribuisce al problema. Dopo la riparazione ripeti la prova con il WC di nuovo alimentato.
+
+Se il contatore continua ad avanzare durante più prove senza usi noti, conserva foto, orari e differenze di volume. Sono dati utili per chi deve localizzare la perdita. Se invece resta fermo, considera la sensibilità dello strumento e la durata del test. Una perdita intermittente può rimanere inattiva per tutta la finestra. Un display che mostra solo metri cubi interi può anche nascondere un passaggio di pochi litri, se la lettura non supera la tacca successiva. Consulta le istruzioni del modello per vedere se offre un indicatore di flusso più sensibile.
+
+Come nella [misura dello spreco alimentare prima di intervenire](/blog/spreco-alimentare-misurare-prima), conviene raccogliere un dato di partenza che si possa riprodurre. Usa la stessa durata e condizioni simili prima e dopo l’intervento. Se il segnale sparisce, hai una verifica pratica del risultato entro i limiti del tuo contatore.
+
+**Fonti**
+
+- [EPA WaterSense — manutenzione domestica, prova del contatore e test del WC](https://www.epa.gov/watersense/home-maintenance)
+- [Acea Ato 2 — individuazione delle perdite occulte a valle del contatore](https://www.aceaato2.a-acqua.it/content/dam/acea-ato2/pdf/it/assistenza/perdite-occulte/criteri-di-depenalizzazione-acea-ato-2.pdf)
+`,
+  },
+  {
     id: "rails-stimulus-buone-pratiche",
     title: "Buone pratiche Stimulus in Rails per timer, eventi e Turbo",
     date: "2026-11-25",

@@ -13,6 +13,12 @@ export const englishBlogMetadata: Record<
   keyof typeof translatedArticleSlugs,
   EnglishArticleMetadata
 > = {
+  "perdite-acqua-contatore": {
+    title: "How to Find a Water Leak with Your Water Meter",
+    date: "2026-11-27",
+    excerpt: "Take two meter readings two hours apart to measure unexpected flow. Convert cubic metres to litres and check whether the toilet is leaking.",
+    tags: ["Water", "Water meters", "Household leaks", "Water conservation"],
+  },
   "rails-stimulus-buone-pratiche": {
     title: "Stimulus Best Practices in Rails for Timers, Events and Turbo",
     date: "2026-11-25",

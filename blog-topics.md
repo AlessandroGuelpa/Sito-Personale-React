@@ -15,7 +15,7 @@ Per la procedura completa leggere [docs/blog-publishing.md](docs/blog-publishing
 
 ## Stato
 
-Prossimo tema: 4
+Prossimo tema: 1
 
 ## Storico
 
@@ -82,6 +82,7 @@ La rotazione parte dal tema 1 già indicato nel registro precedente.
 | 2026-11-24 | 2026-11-24 | 2 — Coding | react-localstorage-sincronizzare-schede | React e localStorage: come sincronizzare due schede | programmata |
 | 2026-11-25 | 2026-11-25 | 3 — Spazio e Artemis | luna-distanza-laser-retroriflettori | Come si misura la distanza della Luna con un laser | programmata |
 | 2026-11-25 | 2026-11-25 | 2 — Coding | rails-stimulus-buone-pratiche | Buone pratiche Stimulus in Rails per timer, eventi e Turbo | extra |
+| 2026-11-27 | 2026-11-27 | 4 — Salvaguardia del pianeta | perdite-acqua-contatore | Come trovare una perdita d’acqua con il contatore | programmata |
 
 Le nuove esecuzioni aggiungono una riga con origine `programmata` e uscita
 odierna. Una riga programmata già presente per la data locale impedisce un
