@@ -8,7 +8,7 @@ bin/rails db:migrate
 bin/rails console
 ```
 
-The generated table includes `created_at` and `updated_at`. The examples below assume the new table has been migrated and contains the three string columns above. For schema changes in an existing application, see [Rails database migrations](/blog/rails-migrazioni-versionare-il-database).
+The generated table includes `created_at` and `updated_at`. The examples below assume the new table has been migrated and contains the three string columns above.
 
 ~~~ruby
 class Launch < ApplicationRecord
