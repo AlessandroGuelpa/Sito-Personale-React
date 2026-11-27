@@ -203,41 +203,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "portfolio",
-    title: "Portfolio personale",
-    kind: "Progetto personale · React",
-    description:
-      "Questo sito: progetti, articoli tecnici e contatti, con tema chiaro e scuro e pagine prerenderizzate.",
-    problem:
-      "Raccontare il mio lavoro e rendere navigabile un archivio di oltre cento articoli senza caricarli tutti in home.",
-    approach:
-      "React, TypeScript e Tailwind. Anteprime leggere, ricerca nel blog e HTML generato per ogni pagina, con metadati dedicati.",
-    outcome:
-      "Il codice è pubblico e documenta la struttura del sito, il processo di build e le scelte per prestazioni e accessibilità.",
-    english: {
-      title: "Personal portfolio",
-      kind: "Personal project · React",
-      description:
-        "This website brings together my projects, technical articles and contact details, with light and dark themes and pre-rendered pages.",
-      problem:
-        "Showcase my work and make an archive of more than a hundred articles searchable without loading them all on the homepage.",
-      approach:
-        "React, TypeScript and Tailwind, with lightweight previews, blog search and HTML and metadata generated for each page.",
-      outcome:
-        "The source code documents the site structure, build process and choices around performance and accessibility.",
-    },
-    stack: ["React", "TypeScript", "Tailwind", "Vite"],
-    categories: ["react", "web"],
-    cover: "portfolio",
-    links: [
-      {
-        label: "Codice del sito",
-        englishLabel: "Website code",
-        href: "https://github.com/AlessandroGuelpa/Sito-Personale-React",
-      },
-    ],
-  },
-  {
     id: "vehrt",
     title: "VEHRT",
     kind: "Progetto personale · Musica",
