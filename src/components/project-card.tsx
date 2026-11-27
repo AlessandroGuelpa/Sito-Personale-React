@@ -29,10 +29,10 @@ export function ProjectCard({
       ];
 
   return (
-    <article className="surface-card overflow-hidden" id={project.id}>
+    <article className="surface-card flex h-full flex-col overflow-hidden" id={project.id}>
       <div
         aria-hidden="true"
-        className={`project-cover project-cover-${project.cover}`}
+        className={`project-cover shrink-0 project-cover-${project.cover}`}
       >
         {project.cover === "mapper" ? (
           <img
@@ -99,7 +99,7 @@ export function ProjectCard({
           </div>
         )}
       </div>
-      <div className="p-6 sm:p-8">
+      <div className="flex flex-1 flex-col p-6 sm:p-8">
         <p className="text-xs font-semibold uppercase tracking-wider text-violet-700 dark:text-violet-400">
           {copy.kind}
         </p>
@@ -117,55 +117,57 @@ export function ProjectCard({
             </li>
           ))}
         </ul>
-        {detailed && (
-          <details className="mt-6 border-t border-zinc-200 pt-5 dark:border-zinc-800">
-            <summary className="cursor-pointer font-semibold text-violet-700 dark:text-violet-400">
-              {english ? "Context and solution" : "Contesto e soluzione"}
-            </summary>
-            <dl className="mt-5 space-y-4 text-sm leading-relaxed">
-              {detailRows.map(([label, text]) => (
-                <div key={label}>
-                  <dt className="font-bold">{label}</dt>
-                  <dd className="mt-1 text-zinc-600 dark:text-zinc-300">
-                    {text}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </details>
-        )}
-        <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
-          {project.links.map((link) => {
-            const label = english ? link.englishLabel : link.label;
-            const props = {
-              className:
-                "inline-flex min-h-11 items-center gap-2 text-sm font-bold text-violet-700 hover:underline dark:text-violet-400",
-              onClick: () =>
-                trackEvent("project_open", {
-                  project: project.id,
-                  destination: link.label,
-                }),
-            };
-
-            return link.href.startsWith("/") ? (
-              <Link key={link.href} {...props} to={link.href}>
-                {label} <span aria-hidden="true">→</span>
-              </Link>
-            ) : (
-              <a
-                key={link.href}
-                {...props}
-                href={link.href}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {label} <span aria-hidden="true">↗</span>
-                <span className="sr-only">
-                  {english ? " (opens in a new tab)" : " (nuova scheda)"}
-                </span>
-              </a>
-            );
-          })}
+        <div className="mt-auto pt-6">
+          {detailed && (
+            <details className="border-t border-zinc-200 pt-5 dark:border-zinc-800">
+              <summary className="cursor-pointer font-semibold text-violet-700 dark:text-violet-400">
+                {english ? "Context and solution" : "Contesto e soluzione"}
+              </summary>
+              <dl className="mt-5 space-y-4 text-sm leading-relaxed">
+                {detailRows.map(([label, text]) => (
+                  <div key={label}>
+                    <dt className="font-bold">{label}</dt>
+                    <dd className="mt-1 text-zinc-600 dark:text-zinc-300">
+                      {text}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </details>
+          )}
+          <div className={`flex flex-wrap gap-x-5 gap-y-2 ${detailed ? "mt-6" : ""}`}>
+            {project.links.map((link) => {
+              const label = english ? link.englishLabel : link.label;
+              const props = {
+                className:
+                  "inline-flex min-h-11 items-center gap-2 text-sm font-bold text-violet-700 hover:underline dark:text-violet-400",
+                onClick: () =>
+                  trackEvent("project_open", {
+                    project: project.id,
+                    destination: link.label,
+                  }),
+              };
+  
+              return link.href.startsWith("/") ? (
+                <Link key={link.href} {...props} to={link.href}>
+                  {label} <span aria-hidden="true">→</span>
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  {...props}
+                  href={link.href}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {label} <span aria-hidden="true">↗</span>
+                  <span className="sr-only">
+                    {english ? " (opens in a new tab)" : " (nuova scheda)"}
+                  </span>
+                </a>
+              );
+            })}
+          </div>
         </div>
       </div>
     </article>

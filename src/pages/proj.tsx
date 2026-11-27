@@ -105,7 +105,7 @@ export default function Projects({ language }: { language: SiteLanguage }) {
         >
           {visible.length} {visible.length === 1 ? copy.project : copy.projects}
         </p>
-        <div className="grid items-start gap-6 md:grid-cols-2">
+        <div className="grid items-stretch gap-6 md:grid-cols-2">
           {visible.map((project) => (
             <ProjectCard
               key={project.id}
