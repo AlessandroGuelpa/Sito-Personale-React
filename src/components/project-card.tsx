@@ -54,6 +54,15 @@ export function ProjectCard({
             src="/projects/fenix-x.webp"
             width={760}
           />
+        ) : project.cover === "tenstepsdown" ? (
+          <img
+            alt=""
+            decoding="async"
+            loading="lazy"
+            src="/projects/tenstepsdown.webp"
+            height={1243}
+            width={1248}
+          />
         ) : project.cover === "ballerini" ? (
           <img
             alt=""

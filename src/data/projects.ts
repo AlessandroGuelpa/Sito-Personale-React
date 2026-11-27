@@ -12,7 +12,7 @@ export interface Project extends ProjectCopy {
   english: ProjectCopy & { title?: string };
   stack: string[];
   categories: string[];
-  cover: "mapper" | "fenix" | "launch" | "ballerini" | "portfolio" | "vehrt";
+  cover: "mapper" | "fenix" | "launch" | "ballerini" | "portfolio" | "vehrt" | "tenstepsdown";
   featured?: boolean;
   links: { label: string; englishLabel: string; href: string }[];
 }
@@ -90,6 +90,40 @@ export const projects: Project[] = [
         label: "Codice sorgente",
         englishLabel: "Source code",
         href: "https://github.com/AlessandroGuelpa/fenix-x-concept",
+      },
+    ],
+  },
+  {
+    id: "tenstepsdown",
+    title: "TENSTEPSDOWN",
+    kind: "Sito artistico · Creative development",
+    description:
+      "Un sito immersivo per un progetto di techno underground sperimentale, tra macchine Elektron, Ableton Live e ricerca sonora.",
+    problem:
+      "Tradurre l'identità visiva e sonora del progetto in un'esperienza web riconoscibile, lontana dai classici siti musicali.",
+    approach:
+      "HTML, CSS e JavaScript senza framework, con tunnel geometrico animato in Canvas, sfumature radiali, layout responsive e integrazione SoundCloud.",
+    outcome:
+      "Il sito è pubblicato su Vercel e raccoglie il manifesto, la musica e il processo creativo del progetto.",
+    english: {
+      kind: "Artist website · Creative development",
+      description:
+        "An immersive website for an experimental underground techno project exploring Elektron hardware, Ableton Live and sound design.",
+      problem:
+        "Translate the project's visual and sonic identity into a distinctive web experience rather than a conventional music website.",
+      approach:
+        "Vanilla HTML, CSS and JavaScript with an animated Canvas tunnel, radial gradients, responsive layout and SoundCloud integration.",
+      outcome:
+        "The website is hosted on Vercel and brings together the project's manifesto, music and creative process.",
+    },
+    stack: ["HTML", "CSS", "JavaScript", "Canvas", "Vercel"],
+    categories: ["web", "creative"],
+    cover: "tenstepsdown",
+    links: [
+      {
+        label: "Visita il sito",
+        englishLabel: "Visit the website",
+        href: "https://tenstepsdown.vercel.app/",
       },
     ],
   },
