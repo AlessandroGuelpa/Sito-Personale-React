@@ -173,6 +173,7 @@ export default function VehrtPage() {
           id="vehrt-top"
         >
           <div aria-hidden="true" className="vehrt-fracture" />
+          <div aria-hidden="true" className="vehrt-hero-art" />
           <div className="vehrt-container vehrt-hero-inner">
             <div className="vehrt-hero-meta">
               <p className="vehrt-eyebrow">
@@ -227,6 +228,47 @@ export default function VehrtPage() {
             <p className="vehrt-eyebrow">01 / Listen</p>
             <h2 id="listen-title">The music.</h2>
             <p>Tracks and mixes from the SoundCloud catalogue.</p>
+          </div>
+          <div aria-hidden="true" className="vehrt-signal-strip">
+            <div className="vehrt-signal-copy">
+              <span>VEHRT / Visual study 001</span>
+              <strong>Sound in<br />motion.</strong>
+              <span>Pattern / Noise / Repetition</span>
+            </div>
+            <div className="vehrt-signal-plot">
+              <svg
+                className="vehrt-waveform"
+                viewBox="0 0 640 120"
+                preserveAspectRatio="none"
+                focusable="false"
+              >
+                <path
+                  className="vehrt-wave-baseline"
+                  d="M0 60H640 M0 20H640 M0 100H640"
+                />
+                {Array.from({ length: 96 }, (_, index) => {
+                  const envelope =
+                    0.22 + 0.78 * Math.abs(Math.sin(index * 0.18));
+                  const amplitude =
+                    (8 + 43 * Math.abs(Math.sin(index * 1.71))) * envelope;
+
+                  return (
+                    <line
+                      key={index}
+                      x1={index * 6.7 + 2}
+                      x2={index * 6.7 + 2}
+                      y1={60 - amplitude}
+                      y2={60 + amplitude}
+                    />
+                  );
+                })}
+              </svg>
+              <div className="vehrt-signal-axis">
+                <span>00 / 00</span>
+                <span>GRAPHIC SIGNAL — 01</span>
+                <span>16 / 16</span>
+              </div>
+            </div>
           </div>
           <div className="vehrt-player">
             <div className="vehrt-player-heading">
@@ -319,6 +361,30 @@ export default function VehrtPage() {
               >
                 <code>{SONIC_PI_EXAMPLE}</code>
               </pre>
+              <div aria-hidden="true" className="vehrt-step-study">
+                <div className="vehrt-step-heading">
+                  <span>Pattern study</span>
+                  <span>16 steps</span>
+                </div>
+                {[
+                  { label: "KICK", steps: [0, 4, 8, 12] },
+                  { label: "HATS", steps: [2, 6, 10, 14] },
+                  { label: "ACID", steps: [0, 3, 5, 7, 10, 13, 15] },
+                  { label: "NOISE", steps: [1, 6, 11, 15] },
+                ].map(({ label, steps }) => (
+                  <div className="vehrt-step-row" key={label}>
+                    <span>{label}</span>
+                    <div className="vehrt-step-grid">
+                      {Array.from({ length: 16 }, (_, index) => (
+                        <span
+                          className={steps.includes(index) ? "is-active" : ""}
+                          key={index}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
               <p className="vehrt-code-caption">
                 A Sonic Pi sketch. The code is part of the instrument.
               </p>

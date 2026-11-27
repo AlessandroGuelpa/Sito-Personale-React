@@ -683,3 +683,239 @@ html[data-vehrt="true"] ::-webkit-scrollbar-thumb {
     will-change: auto;
   }
 }
+
+/* VEHRT — Fracture / industrial signal system.
+   Decorative graphics only; no audio analysis, canvas or remote assets. */
+.vehrt-hero {
+  background: #090909;
+}
+
+.vehrt-hero-art {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #090909f0 0%, #09090962 48%, #09090912 80%),
+    linear-gradient(0deg, #090909 0%, transparent 32%, transparent 80%, #0909098c 100%),
+    url("/vehrt/fracture-field.svg") right center / cover no-repeat;
+}
+
+.vehrt-hero-inner {
+  padding-top: clamp(68px, 8vw, 118px);
+}
+
+.vehrt-hero h1 {
+  margin-block: clamp(64px, 9vw, 124px) clamp(56px, 6vw, 84px);
+}
+
+.vehrt-wordmark {
+  filter: drop-shadow(0 5px 16px #090909b3);
+}
+
+.vehrt-hero-index {
+  margin-top: clamp(60px, 8vw, 100px);
+}
+
+.vehrt-section-heading .vehrt-eyebrow {
+  position: relative;
+  padding-left: 17px;
+}
+
+.vehrt-section-heading .vehrt-eyebrow::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  content: "";
+  background: var(--vehrt-red);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.vehrt-signal-strip {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.5fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 56px);
+  overflow: hidden;
+  padding: clamp(22px, 4vw, 44px);
+  margin-bottom: 28px;
+  border: 1px solid #f2f0eb24;
+  border-left: 3px solid var(--vehrt-red);
+  background:
+    repeating-linear-gradient(90deg, #f2f0eb07 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(0deg, #f2f0eb07 0 1px, transparent 1px 32px),
+    linear-gradient(115deg, #171413, #0c0b0b 70%);
+}
+
+.vehrt-signal-copy {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  font-family: ui-monospace, monospace;
+  text-transform: uppercase;
+}
+
+.vehrt-signal-copy > span,
+.vehrt-signal-axis,
+.vehrt-step-heading {
+  color: #b6afa9;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
+.vehrt-signal-copy > strong {
+  color: var(--vehrt-white);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: clamp(28px, 4.5vw, 58px);
+  font-weight: 850;
+  line-height: 0.91;
+  letter-spacing: -0.07em;
+}
+
+.vehrt-signal-plot {
+  min-width: 0;
+}
+
+.vehrt-waveform {
+  display: block;
+  width: 100%;
+  height: clamp(74px, 12vw, 132px);
+  overflow: hidden;
+}
+
+.vehrt-waveform line {
+  stroke: #bd3948;
+  stroke-width: 2;
+}
+
+.vehrt-waveform line:nth-child(4n) {
+  stroke: #e2d9d3;
+  opacity: 0.8;
+}
+
+.vehrt-wave-baseline {
+  fill: none;
+  stroke: #f2f0eb26;
+  stroke-width: 0.8;
+  stroke-dasharray: 4 5;
+}
+
+.vehrt-signal-axis {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+  font-family: ui-monospace, monospace;
+  font-size: 9px;
+}
+
+.vehrt-step-study {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 18px 24px;
+  border-top: 1px solid #f2f0eb1c;
+  background: #0b0b0b;
+  font-family: ui-monospace, monospace;
+}
+
+.vehrt-step-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.vehrt-step-row {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  color: #b6afa9;
+  font-size: 9px;
+}
+
+.vehrt-step-grid {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.vehrt-step-grid > span {
+  min-width: 0;
+  height: 13px;
+  border: 1px solid #f2f0eb1a;
+  background: #f2f0eb09;
+}
+
+.vehrt-step-grid > span:nth-child(4n + 1) {
+  border-color: #f2f0eb40;
+}
+
+.vehrt-step-grid > .is-active {
+  border-color: #c64b58;
+  background: #a32937;
+}
+
+.vehrt-step-row:nth-child(3) .is-active {
+  border-color: #dad2ca;
+  background: #dad2ca;
+}
+
+.vehrt-contact {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.vehrt-contact::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    linear-gradient(90deg, #090909 0%, transparent 38%, #090909 100%),
+    url("/vehrt/fracture-field.svg") right center / cover no-repeat;
+  opacity: 0.24;
+}
+
+@media (max-width: 640px) {
+  .vehrt-hero-art {
+    background-position: center, center, 64% center;
+  }
+
+  .vehrt-hero-inner {
+    padding-top: 52px;
+  }
+
+  .vehrt-hero h1 {
+    margin-block: 70px 48px;
+  }
+
+  .vehrt-hero-index {
+    margin-top: 52px;
+  }
+
+  .vehrt-actions {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .vehrt-signal-strip {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .vehrt-signal-axis {
+    font-size: 8px;
+    letter-spacing: 0.02em;
+  }
+
+  .vehrt-step-study {
+    padding-inline: 16px;
+  }
+}
