@@ -1,6 +1,6 @@
 An Active Record query can fetch a list efficiently and still leave the page doing unnecessary work. When each item loads its association on demand, the page can issue one query for the list and one more for every item. With 100 launches, that can mean 101 queries.
 
-Start by understanding the [Active Record associations](/blog/rails-associazioni-has-many-belongs-to) the view actually reads. Caching the endpoint introduces the separate question of when to [invalidate a Rails cache](/blog/rails-caching-basi).
+Start with how [Active Record relations are built and loaded](/blog/rails-activerecord-le-basi), then check the [Active Record associations](/blog/rails-associazioni-has-many-belongs-to) the view actually reads. Caching the endpoint introduces the separate question of when to [invalidate a Rails cache](/blog/rails-caching-basi).
 
 ~~~ruby
 # One launch query, then potentially a provider query for each launch.
