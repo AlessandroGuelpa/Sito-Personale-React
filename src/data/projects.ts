@@ -12,7 +12,7 @@ export interface Project extends ProjectCopy {
   english: ProjectCopy & { title?: string };
   stack: string[];
   categories: string[];
-  cover: "mapper" | "launch" | "ballerini" | "portfolio" | "vehrt";
+  cover: "mapper" | "fenix" | "launch" | "ballerini" | "portfolio" | "vehrt";
   featured?: boolean;
   links: { label: string; englishLabel: string; href: string }[];
 }
@@ -50,6 +50,46 @@ export const projects: Project[] = [
         label: "Prova l’app",
         englishLabel: "Try the app",
         href: "https://shopifymapper.vercel.app/",
+      },
+    ],
+  },
+  {
+    id: "fenix-x-concept",
+    title: "fēnix X — Oltre la traccia",
+    kind: "Concept indipendente · E-commerce",
+    description:
+      "Una pagina prodotto per un orologio GPS multisport immaginario, con configuratore, nove render e carrello laterale.",
+    problem:
+      "Far scegliere finitura e cinturino mostrando subito l’anteprima e il prezzo della combinazione selezionata.",
+    approach:
+      "HTML, CSS e JavaScript senza framework. Il configuratore aggiorna immagini e prezzo, mentre il carrello dimostrativo gestisce quantità, accessori e persistenza nel browser.",
+    outcome:
+      "La demo su Vercel permette di provare tre finiture, tre cinturini e il carrello. Il codice è pubblico su GitHub.",
+    english: {
+      title: "fēnix X — Beyond the Trail",
+      kind: "Independent e-commerce concept",
+      description:
+        "A product page for a fictional multisport GPS watch, with a configurator, nine renders and a side cart.",
+      problem:
+        "Help shoppers choose a finish and strap by showing the preview and price of each combination immediately.",
+      approach:
+        "Built with vanilla HTML, CSS and JavaScript. The configurator updates the preview and price, and the demo cart handles quantities, accessories and browser storage.",
+      outcome:
+        "The Vercel demo lets you try three finishes, three straps and the cart. The source code is public on GitHub.",
+    },
+    stack: ["HTML", "CSS", "JavaScript", "Vercel"],
+    categories: ["web"],
+    cover: "fenix",
+    links: [
+      {
+        label: "Prova la demo",
+        englishLabel: "Try the demo",
+        href: "https://fenix-x-concept.vercel.app/",
+      },
+      {
+        label: "Codice sorgente",
+        englishLabel: "Source code",
+        href: "https://github.com/AlessandroGuelpa/fenix-x-concept",
       },
     ],
   },

@@ -45,6 +45,15 @@ export function ProjectCard({
             sizes="(min-width: 1280px) 350px, (min-width: 768px) 50vw, calc(100vw - 40px)"
             width={1200}
           />
+        ) : project.cover === "fenix" ? (
+          <img
+            alt=""
+            decoding="async"
+            height={570}
+            loading="lazy"
+            src="/projects/fenix-x.webp"
+            width={760}
+          />
         ) : project.cover === "ballerini" ? (
           <img
             alt=""
