@@ -1,3 +1,5 @@
+Stimulus is a lightweight JavaScript framework that adds behavior to HTML without replacing server-rendered Rails views. A **controller** owns an element, **targets** identify elements inside it, and **actions** connect browser events to controller methods. This tutorial puts all three together in one working example.
+
 On a product page, a shopper should be able to reveal shipping times with a button. Rails has already sent the delivery estimate in the HTML. Stimulus handles the interaction and keeps the button’s expanded state available to screen readers.
 
 ## 1. Generate a controller in Rails
@@ -36,6 +38,16 @@ Paste this markup into your view, open the page in a browser and press the butto
 The data-controller attribute attaches disclosure to the section. The action on the button names the event to listen for and the method to call. Inside that method, `this.panelTarget` finds the paragraph marked as panel. The browser updates its visibility and the button exposes the new state through aria-expanded.
 
 Duplicate the entire section and open the second panel. The first should stay closed because each section gets its own controller instance. This is a quick check before using the component in a list of products.
+
+## Stimulus controllers, targets and actions at a glance
+
+| Stimulus concept | Where it appears | What it does |
+| --- | --- | --- |
+| Controller | `data-controller="disclosure"` | Connects a JavaScript class to a section of HTML |
+| Target | `data-disclosure-target="panel"` | Lets the controller find a specific element without a global selector |
+| Action | `data-action="click->disclosure#toggle"` | Calls `toggle` on a click inside that controller |
+
+The controller identifier comes from `disclosure_controller.js`; targets are declared with `static targets`, and actions name an event and method. These are independent concepts: a target does not need to be clickable, and an action does not need to be attached to a target.
 
 ## If the button does nothing
 
@@ -91,7 +103,11 @@ Why press the second button? A broken global selector could still pass a test th
 
 ## Decide what happens before JavaScript loads
 
-The exercise starts with hidden content. If the bundle is slow to load, a shopper can press a button that does nothing yet. When the estimate matters to a purchasing decision, consider a native details element with a summary for a simple disclosure. If the project needs this controller, another option is to render the estimate visible and only reveal the button when Stimulus connects. Disable JavaScript and reload the page. A shopper should still be able to find out when the product will arrive.
+The exercise starts with hidden content. If the bundle is slow to load, a shopper can press a button that does nothing yet. When the estimate matters to a purchasing decision, consider a native details element with a summary for a simple disclosure. If the project needs this controller, another option is to render the estimate visible and only reveal the button when Stimulus connects. Disable JavaScript and reload the page. A shopper should still be able to find out when the product will arrive. This is the same principle explained in [progressive enhancement without JavaScript](/blog/progressive-enhancement-funzione-base).
+
+## When to add a second Stimulus controller
+
+Keep a controller focused on one interaction, rather than making it responsible for an entire product page. If a separate widget needs its own behavior, attach its own `data-controller` to that widget. With Turbo navigation, check that listeners and timers are cleaned up when elements leave the page, particularly when a controller reconnects after a DOM replacement.
 
 ## Sources
 

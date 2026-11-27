@@ -1,4 +1,4 @@
-An object that takes effort to hold up on Earth is easier to support on the Moon. Once it starts moving, you still have to apply a force to change its speed. Those two parts of the operation depend on different quantities.
+**Mass does not change on the Moon. Weight does.** An object with a mass of 70 kg on Earth still has a mass of 70 kg on the Moon, but the gravitational force on it is much smaller. An object that takes effort to hold up on Earth is easier to support on the Moon. Once it starts moving, you still have to apply a force to change its speed. Those two parts of the operation depend on different quantities.
 
 The distinction matters during [a lunar landing and powered braking](/blog/allunaggio-paracadute-propulsione), when a vehicle has to change its velocity. In [space navigation](/blog/navigazione-spaziale-posizione-orientamento), mass belongs to the model of how a vehicle moves under force.
 
@@ -9,7 +9,7 @@ Near the surface, the elementary model for weight is `W = mg`. Lunar surface gra
 - On the Moon, use about 1.62 m/s². The weight is about **19.4 N**.
 - On Earth, use about 9.81 m/s². The weight is about **117.7 N**.
 
-The kilogram measures mass and the newton measures force. The figures describe the force of gravity on the load.
+The kilogram measures mass and the newton measures force. The figures describe the force of gravity on the load. For a 70 kg person, the same simplified calculation gives about **686.7 N on Earth** and **113.4 N on the Moon**. Calling the person "about 11.6 kg on the Moon" confuses an Earth-calibrated scale reading with their unchanged mass.
 
 ## Work out the force needed to stop it
 

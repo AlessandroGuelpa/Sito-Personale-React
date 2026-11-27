@@ -4,7 +4,11 @@ Start with the distinction between [power and energy](/blog/kw-kwh-potenza-energ
 
 ## What is the carbon intensity of electricity?
 
-It measures the greenhouse gas emissions associated with a unit of electricity within a defined boundary. A value of 250 g CO₂e/kWh assigns 250 grams of carbon dioxide equivalent to each kilowatt-hour. Multiply measured kWh by the factor and divide by 1,000 to obtain kilograms. If the source reports g CO₂ instead of g CO₂e, keep its units and check which gases it counts.
+It measures the greenhouse gas emissions associated with a unit of electricity within a defined boundary. A value of 250 g CO₂e/kWh assigns 250 grams of carbon dioxide equivalent to each kilowatt-hour. Multiply measured kWh by the factor and divide by 1,000 to obtain kilograms:
+
+`Emissions (kg CO₂e) = electricity used (kWh) × intensity (g CO₂e/kWh) / 1,000`
+
+For example, 4 kWh at 250 g CO₂e/kWh produces an attributed 1 kg CO₂e. This is an accounting calculation, not proof that using 4 kWh caused exactly those additional system emissions. If the source reports g CO₂ instead of g CO₂e, keep its units and check which gases it counts.
 
 ## Multiply by an applicable factor
 
@@ -14,11 +18,11 @@ As a hypothetical example, 10 kWh at 100 g CO₂e per kWh gives 1 kg CO₂e. Usi
 
 An annual average supports some comparisons. For a single hour, you would need a factor appropriate to that hour and location. National generation and national electricity use can have different mixes because countries also import and export electricity. Check which one the figure describes.
 
-Operational emissions and life cycle emissions also cover different processes. A factor that includes plant construction and fuel supply can differ from one focused on generation. Compare estimates that use the same boundary or describe the difference explicitly.
+Operational emissions and life cycle emissions also cover different processes. A factor that includes plant construction and fuel supply can differ from one focused on generation. Compare estimates that use the same boundary or describe the difference explicitly. To compare impacts across more than just the electricity-generation stage, start with [life-cycle assessment boundaries and functional units](/blog/lca-confini-unita-funzionale).
 
 ## Make the calculation reproducible
 
-When I read an estimate, I look for the measured energy, the origin of the factor and its reference year or hour. I also check the exclusions. Those details let someone repeat the calculation and see whether changing the time, electricity mix or underlying data would change the result.
+When I read an estimate, I look for the measured energy, the origin of the factor and its reference year or hour. I also check the exclusions. Those details let someone repeat the calculation and see whether changing the time, electricity mix or underlying data would change the result. A reported factor also has measurement and modelling uncertainty; [reporting uncertainty and significant figures](/blog/misure-incertezza-cifre-decimali) helps prevent a result from appearing more precise than its inputs.
 
 ## Calculate emissions from hourly readings
 
@@ -27,6 +31,10 @@ Suppose charging uses 2 kWh in one hour at 150 g CO₂e/kWh and 6 kWh in the nex
 ## Choose a factor that matches the question
 
 For an annual estimate based on a bill, start with an annual factor appropriate to the electricity consumed. Comparing two charging schedules calls for energy and intensity data aligned to the same intervals and region. Estimating the change in system emissions after shifting the load calls for a marginal analysis or a scenario that models which generators change output. An hourly average can attribute emissions to electricity use, but it cannot by itself identify the generator that responds to additional demand.
+
+## Why two carbon-intensity websites may disagree
+
+Before treating different values as a data error, compare the **location**, **time window**, **generation versus consumption mix**, **CO₂ versus CO₂e units**, and **operational versus life-cycle boundary**. An annual country average is not interchangeable with an hourly estimate for the electricity actually consumed in a region. State which series you used and retain its original unit; do not silently combine measurements with different boundaries.
 
 ## Sources
 

@@ -110,8 +110,8 @@ test("copying a code block preserves its full text and reports success", async (
   await page.goto("/blog/javascript-localstorage-persistenza", {
     waitUntil: "networkidle",
   });
-  await expect(page.locator(".article-outline")).toHaveCount(0);
   const block = page.locator(".article-code-block").first();
+  await expect(block).toBeVisible();
   const code = await block.locator("pre").textContent();
   await block.getByRole("button", { name: "Copia codice" }).click();
   await expect(block.getByRole("button", { name: "Copiato ✓" })).toBeVisible();

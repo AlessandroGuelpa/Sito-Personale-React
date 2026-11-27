@@ -1,4 +1,4 @@
-An Active Record association describes how two models relate. Rails then gives you methods for moving between the records and for creating a child through its parent. The model declarations should agree with the database columns and constraints.
+An Active Record association describes how two models relate. Rails then gives you methods for moving between the records and for creating a child through its parent. The model declarations should agree with the database columns and constraints. If `where`, `find` and model persistence are unfamiliar, start with the [Active Record models and queries tutorial](/blog/rails-activerecord-le-basi) before defining relationships.
 
 ~~~ruby
 class Provider < ApplicationRecord

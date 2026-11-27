@@ -13,6 +13,8 @@ self.onmessage = (event) => {
 };
 ```
 
+Because the `main.js` example uses `import.meta.url`, load that file as an ES module; the [ES modules guide](/blog/javascript-moduli-es-import-export) explains `type="module"` and module-relative URLs. If `worker.js` itself needs static imports, create it with `{ type: "module" }` as the second `Worker` argument.
+
 The sum illustrates the message flow. Real candidates include large file parsing or image processing. Give the worker the smallest useful input, expose a way to handle errors and terminate it when the page no longer needs its results.
 
 ## Account for the data crossing the boundary
