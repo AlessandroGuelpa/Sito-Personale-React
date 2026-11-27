@@ -733,35 +733,35 @@ La scelta utile è rendere esplicito lo stato: ancora usabile, riparabile oppure
   },
   {
     id: "luna-massa-peso-inerzia",
-    seoTitle: "Massa, peso e inerzia sulla Luna",
-    seoDescription: "Scopri quanto pesa un oggetto sulla Luna, perché la sua massa resta uguale e quanta forza serve per fermarlo.",
+    seoTitle: "Quanto si pesa sulla Luna? Massa, peso e gravità",
+    seoDescription: "La massa sulla Luna non cambia, ma il peso è circa un sesto: esempi in kg e newton, gravità lunare di 1,62 m/s² e inerzia nella frenata.",
     title: "Massa, peso e inerzia sulla Luna",
-    updatedAt: "2026-11-26",
+    updatedAt: "2026-11-27",
     date: "2026-10-28",
     firstPublishedAt: "2026-11-03",
     category: "spazio",
     hub: "scienza-passioni",
     icon: "⚖️",
-    excerpt: "Scopri quanto pesa un oggetto sulla Luna, perché la sua massa resta uguale e quanta forza serve per fermarlo.",
+    excerpt: "La massa sulla Luna rimane uguale, il peso diminuisce: esempi per 12 e 70 kg, gravità lunare, inerzia e frenata.",
     tags: ["Spazio", "Fisica", "Luna"],
     content: `
-Un oggetto che sulla Terra è pesante diventa molto più facile da sostenere sulla Luna. È tentante concludere che sia anche facile da spostare, accelerare o fermare in qualunque situazione. Ma stiamo mettendo insieme due effetti differenti.
+**La massa sulla Luna non cambia; il peso sì.** Una persona che sulla Terra ha una massa di 70 kg conserva 70 kg di massa sulla Luna, ma subisce una forza di gravità molto più piccola. Sostenere un oggetto è più facile; accelerarlo o fermarlo richiede ancora di vincere la sua inerzia.
 
 La distinzione tra peso e massa diventa concreta durante [l'allunaggio e la frenata propulsiva](/blog/allunaggio-paracadute-propulsione): un veicolo richiede ancora forza per cambiare velocità. Nella [navigazione spaziale](/blog/navigazione-spaziale-posizione-orientamento) la massa rientra nel modello dinamico, non nel peso percepito.
 
-La massa resta la stessa. Il peso cambia con il campo gravitazionale locale.
+Il chilogrammo indica la quantità di massa; per esprimere il peso come forza si usano i newton. Questa differenza spiega perché "pesare un sesto" non significa avere un sesto della massa.
 
 ## La forza con cui vieni attirato
 
 Nel modello elementare vicino alla superficie, il peso vale P = mg. La gravità lunare è circa un sesto di quella terrestre, quindi a parità di massa diminuisce la forza peso.
 
-Un oggetto ipotetico da 12 kg mantiene una massa di 12 kg. Con una gravità di circa 1,62 m/s², il suo peso è circa 19,4 N, mentre usando 9,81 m/s² sulla Terra è circa 117,7 N. Il newton misura una forza; il chilogrammo una massa.
+Un oggetto ipotetico da 12 kg mantiene una massa di 12 kg. Con una gravità di circa 1,62 m/s², il suo peso è circa 19,4 N, mentre usando 9,81 m/s² sulla Terra è circa 117,7 N. Per una persona di 70 kg il peso è circa **113,4 N sulla Luna** contro **686,7 N sulla Terra**. Il rapporto è vicino a un sesto, mentre la massa rimane invariata.
 
 ## Fermare il movimento è un'altra domanda
 
 Per ottenere la stessa accelerazione di quella massa, nel modello F = ma serve la stessa forza risultante. Se il carico è già in movimento, la sua quantità di moto non scompare perché il peso è diminuito.
 
-Questo non significa che ogni manovra sia identica nei due ambienti. Contatto con il suolo, attrito disponibile e interazione con attrezzature cambiano anch'essi. È proprio il motivo per cui il solo peso non descrive tutta l'operazione.
+Questo non significa che ogni manovra sia identica nei due ambienti. Contatto con il suolo, attrito disponibile e interazione con attrezzature cambiano anch'essi. La [regolite lunare e l'usura dei meccanismi](/blog/polvere-lunare-progettazione) introducono ulteriori requisiti da verificare in un mezzo operativo. È proprio il motivo per cui il solo peso non descrive tutta l'operazione.
 
 ## Un esempio da leggere con le condizioni
 
