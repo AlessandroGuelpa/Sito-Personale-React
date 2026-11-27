@@ -619,7 +619,7 @@ export const englishBlogMetadata: Record<
     title: "How to Use Stimulus in Rails: A Step-by-Step Tutorial",
     date: "2026-11-16",
     updatedAt: "2026-11-27",
-    seoTitle: "Stimulus Tutorial for Rails: Controllers, Targets and Actions",
+    seoTitle: "Stimulus Rails Tutorial: Controllers, Targets & Actions",
     seoDescription: "Learn Stimulus in Rails with a working controller, targets and data-action example. Debug interactions, test multiple instances and handle Turbo visits.",
     excerpt: "Build an expandable panel in Rails with a Stimulus controller. Wire actions and targets, test two instances and debug a button that does nothing.",
     tags: ["Rails", "Stimulus", "Hotwire", "JavaScript"],
