@@ -107,7 +107,7 @@ The exercise starts with hidden content. If the bundle is slow to load, a shoppe
 
 ## When to add a second Stimulus controller
 
-Keep a controller focused on one interaction, rather than making it responsible for an entire product page. If a separate widget needs its own behavior, attach its own `data-controller` to that widget. With Turbo navigation, check that listeners and timers are cleaned up when elements leave the page; the [Stimulus lifecycle guide](/blog/rails-stimulus-buone-pratiche) covers `connect` and `disconnect` in detail.
+Keep a controller focused on one interaction, rather than making it responsible for an entire product page. If a separate widget needs its own behavior, attach its own `data-controller` to that widget. With Turbo navigation, check that listeners and timers are cleaned up when elements leave the page, particularly when a controller reconnects after a DOM replacement.
 
 ## Sources
 
